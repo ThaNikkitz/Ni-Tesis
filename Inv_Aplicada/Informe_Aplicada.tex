@@ -1,0 +1,365 @@
+\documentclass[12pt, notitlepage]{article}
+\usepackage[margin=1in, top=0.5in]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[bottom]{footmisc}
+\usepackage{gensymb}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{pbox}
+\usepackage[makeroom]{cancel}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{newfloat}
+%\usepackage{hyperref}
+\DeclareFloatingEnvironment[name={Gráfico}]{graph}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\setcounter{MaxMatrixCols}{20}
+
+
+\title{Título}
+
+\date{\today}
+\renewcommand{\contentsname}{Contenidos}
+\renewcommand\refname{Referencias}
+\renewcommand\tablename{Tabla}
+\renewcommand\figurename{Figura}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand\varpm{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle+$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({-})$\cr}}}}}
+\newcommand\varmp{\mathbin{\vcenter{\hbox{\oalign{$\scriptstyle({+})$\cr\noalign{\kern-.3ex}\hfil$\scriptscriptstyle-$\hfil\cr}}}}}
+\newcommand\votwo{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle1$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({2})$\cr}}}}}
+
+
+\geometry{letterpaper}
+
+\begin{document}
+\thispagestyle{empty}
+\setlength{\unitlength}{1 cm} %Especificar unidad de trabajo
+\begin{picture}(18,4)
+\put(0,0){\includegraphics[scale=0.38]{UTFSM_logo.png}}
+\put(10.5,0){\includegraphics[scale=0.18]{mecusm.jpg}}
+\end{picture}
+\\
+\\
+\begin{center}
+{\LARGE {Universidad Técnica Federico Santa María}}\\[0.5cm]
+{\Large Departamento de Ingeniería Mecánica}\\[2cm]
+%{\Large Redes}\\[2.3cm]
+{\Huge \textbf{Método de imágenes en un sistema de dos interfaces paralelas}}\\[0.3cm]
+%{\Huge \textbf{``Método de diferencias finitas aplicado a transferencia de calor en una placa"}}\\[0.2cm]
+{\large ICM-392 - Investigación Aplicada II}\\[8 pt]
+{\large Profesor: Christopher Cooper V., Ph.D.}\\[6cm]
+{\large Alumno: Nicolás Espinoza M.}\\
+\vspace{\fill}Valparaíso - Septiembre, 2018
+\end{center}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Resumen}
+En las últimas décadas ha crecido el interés por modelar de forma 
+\pagebreak
+\section{Marco Teórico}
+\subsection{El campo eléctrico y el potencial eléctrico}
+El campo eléctrico correspondiente a una carga puntual $q$ que se encuentra en el vacío en la posición $\vec{x}_0$ viene dado por la conocida ecuación
+\begin{equation}
+\vec{E}_{(\vec{x})} = \frac{q}{4\pi\epsilon_0}\frac{(\vec{x} - \vec{x}_0)}{|\vec{x}-\vec{x}_0|^3}
+\end{equation}
+siendo $\epsilon_0$ la permitividad macroscópica del vacío, una medida de cómo fluye el campo eléctrico en el vacío. Por supuesto, en el caso ejemplificado en la Ec. (1), no hay un medio que reaccione, por lo que $\epsilon=0$ es nuestra referencia. De ahora en adelante se trabaja con $\epsilon$ propio de un dieléctrico; además se elabora más sobre la permitividad en la sección siguiente.\\\\
+Cuando se cuenta con N cargas puntuales, la Ecuación (1) se convierte en una sumatoria sobre todos los elementos del sistema de cargas a considerar
+\begin{equation}
+\vec{E}_{(\vec{x})} = \sum_{i=1}^N\frac{q_i}{4\pi\epsilon}\frac{(\vec{x} - \vec{x}_i)}{|\vec{x}-\vec{x}_i|^3}
+\end{equation}
+Para los casos en que nos encontramos con un medio  continuo y en que tenemos una distribución de carga $\rho_{(\vec{x})}$ de algún tipo, nuestra sumatoria se vuelve una integral, pues $N\rightarrow \infty$.
+\begin{equation}
+\vec{E}_{(\vec{x})} = \int_V\frac{\rho_{(\vec{x}_0)}}{4\pi\epsilon}\frac{(\vec{x} - \vec{x}_0)}{|\vec{x}-\vec{x}_0|^3} dV
+\end{equation}
+Si ahora consideramos el flujo del campo eléctrico a través de una superficie cerrada que rodee completamente al medio analizado, obtenemos
+\begin{equation}
+\int_{\partial V}\vec{E}_{(\vec{x})}\cdot d\vec{S} = \int_V\left(\int_{\partial V}\frac{\rho_{(\vec{x}_0)}}{4\pi\epsilon}\frac{(\vec{x} - \vec{x}_0)}{|\vec{x}-\vec{x}_0|^3}\cdot dS\right)dV = \int_V \frac{\rho}{\epsilon} dV
+\end{equation}
+Esta es la ley de Gauss en forma integral. Con el teorema de la divergencia aplicado a la Ec. (4) se llega a la ley de Gauss en forma diferencial:
+\begin{equation}
+\nabla\cdot\vec{E} = \frac{\rho}{\epsilon}
+\end{equation}
+Por otro lado, como el campo eléctrico es un campo vectorial irrotacional, se puede aplicar el teorema fundamental del cálculo para obtener su función potencial. Como $\vec{E}_{(\vec{x})}$ es una variable sólo de la diferencia de posiciones entre la de la carga y el punto de evaluación $|\vec{x} - \vec{x}_0|$ (función solo del radio), la integración es directa si la referencia para el potencial eléctrico se toma como $0$ al infinito, quedando
+\begin{equation}
+ \vec{E} = \nabla\phi \quad\rightarrow\quad\phi_{(\vec{x})} = -\int_\infty^{\vec{x}} \vec{E}_{(\vec{x})} d\vec{x} = -\int_\infty^{\vec{x}} \frac{q}{4\pi\epsilon}\frac{(\vec{x}-\vec{x}_0)}{|\vec{x} - \vec{x}_0|^3} = \frac{q}{4\pi\epsilon}\frac{1}{|\vec{x} - \vec{x}_0|}
+\end{equation}
+Esto es en los casos en que se tenga una carga puntual, como en el caso de la Ec. (1). Para una carga distribuida se debe considerar la Ec. (4), lo que nos lleva a
+\begin{equation}
+\phi_{(\vec{x})} = \int_V \frac{\rho_{(\vec{x}_0)}}{4\pi\epsilon}\frac{1}{|\vec{x}-\vec{x}_0|}dV
+\end{equation}
+En los casos en que el medio en el que está la carga $q$ no sea el vacío, se debe considerar que la materia que lo compone si reaccionará al campo eléctrico asociado a $q$; en estos casos, $\epsilon \neq \epsilon_0$. Es decir, hay que aclarar que las Ecs. (4) y (5) no están completas, pues falta considerar el efecto de la \textit{polarización}. Además resulta interesante entender qué es realmente la permitividad, que esta relacionada directamente con la polarización del medio; a continuación explicaremos estos puntos.
+\subsection{La permitividad de un medio material, la polarización y el campo eléctrico microscópico}
+Se puede entender la constante dieléctrica de un material (o permitividad) como una medida del reordenamiento de las partículas de un medio a nivel molecular frente a la presencia de un campo eléctrico externo y provocando así que dichas partículas generen un \textit{campo eléctrico inducido}, que es opuesto en sentido al original, pero no necesariamente de la misma intensidad; este disminuye el flujo neto del campo eléctrico externo, por lo que impide en cierta medida su paso, dando su nombre a la propiedad - en qué grado las moléculas del material \textbf{permiten} el flujo de campo eléctrico.\\\\
+La permitividad que se utiliza en las Ecs. de la sección anterior es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se dijo que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es la referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
+
+\subsubsection{Campo eléctrico local, y polarización}
+\begin{figure}[H]
+\centering
+\input{Fig_1.eps_tex}
+\caption{Efecto de un campo sobre la forma de un átomo. El electrón es "jalado" por el campo, mientras que el protón es "empujado", induciendo así un dipolo.}
+\end{figure}
+Cuando se aplica un campo eléctrico externo a un cuerpo (macroscópico) dieléctrico, las partículas constituyentes de los átomos se comportan de forma especial. Por ejemplo, en la Figura 1 se muestra un átomo simple de hidrógeno que se reordena bajo la acción de un campo externo, generando así un campo eléctrico opuesto. Este efecto es la polarización, e induce un momento dipolar $\vec{p}$ en los átomos afectados por el campo eléctrico local.
+\begin{equation}
+\vec{p} = \alpha\vec{E}^{loc}
+\end{equation}
+$\alpha$ se conoce como la polarizabilidad microscópica, un coeficiente de proporcionalidad que representa qué tanto se polariza la especie analizada - la magnitud del momento dipolar inducido - en presencia de un cierto campo eléctrico local $\vec{E}^{loc}$. Por supuesto, esta es una relación constitutiva, porque $\alpha$ depende del material o elemento estudiado. Ahora hacemos la distinción entre los distintos campos eléctricos de interés para este apartado:
+\begin{gather*}
+\vec{E}^{ext} \quad \longrightarrow \quad \text{Campo eléctrico externo}\\
+\vec{E}^{loc} \quad \longrightarrow \quad \text{Campo eléctrico local}\\
+\vec{E}^{ind} \quad \longrightarrow \quad \text{Campo eléctrico inducido (microscópico)}\\
+\vec{E} \quad \longrightarrow \quad \text{Campo eléctrico macroscópico}
+\end{gather*}
+y definimos la relación entre los tres como
+\begin{equation}
+\vec{E}^{loc} = \vec{E}^{ind} + \vec{E}^{ext}
+\end{equation}
+Es conveniente explicar que si bien se define uno de los campos como microscópico o local, esto no es el campo debido a un único átomo o molécula, sino el propio de un volumen macroscópicamente pequeño pero microscópicamente grande; por lo tanto, los términos local y microscópico son en realidad promedios sobre volúmenes más pequeños que el campo de las ecuaciones de Maxwell. Hay que notar también que si el campo eléctrico se transmite por el vacío, $\vec{E}^{ind} = 0$ y por ende $\vec{E}^{ext} = \vec{E}^{loc} = \vec{E}$. No se entra en detalle respecto al álgebra pues existen referencias sobre el tema, como por ejemplo el texto de Kantorovich \cite{Kantorovich}, pero después de algo de trabajo se llega a la expresión para el campo eléctrico local, también llamado campo de Lorentz, en función del campo macroscópico
+\begin{equation}
+\vec{E}^{loc} = \vec{E}(1 + \kappa)
+\end{equation}
+donde $\kappa$ es un factor de corrección que depende del ordenamiento microscópico. El campo eléctrico local es el campo que siente cada uno de los muchos volúmenes pequeños que, en conjunto, componen el medio macroscópico que estamos estudiando. Por último se presenta la definición de densidad de polarización $\vec{P}$ para cerrar el círculo de relaciones entre el dieléctrico estudiado a nivel macroscópico y microscópico. La densidad de polarización por unidad de volumen se define de dos maneras; esto sale de diversas fuentes, pero W. Cai \cite{Cai} lo resume todo de forma simple:
+\begin{gather}
+\vec{P}_{(\vec{x})} = \sum_i N_i\alpha_i\left[\vec{E}_{(\vec{x})}^{loc}\right]_i = \sum_i N_i\vec{p}_i\\
+\vec{P}_{(\vec{x})} = \epsilon_0\chi\vec{E}_{(\vec{x})}
+\end{gather}
+con $N_i$ la densidad numérica (\textit{number density}) del $i$-ésimo átomo por unidad de volumen, y $\chi$ la susceptibilidad del medio dieléctrico (que en el caso del vacío es 0). Antes de continuar el desarrollo, se procede a definir qué son la densidad de polarización y la susceptibilidad. Como concepto, la densidad de polarización es la polarización a nivel macroscópico, por unidad de volumen, debida a todos los momentos dipolares inducidos en las moléculas de dicho volumen asociados al campo eléctrico que los induce. Por otra parte, la susceptibilidad permite relacionar un campo eléctrico macroscópico con los efectos que este tiene en el momento dipolar de las partículas en un volumen a través de la densidad de polarización, como se indica en la Ec. (12); más allá de ser una constante de proporcionalidad, indica de forma promediada cómo influye el campo eléctrico en la orientación de los dipolos, y cómo varía el momentum dipolar del medio a nivel macroscópico en presencia del campo eléctrico. Hay que resaltar que esto no implica traslación o \textit{migración} electrónica, sino solo rotación del átomo o molécula para la reorientación del dipolo, intentando alinearlo con el campo.\\\\
+Para terminar esta parte del desarrollo teórico, de las Ecs. (10-12) y sabiendo que el campo macroscópico es el mismo, se puede deducir que
+\begin{equation}
+\vec{P}_{(\vec{x})} = \epsilon_0\chi\vec{E}_{(\vec{x})} = \vec{E}_{(\vec{x})}\sum_iN_i\alpha_i(1+\kappa_i) \implies \epsilon_0\chi = \sum_iN_i\alpha_i(1+\kappa_i)
+\end{equation}
+Un caso particular es la teoría de Clausius-Mossotti, en cuyo caso el valor de $\kappa_i = \kappa$ es $\chi/3$; uno de los supuestos es que la distribución molecular es una malla cúbica regular.\\\\
+Con esto se puede entender de manera general cómo se relacionan el campo eléctrico macroscópico y microscópico. El propósito de este apartado es simplemente aclarar que ambos análisis no son independientes y que el tratamiento de continuo que se dará en lo sucesivo esta fundamentado en teoría del comportamiento eléctrico molecular molecular; es por esto que se omiten pasos y sólo se presentan resultados que se consideran importantes.
+
+\subsubsection{Permitividad de un medio macroscópico}
+Ya se explicó qué son la susceptibilidad y densidad de polarización, por lo que se procede a definir un poco mejor qué es la permitividad, profundizando en lo que se mencionó en la Sección 2.2.
+%\begin{figure}
+%\centering
+%\includegraphics[scale=]{•}
+%\caption{}
+%\end{figure}
+Primero corresponde aclarar que la permitividad es netamente una propiedad macroscópica del medio, pero se prefiere caer en la redundancia un par de veces, como en el caso del título de esta sección, de manera de reafirmar este punto. Cuando un campo eléctrico afecta un medio dieléctrico, los dipolos no solo se intentan alinear con las líneas de campo, sino que además hay un movimiento de cargas libres dentro del cuerpo. Sumado a esto está el hecho de que los átomos conformantes del medio rompen el estado de equilibrio, pues los protones son repelidos por el campo, mientras que los electrones son atraidos por este (Fig. 2). Este efecto genera que se formen dipolos, y en consecuencia que haya un momento dipolar en el medio; es por esta razón que la susceptibilidad se relaciona con la permitividad. Teniendo presentes los fenómenos recién nombrados, se reitera la definición de permitividad o constante dieléctrica como una cuantificación macroscópica promedio de la tendencia de un medio (en este caso un dieléctrico) a oponerse al flujo de campo eléctrico por alguno de los mecanismos nombrados anteriormente.\\\\
+Existen tres \textit{permitividades} de interés para este desarrollo: la permitividad del vacío $\epsilon_0$, la permitividad propia de un material $\epsilon$, y la permitividad relativa o constante dieléctrica, a la que en este caso se da más importancia
+\begin{equation}
+\epsilon_r = \frac{\epsilon}{\epsilon_0}=\epsilon_0(1+\chi)
+\end{equation}
+(llamada $k$ en algunas fuentes). De ahora en adelante, $\epsilon$ a secas pasa a ser la permitividad relativa y se denomina simplemente \textit{permitividad} o \textit{constante dieléctrica} de un medio.\footnote{En estricto rigor, la constante dieléctrica es $\epsilon_r\cdot\epsilon_0$, pero por costumbre se utiliza este término para la propiedad adimensional en este informe.}
+\subsection{Desplazamiento eléctrico y campo eléctrico en un dieléctrico}
+En lo sucesivo, todo el trabajo es relativo a un medio o campo macroscópico. En este informe no se trabaja directamente con los momentos dipolares, la susceptibilidad, o incluso con la densidad de polarización, sino que se presenta una sola ecuación que engloba todos los efectos de un campo eléctrico sobre un dieléctrico; para llegar a dicha ecuación se utilizan las ecuaciones ya introducidas y un par de relaciones nuevas.\\\\
+La Ec. (12) es una expresión que asocia el campo eléctrico y la densidad de polarización, establecida a través de la susceptibilidad y la permitividad. Además, de la Ec. (5) tenemos la ley de Gauss para una distribución de carga, que tiene que ver únicamente con la permitividad.\\\\
+Si se asume que el flujo de campo eléctrico se debe a contribuciones de la distribución de carga y de la polarización del medio unicamente, entonces se puede expresar dicho flujo de campo eléctrico como
+\begin{equation}
+\nabla\cdot\vec{E} = \frac{\rho - \nabla\cdot\vec{P}}{\epsilon_0}
+\end{equation}
+Se define entonces el \textit{desplazamiento eléctrico} como
+\begin{equation}
+\vec{D} = \vec{E} + \vec{P} = \epsilon_0\vec{E}(1 + \chi)
+\end{equation}
+lo que nos permite escribir la Ec. (15) como
+\begin{equation}
+\nabla\cdot\vec{D} = \rho
+\end{equation}
+Esto corresponde al efecto completo del flujo de campo eléctrico sobre el medio. En general se asocia el campo eléctrico $\vec{E}$ a las cargas libres (free charges) y la densidad de polarización $\vec{P}$ a las cargas fijas (bound charges), pero para el objetivo de este texto eso no es relevante.\\\\
+Siguiendo con la idea, recordando que ahora $\epsilon_r = \epsilon$, suponiendo que la permitividad es una propiedad isotrópica y usando la Ec. (14) en la (16), podemos obtener
+\begin{equation}
+\vec{D} = \epsilon\vec{E}\quad\biggm/\nabla\cdot\qquad\rightarrow\qquad\nabla\cdot\vec{D}=\nabla\cdot(\epsilon\vec{E}) = \nabla(\epsilon)\cdot\vec{E} + \epsilon\nabla\cdot\vec{E} = \rho
+\end{equation}
+Aún más, si la permitividad del medio es constante sobre el mismo, entonces se puede el término $\nabla (\epsilon)\cdot\vec{E}$.\\\\
+Es así que recuperamos la ecuación de la que prácticamente parte el desarrollo de la teoría, la ley de Gauss.
+\begin{equation}
+\nabla\cdot\vec{E} = \frac{\rho}{\epsilon}
+\end{equation}
+El gran progreso es haber demostrado que no solo sirve para calcular el campo eléctrico en el vacío, sino que se puede aplicar a los dieléctricos en general y que incluso se consideran los efectos de polarización inducidos.
+
+\subsection{Método de imágenes}
+En la teoría electrostática hay ocasiones en que hay que trabajar con interfaces que separan distintos medios dieléctricos. El método de imágenes destaca por su simpleza en este tipo de escenarios. La idea es que cargas en un medio inducirán un campo opuesto en el otro, el denominado campo de reacción. A su vez este campo inducido afectará al campo en el primer medio, por lo que hay que encontrar una expresión para el comportamiento de los campos eléctricos en los dos medios; por supuesto, este problema no se soluciona simplemente con aplicar la Ec. (1).\\\\
+El método de imágenes facilita la resolución del problema de una forma simple: En vez de considerar la polarización y el consecuente campo inducido por el segundo medio como un todo, se hace más fácil poner una carga o distribución de cargas imágenes (puede ser incluso una distribución continua) de tal forma que el efecto de dicha carga sobre el primer medio sea el mismo que si hubiera un campo de reacción. Para esto uno analiza los distintos medios por separado en vez de como un sistema.\\\\
+Como la interfaz es un límite para el espacio de análisis, es aquí donde se analizan las condiciones de frontera. Para un sistema de coordenadas adecuado al problema, existen condiciones para la componente normal del campo y para su componente tangencial. Matemáticamente esto es
+\begin{gather}
+\epsilon_1\vec{E}_1\cdot\vec{n} = \epsilon_2\vec{E}_2\cdot\vec{n}\\
+\vec{E}_1\cdot\vec{t} = \vec{E}_2\cdot\vec{t}
+\end{gather}
+En este caso, $\vec{n}$ es un vector normal a la superficie interfaz, y $\vec{t}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un salto en la componente normal del campo eléctrico igual a $\epsilon_1/\epsilon_2$, pero hay continuidad en su componente tangencial. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Fig. 3.
+%\begin{figure}
+%\centering
+%\includegraphics[scale=]{•}
+%\caption{}
+%\end{figure}
+La idea es determinar qué valor tiene que tener la o las cargas imagen necesarias, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal, pero los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto en la componente normal del campo eléctrico dado por
+\begin{equation}
+(\vec{E}_2 - \vec{E}_1)\cdot\vec{n} = \frac{\sigma}{\epsilon_m}
+\end{equation}
+con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano.\\\\
+Si quizás se piensa que no hay mucha pronfudidad en este tema, es porque se desarrolla más a fondo en lo sucesivo, ya que forma parte del problema clave que motiva este escrito; esto funciona solo como una introducción para presentar en qué consiste el método de imágenes.
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\section{Introducción}
+%Como se menciona previamente, el enfoque de este informe es la resolución de algunos problemas mediante el esquema de diferencias finitas. 
+%
+%
+%\pagebreak
+%
+%\section{Metodologías de resolución}
+%\subsection{Euler Implícito}
+%El método de Euler Implícito (BE desde ahora) es una aproximación numérica de primer orden que consiste en una truncación en la serie de Taylor para la primera derivada. 
+%\begin{equation}
+%\phi_{(x+\Delta x)} = \phi_{(x)} + \Delta x\frac{\partial\phi_{x}}{\partial x} + ...
+%\end{equation}
+%Luego se despeja la derivada y se remplaza en la expresión a integrar, de la siguiente forma:
+%\begin{equation}
+%\int_x^{x+\Delta x}\frac{d\phi}{dx}dx \approx \frac{\phi_{(x+\Delta x)} - \phi_{(x)}}{\Delta x}
+%\end{equation}
+%Si esto resulta conocido, eso es porque cuando se aplica $\lim_{\Delta x\to 0}$ al lado derecho de la expresión, se recupera la derivada exacta. Esto funciona de igual forma en aproximaciones en el tiempo, aunque en una ecuación diferencial (ED) que involucre tiempo y que se aproxime mediante la truncación de la Ecuación 1, existen dos alternativas: En primer lugar se puede utilizar la información ya conocida, denominada por un superíndice $n$, al tiempo presente. Por otra parte, se puede utilizar el tiempo siguiente $n+1$, que corresponde a información que no tenemos. Es este último el denominado Backward-Euler (BE) que se implementa más adelante; su funcionamiento es el siguiente, para una ED genérica nuevamente:
+%\begin{gather*}
+%\frac{dy_{(t)}}{dt} = ay_{(t)} + b_{(t)} \approx\\
+%\frac{y^{n+1} - y^{n}}{\Delta t} = ay^{n+1} + b_{(t+\Delta t)} \numberthis
+%\end{gather*}
+%La precisión del método es $O(\Delta t)$. Esto quiere decir que el error de truncación disminuye linealmente con el paso $\Delta t$. Además, la estabilidad del método es incondicional, por lo que la solución no explota para pasos grandes de tiempo (y en caso que los haya, pequeños de espacio).\\\\
+%Este apartado tiene por objetivo esbozar rápidamente el funcionamiento de la discretización BE. Para este inocente ejemplo, la solución es dejar a un lado de la igualdad los valores en el tiempo futuro y al otro los del tiempo pasado. Este no es el caso en ecuaciones más complejas, y por eso es de gran importancia familiarizarse con los métodos implícitos, aunque BE sea el más básico de ellos.
+%
+%\subsection{Crank-Nicolson}
+%El método de Crank-Nicolson es una aproximación por diferencias finitas que, para simplificar la explicación, consiste en el promedio entre el tiempo futuro $n+1$ y el tiempo actual $n$. Es un método semi-implícito, condicionalmente estable y de mayor orden que el Euler implícito. El método CN es de segundo orden en espacio y tiempo, y en cuanto a rapidez de cálculo se estima que un computador demora aproximadamente lo mismo en calcular resultados para este método y para Euler; por lo tanto, es recomendable implementar este método cuando sea posible por sobre Euler Implícito. Para el caso unidimensional que se estudia en este trabajo o similares, el método de Crank-Nicolson es de la forma
+%
+%\begin{gather}
+%\frac{dy}{dt} = \frac{1}{2}\left(\frac{dy}{dt} + \frac{dy}{dt}\right) \quad \longrightarrow \quad
+%\frac{dy}{dt} \approx \frac{1}{2}\left(\left.\frac{dy}{dt}\right|^{n+1} + \quad\left.\frac{dy}{dt}\right|^n\right)\\
+%\longrightarrow \quad\frac{dy}{dt} = \frac{z^{n+1} + z^n}{\Delta t} \quad \longrightarrow \quad \frac{y^{n+1} - y^n}{\Delta t} = \frac{z^{n+1} + z^n}{2}
+%\end{gather}
+%De manera general, para un sistema de la forma $dy/dt = f_{(t,y)}$, el método de Crank-Nicolson tiene la forma
+%\begin{equation}
+%\frac{dy}{dt} \approx \frac{f_{(t^{n+1},y_{\left(t^{n+1}\right()})} + f_{(t^n,y_{(t^n)})}}{2}
+%\end{equation}
+%
+%\subsection{Leap-Frog}
+%\subsection{Newmark}
+%\subsection{Runge-Kutta 4}
+%
+%\pagebreak
+%
+%\section{Problema 1}
+%\subsection{Presentación del problema}
+%Se pide realizar tres simulaciones simples para empezar a familiarizarse con el lenguaje y los comandos de la computadora. Estos tres problemas cortos son:
+%\begin{itemize}
+%\item{Escribir un programa que permita calcular la serie armónica hasta el término n, dibujar algunos valores de esa serie con \texttt{Gnuplot} y comparar entre precisión simple y doble.}
+%\item{En el segundo ejercicio se pide reproducir una serie de Fibonacci para un valor $n$ que se le escribe al programa. Además se debe graficar el comportamiento de la serie para ciertos valores de $n$.}
+%\item{En la tercera parte de este ejercicio se pide crear un programa que multiplique matrices entregadas, y luego modificar dicho programa para que lea las dimensiones de las matrices sin tener que entregarlas como input.}
+%\end{itemize}
+%\subsection{Trasfondo teórico y análisis numérico del problema}
+%\subsection{Algoritmos y el programa.}
+%\subsection{Resultados}
+%\subsection{Análisis de resultados y conclusiones}
+%
+%\pagebreak
+%
+%\section{Problema 2.1}
+%\subsection{Presentación del problema}
+%En el problema a resolver se busca modelar el comportamiento de una arteria a través de la suposición de que esta se compone de anillos independientes el uno del otro, despreciando los esfuerzos axiales y asumiendo sólo deformación radial. El radio de la arteria viene dado por $R_{(t)} = R_0 + y_{(t)}$, donde la aplicación de la ley de Newton al sistema genera la siguiente ecuación diferencial ordinaria
+%\begin{equation}
+%\frac{d^2y_{(t)}}{dt^2} + \beta\frac{dy_{(t)}}{dt} + \alpha y_{(t)} = \gamma(p_{(t)} - p_0)
+%\end{equation}
+%En el contexto de este modelo, se pide llevar y resolver esta ecuación en forma matricial, escribir programas que permitan resolver dicha ecuación matricial con los métodos BE y de Crank-Nicolson descritos más arriba para distintos valores del parámetro $\beta$, y evaluar para distintos tiempos y pasos de tiempo. Además se pide graficar y comentar sobre la influencia de algunos parámetros y la estabilidad de los métodos.
+%\subsection{Trasfondo teórico y análisis numérico del problema}
+%La Ecuación (12) permite modelar el problema de una arteria sometida a un diferencial de presión a causa del flujo sanguíneo. Sin embargo, se debe pasar a formato matricial para poder interpretar correctamente el modelo matemático de este problema. El sistema resultante es
+%\begin{equation}
+%\frac{d}{dt} \begin{pmatrix} y\\z \end{pmatrix} = \begin{pmatrix}
+%0 & 1\\
+%-\alpha & -\beta
+%\end{pmatrix}\begin{pmatrix} y\\z \end{pmatrix} + 
+%\begin{pmatrix}
+%0 \\ \gamma (p_{(t)} - p_0)
+%\end{pmatrix}
+%\end{equation}
+%Por simpleza, la matriz que acompaña al vector $\vec{y} = [y, z]^t$ al lado derecho de la igualdad se denomina como $A$, donde $z = y'$. Los valores propios se determinan como
+%\begin{equation}
+%det\left(\begin{pmatrix} 0 & 1 \\ -\alpha & -\beta \end{pmatrix} -
+%\begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix}\right) = 0 \quad \rightarrow \quad \lambda_{\votwo}=\frac{-\beta\varpm\sqrt{\beta²-4\alpha}}{2}
+%\end{equation}
+%Se procede a discretizar esta ecuación por los métodos mencionados previamente, definiendo el vector $\vec{b} = [0,\gamma(p_{(t)}-p_0)]^t$.
+%\subsubsection{Backward-Euler}
+%Discretizando primero con el método de Euler implícito se obtiene
+%\begin{gather*}
+%\frac{\vec{y}^{n+1} - \vec{y}^n}{\Delta t} = \underline{A}\vec{y}^{n+1} + \vec{b}^{n+1} \\
+%(\underline{\mathds{1}} - \Delta t\underline{A})\vec{y}^{n+1} = \vec{y}^n + \Delta t \vec{b}^{n+1}
+%\end{gather*}
+%De aquí se determinan de manera rápida las dos ecuaciones que se utilizan en el algoritmo presentado más adelante.
+%\begin{gather*}
+%y^{n+1} - y^n = z^{n+1}\Delta t \\
+%z^{n+1} - z^n = -\alpha y^{n+1} - 
+%\end{gather*}
+%\subsection{Algoritmos y el programa.}
+%\subsection{Resultados}
+%\subsection{Análisis de resultados y conclusiones}
+%
+%\pagebreak
+%
+%\section{Problema 2.2}
+%\subsection{Presentación del problema}
+%\subsection{Trasfondo teórico y análisis numérico del problema}
+%\subsection{Algoritmos y el programa.}
+%\subsection{Resultados}
+%\subsection{Análisis de resultados y conclusiones}
+%
+%\pagebreak
+%
+%\section{Problema 3}
+%\subsection{Presentación del problema}
+%El problema tres consiste en estudiar la publicación de Edward Lorenz sobre sistemas dinámicos caóticos para modelar fenómenos atmosféricos. Se pide replicar los experimentos numéricos de Lorenz con el método de aproximación Runge-Kutta de orden 4. Se hace un análisis de la dependencia del Número de Rayleigh que tiene el sistema de ecuaciones de Lorenz, además de una explicación sobre qué significa un sistema dinámico caótico y qué es un atractor extraño.
+%\subsection{Trasfondo teórico y análisis numérico del problema}
+%\subsubsection{Un sistema dinámico caótico}
+%Se define un sistema dinámico caótico como aquel que varía en el tiempo de tal forma que, para una ecuación determinada e incluso analítica, cumple con tres puntos.
+%\begin{enumerate}
+%\item{Una pequeña variación en los parámetros de entrada puede generar grandes cambios en los valores de salida del problema.}
+%\item{No se puede separar en dos sets o subsistemas independientes, pues el sistema principal es topológicamente transitivo.}
+%\item{Se encuentra un elemento de regularidad en el hecho de que hay puntos periódicos.}
+%\end{enumerate}
+%El primer punto quiere decir que el sistema es impredecible, pues hay una alta dependencia de la precisión de los parámetros de entrada. Esto puede significar problemas en los cálculos computacionales, pues siempre hay un error de máquina asociado a los cálculos.\\
+%El segundo punto se puede interpretar como que los puntos en un instante no respetan sus vecindades $\delta$ al tiempo siguiente, y eventualmente se pueden disparar a valores remotos; esto está asociado a lo impredecible del sistema.\\
+%Por último, a pesar de todo lo anterior existe un patrón en el hecho de que hay puntos periódicos, denominados densos, que se repiten de manera frecuente. Es aquí donde entra la noción de atractor; si se le da un tiempo suficientemente largo al proceso bajo estudio, se puede distinguir un patrón o una ruta, si se quiere, y es la que define a un atractor.
+%\subsubsection{Un atractor extraño}
+%Un atractor extraño es el estado de un sistema que, modelado por ecuaciones, tiende a atraer a los otros estados; el elemento extraño lo entregan las discontinuidades en el modelo matemático, que hacen que el problema tenga irregularidades y se torne en un problema de dimensiones fraccionadas: el sistema físico es de dos o tres dimensiones, pero el modelo matemático se torna de una dimensión intermedia (como 2,58, por inventar un número), haciendo que la física del problema se "fracture". Esta es la base que permite explicar el concepto de fractales, pues estos son los estados, rutas, u otros atractores, que tienen rupturas en ciertos puntos debido a discontinuidades matemáticas, incluso a pesar de estar modelándose un problema continuo.
+%
+%\subsection{Algoritmos y el programa.}
+%\subsection{Resultados}
+%\subsection{Análisis de resultados y conclusiones}
+%
+%\pagebreak
+%%\section{}
+%
+%\section{Conclusiones generales}
+
+\pagebreak
+
+\begin{thebibliography}{20}
+\bibitem{Jackson}
+Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
+\bibitem{Griffiths}
+Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prentice Hall, 1999
+\bibitem{Kantorovich}
+Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition, Ch. 8; Springer, 2004
+\bibitem{Cai}
+Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
+\end{thebibliography}
+
+%\pagebreak
+
+%\section*{Anexos}
+
+\end{document}
