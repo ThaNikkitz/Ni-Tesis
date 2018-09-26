@@ -61,8 +61,16 @@
 \tableofcontents
 \newpage
 
-\section{Resumen}
-En las últimas décadas ha crecido el interés por modelar de forma 
+\section{Introducción}
+En las últimas décadas ha crecido el interés por modelar de forma más precisa el comportamiento de sistemas biológicos, destacando las células y sus componentes y procesos. Es en esta línea de investigación que surgen y se desarrollan métodos para representar las interacciones que ocurren tanto dentro de la célula como a nivel extracelular.\\\\
+Sin embargo, la complejidad de estos fenómenos hace que sea imposible hasta el momento abarcar de manera completa la naturaleza del proceso biológico correspondiente. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes tenemos la electrodinámica, la termodinámica, la mecánica de sólidos, mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
+Para modelar la fenomenología de los sistemas biológicos según las diferentes disciplinas científicas mencionadas se utiliza una cantidad de métodos computacionales, de los cuales quizás los más conocidos son la dinámica molecular (MD) en casos explícitos y el método de elementos finitos (FEM) en casos implícitos. Por supuesto y como todo en la vida, ambos tienen sus ventajas y desventajas; un punto en contra que tienen en común ambos tipos de modelación es que en general son lentos. Por esto es que ha empezado a tomar cada vez más fuerza el método de elementos de borde/frontera (BEM), que permite resolver problemas físicos comparativamente rápido a expensas de una formulación más compleja.\\\\
+Es con miras a definir dicha formulación que se presenta este informe. El objetivo global corresponde a \textit{definir un modelo que permita representar el comportamiento electrostático de una membrana celular, y la importancia de incluirla en modelaciones de interacciones celulares}. A través de esto se puede determinar si vale la pena considerar el aporte \textbf{electrostático} de una bicapa fosfolipídica en la energía de enlace de las proteínas de membrana celulares. Hay que tener presente que además existen otros fenómenos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza.\\\\
+El presente texto busca entonces \textit{presentar la física que ocurre tras una interacción electrostática en medios dieléctricos, trabajando un método que permita modelar una membrana celular a partir de un sistema de tres medios separados por dos interfaces, con cargas distribuidas en el medio encerrado}. Sumado a esto se presentan resúmenes de publicaciones relevantes para la línea de estudio pertinente a este escrito, y que incluso podrían servir para mejorar la precisión del modelo al representar de manera más fiel la física de las interacciones de interés, al sumar otro tipo de interacciones o fenómenos, o al plantear respuestas a interrogantes que pudieran surgir en un futuro.\\\\
+En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. Luego se procede a introducir y replicar un método que resulta muy atractivo de modelar con BEM, pero en este caso se trabaja con diferencias finitas de primer orden; el objetivo es determinar un punto en que el error numérico sea suficientemente bajo como para considerarlo despreciable. Luego se presentan los resúmenes de publicaciones antes mencionados, para terminar con una serie de conclusiones y el trabajo que se busca desarrollar a partir de todo lo visto en este informe.\\\\
+
+
+
 \pagebreak
 \section{Marco Teórico}
 \subsection{El campo eléctrico y el potencial eléctrico}
@@ -192,15 +200,16 @@ En este caso, $\vec{n}$ es un vector normal a la superficie interfaz, y $\vec{t}
 %\includegraphics[scale=]{•}
 %\caption{}
 %\end{figure}
-La idea es determinar qué valor tiene que tener la o las cargas imagen necesarias, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal, pero los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto en la componente normal del campo eléctrico dado por
+La idea es determinar qué valor tiene que tener la o las cargas imagen necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto en la componente normal del campo eléctrico dado por
 \begin{equation}
 (\vec{E}_2 - \vec{E}_1)\cdot\vec{n} = \frac{\sigma}{\epsilon_m}
 \end{equation}
 con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano.\\\\
 Se desarrolla más a cavalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
 
-\section{Modelo de un sistema de tres dos interfaces}
-La presente sección se basa fundamentalmente en el desarrollo realizado en la publicación de Yang et al.\cite{Pei-kun}
+\section{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
+La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim\cite{Pei-kun} y en reproducir sus resultados para determinar un par de parámetros y si efectivamente resulta viable, con miras a trabajos futuros.\\\\
+En este paper se presenta un método basado en el método de cargas imagen, pero aplicado a sistemas rectangulares.
 
 
 
@@ -215,7 +224,13 @@ La presente sección se basa fundamentalmente en el desarrollo realizado en la p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %
+%\section{Lecturas relevantes al respecto}
+
+%
 %\section{Conclusiones generales}
+
+%
+%\section{Continuación de trabajo}
 
 \pagebreak
 
@@ -229,8 +244,9 @@ Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, Fir
 \bibitem{Cai}
 Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
 \bibitem{Pei-kun}
-Yang, P. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image
-Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
+Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
+
+
 \end{thebibliography}
 
 %\pagebreak

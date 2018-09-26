@@ -1,9 +1,9 @@
-\contentsline {section}{\numberline {1}Resumen}{3}
-\contentsline {section}{\numberline {2}Marco Te\IeC {\'o}rico}{4}
-\contentsline {subsection}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{4}
-\contentsline {subsection}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{5}
-\contentsline {subsubsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{5}
-\contentsline {subsubsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{7}
-\contentsline {subsection}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{8}
-\contentsline {subsection}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{9}
-\contentsline {section}{\numberline {3}Modelo de un sistema de tres dos interfaces}{10}
+\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{3}
+\contentsline {section}{\numberline {2}Marco Te\IeC {\'o}rico}{5}
+\contentsline {subsection}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{5}
+\contentsline {subsection}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{6}
+\contentsline {subsubsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{6}
+\contentsline {subsubsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{8}
+\contentsline {subsection}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{9}
+\contentsline {subsection}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{10}
+\contentsline {section}{\numberline {3}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{11}
