@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.3)  21 SEP 2018 18:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.3)  26 SEP 2018 15:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -485,17 +485,12 @@ Package epstopdf Info: Source file: <Fig_1.eps>
 (epstopdf)                    date: 2018-09-21 18:20:39
 (epstopdf)                    size: 5663 bytes
 (epstopdf)             Output file: <Fig_1-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-09-21 18:20:24
+(epstopdf)                    date: 2018-09-21 18:20:42
 (epstopdf)                    size: 3163 bytes
 (epstopdf)             Command: <repstopdf --outfile=Fig_1-eps-converted-to.pdf
  Fig_1.eps>
 (epstopdf)             \includegraphics on input line 52.
-runsystem(repstopdf --outfile=Fig_1-eps-converted-to.pdf Fig_1.eps)...executed 
-safely (allowed).
-
-Package epstopdf Info: Result file: <Fig_1-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-09-21 18:20:42
-(epstopdf)                    size: 3163 bytes.
+Package epstopdf Info: Output file is already uptodate.
 
 <Fig_1-eps-converted-to.pdf, id=29, 249.93375pt x 107.40125pt>
 File: Fig_1-eps-converted-to.pdf Graphic file (type pdf)
@@ -544,49 +539,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 173--176
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 182--185
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 182--185
-
- []
-
 [8]
+Underfull \hbox (badness 10000) in paragraph at lines 182--185
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 182--185
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 198--201
 
  []
 
-[9] [10] (./Informe_Aplicada.aux) ) 
+[9] [10] [11] (./Informe_Aplicada.aux) ) 
 Here is how much of TeX's memory you used:
- 5924 strings out of 494910
- 83792 string characters out of 6179837
- 164643 words of memory out of 5000000
- 9093 multiletter control sequences out of 15000+600000
+ 5925 strings out of 494910
+ 83801 string characters out of 6179837
+ 164646 words of memory out of 5000000
+ 9094 multiletter control sequences out of 15000+600000
  12754 words of font info for 49 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  38i,12n,43p,1288b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmti12.pfb>
-Output written on Informe_Aplicada.pdf (10 pages, 285436 bytes).
+</usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmti12.pfb>
+Output written on Informe_Aplicada.pdf (11 pages, 287872 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 107 PDF objects out of 1000 (max. 8388607)
+ 74 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

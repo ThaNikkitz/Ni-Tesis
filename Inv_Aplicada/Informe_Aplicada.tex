@@ -104,9 +104,9 @@ La permitividad que se utiliza en las Ecs. de la sección anterior es llamada ta
 \begin{figure}[H]
 \centering
 \input{Fig_1.eps_tex}
-\caption{Efecto de un campo sobre la forma de un átomo. El electrón es "jalado" por el campo, mientras que el protón es "empujado", induciendo así un dipolo.}
+\caption{Efecto de un campo sobre la forma de un átomo. El electrón (en realidad la nube electrónica) es "jalado" por el campo, mientras que el protón es "empujado", induciendo así un dipolo.}
 \end{figure}
-Cuando se aplica un campo eléctrico externo a un cuerpo (macroscópico) dieléctrico, las partículas constituyentes de los átomos se comportan de forma especial. Por ejemplo, en la Figura 1 se muestra un átomo simple de hidrógeno que se reordena bajo la acción de un campo externo, generando así un campo eléctrico opuesto. Este efecto es la polarización, e induce un momento dipolar $\vec{p}$ en los átomos afectados por el campo eléctrico local.
+Cuando se aplica un campo eléctrico externo a un cuerpo o medio (macroscópico) dieléctrico, las partículas constituyentes de los átomos se comportan de forma especial. Por ejemplo, en la Figura 1 se muestra un átomo simple de hidrógeno que se reordena bajo la acción de un campo externo que rompe el equilibrio eléctrico del átomo, generando así un campo eléctrico opuesto cuyas líneas de campo (inducido) van del protón hacia el electrón (se representa la nube electrónica con un solo electrón por simplicidad). Este efecto es la polarización, e induce un momento dipolar $\vec{p}$ en los átomos afectados por el campo eléctrico a nivel local.
 \begin{equation}
 \vec{p} = \alpha\vec{E}^{loc}
 \end{equation}
@@ -197,7 +197,11 @@ La idea es determinar qué valor tiene que tener la o las cargas imagen necesari
 (\vec{E}_2 - \vec{E}_1)\cdot\vec{n} = \frac{\sigma}{\epsilon_m}
 \end{equation}
 con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano.\\\\
-Si quizás se piensa que no hay mucha pronfudidad en este tema, es porque se desarrolla más a fondo en lo sucesivo, ya que forma parte del problema clave que motiva este escrito; esto funciona solo como una introducción para presentar en qué consiste el método de imágenes.
+Se desarrolla más a cavalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
+
+\section{Modelo de un sistema de tres dos interfaces}
+La presente sección se basa fundamentalmente en el desarrollo realizado en la publicación de Yang et al.\cite{Pei-kun}
+
 
 
 
@@ -210,138 +214,6 @@ Si quizás se piensa que no hay mucha pronfudidad en este tema, es porque se des
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%\section{Introducción}
-%Como se menciona previamente, el enfoque de este informe es la resolución de algunos problemas mediante el esquema de diferencias finitas. 
-%
-%
-%\pagebreak
-%
-%\section{Metodologías de resolución}
-%\subsection{Euler Implícito}
-%El método de Euler Implícito (BE desde ahora) es una aproximación numérica de primer orden que consiste en una truncación en la serie de Taylor para la primera derivada. 
-%\begin{equation}
-%\phi_{(x+\Delta x)} = \phi_{(x)} + \Delta x\frac{\partial\phi_{x}}{\partial x} + ...
-%\end{equation}
-%Luego se despeja la derivada y se remplaza en la expresión a integrar, de la siguiente forma:
-%\begin{equation}
-%\int_x^{x+\Delta x}\frac{d\phi}{dx}dx \approx \frac{\phi_{(x+\Delta x)} - \phi_{(x)}}{\Delta x}
-%\end{equation}
-%Si esto resulta conocido, eso es porque cuando se aplica $\lim_{\Delta x\to 0}$ al lado derecho de la expresión, se recupera la derivada exacta. Esto funciona de igual forma en aproximaciones en el tiempo, aunque en una ecuación diferencial (ED) que involucre tiempo y que se aproxime mediante la truncación de la Ecuación 1, existen dos alternativas: En primer lugar se puede utilizar la información ya conocida, denominada por un superíndice $n$, al tiempo presente. Por otra parte, se puede utilizar el tiempo siguiente $n+1$, que corresponde a información que no tenemos. Es este último el denominado Backward-Euler (BE) que se implementa más adelante; su funcionamiento es el siguiente, para una ED genérica nuevamente:
-%\begin{gather*}
-%\frac{dy_{(t)}}{dt} = ay_{(t)} + b_{(t)} \approx\\
-%\frac{y^{n+1} - y^{n}}{\Delta t} = ay^{n+1} + b_{(t+\Delta t)} \numberthis
-%\end{gather*}
-%La precisión del método es $O(\Delta t)$. Esto quiere decir que el error de truncación disminuye linealmente con el paso $\Delta t$. Además, la estabilidad del método es incondicional, por lo que la solución no explota para pasos grandes de tiempo (y en caso que los haya, pequeños de espacio).\\\\
-%Este apartado tiene por objetivo esbozar rápidamente el funcionamiento de la discretización BE. Para este inocente ejemplo, la solución es dejar a un lado de la igualdad los valores en el tiempo futuro y al otro los del tiempo pasado. Este no es el caso en ecuaciones más complejas, y por eso es de gran importancia familiarizarse con los métodos implícitos, aunque BE sea el más básico de ellos.
-%
-%\subsection{Crank-Nicolson}
-%El método de Crank-Nicolson es una aproximación por diferencias finitas que, para simplificar la explicación, consiste en el promedio entre el tiempo futuro $n+1$ y el tiempo actual $n$. Es un método semi-implícito, condicionalmente estable y de mayor orden que el Euler implícito. El método CN es de segundo orden en espacio y tiempo, y en cuanto a rapidez de cálculo se estima que un computador demora aproximadamente lo mismo en calcular resultados para este método y para Euler; por lo tanto, es recomendable implementar este método cuando sea posible por sobre Euler Implícito. Para el caso unidimensional que se estudia en este trabajo o similares, el método de Crank-Nicolson es de la forma
-%
-%\begin{gather}
-%\frac{dy}{dt} = \frac{1}{2}\left(\frac{dy}{dt} + \frac{dy}{dt}\right) \quad \longrightarrow \quad
-%\frac{dy}{dt} \approx \frac{1}{2}\left(\left.\frac{dy}{dt}\right|^{n+1} + \quad\left.\frac{dy}{dt}\right|^n\right)\\
-%\longrightarrow \quad\frac{dy}{dt} = \frac{z^{n+1} + z^n}{\Delta t} \quad \longrightarrow \quad \frac{y^{n+1} - y^n}{\Delta t} = \frac{z^{n+1} + z^n}{2}
-%\end{gather}
-%De manera general, para un sistema de la forma $dy/dt = f_{(t,y)}$, el método de Crank-Nicolson tiene la forma
-%\begin{equation}
-%\frac{dy}{dt} \approx \frac{f_{(t^{n+1},y_{\left(t^{n+1}\right()})} + f_{(t^n,y_{(t^n)})}}{2}
-%\end{equation}
-%
-%\subsection{Leap-Frog}
-%\subsection{Newmark}
-%\subsection{Runge-Kutta 4}
-%
-%\pagebreak
-%
-%\section{Problema 1}
-%\subsection{Presentación del problema}
-%Se pide realizar tres simulaciones simples para empezar a familiarizarse con el lenguaje y los comandos de la computadora. Estos tres problemas cortos son:
-%\begin{itemize}
-%\item{Escribir un programa que permita calcular la serie armónica hasta el término n, dibujar algunos valores de esa serie con \texttt{Gnuplot} y comparar entre precisión simple y doble.}
-%\item{En el segundo ejercicio se pide reproducir una serie de Fibonacci para un valor $n$ que se le escribe al programa. Además se debe graficar el comportamiento de la serie para ciertos valores de $n$.}
-%\item{En la tercera parte de este ejercicio se pide crear un programa que multiplique matrices entregadas, y luego modificar dicho programa para que lea las dimensiones de las matrices sin tener que entregarlas como input.}
-%\end{itemize}
-%\subsection{Trasfondo teórico y análisis numérico del problema}
-%\subsection{Algoritmos y el programa.}
-%\subsection{Resultados}
-%\subsection{Análisis de resultados y conclusiones}
-%
-%\pagebreak
-%
-%\section{Problema 2.1}
-%\subsection{Presentación del problema}
-%En el problema a resolver se busca modelar el comportamiento de una arteria a través de la suposición de que esta se compone de anillos independientes el uno del otro, despreciando los esfuerzos axiales y asumiendo sólo deformación radial. El radio de la arteria viene dado por $R_{(t)} = R_0 + y_{(t)}$, donde la aplicación de la ley de Newton al sistema genera la siguiente ecuación diferencial ordinaria
-%\begin{equation}
-%\frac{d^2y_{(t)}}{dt^2} + \beta\frac{dy_{(t)}}{dt} + \alpha y_{(t)} = \gamma(p_{(t)} - p_0)
-%\end{equation}
-%En el contexto de este modelo, se pide llevar y resolver esta ecuación en forma matricial, escribir programas que permitan resolver dicha ecuación matricial con los métodos BE y de Crank-Nicolson descritos más arriba para distintos valores del parámetro $\beta$, y evaluar para distintos tiempos y pasos de tiempo. Además se pide graficar y comentar sobre la influencia de algunos parámetros y la estabilidad de los métodos.
-%\subsection{Trasfondo teórico y análisis numérico del problema}
-%La Ecuación (12) permite modelar el problema de una arteria sometida a un diferencial de presión a causa del flujo sanguíneo. Sin embargo, se debe pasar a formato matricial para poder interpretar correctamente el modelo matemático de este problema. El sistema resultante es
-%\begin{equation}
-%\frac{d}{dt} \begin{pmatrix} y\\z \end{pmatrix} = \begin{pmatrix}
-%0 & 1\\
-%-\alpha & -\beta
-%\end{pmatrix}\begin{pmatrix} y\\z \end{pmatrix} + 
-%\begin{pmatrix}
-%0 \\ \gamma (p_{(t)} - p_0)
-%\end{pmatrix}
-%\end{equation}
-%Por simpleza, la matriz que acompaña al vector $\vec{y} = [y, z]^t$ al lado derecho de la igualdad se denomina como $A$, donde $z = y'$. Los valores propios se determinan como
-%\begin{equation}
-%det\left(\begin{pmatrix} 0 & 1 \\ -\alpha & -\beta \end{pmatrix} -
-%\begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix}\right) = 0 \quad \rightarrow \quad \lambda_{\votwo}=\frac{-\beta\varpm\sqrt{\beta²-4\alpha}}{2}
-%\end{equation}
-%Se procede a discretizar esta ecuación por los métodos mencionados previamente, definiendo el vector $\vec{b} = [0,\gamma(p_{(t)}-p_0)]^t$.
-%\subsubsection{Backward-Euler}
-%Discretizando primero con el método de Euler implícito se obtiene
-%\begin{gather*}
-%\frac{\vec{y}^{n+1} - \vec{y}^n}{\Delta t} = \underline{A}\vec{y}^{n+1} + \vec{b}^{n+1} \\
-%(\underline{\mathds{1}} - \Delta t\underline{A})\vec{y}^{n+1} = \vec{y}^n + \Delta t \vec{b}^{n+1}
-%\end{gather*}
-%De aquí se determinan de manera rápida las dos ecuaciones que se utilizan en el algoritmo presentado más adelante.
-%\begin{gather*}
-%y^{n+1} - y^n = z^{n+1}\Delta t \\
-%z^{n+1} - z^n = -\alpha y^{n+1} - 
-%\end{gather*}
-%\subsection{Algoritmos y el programa.}
-%\subsection{Resultados}
-%\subsection{Análisis de resultados y conclusiones}
-%
-%\pagebreak
-%
-%\section{Problema 2.2}
-%\subsection{Presentación del problema}
-%\subsection{Trasfondo teórico y análisis numérico del problema}
-%\subsection{Algoritmos y el programa.}
-%\subsection{Resultados}
-%\subsection{Análisis de resultados y conclusiones}
-%
-%\pagebreak
-%
-%\section{Problema 3}
-%\subsection{Presentación del problema}
-%El problema tres consiste en estudiar la publicación de Edward Lorenz sobre sistemas dinámicos caóticos para modelar fenómenos atmosféricos. Se pide replicar los experimentos numéricos de Lorenz con el método de aproximación Runge-Kutta de orden 4. Se hace un análisis de la dependencia del Número de Rayleigh que tiene el sistema de ecuaciones de Lorenz, además de una explicación sobre qué significa un sistema dinámico caótico y qué es un atractor extraño.
-%\subsection{Trasfondo teórico y análisis numérico del problema}
-%\subsubsection{Un sistema dinámico caótico}
-%Se define un sistema dinámico caótico como aquel que varía en el tiempo de tal forma que, para una ecuación determinada e incluso analítica, cumple con tres puntos.
-%\begin{enumerate}
-%\item{Una pequeña variación en los parámetros de entrada puede generar grandes cambios en los valores de salida del problema.}
-%\item{No se puede separar en dos sets o subsistemas independientes, pues el sistema principal es topológicamente transitivo.}
-%\item{Se encuentra un elemento de regularidad en el hecho de que hay puntos periódicos.}
-%\end{enumerate}
-%El primer punto quiere decir que el sistema es impredecible, pues hay una alta dependencia de la precisión de los parámetros de entrada. Esto puede significar problemas en los cálculos computacionales, pues siempre hay un error de máquina asociado a los cálculos.\\
-%El segundo punto se puede interpretar como que los puntos en un instante no respetan sus vecindades $\delta$ al tiempo siguiente, y eventualmente se pueden disparar a valores remotos; esto está asociado a lo impredecible del sistema.\\
-%Por último, a pesar de todo lo anterior existe un patrón en el hecho de que hay puntos periódicos, denominados densos, que se repiten de manera frecuente. Es aquí donde entra la noción de atractor; si se le da un tiempo suficientemente largo al proceso bajo estudio, se puede distinguir un patrón o una ruta, si se quiere, y es la que define a un atractor.
-%\subsubsection{Un atractor extraño}
-%Un atractor extraño es el estado de un sistema que, modelado por ecuaciones, tiende a atraer a los otros estados; el elemento extraño lo entregan las discontinuidades en el modelo matemático, que hacen que el problema tenga irregularidades y se torne en un problema de dimensiones fraccionadas: el sistema físico es de dos o tres dimensiones, pero el modelo matemático se torna de una dimensión intermedia (como 2,58, por inventar un número), haciendo que la física del problema se "fracture". Esta es la base que permite explicar el concepto de fractales, pues estos son los estados, rutas, u otros atractores, que tienen rupturas en ciertos puntos debido a discontinuidades matemáticas, incluso a pesar de estar modelándose un problema continuo.
-%
-%\subsection{Algoritmos y el programa.}
-%\subsection{Resultados}
-%\subsection{Análisis de resultados y conclusiones}
-%
-%\pagebreak
-%%\section{}
 %
 %\section{Conclusiones generales}
 
@@ -356,6 +228,9 @@ Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prenti
 Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition, Ch. 8; Springer, 2004
 \bibitem{Cai}
 Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
+\bibitem{Pei-kun}
+Yang, P. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image
+Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
 \end{thebibliography}
 
 %\pagebreak

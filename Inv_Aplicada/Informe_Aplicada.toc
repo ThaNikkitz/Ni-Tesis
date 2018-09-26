@@ -6,3 +6,4 @@
 \contentsline {subsubsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{7}
 \contentsline {subsection}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{8}
 \contentsline {subsection}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{9}
+\contentsline {section}{\numberline {3}Modelo de un sistema de tres dos interfaces}{10}
