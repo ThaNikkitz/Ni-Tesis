@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.3)  26 SEP 2018 18:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.3)  22 OCT 2018 13:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -594,15 +594,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 211--213
 
  []
 
-[11] [12] (./Informe_Aplicada.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 214--222
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 225--231
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 280--283
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 280--283
+
+ []
+
+[13] [14] (./Informe_Aplicada.aux) ) 
 Here is how much of TeX's memory you used:
  5925 strings out of 494910
  83801 string characters out of 6179837
- 165646 words of memory out of 5000000
+ 169646 words of memory out of 5000000
  9094 multiletter control sequences out of 15000+600000
  12754 words of font info for 49 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,12n,43p,1288b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,21n,43p,1288b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
@@ -617,11 +642,12 @@ fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmti12.pfb>
-Output written on Informe_Aplicada.pdf (12 pages, 292801 bytes).
+m/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/latxfon
+t/line10.pfb>
+Output written on Informe_Aplicada.pdf (14 pages, 307618 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
- 76 compressed objects within 1 object stream
+ 121 PDF objects out of 1000 (max. 8388607)
+ 84 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
