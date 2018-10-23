@@ -267,6 +267,29 @@ Considerar un número mayor de cargas ($N$) simplemente implica sumar sobre ella
 \end{equation}
 En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.
 
+\subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
+Las Ecs. (29) y (30) contemplan sumatorias que van desde $-\infty$ a $\infty$, cosa que a nivel computacional no es posible lograr. Para eso y sabiendo que la sumatoria converge al tener un denominador que va aumentando, se puede buscar un número $n < \infty$ que resulte representativo. Para esto se trabaja con un código simple hecho en \texttt{Python 3}, a través de la interfaz \texttt{Jupyter}. Se buscan dos valores de $n$ consecutivos tales que la diferencia porcentual entre los potenciales para cada n sea baja. Aquí $n$ corresponde a $+\infty$ y $-n$ a $-\infty$. Se evalúa la Ec. (29) con $n = 48$ y luego con $n=50$, siendo la diferencia relativa entre estos dos valores igual a $0.00936287...\%$. Además se evalúa para valores $n = 68$ y $n=70$, lo que da un $\Delta$ porcentual de $0.00225061...\%$. Esto se calcula mediante
+\begin{equation*}
+\frac{\phi_{(n)} - \phi_{(n-1)}}{\phi_{(n-1)}}\cdot 100\%
+\end{equation*}
+Se tiene entonces un claro indicio de que aumentar el valor de $n$ más allá de $50$ no es realmente útil e implica dedicar más recursos computacionales. Se presenta a continuación una gráfica para un valor de $q=1$, $\epsilon_1 = 80$ y $\epsilon_2 = 2$. La primera constante dieléctrica corresponde a la del medio externo, y la segunda a la del medio encerrado. En esta gráfica se puede apreciar cómo la Ec. (29) converge a un valor del potencial $\phi$ a medida que aumenta $n$, hasta un punto en que prácticamente ya no hay diferencia.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{./Imagenes/phi_n.png}
+\caption{Convergencia del valor del potencial en función de $n$.}
+\end{figure}
+\noindent
+Ahora se presenta la diferencia porcentual, con escala logarítmica en el eje de la variación para poder distinguir de mejor forma los cambios en el valor. Como ya se dijo y también como se puede ver tanto en la gráfica anterior como en la siguiente, no merece la pena calcular para $n$ mucho mayores a 50, pues es poca la precisión que se gana, y para conjuntos de múltiples cargas se genera una carga computacional innecesaria.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{./Imagenes/delta_n.png}
+\caption{Variación porcentual del valor de $\phi$ en función de $n$.}
+\end{figure}
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %
@@ -276,10 +299,10 @@ En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen
 %\section{Conclusiones generales}
 
 %
-\section{Continuación de trabajo}
-Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
-El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en caso de ser posible \\\\
-Además, hay otros puntos de investigación, como simular una o un sistema de cargas fuera de la membrana, lo que permitiría expandir 
+%\section{Continuación de trabajo}
+%Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
+%El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en caso de ser posible \\\\
+%Además, hay otros puntos de investigación, como simular una o un sistema de cargas fuera de la membrana, lo que permitiría expandir 
 
 
 \pagebreak
