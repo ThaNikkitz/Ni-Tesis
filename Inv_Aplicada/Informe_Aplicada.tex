@@ -70,6 +70,8 @@ El presente texto busca entonces \textit{presentar la física que ocurre tras un
 En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. Luego se procede a introducir y replicar un método que resulta muy atractivo de modelar con BEM, pero en este caso se trabaja con diferencias finitas de primer orden; el objetivo es determinar un punto en que el error numérico sea suficientemente bajo como para considerarlo despreciable. Luego se presentan los resúmenes de publicaciones antes mencionados, para terminar con una serie de conclusiones y el trabajo que se busca desarrollar a partir de todo lo visto en este informe.\\\\
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \pagebreak
 \section{Marco Teórico}
@@ -153,7 +155,7 @@ Ya se explicó qué son la susceptibilidad y densidad de polarización, por lo q
 %\includegraphics[scale=]{•}
 %\caption{}
 %\end{figure}
-Primero corresponde aclarar que la permitividad es netamente una propiedad macroscópica del medio, pero se prefiere caer en la redundancia un par de veces, como en el caso del título de esta sección, de manera de reafirmar este punto. Cuando un campo eléctrico afecta un medio dieléctrico, los dipolos no solo se intentan alinear con las líneas de campo, sino que además hay un movimiento de cargas libres dentro del cuerpo. Sumado a esto está el hecho de que los átomos conformantes del medio rompen el estado de equilibrio, pues los protones son repelidos por el campo, mientras que los electrones son atraidos por este (Fig. 2). Este efecto genera que se formen dipolos, y en consecuencia que haya un momento dipolar en el medio; es por esta razón que la susceptibilidad se relaciona con la permitividad. Teniendo presentes los fenómenos recién nombrados, se reitera la definición de permitividad o constante dieléctrica como una cuantificación macroscópica promedio de la tendencia de un medio (en este caso un dieléctrico) a oponerse al flujo de campo eléctrico por alguno de los mecanismos nombrados anteriormente.\\\\
+Primero corresponde aclarar que la permitividad es netamente una propiedad macroscópica del medio, pero se prefiere caer en la redundancia un par de veces, como en el caso del título de esta sección, de manera de reafirmar este punto. Cuando un campo eléctrico afecta un medio dieléctrico, los dipolos no solo se intentan alinear con las líneas de campo, sino que además hay un \textit{movimiento de cargas libres} dentro del cuerpo. Sumado a esto está el hecho de que los átomos conformantes del medio rompen el estado de equilibrio, pues los protones son repelidos por el campo, mientras que los electrones son atraidos por este (Fig. 1). Este efecto genera que se formen nuevos dipolos, y en consecuencia que haya un momento dipolar distinto al original en el medio; es por esta razón que la susceptibilidad se relaciona con la permitividad. Teniendo presentes los fenómenos recién nombrados, se reitera la definición de permitividad o constante dieléctrica como una cuantificación macroscópica promedio de la tendencia de un medio (en este caso un dieléctrico) a oponerse al flujo de campo eléctrico por alguno de los mecanismos nombrados anteriormente.\\\\
 Existen tres \textit{permitividades} de interés para este desarrollo: la permitividad del vacío $\epsilon_0$, la permitividad propia de un material $\epsilon$, y la permitividad relativa o constante dieléctrica, a la que en este caso se da más importancia
 \begin{equation}
 \epsilon_r = \frac{\epsilon}{\epsilon_0}=\epsilon_0(1+\chi)
@@ -174,7 +176,7 @@ lo que nos permite escribir la Ec. (15) como
 \begin{equation}
 \nabla\cdot\vec{D} = \rho
 \end{equation}
-Esto corresponde al efecto completo del flujo de campo eléctrico sobre el medio. En general se asocia el campo eléctrico $\vec{E}$ a las cargas libres (free charges) y la densidad de polarización $\vec{P}$ a las cargas fijas (bound charges), pero para el objetivo de este texto eso no es relevante.\\\\
+Esto corresponde al efecto completo del flujo de campo eléctrico sobre el medio. En general, en la Ec.(16) se asocia el campo eléctrico $\vec{E}$ a las cargas libres (free charges) y la densidad de polarización $\vec{P}$ a las cargas fijas (bound charges), pero para el objetivo de este texto eso no es relevante.\\\\
 Siguiendo con la idea, recordando que ahora $\epsilon_r = \epsilon$, suponiendo que la permitividad es una propiedad isotrópica y usando la Ec. (14) en la (16), podemos obtener
 \begin{equation}
 \vec{D} = \epsilon\vec{E}\quad\biggm/\nabla\cdot\qquad\rightarrow\qquad\nabla\cdot\vec{D}=\nabla\cdot(\epsilon\vec{E}) = \nabla(\epsilon)\cdot\vec{E} + \epsilon\nabla\cdot\vec{E} = \rho
@@ -194,30 +196,37 @@ Como la interfaz es un límite para el espacio de análisis, es aquí donde se a
 \epsilon_1\vec{E}_1\cdot\vec{n} = \epsilon_2\vec{E}_2\cdot\vec{n}\\
 \vec{E}_1\cdot\vec{t} = \vec{E}_2\cdot\vec{t}
 \end{gather}
-En este caso, $\vec{n}$ es un vector normal a la superficie interfaz, y $\vec{t}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un salto en la componente normal del campo eléctrico igual a $\epsilon_1/\epsilon_2$, pero hay continuidad en su componente tangencial. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Fig. 3.
-%\begin{figure}
-%\centering
-%\includegraphics[scale=]{•}
-%\caption{}
-%\end{figure}
-La idea es determinar qué valor tiene que tener la o las cargas imagen necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto en la componente normal del campo eléctrico dado por
+En este caso, $\vec{n}$ es un vector normal a la superficie interfaz, y $\vec{t}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\epsilon_1/\epsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción sólo en el medio 1.
+\begin{figure}[H]
+\vspace{2cm}
+\centering
+\input{Fig_2.eps_tex}
+\caption{Se observan las líneas de desplazamiento eléctrico, que dan cuenta del efecto de la polarización.}
+\end{figure}
+\noindent
+La idea es determinar qué valor tiene que tener la carga o conjunto de cargas necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto (discontinuidad) en la componente normal del campo eléctrico dado por
 \begin{equation}
 (\vec{E}_2 - \vec{E}_1)\cdot\vec{n} = \frac{\sigma}{\epsilon_m}
 \end{equation}
-con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano.\\\\
-Se desarrolla más a cavalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
+con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
+Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
 La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Limn \cite{Pei-kun} y en reproducir sus resultados para determinar un par de parámetros y si efectivamente resulta viable, con miras a trabajos futuros.\\\\
 En este paper se presenta un método basado en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica. La solución de hecho se convierte en una sumatoria infinita porque el campo causado por la polarización de un medio polariza en cierto grado a los otros, y a su vez dicha polarización induce una reacción en el primer medio. Esta cadena de inducciones de campo eléctrico es infinita, similar al efecto que se produce cuando se miran dos espejos opuestos. Pasando al lado más matemático, se presenta en primera instancia el caso con una interfaz y luego con dos interfaces paralelas.
 \subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
-En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la Figura 4. El campo eléctrico viene dado por la Ec. (2), y tiene como condiciones de contorno las presentadas en las Ecs. (20) y (21).
-%\begin{figure}
-%\centering
-%\input{}
-%\caption{}
-%\end{figure}
-El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$.\\\\
+En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la Figura 3. El campo eléctrico viene dado por la Ec. (2), y tiene como condiciones de contorno las presentadas en las Ecs. (20) y (21).
+\begin{figure}[H]
+\centering
+\input{Fig_3.eps_tex}
+\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}
+\end{figure}
+\noindent
+El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\2}} = \sqrt{r^2 + (z\pm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
 No es complejo realizar el desarrollo, remplazando la expresión para el campo en las condiciones de contorno. Con un poco de álgebra se puede llegar a una forma de escribir las cargas $q_1$ y $q_2$ en función de la carga $q$, así como de las permitividades de los medios. Se muestra a continuación un paso a paso breve de cómo se resuelve el sistema. Si $\phi_1$ es el potencial para algún punto en el medio 1, y $\phi_2$ es el potencial en el medio 2, se tiene
 \begin{gather}
 \phi_1 = \frac{1}{4\pi\epsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\\
@@ -252,8 +261,12 @@ q_2 = \left(\frac{2\epsilon_2}{\epsilon_1 + \epsilon_2}\right)\cdot q
 Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (23) y (24) dependiendo de dónde se encuentra; por supuesto, esto remplazando los valores de $q_1$ y $q_2$ por los de las Ecs. (27) y (28).
 
 \subsection{Sistema con dos interfaces paralelas y cargas en el medio}
-En este caso se complica la explicación y por ende la expresión matemática que representa al sistema. Si se tienen tres medios dieléctricos, y la carga puntual se ubica en el segundo - el primero y el tercero encierran al segundo - entonces ocurre que si la carga polariza al medio 3, este \textbf{y} la carga puntual generan un campo de reacción en el medio 1, el cual induce una reacción en el medio 3 que se debe considerar junto con la inicialmente producida por la carga puntual. Este efecto sigue infinitamente, y a nivel estático corresponde a una sumatoria infinita de los efectos que tienen todas las reacciones generadas por la carga sobre todos los dieléctricos afectados. Para visualizarlo de mejor forma, una gran analogía es imaginarse lo que ocurre al pararse entre dos espejos paralelos y mirar ortogonalmente hacia uno de ellos.\\\\
-La fórmula matemática como tal que representa dicho sistema, para medios 1 y 3 con la misma constante dieléctrica $epsilon_1$, es \cite{Pei-kun}
+\begin{figure}[H]
+\centering
+\input{Fig_4.eps_tex}
+\caption{La imagen superior es la situación real para el caso de una carga, mientras que la figura inferior es el sistema trabajado con el método de imágenes. Esto sigue de manera infinita, pero sólo se muestran unas pocas cargas por motivos obvios.}
+\end{figure}
+En este caso, la explicación y por consecuencia la expresión matemática que modela el problema, se tornan más complejas. Si se tienen tres medios dieléctricos 1, 2 y 3, tales que las constantes dieléctricas de los medios 1 y 3 son iguales entre si (Fig. 4), entonces una carga en el medio 2 genera un campo de reacción en los medios 1 y 3, y cada uno de estos induce una reacción en los otros medios. Se genera así un efecto cascada, lo que se traduce en una sumatoria infinita \cite{Pei-kun} como se ve a continuación
 \begin{equation}
 \phi_{(\vec{x})} = \sum_{i=-\infty}^\infty\frac{q_i}{4\pi\epsilon_2|\vec{x} - \vec{x}_i|}
 \end{equation}
@@ -261,48 +274,58 @@ donde
 \begin{equation*}
 q_i = q\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_1 + \epsilon_2}\right)^{|i|} \qquad\qquad x_i=(-1)^ix_0 + i\cdot a
 \end{equation*}
-Considerar un número mayor de cargas ($N$) simplemente implica sumar sobre ellas y considerando el potencial debido a la interacción entre ellas, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la Ec. (29) quede
+Cada término de la sumatoria es menor al anterior en magnitud, tendiendo a converger de forma relativamente rápida.\\\\
+Una analogía de este fenómeno y que también tiene que ver con electromagnetismo es lo que ocurre al mirar hacia uno de dos espejos paralelos enfrentados. La imagen de uno se refleja infinitamente en el otro, disminuyendo en tamaño con cada reflejo.\\\\
+Considerar un número mayor de cargas ($N$) simplemente implica sumar sobre estas, considerando el potencial debido a la interacción electrostática entre las partículas componentes del sistema, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la Ec. (29) quede
 \begin{equation}
-\phi_{(\vec{x})} = \sum_{j = 1}^N \frac{q_j}{4\pi\epsilon_2|\vec{x} - \vec{x_j}|} + \sum_{j=1}^N\sum_{i=-\infty}^\infty\frac{q_{j,i}}{4\pi\epsilon_2|\vec{x} - \vec{x}_{j,i}|}\quad ; \quad \vec{x} \neq \vec{x}_j\quad ; \quad \vec{x} \neq \vec{x}_{j,i}
+\phi_{(\vec{x})} = \sum_{\substack{j = 1\\j\neq i}}^N \frac{q_j}{4\pi\epsilon_2|\vec{x} - \vec{x_j}|} + \sum_{j=1}^N\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\epsilon_2|\vec{x} - \vec{x}_{j,i}|}\quad ; \quad \vec{x} \neq \vec{x}_j\quad ; \quad \vec{x} \neq \vec{x}_{j,i}
 \end{equation}
 En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.
 
 \subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
-Las Ecs. (29) y (30) contemplan sumatorias que van desde $-\infty$ a $\infty$, cosa que a nivel computacional no es posible lograr. Para eso y sabiendo que la sumatoria converge al tener un denominador que va aumentando, se puede buscar un número $n < \infty$ que resulte representativo. Para esto se trabaja con un código simple hecho en \texttt{Python 3}, a través de la interfaz \texttt{Jupyter}. Se buscan dos valores de $n$ consecutivos tales que la diferencia porcentual entre los potenciales para cada n sea baja. Aquí $n$ corresponde a $+\infty$ y $-n$ a $-\infty$. Se evalúa la Ec. (29) con $n = 48$ y luego con $n=50$, siendo la diferencia relativa entre estos dos valores igual a $0.00936287...\%$. Además se evalúa para valores $n = 68$ y $n=70$, lo que da un $\Delta$ porcentual de $0.00225061...\%$. Esto se calcula mediante
+Las Ecs. (29) y (30) contemplan sumatorias que van desde $-\infty$ a $\infty$, cosa que a nivel computacional no es posible lograr. Para eso y sabiendo que la sumatoria converge al tener un denominador que va aumentando, se puede buscar un número $n < \infty$ que resulte representativo. Se trabaja con un código simple hecho en \texttt{Python 3}, a través de la interfaz \texttt{Jupyter}. Se buscan dos valores de $n$ consecutivos tales que la diferencia porcentual entre los potenciales para cada n sea baja. Aquí $n$ corresponde a $+\infty$ y $-n$ a $-\infty$. Se evalúa la Ec. (29) con $n = 48$ y luego con $n=50$, siendo la diferencia relativa entre estos dos valores igual a $0.00936287...\%$. Además se evalúa para valores de $n = 68$ y $n=70$, lo que da un $\Delta$ porcentual de $0.00225061...\%$. Esto se calcula mediante
 \begin{equation*}
 \frac{\phi_{(n)} - \phi_{(n-1)}}{\phi_{(n-1)}}\cdot 100\%
 \end{equation*}
-Se tiene entonces un claro indicio de que aumentar el valor de $n$ más allá de $50$ no es realmente útil e implica dedicar más recursos computacionales. Se presenta a continuación una gráfica para un valor de $q=1$, $\epsilon_1 = 80$ y $\epsilon_2 = 2$. La primera constante dieléctrica corresponde a la del medio externo, y la segunda a la del medio encerrado. En esta gráfica se puede apreciar cómo la Ec. (29) converge a un valor del potencial $\phi$ a medida que aumenta $n$, hasta un punto en que prácticamente ya no hay diferencia.
+Se tiene entonces un claro indicio de que aumentar el valor de $n$ mucho más allá de $50$ no es realmente útil e implica dedicar más recursos computacionales. Se presenta a continuación una gráfica para un valor de $q=1$, $\epsilon_1 = 80$ y $\epsilon_2 = 2$. La primera constante dieléctrica corresponde a la del medio externo, y la segunda a la del medio encerrado. La posición de la carga de prueba es $(0,0,0)$, y la del punto de evaluación es $(1,0,0)$ en coordenadas cartesianas. En esta gráfica se puede apreciar cómo la Ec. (29) converge a un valor del potencial $\phi$ a medida que aumenta $n$, hasta un punto en que prácticamente ya no hay diferencia. El valor para $n=120$ es $\phi = 0.0253427...\approx 0.025343$.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{./Imagenes/phi_n.png}
 \caption{Convergencia del valor del potencial en función de $n$.}
 \end{figure}
-\noindent
-Ahora se presenta la diferencia porcentual, con escala logarítmica en el eje de la variación para poder distinguir de mejor forma los cambios en el valor. Como ya se dijo y también como se puede ver tanto en la gráfica anterior como en la siguiente, no merece la pena calcular para $n$ mucho mayores a 50, pues es poca la precisión que se gana, y para conjuntos de múltiples cargas se genera una carga computacional innecesaria.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{./Imagenes/delta_n.png}
 \caption{Variación porcentual del valor de $\phi$ en función de $n$.}
 \end{figure}
-
+\noindent
+Se presenta también la diferencia porcentual entre los cálculos para distintos valores de $n$ en la Figura 6, con escala logarítmica en el eje de la variación para poder distinguir de mejor forma los cambios en el valor. Como ya se dijo y también como se puede ver en cualquiera de las dos gráficas, no merece la pena calcular para $n$ mucho mayores a 50, pues es poca la precisión que se gana, y para conjuntos de múltiples cargas se produce una demanda computacional innecesaria.\\\\
+Se puede observar que, teniendo en cuenta la escala logarítmica, la diferencia entre iteraciones después de la marca roja tiende a ser lineal, por lo que no se gana mucho aumentando el número de datos. Es para tener mayor certeza de la precisión del cálculo que se propone trabajar con $n = 70$. 
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%
-%\section{Lecturas relevantes al respecto}
 
-%
-%\section{Conclusiones generales}
 
-%
-%\section{Continuación de trabajo}
-%Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
-%El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en caso de ser posible \\\\
-%Además, hay otros puntos de investigación, como simular una o un sistema de cargas fuera de la membrana, lo que permitiría expandir 
+\section{Lecturas relevantes al respecto}
+En la sección actual se presentan una serie de breves resúmenes de publicaciones relacionadas con la temática de modelos computacionales de células y/o biomoléculas, o que sean de aporte para el entendimiento de la teoría electrostática en alguna forma.
+\subsection{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Conclusiones generales}
+Durante el aprendizaje que conlleva el presente trabajo se logra afianzar el conocimiento sobre la teoría electrostática, así como también familiarizarse con la ecuación de Poisson-Boltzman, de dónde surge y todo lo que representa. Ya se señaló en un principio que la idea principal de este escrito es presentar la base teórica para poder implementar BEM, y en primera instancia eso se logra para un medio homogeneo, pues ya se cuenta con una expresión para el potencial en función de las variables de interés del problema.\\\\
+En este informe se explica por qué es posible utilizar la teoría electrostática macroscópica para describir fenómenos a nivel biomolecular, dando paso a la explicación y aplicación del método de imágenes para resolver un sistema simple de una carga y una interfaz planar. Con la introducción y resolución de la teoría y el problema tipo del método de imágenes respectivamente, se procede a la implementación mediante el método RIC. Mediante esta última herramienta se pueden trabajar sistemas de múltiples cargas en un medio encerrado por dos interfaces a través de cargas imágenes que representen el campo de reacción de los medios. Gracias a un pequeño programa es que se logra definir un número conveniente para representar el valor de $\infty$ en los límites de la sumatoria para el caso de una sola carga encerrada. \\\\
+A continuación se plante cómo seguir con este trabajo a partir de los fundamentos establecidos en el presente texto, pues la idea es hacer uso de la teoría incluida aquí para entregar un aporte, particularmente buscando una mejora en la velocidad de cálculo.\\\\
+Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación, se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
+El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en determinar también si el aporte de dicha membrana es realmente significativo o se puede despreciar, y en qué casos es correcto hacerlo.\\\\
+También hay otros puntos de investigación, como simular una o un sistema de cargas fuera de la membrana. Esto abriría la posibilidad de trabajar con proteínas transmembrana sin tener que cambiar de forma significativa el planteamiento del problema. Además puede ser que si se continúa con esta línea de investigación, surjan otras aristas que valga la pena explorar y sean de interés.\\\\
+Cerrando las ideas, se puede decir que el trabajo presentado en este informe consiste en adquirir conocimientos base e información sobre otros trabajos relacionados con el tema. Esto se hace para poder avanzar en lo sucesivo con el desarrollo de nuevas propuestas que permitan acelerar los cálculos energéticos de la interacción electrostática en sistemas de múltiples cargas. Queda pendiente familiarizarse con el método BEM, para poder así juntar todo en un trabajo final que englobe la teoría electrostática aplicada a interacciones moleculares de proteínas en la membrana mediante el método de elementos de borde.
 
 
 \pagebreak
@@ -318,7 +341,8 @@ Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, Fir
 Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
 \bibitem{Pei-kun}
 Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
-
+\bibitem{APBSmem}
+Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9) 2010
 
 \end{thebibliography}
 

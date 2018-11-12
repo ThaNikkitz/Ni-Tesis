@@ -7,6 +7,9 @@
 \contentsline {subsection}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{9}
 \contentsline {subsection}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{10}
 \contentsline {section}{\numberline {3}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{11}
-\contentsline {subsection}{\numberline {3.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{11}
-\contentsline {subsection}{\numberline {3.2}Sistema con dos interfaces paralelas y cargas en el medio}{13}
-\contentsline {subsection}{\numberline {3.3}Definici\IeC {\'o}n de l\IeC {\'\i }mites para las sumatorias (c\IeC {\'a}lculo computacional de $\infty $)}{13}
+\contentsline {subsection}{\numberline {3.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{12}
+\contentsline {subsection}{\numberline {3.2}Sistema con dos interfaces paralelas y cargas en el medio}{14}
+\contentsline {subsection}{\numberline {3.3}Definici\IeC {\'o}n de l\IeC {\'\i }mites para las sumatorias (c\IeC {\'a}lculo computacional de $\infty $)}{15}
+\contentsline {section}{\numberline {4}Lecturas relevantes al respecto}{17}
+\contentsline {subsection}{\numberline {4.1}APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}{17}
+\contentsline {section}{\numberline {5}Conclusiones generales}{17}
