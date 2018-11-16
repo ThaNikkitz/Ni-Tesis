@@ -11,5 +11,7 @@
 \contentsline {subsection}{\numberline {3.2}Sistema con dos interfaces paralelas y cargas en el medio}{14}
 \contentsline {subsection}{\numberline {3.3}Definici\IeC {\'o}n de l\IeC {\'\i }mites para las sumatorias (c\IeC {\'a}lculo computacional de $\infty $)}{15}
 \contentsline {section}{\numberline {4}Lecturas relevantes al respecto}{17}
-\contentsline {subsection}{\numberline {4.1}APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}{17}
-\contentsline {section}{\numberline {5}Conclusiones generales}{17}
+\contentsline {subsection}{\numberline {4.1}APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite {APBSmem}}{17}
+\contentsline {subsection}{\numberline {4.2}Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model.\cite {Huimin-Lin}}{18}
+\contentsline {subsection}{\numberline {4.3}Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite {Gan}}{18}
+\contentsline {section}{\numberline {5}Conclusiones generales}{18}

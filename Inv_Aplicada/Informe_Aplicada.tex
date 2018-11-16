@@ -312,14 +312,38 @@ Se puede observar que, teniendo en cuenta la escala logarítmica, la diferencia 
 
 \section{Lecturas relevantes al respecto}
 En la sección actual se presentan una serie de breves resúmenes de publicaciones relacionadas con la temática de modelos computacionales de células y/o biomoléculas, o que sean de aporte para el entendimiento de la teoría electrostática en alguna forma.
-\subsection{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}
+\subsection{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite{APBSmem}}
+La publicación sobre APBSmem es más que nada una guía para la utilización del programa APBSmem, en el que se presentan además los métodos utilizados para el cálculo de energías de interés, en sistemas biológicos (proteína-membrana principalmente); esto puede ser, solvatación para iones, para proteínas, o canales transmembrana. 
+La bicapa consiste en ``planchas" de material dieléctrico con baja constante dieléctrica que se colocan de tal forma que limiten con la proteína y no sean parte de, en el caso que haya, las proteínas de canal. Para ubicar la membrana, el programa utiliza las posiciones espaciales de residuos hidrofóbicos como referencia, o también se puede acudir a la base de datos Orientations of Proteins in Membranes.\\\\
+Utilizando la ecuación PB lineal, el programa puede calcular el potencial de membrana o proteína por separado, en caso que sea requerido. Se incluyen las ecuaciones de PB para tres casos: bajo la membrana (dentro de la célula), en la membrana, y sobre esta (fuera de la célula). Esto se logra con la ecuación de Poisson-Boltzman linealizada y sumando un término para compensar por la diferencia de potencial entre el interior y el exterior; esta diferencia es producto de la concentración de iones (Potasio, Calcio, etc) al interior y exterior de la pared celular. Los potenciales del sistema vienen de la ecuación PB por fuera de la célula, PB modificado para dar cuenta de la concentración de iones dentro de la célula, y Poisson (Laplace) dentro en la membrana; para una bicapa con límites $z = L/2$ y $z = -L/2$, los potenciales son
+
+\begin{align}
+\phi_1(z) &= \frac{e}{k_BT}V_{in}\frac{1}{\frac{\epsilon_w}{\epsilon_m}\kappa L + 2}e^{\kappa(L/2 - z)} &z>L/2\\
+\phi_2(z) &= \frac{e}{k_BT}V_{in}\left(\frac{1}{2}-\frac{1}{\frac{\epsilon_w}{\epsilon_m}\kappa L + 2}\frac{\epsilon_w}{\epsilon_m}\kappa z\right) &-L/2 < z < L/2\\
+\arraycolsep=0.3in\def\arraystretch{2}
+\phi_3(z) &= \frac{e}{k_BT}V_{in}\left(1 - \frac{1}{\frac{\epsilon_w}{\epsilon_m}\kappa L + 2}e^{\kappa(z+ L/2)}\right)&z<-L/2
+\end{align}
+En este caso $\phi_{1,2,3}$ es el potencial producto de la membrana, $e$ es la carga del electrón, y $\kappa^2=\bar{\kappa}^2/\epsilon_w$ es una variable auxiliar relacionada con la longitud de Debye-Hückel $\bar{\kappa}$.\\\\
+El programa, según se escribe en la publicación, trabaja con el método de diferencias finitas para el cálculo del potencial. Se incluyen ejemplos de cálculos para los tres casos de cálculos energéticos mencionados en el paper.
+\subsection{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model.\cite{Huimin-Lin}}
+En esta publicación se estudia la ecuación de PB linealizada aproximada mediante el método de imágenes; en particular, se modela el campo de reacción del solvente y la membrana en presencia de un canal iónico. Para esto, los investigadores obtienen imágenes para las interfaces planas de la membrana y para una interfaz propia de un cilindro, que sirve para separar al canal iónico del resto del sistema estudiado. Se determina una aproximación por el método de imágenes dentro y fuera de la membrana y del cilindro. Se integran también los aportes iónicos de la solución al modelo, lo que genera una expansión en funciones ortogonales de $sin$ y $cos$ para el potencial de Coulomb y el campo de reacción en la membrana. De la publicación se tienen las expresiones para el potencial en la membrana, sobre ella y bajo ella en $z$. Además, las imágenes y sus posiciones se obtienen por uno de dos métodos: una solución de la minimización del error $L_2$ entre la expresión propuesta por el método RIC \cite{Pei-kun} y el método de múltiples imágenes, que presenta Wei Cai en otro paper \cite{Wei-Cai}.
+\begin{align*}
+\text{Sol. RIC}\qquad\qquad \phi_{rf} = &\sum_{\substack{k = -\infty\\
+k \neq 0}}^{k = \infty} \frac{q_k}{\epsilon_m|\mathbf{x} - \mathbf{x}_k|}\\
+\text{Sol. Mult. Im. Method}\qquad\qquad \phi_{irf} = & \frac{q_s}{\epsilon_m}\sum_{l}\frac{q_k}{|\mathbf{x} - \mathbf{x}_l|}
+\end{align*}
+También existe la alternativa de utilizar un método de ajuste tipo Prony para resolver el sistema, aplicando dicho ajuste a la expansión de Fourier
+En el paper se menciona que no existe actualmente una forma de modelar los efectos de la solución electrolítica sobre el canal iónico mediante el método de imágenes. Para modelar el canal intermembrana a pesar de este obstáculo es que se propone el uso de un modelo híbrido: se utiliza el método de imágenes para modelar los potenciales de la membrana y del solvente. Se utiliza un cilindro para encerrar el canal, junto con parte del solvente y la membrana, y se calculan las condiciones en las interfaces correspondientes al cilindro. Con esto se puede utilizar un método como dinámica molecular para realizar los cálculos correspondientes al canal intermembrana.
+\subsection{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite{Gan}}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section{Conclusiones generales}
-Durante el aprendizaje que conlleva el presente trabajo se logra afianzar el conocimiento sobre la teoría electrostática, así como también familiarizarse con la ecuación de Poisson-Boltzman, de dónde surge y todo lo que representa. Ya se señaló en un principio que la idea principal de este escrito es presentar la base teórica para poder implementar BEM, y en primera instancia eso se logra para un medio homogeneo, pues ya se cuenta con una expresión para el potencial en función de las variables de interés del problema.\\\\
+Durante el aprendizaje que conlleva el presente trabajo se logra afianzar el conocimiento sobre la teoría electrostática, así como también familiarizarse con la ecuación de Poisson-Boltzman (a través de las lecturas pertinentes al tema), de dónde surge y todo lo que representa. Ya se señaló en un principio que la idea principal de este escrito es presentar la base teórica para poder implementar BEM, y en primera instancia eso se logra para un medio homogeneo, pues ya se cuenta con una expresión para el potencial en función de las variables de interés del problema.\\\\
 En este informe se explica por qué es posible utilizar la teoría electrostática macroscópica para describir fenómenos a nivel biomolecular, dando paso a la explicación y aplicación del método de imágenes para resolver un sistema simple de una carga y una interfaz planar. Con la introducción y resolución de la teoría y el problema tipo del método de imágenes respectivamente, se procede a la implementación mediante el método RIC. Mediante esta última herramienta se pueden trabajar sistemas de múltiples cargas en un medio encerrado por dos interfaces a través de cargas imágenes que representen el campo de reacción de los medios. Gracias a un pequeño programa es que se logra definir un número conveniente para representar el valor de $\infty$ en los límites de la sumatoria para el caso de una sola carga encerrada. \\\\
 A continuación se plante cómo seguir con este trabajo a partir de los fundamentos establecidos en el presente texto, pues la idea es hacer uso de la teoría incluida aquí para entregar un aporte, particularmente buscando una mejora en la velocidad de cálculo.\\\\
 Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación, se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
@@ -343,6 +367,13 @@ Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edit
 Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
 \bibitem{APBSmem}
 Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9) 2010
+\bibitem{Huimin-Lin}
+Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model}, J. Sci. Comput. 2011
+\bibitem{Wei-Cai}
+Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to charges inside or outside a dielectric sphere} J. Comput. Phys. 223, 2007
+\bibitem{Gan}
+Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface} Phys. Rev. E 84, 016705 (2011)
+
 
 \end{thebibliography}
 
