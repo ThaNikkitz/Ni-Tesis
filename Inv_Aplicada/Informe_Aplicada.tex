@@ -329,13 +329,25 @@ El programa, según se escribe en la publicación, trabaja con el método de dif
 En esta publicación se estudia la ecuación de PB linealizada aproximada mediante el método de imágenes; en particular, se modela el campo de reacción del solvente y la membrana en presencia de un canal iónico. Para esto, los investigadores obtienen imágenes para las interfaces planas de la membrana y para una interfaz propia de un cilindro, que sirve para separar al canal iónico del resto del sistema estudiado. Se determina una aproximación por el método de imágenes dentro y fuera de la membrana y del cilindro. Se integran también los aportes iónicos de la solución al modelo, lo que genera una expansión en funciones ortogonales de $sin$ y $cos$ para el potencial de Coulomb y el campo de reacción en la membrana. De la publicación se tienen las expresiones para el potencial en la membrana, sobre ella y bajo ella en $z$. Además, las imágenes y sus posiciones se obtienen por uno de dos métodos: una solución de la minimización del error $L_2$ entre la expresión propuesta por el método RIC \cite{Pei-kun} y el método de múltiples imágenes, que presenta Wei Cai en otro paper \cite{Wei-Cai}.
 \begin{align*}
 \text{Sol. RIC}\qquad\qquad \phi_{rf} = &\sum_{\substack{k = -\infty\\
-k \neq 0}}^{k = \infty} \frac{q_k}{\epsilon_m|\mathbf{x} - \mathbf{x}_k|}\\
-\text{Sol. Mult. Im. Method}\qquad\qquad \phi_{irf} = & \frac{q_s}{\epsilon_m}\sum_{l}\frac{q_k}{|\mathbf{x} - \mathbf{x}_l|}
+k \neq 0}}^{k = \infty} \frac{q_k}{\epsilon_m|\vec{x} - \vec{x}_k|}\\
+\text{Sol. Mult. Im. Method}\qquad\qquad \phi_{irf} = & \frac{q_s}{\epsilon_m}\sum_{l}\frac{q_k}{|\vec{x} - \vec{x}_l|}
 \end{align*}
 También existe la alternativa de utilizar un método de ajuste tipo Prony para resolver el sistema, aplicando dicho ajuste a la expansión de Fourier
 En el paper se menciona que no existe actualmente una forma de modelar los efectos de la solución electrolítica sobre el canal iónico mediante el método de imágenes. Para modelar el canal intermembrana a pesar de este obstáculo es que se propone el uso de un modelo híbrido: se utiliza el método de imágenes para modelar los potenciales de la membrana y del solvente. Se utiliza un cilindro para encerrar el canal, junto con parte del solvente y la membrana, y se calculan las condiciones en las interfaces correspondientes al cilindro. Con esto se puede utilizar un método como dinámica molecular para realizar los cálculos correspondientes al canal intermembrana.
 \subsection{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite{Gan}}
-
+Se emplea el método de imágenes para simular un coloide esférico, en primera instancia sin carga. El coloide se considera un macroión, sumergido en un dieléctrico en el que hay más especies iónicas distribuidas. Para esto se ocupa la ecuación de Poisson para el potencial, que surge de aplicar $\nabla$ a la ecuación (7). Se tratan los iones del solvente como cargas puntuales, considerando de inmediato una formulación explícita del problema. Como el coloide no tiene carga, se trabaja con la ecuación de Laplace.\\\\
+Ahora, fuera del colide esférico se tiene que
+\begin{equation*}
+\Phi(\vec{r}) = \Phi_{Coul}(\vec{r}) + \Phi_{pol}(\vec{r})
+\end{equation*}
+El potencial de polarización es el complejo en este problema, pues el de Coulomb es el ya conocido $q/(\epsilon|\vec{r}-\vec{r}_s|)$.\\\\
+Para el potencial de polarización se ubican cargas a lo largo de una recta, de tal forma que se genere la esfera para una carga $q$ real ubicada a una distancia $r_s$ del centro de referencia. Con una expansión en esférica harmónica, se puede reformular el potencial de polarización como las contribuciones de una carga $q_K$, llamada de Kelvin, y una distribución lineal de carga desde el origen hasta la posición de $q_K$. Esta se puede discretizar y llevar a una sumatoria de la forma
+\begin{gather*}
+\Phi_{pol}(\vec{r}) = \frac{q_K}{\epsilon|\vec{r} - \vec{r}_K} + \sum_{m = 1}^I \frac{q_m}{\epsilon|\vec{r} - \vec{x}_m|}\\
+q_m = \frac{\omega_m}{2}\frac{\gamma a q}{r_s}\qquad\qquad x_m = r_K\left(\frac{1-s_m}{2}\right)^{1/\sigma}
+\end{gather*}
+donde $\gamma=(\epsilon_{in} - \epsilon_{out})/(\epsilon_{in}+ \epsilon_{out})$, $\sigma = \epsilon_{out}/(\epsilon_{in} + \epsilon{out})$, a el radio del coloide esférico, $r_K$ es el radio de la carga de Kelvin desde el centro del sistema de referencia, y $q$ es la carga de prueba. A partir de esto, se puede aproximar la carga lineal distribuida mediante $I + 1$ cargas puntuales.
+\subsection{Influence of the Membrane Potential on the Free Energu of an Intrinsic Protein \cite{Roux}}
 
 
 
@@ -373,6 +385,8 @@ Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic
 Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to charges inside or outside a dielectric sphere} J. Comput. Phys. 223, 2007
 \bibitem{Gan}
 Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface} Phys. Rev. E 84, 016705 (2011)
+\bibitem{Roux}
+Roux, B. \textit{Influence of the Membrane Potential on the Free Energy of an Intrinsic Protein} Byophysical Journal, Vol. 73, 2980--2989, 1997
 
 
 \end{thebibliography}

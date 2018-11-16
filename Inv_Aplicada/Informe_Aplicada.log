@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.3)  16 NOV 2018 16:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.3)  16 NOV 2018 17:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -713,42 +713,52 @@ Underfull \hbox (badness 10000) in paragraph at lines 325--328
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
+Underfull \hbox (badness 10000) in paragraph at lines 338--340
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 342--345
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
+Underfull \hbox (badness 10000) in paragraph at lines 358--365
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
+Underfull \hbox (badness 10000) in paragraph at lines 358--365
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
+Underfull \hbox (badness 10000) in paragraph at lines 358--365
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
+Underfull \hbox (badness 10000) in paragraph at lines 358--365
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--353
+Underfull \hbox (badness 10000) in paragraph at lines 358--365
 
  []
 
-[18] [19] [20] (./Informe_Aplicada.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 358--365
+
+ []
+
+[19] [20] [21] (./Informe_Aplicada.aux) ) 
 Here is how much of TeX's memory you used:
- 5973 strings out of 494910
- 84699 string characters out of 6179837
- 168658 words of memory out of 5000000
- 9127 multiletter control sequences out of 15000+600000
- 14791 words of font info for 57 fonts, out of 8000000 for 9000
+ 5970 strings out of 494910
+ 84667 string characters out of 6179837
+ 168662 words of memory out of 5000000
+ 9126 multiletter control sequences out of 15000+600000
+ 14170 words of font info for 55 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  38i,21n,43p,1288b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/t
@@ -769,10 +779,10 @@ nts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10
 .pfb>
-Output written on Informe_Aplicada.pdf (20 pages, 386214 bytes).
+Output written on Informe_Aplicada.pdf (21 pages, 392342 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
- 109 compressed objects within 2 object streams
+ 165 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
