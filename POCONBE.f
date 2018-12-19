@@ -3,12 +3,14 @@
 
 	Character*10 FILEIN, FILEOUT
 
-	Dimension X(101), Y(101), XM(100), YM(100), F1(100), DF1(100)
-	Dimension KODE(100), CX(20), CY(20), POT(20), FLUX1(20), FLUX2(20)
+	Real*8 :: X(101), Y(101), XM(100), YM(100), F1(100), DF1(100)
+	Real*8 :: KODE(100), CX(20), CY(20), POT(20), FLUX1(20), FLUX2(20)
 
-	Common/MATG/ G(100,100)
-	Common/MATH/ H(100,100)
-	Common N, L, INP, IPR
+	Real*8 :: G(100,100), H(100,100)
+	Real*8 :: D, A, B, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+
+	Integer :: NX, I, J, K, KK
+	Integer :: N, L, INP, IPR
 
 	NX = 100
 
@@ -32,8 +34,8 @@
 
 	Call OUTPTPC(XM, YM, F1, DF1, CX, CY, POT, FLUX1, FLUX2)
 
-	Close (INP)
 	Close (IPR)
+	Close (INP)
 	Stop
 	End
 
@@ -46,9 +48,19 @@
 	Subroutine INPUTPC(CX, CY, X, Y, KODE, F1)
 	Implicit None
 
+
+	Real*8 :: XM(100), YM(100), DF1(100)
+	Real*8 :: POT(20), FLUX1(20), FLUX2(20)
+
+	Real*8 :: G(100,100), H(100,100)
+	Real*8 :: D, A, B, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+
+	Integer :: NX, I, J, K, KK
+	Integer :: N, L, INP, IPR
+
 	Character*80 Title
 	Common N, L, INP, IPR
-	Dimension CX(1), CY(1), X(1), Y(1), KODE(1), F1(1)
+	Real*8 :: CX(1), CY(1), X(1), Y(1), KODE(1), F1(1)
 
 	Write(IPR, 100)
 100	Format(' ',79('*'))
@@ -66,7 +78,7 @@
 500	Format(2X, 'COORDINATES OF THE EXTREME POINTS OF THE'
 	1'BOUNDARY ELEMENTS', 1X, 'POINT', 7X, 'X', 15X, 'Y')
 
-	Read(INP,*) (X(I), Y(I), I=1,N)
+	Read(INP, *) (X(I), Y(I), I=1,N)
 	Do 10 I=1,N
 10	Write(IPR, 700)I, X(I), Y(I)
 700	Format(2X, I3, 2(2X,E14.5))
@@ -95,9 +107,15 @@
 	Subroutine GHMATPC(X, Y, XM, YM, G, H, F1, DF1, KODE, NX)
 	Implicit None
 
+	Real*8 :: CX(20), CY(20), POT(20), FLUX1(20), FLUX2(20)
+	Real*8 :: D, A, B, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+
+	Integer :: NX, I, J, K, KK
+	Integer :: N, L, INP, IPR
+
 	Common N, L, INP, IPR
-	Dimension X(1), Y(1), XM(1), YM(1), F1(1), KODE(1)
-	Dimension DF1(1), G(NX,NX), H(NX,NX)
+	Real*8 :: X(1), Y(1), XM(1), YM(1), F1(1), KODE(1)
+	Real*8 :: DF1(1), G(NX,NX), H(NX,NX)
 
 	X(N+1) = X(1)
 	Y(N+1) = Y(1)
@@ -144,7 +162,18 @@
 	1 DU1, DU2, K)
 	Implicit None
 
-	Dimension XCO(4), YCO(4), GI(4), OME(4)
+	Real*8 :: X(101), Y(101), XM(100), YM(100), F1(100), DF1(100)
+	Real*8 :: KODE(100), CX(20), CY(20), POT(20), FLUX1(20), FLUX2(20)
+
+	Real*8 :: G, H
+	Real*8 :: D, A, B, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+	Real*8 :: AX, BX, AY, BY, SL, ETA1, ETA2, RD1, RD2, RDN
+	Real*4 :: RA
+
+	Integer :: NX, I, J, K, KK
+	Integer :: N, L, INP, IPR
+
+	Real*8 :: XCO(4), YCO(4), GI(4), OME(4)
 	Data GI/0.86113631, -0.86113631, 0.33998104, -0.33998104/
 	Data OME/0.34785485, 0.34785185, 0.65214515, 0.65214515/
 
@@ -171,7 +200,7 @@
 	RDN = RD1*ETA1 + RD2*ETA2
 
 	If(K) 30, 30, 10
-	DU1 = DU1 + RD1*OME(I)*SL/RA
+10	DU1 = DU1 + RD1*OME(I)*SL/RA
 	DU2 = DU2 + RD2*OME(I)*SL/RA
 	DQ1 = DQ1 - ((2.*RD1**2 - 1.)*ETA1 + 2.*RD1*RD2*ETA2)*OME(I)*SL/RA**2
 	DQ2 = DQ2 - ((2.*RD2**2 - 1.)*ETA2 + 2.*RD1*RD2*ETA1)*OME(I)*SL/RA**2
@@ -191,6 +220,9 @@
 	Subroutine LOCINPC(X1, Y1, X2, Y2, G)
 	Implicit None
 
+	Real*8 :: X1, Y1, X2, Y2, G, AX, AY
+	Real*4 :: SR
+
 	AX = (X2 - X1)/2.
 	AY = (Y2 - Y1)/2.
 	SR = Sqrt(AX**2 + AY**2)
@@ -208,7 +240,17 @@
 	Subroutine SLNPD(A, B, D, N, NX)
 	Implicit None
 
-	Dimension B(NX), A(NX,NX)
+	Real*8 :: X(101), Y(101), XM(100), YM(100), F1(100), DF1(100)
+	Real*8 :: KODE(100), CX(20), CY(20), POT(20), FLUX1(20), FLUX2(20)
+
+	Real*8 :: G(100,100), H(100,100)
+	Real*8 :: D, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+	Real*8 :: C, TOL
+
+	Integer :: NX, I, J, K, KK, K1, N1
+	Integer :: N, L, INP, IPR
+
+	Real*8 :: B(NX), A(NX,NX)
 	TOL = 1.E-6
 	N1 = N - 1
 	Do 100 K = 1, N1
@@ -272,9 +314,16 @@
 	Subroutine INTERPC(F1, DF1, KODE, CX, CY, X, Y, POT, FLUX1, FLUX2)
 	Implicit None
 
+	Real*8 :: G(100,100), H(100,100)
+	Real*8 :: D, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+	Real*8 :: A, B
+
+	Integer :: NX, I, J, K, KK
+	Integer :: N, L, INP, IPR
+
 	Common N, L, INP, IPR
-	Dimension F1(1), DF1(1), KODE(1), CX(1), CY(1), X(1), Y(1)
-	Dimension POT(1), FLUX1(1), FLUX2(1)
+	Real*8 :: F1(1), DF1(1), KODE(1), CX(1), CY(1), X(1), Y(1)
+	Real*8 :: POT(1), FLUX1(1), FLUX2(1)
 
 	Do 20 I = 1, N
 	If(KODE(I)) 20, 20, 10
@@ -292,8 +341,8 @@
 	Do 30 J = 1, N
 	KK = J + 1
 
-	Call EXTINPC(CX(K), CY(K), X(J), Y(J), X(KK), Y(KK), A, B,
-	1 DQ1, DQ2, DU1, DU2, 1)
+	Call EXTINPC(CX(K), CY(K), X(J), Y(J), X(KK), Y(KK), A, B
+	1 , DQ1, DQ2, DU1, DU2, 1)
 	POT(K) = POT(K) + DF1(J)*B - F1(J)*A
 	FLUX1(K) = FLUX1(K) + DF1(J)*DU1 - F1(J)*DQ1
 30	FLUX2(K) = FLUX2(K) + DF1(J)*DU2 - F1(J)*DQ2
@@ -312,9 +361,18 @@
 	Subroutine OUTPTPC(XM, YM, F1, DF1, CX, CY, POT, FLUX1, FLUX2)
 	Implicit None
 
+	Real*8 :: X(101), Y(101)
+	Real*8 :: KODE(100)
+
+	Real*8 :: G(100,100), H(100,100)
+	Real*8 :: D, A, B, CH, DQ1, DQ2, DU1, DU2, XP, YP, X1, Y1, X2, Y2
+
+	Integer :: NX, I, J, K, KK
+	Integer :: N, L, INP, IPR
+
 	Common N, L, INP, IPR
-	Dimension XM(1), YM(1), F1(1), DF1(1), CX(1), CY(1)
-	Dimension POT(1), FLUX1(1), FLUX2(1)
+	Real*8 :: XM(1), YM(1), F1(1), DF1(1), CX(1), CY(1)
+	Real*8 :: POT(1), FLUX1(1), FLUX2(1)
 
 	Write(IPR, 100)
 100	Format(' ', 79('*')//1X, 'Results'//2X, 'Boundary Nodes'//8X,
