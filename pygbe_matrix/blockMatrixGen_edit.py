@@ -20,7 +20,8 @@
   THE SOFTWARE.
 '''
 import numpy
-from numpy              import *
+import numpy.matlib
+#from numpy              import *
 from class_definition   import *
 from scipy.sparse       import *
 from semi_analyticalwrap import SA_wrap_arr                  
@@ -108,22 +109,28 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
+    x_n_tar = ones((Ns*K,1))*tar.xi
+    y_n_tar = ones((Ns*K,1))*tar.yi
+    z_n_tar = ones((Ns*K,1))*tar.zi
+
+#    position_array = numpy.array([x_n_tar, y_n_tar, z_n_tar])
 #    n = abs(neg_infty) + infty + 1
-	epsilon_w = 80.
-	epsilon_m = 2.
-	n = 61
-    Q_i = numpy.empty((Ns,n), dtype=object)
+    a = 100. #10 nm cell membrane thickness
+    epsilon_w = 80.
+    epsilon_m = 2.
+    n = 61
+    Q_i = numpy.matlib.repmat(WK,n,1)
 #    x_i = numpy.empty(n, dtype=object)
-    e_pos_array = numpy.matlib.repmat((tar.xi, tar.yi, tar.zi),n,1)
-    pos_i = numpy.matlib.repmat((src.xi, src.yi, src.zi),n,1)
+    e_pos = numpy.matlib.repmat(z_n_tar, n, 1) #Pensar como usar el vector completo en vez de solo la coordenada z
+    i_pos = numpy.matlib.repmat(src.zj, n, 1) #idem
 #    norma = numpy.empty(n, dtype = object)
     for i in range(-30, 30+1):
-        Q_i[:][i+30] = q*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(i)
-        pos_i[i+30][0] = ((-1)**i)*src.zi + i*a
+		Q_i[:][i+30] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(i)
+		i_pos[2][i+30] = ((-1)**i)*src.zj[i] + i*a
 
-    dx = transpose(ones((Ns*K,Nt))*tar.xi) - src.xj
-    dy = transpose(ones((Ns*K,Nt))*tar.yi) - src.yj
-    dz = transpose(ones((Ns*K,Nt))*tar.zi) - src.zj
+    dx = transpose(x_n_tar) - src.xj
+    dy = transpose(y_n_tar) - src.yj
+    dz = transpose(z_n_tar) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
@@ -149,7 +156,10 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
 #       Single layer
-        V_lyr = src.Area * sum(WK * sum((1/(4*numpy.pi*epsilon_m))*numpy.divide(Q_i,numpy.linalg.norm((e_pos_array-pos_i), axis = 1))), axis=2)
+        dumb_dummy = sum((1/(4*numpy.pi*epsilon_m))*numpy.divide(Q_i, numpy.linalg.norm((e_pos - i_pos), axis = 1)))
+        V_lyr = src.Area * sum(dumb_dummy, axis=2)
+#        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
+#        print dumb_dummy
 #       Adjoint double layer
         Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
         
@@ -186,7 +196,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
 
         N_analytical += len(an_integrals)
 
-        if abs(src.xi[0]-tar.xi[0])<1e-10:
+        if abs(src.xi[0]-tar.xi[0])<1e-10: # Por que solo con la primera coordenada? No deberia tambien probar "y" y "z"?
             if same[i,i] == 1:
                 local_center = array([tar.xi[i], tar.yi[i], tar.zi[i]])
                 G_Y  = zeros(1)

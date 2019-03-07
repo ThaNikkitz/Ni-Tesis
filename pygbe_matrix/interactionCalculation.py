@@ -21,7 +21,7 @@
 '''
 
 from numpy import *
-from blockMatrixGen import blockMatrix
+from blockMatrixGen_edit import blockMatrix #should be from blockMatrixGen import
 from semi_analytical import GQ_1D                  
 #import sys
 #sys.path.append('../util')
