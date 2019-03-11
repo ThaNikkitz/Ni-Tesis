@@ -135,11 +135,11 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         K_lyr = src.Area * (sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*src.normal[:,0]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
+
 #       Single layer
         V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
 #       Adjoint double layer
         Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
-        
 
     same = zeros((Nt,Ns),dtype=int32)
     if abs(src.xi[0]-tar.xi[0])<1e-10:

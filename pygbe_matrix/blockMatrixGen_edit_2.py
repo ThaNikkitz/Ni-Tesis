@@ -124,21 +124,8 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     epsilon_w = 80.
     epsilon_m = 2.
     n = 61
-    Q_i = numpy.matlib.repmat(WK,n,1)
-#    x_i = numpy.empty(n, dtype=object)
-    e_pos = numpy.matlib.repmat(transpose(z_n_tar), n, 1) #Pensar como usar el vector completo en vez de solo la coordenada z
-    i_pos = numpy.matlib.repmat(src.zj, n, 1) #idem
-    e_pos = reshape(e_pos,(Ns, n, Nt*K))
-#    norma = numpy.empty(n, dtype = object)
-    for i in range(-30, 30+1):
-		Q_i[i+30] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(i)
-		i_pos[i+30] = ((-1)**i)*src.zj[i] + i*a
 
 #    i_pos = transpose(i_pos)
-    Q_i = transpose(Q_i)
-
-    print e_pos.shape
-    print i_pos.shape
 
     dx = transpose(x_n_tar) - src.xj
     dy = transpose(y_n_tar) - src.yj
@@ -168,12 +155,16 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
 #       Single layer
-        r_vector = abs(e_pos - i_pos)
-        print r_vector.shape
-        r_vector = reshape(r_vector,(Nt*K, Ns, n))
-        dumb_dummy = numpy.zeros((Nt*K,Ns,n))
+        dumb_dummy = numpy.zeros((Nt*K, Ns, n))
+        Q_i = numpy.empty(n, dtype = object)
+        i_pos = numpy.zeros((Ns*K, n))
+        e_pos = numpy.ones((Nt*K, 1))*tar.zi
         for nn in range(n):
-            dumb_dummy[:,:,nn] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[:,nn]/r_vector[:,:,nn])
+            for ii in range(Ns*K):
+                for jj in range(Nt):
+                    Q_i[nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
+    	        	i_pos[ii,nn] = ((-1)**nn)*src.zj[jj] + nn*a
+                    dumb_dummy[jj,nn] = 1/(4*numpy.pi*epsilon_m)*Q_i[nn]/abs(e_pos[ii,jj] - i_pos[jj,nn])
         V_lyr = src.Area * sum(dumb_dummy, axis=2)
 #        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
 #        print dumb_dummy
