@@ -108,10 +108,12 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    dx = transpose(ones((Ns*K,Nt))*tar.xi) - src.xj
-    dy = transpose(ones((Ns*K,Nt))*tar.yi) - src.yj
-    dz = transpose(ones((Ns*K,Nt))*tar.zi) - src.zj
+    dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
+    dy = transpose(ones((Ns*K,1))*tar.yi) - src.yj
+    dz = transpose(ones((Ns*K,1))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
+
+    print src.xj.shape, dx.shape
 
     dx = reshape(dx,(Nt,Ns,K))
     dy = reshape(dy,(Nt,Ns,K))

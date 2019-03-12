@@ -155,16 +155,24 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
 #       Single layer
-        dumb_dummy = numpy.zeros((Nt*K, Ns, n))
-        Q_i = numpy.empty(n, dtype = object)
+        dumb_dummy = numpy.zeros((Nt, Ns, K))
+        Q_i = numpy.zeros((n,K))
         i_pos = numpy.zeros((Ns*K, n))
-        e_pos = numpy.ones((Nt*K, 1))*tar.zi
+        e_pos = numpy.ones((Nt*K,Ns))*tar.zi
+        e_pos = numpy.matlib.repmat(e_pos, n, 1)
+        e_pos = reshape(e_pos,(Ns, Nt*K, n))
         for nn in range(n):
+            Q_i[:][nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K):
+                i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a                
+        Q_i = transpose(Q_i)	
+        r_vec_i = abs(e_pos - i_pos)
+        r_vec_i = reshape(r_vec_i, (K, n, Nt, Ns))
+        for kk in range(K):
+            for ii in range(Ns):
                 for jj in range(Nt):
-                    Q_i[nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
-    	        	i_pos[ii,nn] = ((-1)**nn)*src.zj[jj] + nn*a
-                    dumb_dummy[jj,nn] = 1/(4*numpy.pi*epsilon_m)*Q_i[nn]/abs(e_pos[ii,jj] - i_pos[jj,nn])
+                    dumb_dummy[ii,jj,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
+        print dumb_dummy.shape
         V_lyr = src.Area * sum(dumb_dummy, axis=2)
 #        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
 #        print dumb_dummy
