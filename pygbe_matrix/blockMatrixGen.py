@@ -29,7 +29,7 @@ from semi_analyticalwrap import SA_wrap_arr
 #from triangulation          import *
 #from integral_matfree       import *
 #from semi_analyticalwrap    import SA_wrap_arr
-from GaussIntegration       import gaussIntegration_fine
+from GaussIntegration_edit       import gaussIntegration_fine
 
 
 def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
@@ -112,8 +112,6 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     dy = transpose(ones((Ns*K,1))*tar.yi) - src.yj
     dz = transpose(ones((Ns*K,1))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
-
-    print src.xj.shape, dx.shape
 
     dx = reshape(dx,(Nt,Ns,K))
     dy = reshape(dy,(Nt,Ns,K))
