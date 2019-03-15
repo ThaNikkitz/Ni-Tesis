@@ -21,6 +21,7 @@
 '''
 
 from numpy import *
+import numpy.matlib
 import sys
 
 
@@ -91,6 +92,11 @@ def getGaussPoints(y,triangle, n):
 
 def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, LorY, eps):
 
+    a = 100. #10 nm cell membrane thickness
+    epsilon_w = 80.
+    epsilon_m = 2.
+    n = 61
+
     xi = local_center[:,0]
     yi = local_center[:,1]
     zi = local_center[:,2]
@@ -134,7 +140,28 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
                           + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
                           + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
 #       Single layer
-        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
+
+        dumb_dummy = zeros((Nt, Ns, K_fine))
+        Q_i = zeros((n,K_fine))
+        i_pos = zeros((Ns*K_fine,n))
+        e_pos = ones((Nt*K_fine,Ns))*zi
+        e_pos = numpy.matlib.repmat(e_pos, n, 1)
+        e_pos = reshape(e_pos,(Ns, Nt*K_fine, n))
+        for nn in range(n):
+            Q_i[:][nn] = W*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
+            for ii in range(Ns*K_fine):
+                i_pos[ii,nn] = ((-1)**nn)*Xj[ii,0] + nn*a                
+        Q_i = transpose(Q_i)	
+        r_vec_i = abs(e_pos - i_pos)
+        r_vec_i = reshape(r_vec_i, (K_fine, n, Nt, Ns))
+        for kk in range(K_fine):
+            for ii in range(Ns):
+                for jj in range(Nt):
+                    dumb_dummy[ii,jj,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
+        print dumb_dummy.shape
+        V_lyr = Area * sum(dumb_dummy, axis=2)
+
+#        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
 #       Adjoint Double layer 
         Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
 
