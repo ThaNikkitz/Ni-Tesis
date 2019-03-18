@@ -106,8 +106,6 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     M = panel
     Xj = dot(X,M)
 
-    print panel.shape, Xj.shape
-
     Ns = 1
     Nt = len(xi)
 
@@ -144,21 +142,21 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         dumb_dummy = zeros((Nt, Ns, K_fine))
         Q_i = zeros((n,K_fine))
         i_pos = zeros((Ns*K_fine,n))
-        e_pos = ones((Nt*K_fine,Ns))*zi
+        e_pos = ones((Ns*K_fine,Nt))*zi
+
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
-        e_pos = reshape(e_pos,(Ns, Nt*K_fine, n))
+        e_pos = reshape(e_pos,(Nt, n, Ns*K_fine))
         for nn in range(n):
             Q_i[:][nn] = W*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K_fine):
-                i_pos[ii,nn] = ((-1)**nn)*Xj[ii,0] + nn*a                
-        Q_i = transpose(Q_i)	
+                i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
+        Q_i = transpose(Q_i)
+        i_pos = transpose(i_pos)
         r_vec_i = abs(e_pos - i_pos)
         r_vec_i = reshape(r_vec_i, (K_fine, n, Nt, Ns))
         for kk in range(K_fine):
-            for ii in range(Ns):
-                for jj in range(Nt):
-                    dumb_dummy[ii,jj,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
-        print dumb_dummy.shape
+            for jj in range(Nt):
+                dumb_dummy[jj,0,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)
         V_lyr = Area * sum(dumb_dummy, axis=2)
 
 #        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
