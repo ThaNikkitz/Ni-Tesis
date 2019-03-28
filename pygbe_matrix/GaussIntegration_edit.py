@@ -155,7 +155,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Nt, n, Ns*K_fine))
-        for nn in range(n):
+        for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:][nn] = W*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K_fine):
                 i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
