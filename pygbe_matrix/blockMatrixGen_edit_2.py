@@ -161,7 +161,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         e_pos = numpy.ones((Nt*K,Ns))*tar.zi
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Ns, Nt*K, n))
-        for nn in range(n):
+        for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:][nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K):
                 i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a                
