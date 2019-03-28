@@ -101,22 +101,31 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     yi = local_center[:,1]
     zi = local_center[:,2]
 
+#    print xi.shape
+
+
     X,W = quadratureRule_fine(K_fine)
     X = reshape(X,(K_fine,3))
     M = panel
     Xj = dot(X,M)
 
+#    print Xj.shape
+
     Ns = 1
     Nt = len(xi)
 
     dx = transpose(ones((Ns*K_fine,Nt))*xi) - Xj[:,0]
+    dxx = numpy.matlib.repmat(dx, n, 1)
     dy = transpose(ones((Ns*K_fine,Nt))*yi) - Xj[:,1]
+    dyy = numpy.matlib.repmat(dy, n, 1)
     dz = transpose(ones((Ns*K_fine,Nt))*zi) - Xj[:,2]
 
     r = sqrt(dx*dx+dy*dy+dz*dz)
 
     dx = reshape(dx,(Nt,Ns,K_fine))
+    dxx = reshape(dxx, (Nt, n, K_fine))
     dy = reshape(dy,(Nt,Ns,K_fine))
+    dyy = reshape(dyy, (Nt, n, K_fine))
     dz = reshape(dz,(Nt,Ns,K_fine))
     r  = reshape(r,(Nt,Ns,K_fine))
 
@@ -152,7 +161,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
                 i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
         Q_i = transpose(Q_i)
         i_pos = transpose(i_pos)
-        r_vec_i = abs(e_pos - i_pos)
+        r_vec_i = sqrt((e_pos - i_pos)**2 + dxx**2 + dyy**2)
         r_vec_i = reshape(r_vec_i, (K_fine, n, Nt, Ns))
         for kk in range(K_fine):
             for jj in range(Nt):

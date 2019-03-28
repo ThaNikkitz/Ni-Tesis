@@ -30,7 +30,7 @@ from semi_analyticalwrap import SA_wrap_arr
 #from triangulation          import *
 #from integral_matfree       import *
 #from semi_analyticalwrap    import SA_wrap_arr
-from GaussIntegration       import gaussIntegration_fine
+from GaussIntegration_edit       import gaussIntegration_fine
 
 
 def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
@@ -172,10 +172,8 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
             for ii in range(Ns):
                 for jj in range(Nt):
                     dumb_dummy[ii,jj,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
-        print dumb_dummy.shape
         V_lyr = src.Area * sum(dumb_dummy, axis=2)
 #        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
-#        print dumb_dummy
 #       Adjoint double layer
         Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
         
