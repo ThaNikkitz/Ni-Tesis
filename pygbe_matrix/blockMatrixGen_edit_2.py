@@ -171,7 +171,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         for kk in range(K):
             for ii in range(Ns):
                 for jj in range(Nt):
-                    dumb_dummy[ii,jj,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
+                    dumb_dummy[ii,jj,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
         V_lyr = src.Area * sum(dumb_dummy, axis=2)
 #        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
 #       Adjoint double layer

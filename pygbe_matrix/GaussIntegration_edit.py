@@ -165,7 +165,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         r_vec_i = reshape(r_vec_i, (K_fine, n, Nt, Ns))
         for kk in range(K_fine):
             for jj in range(Nt):
-                dumb_dummy[jj,0,kk] = sum(1/(4*numpy.pi*epsilon_m)*Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)
+                dumb_dummy[jj,0,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)
         V_lyr = Area * sum(dumb_dummy, axis=2)
 
 #        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
