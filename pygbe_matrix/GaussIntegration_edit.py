@@ -142,17 +142,11 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
                          + transpose(transpose(sum(W/r**3*dz, axis=2))*normal_tar[:,2]) )
 
     else:           # if Yukawa
-#       Double layer 
-        K_lyr = Area * (sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
-                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
-                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
-#       Single layer
 
         dumb_dummy = zeros((Nt, Ns, K_fine))
         Q_i = zeros((n,K_fine))
         i_pos = zeros((Ns*K_fine,n))
         e_pos = ones((Ns*K_fine,Nt))*zi
-
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Nt, n, Ns*K_fine))
         for nn in range(-(n-1)/2, (n+1)/2):
@@ -163,6 +157,12 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         i_pos = transpose(i_pos)
         r_vec_i = sqrt((e_pos - i_pos)**2 + dxx**2 + dyy**2)
         r_vec_i = reshape(r_vec_i, (K_fine, n, Nt, Ns))
+
+#       Double layer 
+        K_lyr = Area * (sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
+                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
+                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
+#       Single layer
         for kk in range(K_fine):
             for jj in range(Nt):
                 dumb_dummy[jj,0,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)

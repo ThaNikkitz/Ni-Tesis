@@ -30,7 +30,7 @@ from semi_analyticalwrap import SA_wrap_arr
 #from triangulation          import *
 #from integral_matfree       import *
 #from semi_analyticalwrap    import SA_wrap_arr
-from GaussIntegration_edit       import gaussIntegration_fine
+from GaussIntegration_edit       import gaussIntegration_fine #Should be GaussIntegration
 
 
 def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
@@ -109,9 +109,9 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    x_n_tar = ones((Ns*K,1))*tar.xi
-    y_n_tar = ones((Ns*K,1))*tar.yi
-    z_n_tar = ones((Nt*K,1))*tar.zi
+#    x_n_tar = ones((Ns*K,1))*tar.xi
+#    y_n_tar = ones((Ns*K,1))*tar.yi
+#    z_n_tar = ones((Nt*K,1))*tar.zi
 
 #    one_vector = numpy.ones((Nt,1))
 
@@ -127,13 +127,17 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
 
 #    i_pos = transpose(i_pos)
 
-    dx = transpose(x_n_tar) - src.xj
-    dy = transpose(y_n_tar) - src.yj
-    dz = transpose(z_n_tar) - src.zj
+    dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
+    dxx = numpy.matlib.repmat(dx, n, 1)
+    dy = transpose(ones((Ns*K,1))*tar.yi) - src.yj
+    dyy = numpy.matlib.repmat(dy, n, 1)
+    dz = transpose(ones((Nt*K,1))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
+    dxx = reshape(dxx, (Nt, n, K_fine))
     dy = reshape(dy,(Nt,Ns,K))
+    dyy = reshape(dyy, (Nt, n, K_fine))
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
 
@@ -150,24 +154,36 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
                              + transpose(transpose(sum(WK/r**3*dz, axis=2))*tar.normal[:,2]) )
 
     else:           # if Yukawa
-#       Double layer 
-        K_lyr = src.Area * (sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*src.normal[:,0]
-                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
-                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
-#       Single layer
+
         dumb_dummy = numpy.zeros((Nt, Ns, K))
+        dumb_dummy_2 = numpy.zeros((Nt, Ns, K))
         Q_i = numpy.zeros((n,K))
         i_pos = numpy.zeros((Ns*K, n))
         e_pos = numpy.ones((Nt*K,Ns))*tar.zi
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Ns, Nt*K, n))
+        Q_i = transpose(Q_i)	
+        r_vec_i = sqrt((e_pos - i_pos)**2 + dxx**2 + dyy**2)
+        r_vec_i = reshape(r_vec_i, (K, n, Nt, Ns))
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:][nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K):
-                i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a                
-        Q_i = transpose(Q_i)	
-        r_vec_i = abs(e_pos - i_pos)
-        r_vec_i = reshape(r_vec_i, (K, n, Nt, Ns))
+                i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a  
+
+#       Double layer 
+        for kk in range(K):
+            for ii in range(Ns):
+                for jj in range(Nt):
+                    dumb_dummy_2[ii,jj,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
+
+        K_lyr = src.Area * (sum(/r_vec_i[kk,:,jj,ii]**3, axis = 2)*src.normal[:,0]
+                          + sum(Q_i[kk,:]*dy/r_vec_i[kk,:,jj,ii]**3, axis = 2)*src.normal[:,1]
+                          + sum(Q_i[kk,:]*dy/r_vec_i[kk,:,jj,ii]**3, axis = 2)*src.normal[:,2])
+#        K_lyr = src.Area * (sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*src.normal[:,0]
+#                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
+#                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
+
+#       Single layer              
         for kk in range(K):
             for ii in range(Ns):
                 for jj in range(Nt):
