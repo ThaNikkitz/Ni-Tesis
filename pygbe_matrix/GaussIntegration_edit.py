@@ -92,7 +92,7 @@ def getGaussPoints(y,triangle, n):
 
 def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, LorY, eps):
 
-    a = 100. #10 nm cell membrane thickness
+    a = 100000000. #10 nm cell membrane thickness
     epsilon_w = 80.
     epsilon_m = 2.
     n = 61
@@ -101,15 +101,10 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     yi = local_center[:,1]
     zi = local_center[:,2]
 
-#    print xi.shape
-
-
     X,W = quadratureRule_fine(K_fine)
     X = reshape(X,(K_fine,3))
     M = panel
     Xj = dot(X,M)
-
-#    print Xj.shape
 
     Ns = 1
     Nt = len(xi)
@@ -161,7 +156,6 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         r_vec_i = reshape(r_vec_i, (Nt, Ns, K_fine, n))
 
 #       Double layer 
-
         dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis = 2)*normal[0]
         dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis = 2)*normal[1]
         dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis = 2)*normal[2]
@@ -169,19 +163,12 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         K_lyr = Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
 
-#        K_lyr = Area * (sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
-#                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
-#                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
 #       Single layer
-#        for kk in range(K_fine):
-#            for jj in range(Nt):
-#                dumb_dummy[jj,0,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)
-
         dumb_dummy = sum(Q_i/r_vec_i, axis = 3)
         
         V_lyr = Area * sum(dumb_dummy, axis=2)
 
-#        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
+
 #       Adjoint Double layer 
         Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
 

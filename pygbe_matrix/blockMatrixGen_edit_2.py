@@ -109,23 +109,10 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
-#    x_n_tar = ones((Ns*K,1))*tar.xi
-#    y_n_tar = ones((Ns*K,1))*tar.yi
-#    z_n_tar = ones((Nt*K,1))*tar.zi
-
-#    one_vector = numpy.ones((Nt,1))
-
-#    z_tar = transpose(numpy.matmul(z_n_tar,one_vector))
-#    z_src = ones((1,1))*src.zj
-
-#    position_array = numpy.array([x_n_tar, y_n_tar, z_n_tar])
-#    n = abs(neg_infty) + infty + 1
-    a = 100. #10 nm cell membrane thickness
+    a = 100000000. #10 nm cell membrane thickness
     epsilon_w = 80.
     epsilon_m = 2.
     n = 61
-
-#    i_pos = transpose(i_pos)
 
     dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
     dxx = numpy.matlib.repmat(dx, n, 1)
@@ -161,7 +148,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         dumb_dummy_3 = numpy.zeros((Nt, Ns, K))
         Q_i = numpy.zeros((K,n))
         i_pos = numpy.zeros((Ns*K, n))
-        e_pos = numpy.ones((Nt*K,Ns))*tar.zi
+        e_pos = numpy.ones((Nt*K, Ns))*tar.zi
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Ns, Nt*K, n))
         for nn in range(-(n-1)/2, (n+1)/2):
@@ -180,14 +167,10 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
 
         K_lyr = src.Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
-#        K_lyr = src.Area * (sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*src.normal[:,0]
-#                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
-#                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
-
 #       Single layer              
         dumb_dummy = sum(Q_i/r_vec_i, axis = 3)
         V_lyr = src.Area * sum(dumb_dummy, axis = 2)
-#        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
+
 #       Adjoint double layer
         Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
         
