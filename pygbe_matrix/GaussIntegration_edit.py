@@ -123,9 +123,9 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     r = sqrt(dx*dx+dy*dy+dz*dz)
 
     dx = reshape(dx,(Nt,Ns,K_fine))
-    dxx = reshape(dxx, (Nt, n, K_fine))
+    dxx = reshape(dxx, (Nt, K_fine, n))
     dy = reshape(dy,(Nt,Ns,K_fine))
-    dyy = reshape(dyy, (Nt, n, K_fine))
+    dyy = reshape(dyy, (Nt, K_fine, n))
     dz = reshape(dz,(Nt,Ns,K_fine))
     r  = reshape(r,(Nt,Ns,K_fine))
 
@@ -144,31 +144,41 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     else:           # if Yukawa
 
         dumb_dummy = zeros((Nt, Ns, K_fine))
-        dumb_dummy_1 = numpy.zeros((Nt, Ns, K))
-        dumb_dummy_2 = numpy.zeros((Nt, Ns, K))
-        dumb_dummy_3 = numpy.zeros((Nt, Ns, K))
+        dumb_dummy_1 = numpy.zeros((Nt, Ns, K_fine))
+        dumb_dummy_2 = numpy.zeros((Nt, Ns, K_fine))
+        dumb_dummy_3 = numpy.zeros((Nt, Ns, K_fine))
         Q_i = zeros((K_fine, n))
         i_pos = zeros((Ns*K_fine,n))
         e_pos = ones((Ns*K_fine,Nt))*zi
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
-        e_pos = reshape(e_pos,(Nt, n, Ns*K_fine))
+        e_pos = reshape(e_pos,(Nt, Ns*K_fine, n))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:][nn] = W*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
+            Q_i[:,nn] = W*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K_fine):
                 i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
-        Q_i = transpose(Q_i)
-        i_pos = transpose(i_pos)
-        r_vec_i = sqrt((e_pos - i_pos)**2 + dxx**2 + dyy**2)
-        r_vec_i = reshape(r_vec_i, (K_fine, n, Nt, Ns))
+        dzz = e_pos - i_pos
+        r_vec_i = sqrt(dzz**2 + dxx**2 + dyy**2)
+        r_vec_i = reshape(r_vec_i, (Nt, Ns, K_fine, n))
 
 #       Double layer 
-        K_lyr = Area * (sum(/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
-                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
-                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
+
+        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis = 2)*normal[0]
+        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis = 2)*normal[1]
+        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis = 2)*normal[2]
+
+        K_lyr = Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+
+
+#        K_lyr = Area * (sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
+#                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
+#                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
 #       Single layer
-        for kk in range(K_fine):
-            for jj in range(Nt):
-                dumb_dummy[jj,0,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)
+#        for kk in range(K_fine):
+#            for jj in range(Nt):
+#                dumb_dummy[jj,0,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,0], axis = 0)
+
+        dumb_dummy = sum(Q_i/r_vec_i, axis = 3)
+        
         V_lyr = Area * sum(dumb_dummy, axis=2)
 
 #        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
