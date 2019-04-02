@@ -29,7 +29,7 @@ from semi_analyticalwrap import SA_wrap_arr
 #from triangulation          import *
 #from integral_matfree       import *
 #from semi_analyticalwrap    import SA_wrap_arr
-from GaussIntegration_edit       import gaussIntegration_fine
+from GaussIntegration       import gaussIntegration_fine
 
 
 def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):

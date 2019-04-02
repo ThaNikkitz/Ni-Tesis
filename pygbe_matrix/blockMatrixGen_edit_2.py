@@ -135,9 +135,9 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
-    dxx = reshape(dxx, (Nt, n, K_fine))
+    dxx = reshape(dxx,(Nt, Ns, K, n))
     dy = reshape(dy,(Nt,Ns,K))
-    dyy = reshape(dyy, (Nt, n, K_fine))
+    dyy = reshape(dyy,(Nt, Ns, K, n))
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
 
@@ -156,39 +156,37 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     else:           # if Yukawa
 
         dumb_dummy = numpy.zeros((Nt, Ns, K))
+        dumb_dummy_1 = numpy.zeros((Nt, Ns, K))
         dumb_dummy_2 = numpy.zeros((Nt, Ns, K))
-        Q_i = numpy.zeros((n,K))
+        dumb_dummy_3 = numpy.zeros((Nt, Ns, K))
+        Q_i = numpy.zeros((K,n))
         i_pos = numpy.zeros((Ns*K, n))
         e_pos = numpy.ones((Nt*K,Ns))*tar.zi
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Ns, Nt*K, n))
-        Q_i = transpose(Q_i)	
-        r_vec_i = sqrt((e_pos - i_pos)**2 + dxx**2 + dyy**2)
-        r_vec_i = reshape(r_vec_i, (K, n, Nt, Ns))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:][nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
+            Q_i[:,nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K):
                 i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a  
 
-#       Double layer 
-        for kk in range(K):
-            for ii in range(Ns):
-                for jj in range(Nt):
-                    dumb_dummy_2[ii,jj,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
+        dzz = e_pos - i_pos
+        dzz = reshape(dzz,(Nt,Ns,K,n))
+        r_vec_i = sqrt(dxx**2 + dyy**2 + dzz**2)
 
-        K_lyr = src.Area * (sum(/r_vec_i[kk,:,jj,ii]**3, axis = 2)*src.normal[:,0]
-                          + sum(Q_i[kk,:]*dy/r_vec_i[kk,:,jj,ii]**3, axis = 2)*src.normal[:,1]
-                          + sum(Q_i[kk,:]*dy/r_vec_i[kk,:,jj,ii]**3, axis = 2)*src.normal[:,2])
+#       Double layer
+        dumb_dummy_1 = 	sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
+        dumb_dummy_2 = 	sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
+        dumb_dummy_3 = 	sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
+
+        K_lyr = src.Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+
 #        K_lyr = src.Area * (sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*src.normal[:,0]
 #                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
 #                          + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
 
 #       Single layer              
-        for kk in range(K):
-            for ii in range(Ns):
-                for jj in range(Nt):
-                    dumb_dummy[ii,jj,kk] = sum(Q_i[kk,:]/r_vec_i[kk,:,jj,ii], axis = 0)
-        V_lyr = src.Area * sum(dumb_dummy, axis=2)
+        dumb_dummy = sum(Q_i/r_vec_i, axis = 3)
+        V_lyr = src.Area * sum(dumb_dummy, axis = 2)
 #        V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
 #       Adjoint double layer
         Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
