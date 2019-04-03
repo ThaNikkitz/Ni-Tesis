@@ -92,8 +92,8 @@ def getGaussPoints(y,triangle, n):
 
 def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, LorY, eps):
 
-    a = 100000000. #10 nm cell membrane thickness
-    epsilon_w = 80.
+    a = 100. #10 nm cell membrane thickness
+    epsilon_w = 2.
     epsilon_m = 2.
     n = 61
 
@@ -115,7 +115,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     dyy = numpy.matlib.repmat(dy, n, 1)
     dz = transpose(ones((Ns*K_fine,Nt))*zi) - Xj[:,2]
 
-    r = sqrt(dx*dx+dy*dy+dz*dz)
+    r = sqrt(dx*dx+dy*dy+dz*dz) # Por que no usa eps**2 aca, pero si en blockMatrix?
 
     dx = reshape(dx,(Nt,Ns,K_fine))
     dxx = reshape(dxx, (Nt, K_fine, n))
@@ -148,7 +148,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Nt, Ns*K_fine, n))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:,nn] = W*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
+            Q_i[:,nn] = W*((epsilon_m - epsilon_w)/(epsilon_w + epsilon_m))**abs(nn)
             for ii in range(Ns*K_fine):
                 i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
         dzz = e_pos - i_pos

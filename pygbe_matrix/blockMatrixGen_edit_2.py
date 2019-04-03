@@ -109,8 +109,8 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    a = 100000000. #10 nm cell membrane thickness
-    epsilon_w = 80.
+    a = 100. #10 nm cell membrane thickness
+    epsilon_w = 2.
     epsilon_m = 2.
     n = 61
 
@@ -135,6 +135,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
                           + sum(WK/r**3*dz, axis=2)*src.normal[:,2])
 #       Single layer
         V_lyr = src.Area * sum(WK/r, axis=2)
+
 #       Adjoint double layer
         Kp_lyr = -src.Area * ( transpose(transpose(sum(WK/r**3*dx, axis=2))*tar.normal[:,0])
                              + transpose(transpose(sum(WK/r**3*dy, axis=2))*tar.normal[:,1])
@@ -150,7 +151,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         i_pos = numpy.zeros((Ns*K, n))
         e_pos = numpy.ones((Nt*K, Ns))*tar.zi
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
-        e_pos = reshape(e_pos,(Ns, Nt*K, n))
+        e_pos = reshape(e_pos,(Nt, Ns*K, n))
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:,nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
             for ii in range(Ns*K):
