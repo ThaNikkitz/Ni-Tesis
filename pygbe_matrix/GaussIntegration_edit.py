@@ -149,6 +149,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         e_pos = reshape(e_pos,(Nt, Ns*K_fine, n))
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:,nn] = W*((epsilon_m - epsilon_w)/(epsilon_w + epsilon_m))**abs(nn)
+#            if Q_i[1,nn] != 0.:
             for ii in range(Ns*K_fine):
                 i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
         dzz = e_pos - i_pos
