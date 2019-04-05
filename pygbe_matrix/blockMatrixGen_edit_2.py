@@ -211,11 +211,13 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         if abs(src.xi[0]-tar.xi[0])<1e-10: # Por que solo con la primera coordenada? No deberia tambien probar "y" y "z"?
             if same[i,i] == 1:
                 local_center = array([tar.xi[i], tar.yi[i], tar.zi[i]])
+                if i == 1:
+                    print local_center
                 G_Y  = zeros(1)
                 dG_Y = zeros(1)
                 G_L  = zeros(1)
                 dG_L = zeros(1)
-                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, kappa, array([1], dtype=int32), xk, wk) 
+                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, kappa, array([1], dtype=int32), xk, wk)
 
                 if LorY==1:   # if Laplace
                     K_lyr[i,i]  = dG_L
