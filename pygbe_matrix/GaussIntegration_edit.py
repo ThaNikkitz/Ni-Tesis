@@ -92,7 +92,7 @@ def getGaussPoints(y,triangle, n):
 
 def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, LorY, eps):
 
-    a = 1000000. #10 nm cell membrane thickness
+    a = 100. #10 nm cell membrane thickness
     epsilon_w = 80.
     epsilon_m = 2.
     n = 61

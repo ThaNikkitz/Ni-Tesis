@@ -84,7 +84,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL kappa, REAL *xk, 
     REAL epsilon_w = 80.;
     REAL epsilon_m = 2.;
     int n = 61;
-    REAL a =1000000.;
+    REAL a =100.;
 
     REAL absZ = fabs(z), signZ;
     if (absZ<1e-10) signZ = 0;
@@ -101,7 +101,8 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL kappa, REAL *xk, 
             Q_i = pow((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w), fabs(nn));
             z_i = nn*a; //+ pow(-1, nn)*altura Source esta en el plano, por lo que 'altura' deberia ser 0. Corroborar
             R = sqrt(Rtheta*Rtheta + (z-z_i)*(z-z_i));
-            PHI[0] += wk[i]*Q_i*(R-fabs(z-z_i))*dtheta/2;
+            PHI[0] += wk[i]*Q_i*(R-(fabs(z)-z_i))*dtheta/2; //preguntar por que va el fabs y explicar que el valor practicamente cambia de signo cuando no esta
+// El fabs() se aplica a z, o a z - z_i? Según yo al menos, a z solamente, porque sino el término se anula consigo mismo.
             PHI[1] += wk[i]*Q_i*((z-z_i)/R - (z-z_i)/fabs(z-z_i))*dtheta/2;
         }
         R = sqrt(Rtheta*Rtheta + z*z);

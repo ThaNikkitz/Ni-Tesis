@@ -109,7 +109,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    a = 1000000. #10 nm cell membrane thickness
+    a = 100. #10 nm cell membrane thickness
     epsilon_w = 80.
     epsilon_m = 2.
     n = 61
