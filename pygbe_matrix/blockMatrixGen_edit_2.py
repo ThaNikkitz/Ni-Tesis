@@ -109,8 +109,8 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    a = 100. #10 nm cell membrane thickness
-    epsilon_w = 2.
+    a = 1000000. #10 nm cell membrane thickness
+    epsilon_w = 80.
     epsilon_m = 2.
     n = 61
 
@@ -211,8 +211,6 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         if abs(src.xi[0]-tar.xi[0])<1e-10: # Por que solo con la primera coordenada? No deberia tambien probar "y" y "z"?
             if same[i,i] == 1:
                 local_center = array([tar.xi[i], tar.yi[i], tar.zi[i]])
-                if i == 1:
-                    print local_center
                 G_Y  = zeros(1)
                 dG_Y = zeros(1)
                 G_L  = zeros(1)

@@ -24,6 +24,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <time.h>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 #define REAL double
 
@@ -81,10 +84,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL kappa, REAL *xk, 
     REAL theta2 = atan2(v2,x);
     REAL dtheta = theta2 - theta1;
     REAL thetam = (theta2 + theta1)/2; 
-    REAL epsilon_w = 80.;
-    REAL epsilon_m = 2.;
-    int n = 61;
-    REAL a =1000000.;
+
 
     REAL absZ = fabs(z), signZ;
     if (absZ<1e-10) signZ = 0;
@@ -96,15 +96,18 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL kappa, REAL *xk, 
     {
         thetak = dtheta/2*xk[i] + thetam;
         Rtheta = x/cos(thetak);
-        for (int nn = -(n-1)/2; nn<(n+1)/2; nn++){
-            REAL Q_i, z_i;
-            Q_i = pow((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w), fabs(nn));
-            z_i = nn*a; //+ pow(-1, nn)*altura Source esta en el plano, por lo que 'altura' deberia ser 0. Corroborar
-            R = sqrt(Rtheta*Rtheta + (z-z_i)*(z-z_i));
-            PHI[0] += wk[i]*Q_i*(R-fabs(z-z_i))*dtheta/2;
-            PHI[1] += wk[i]*Q_i*((z-z_i)/R - (z-z_i)/fabs(z-z_i))*dtheta/2;
+        R      = sqrt(Rtheta*Rtheta + z*z);
+        expKr  = exp(-kappa*R);
+        if (kappa>1e-10)
+        {
+            PHI[0]+= -wk[i]*(expKr - expKz)/kappa * dtheta/2;
+            PHI[1]+=  wk[i]*(z/R*expKr - expKz*signZ) * dtheta/2;
         }
-        R = sqrt(Rtheta*Rtheta + z*z);
+        else
+        {
+            PHI[0]+= wk[i]*(R-absZ) * dtheta/2;
+            PHI[1]+= wk[i]*(z/R - signZ) * dtheta/2;
+        }
         PHI[2]+= wk[i]*(R-absZ) * dtheta/2;
         PHI[3]+= wk[i]*(z/R - signZ) * dtheta/2;
     }
@@ -129,14 +132,14 @@ void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL kappa, REAL *xk, REAL *
     REAL alpha = dot_prod(v21,v1)/(L21*L21);
 
     REAL rOrthog[3];
-    axpy(v21, v1, rOrthog, alpha, -1, 3); //No entiendo que cresta pasa aca
+    axpy(v21, v1, rOrthog, alpha, -1, 3);
 
-    REAL d_toEdge = norm(rOrthog); //Segun yo esto sobra
+    REAL d_toEdge = norm(rOrthog);
     REAL v1_neg[3];
     ax(v1, v1_neg, -1, 3);
     
     REAL side_vec[3];
-    cross(v21, v1_neg, side_vec); //Esto tampoco lo usa nunca xD
+    cross(v21, v1_neg, side_vec);
 
     REAL rotateToVertLine[9];
 
