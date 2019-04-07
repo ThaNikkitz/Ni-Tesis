@@ -103,16 +103,14 @@ def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     return K_lyr, V_lyr
 
 
-def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
+def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
     
     Ns = len(src.xi)
     Nt = len(tar.xi)
     K  = len(WK)
 
     a = 100. #10 nm cell membrane thickness
-    epsilon_w = 80.
     epsilon_m = 2.
-    n = 61
 
     dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
     dxx = numpy.matlib.repmat(dx, n, 1)
@@ -153,7 +151,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Nt, Ns*K, n))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:,nn] = WK*((epsilon_m - epsilon_w)/(epsilon_m + epsilon_w))**abs(nn)
+            Q_i[:,nn] = WK*((epsilon_m - E)/(epsilon_m + E))**abs(nn)
             for ii in range(Ns*K):
                 i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a  
 
@@ -201,7 +199,8 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         local_center[:,2] = tar.zi[an_integrals]
         normal_tar = tar.normal[an_integrals]
 
-        K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, kappa, LorY, eps)
+        K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, E, LorY, eps, n)
+#        print K_aux, V_aux, Kp_aux
         K_lyr[an_integrals,i]  = K_aux[:,0]
         V_lyr[an_integrals,i]  = V_aux[:,0]
         Kp_lyr[an_integrals,i] = Kp_aux[:,0]
@@ -215,7 +214,7 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
                 dG_Y = zeros(1)
                 G_L  = zeros(1)
                 dG_L = zeros(1)
-                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, kappa, array([1], dtype=int32), xk, wk)
+                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, E, array([1], dtype=int32), xk, wk, n)
 
                 if LorY==1:   # if Laplace
                     K_lyr[i,i]  = dG_L

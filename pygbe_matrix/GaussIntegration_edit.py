@@ -90,12 +90,10 @@ def getGaussPoints(y,triangle, n):
     return xi[:,0], xi[:,1], xi[:,2]
 
 
-def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, LorY, eps):
+def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, E, LorY, eps, n):
 
     a = 100. #10 nm cell membrane thickness
-    epsilon_w = 80.
     epsilon_m = 2.
-    n = 61
 
     xi = local_center[:,0]
     yi = local_center[:,1]
@@ -148,8 +146,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Nt, Ns*K_fine, n))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:,nn] = W*((epsilon_m - epsilon_w)/(epsilon_w + epsilon_m))**abs(nn)
-
+            Q_i[:,nn] = W*((epsilon_m - E)/(E + epsilon_m))**abs(nn)
 #            if nn == 4:
 #                print Q_i[:,nn] - W
             for ii in range(Ns*K_fine):

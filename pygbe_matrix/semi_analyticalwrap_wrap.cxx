@@ -3117,10 +3117,10 @@ extern void SA_wrap_arr(double *y, int ySize,
                     double *dphi_Y, int dphi_YSize, 
                     double *phi_L, int phi_LSize, 
                     double *dphi_L, int dphi_LSize, 
-                    double kappa, 
+                    double E, 
                     int    *same, int sameSize, 
                     double *xk, int xkSize, 
-                    double *wk, int wkSize);
+                    double *wk, int wkSize, int n);
 
 extern void P2P_c(double *MY, int MYSize, double *dMY, int dMYSize, double *ML, int MLSize, double *dML, int dMLSize,
         double *triangle, int triangleSize, int *tri, int triSize, int *k, int kSize, 
@@ -3129,7 +3129,7 @@ extern void P2P_c(double *MY, int MYSize, double *dMY, int dMYSize, double *ML, 
         double *xt, int xtSize, double *yt, int ytSize, double *zt, int ztSize,
         double *m, int mSize, double *mx, int mxSize, double *my, int mySize, double *mz, int mzSize, double *mclean, int mcleanSize, int *targets, int targetsSize, 
         double *Area, int AreaSize, double *xk, int xkSize, double *wk, int wkSize, 
-        double kappa, double threshold, double eps, double w0, double *aux, int auxSize);
+        double E, double threshold, double eps, double w0, double *aux, int auxSize, int n);
 
 
 #ifndef SWIG_FILE_WITH_INIT
@@ -3491,6 +3491,111 @@ SWIG_AsVal_double (PyObject *obj, double *val)
   return res;
 }
 
+
+#include <limits.h>
+#if !defined(SWIG_NO_LLONG_MAX)
+# if !defined(LLONG_MAX) && defined(__GNUC__) && defined (__LONG_LONG_MAX__)
+#   define LLONG_MAX __LONG_LONG_MAX__
+#   define LLONG_MIN (-LLONG_MAX - 1LL)
+#   define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
+# endif
+#endif
+
+
+#include <float.h>
+
+
+#include <math.h>
+
+
+SWIGINTERNINLINE int
+SWIG_CanCastAsInteger(double *d, double min, double max) {
+  double x = *d;
+  if ((min <= x && x <= max)) {
+   double fx = floor(x);
+   double cx = ceil(x);
+   double rd =  ((x - fx) < 0.5) ? fx : cx; /* simple rint */
+   if ((errno == EDOM) || (errno == ERANGE)) {
+     errno = 0;
+   } else {
+     double summ, reps, diff;
+     if (rd < x) {
+       diff = x - rd;
+     } else if (rd > x) {
+       diff = rd - x;
+     } else {
+       return 1;
+     }
+     summ = rd + x;
+     reps = diff/summ;
+     if (reps < 8*DBL_EPSILON) {
+       *d = rd;
+       return 1;
+     }
+   }
+  }
+  return 0;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_long (PyObject *obj, long* val)
+{
+#if PY_VERSION_HEX < 0x03000000
+  if (PyInt_Check(obj)) {
+    if (val) *val = PyInt_AsLong(obj);
+    return SWIG_OK;
+  } else
+#endif
+  if (PyLong_Check(obj)) {
+    long v = PyLong_AsLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      return SWIG_OverflowError;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    long v = PyInt_AsLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
+	if (val) *val = (long)(d);
+	return res;
+      }
+    }
+  }
+#endif
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_int (PyObject * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< int >(v);
+    }
+  }  
+  return res;
+}
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -3515,6 +3620,7 @@ SWIGINTERN PyObject *_wrap_SA_wrap_arr(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int arg17 ;
   double *arg18 = (double *) 0 ;
   int arg19 ;
+  int arg20 ;
   PyArrayObject *array1 = NULL ;
   int is_new_object1 = 0 ;
   PyArrayObject *array3 = NULL ;
@@ -3531,6 +3637,8 @@ SWIGINTERN PyObject *_wrap_SA_wrap_arr(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int is_new_object16 = 0 ;
   PyArrayObject *array18 = NULL ;
   int is_new_object18 = 0 ;
+  int val20 ;
+  int ecode20 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -3541,8 +3649,9 @@ SWIGINTERN PyObject *_wrap_SA_wrap_arr(PyObject *SWIGUNUSEDPARM(self), PyObject 
   PyObject * obj7 = 0 ;
   PyObject * obj8 = 0 ;
   PyObject * obj9 = 0 ;
+  PyObject * obj10 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOO:SA_wrap_arr",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOO:SA_wrap_arr",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10)) SWIG_fail;
   {
     array1 = obj_to_array_contiguous_allow_conversion(obj0, NPY_DOUBLE, &is_new_object1);
     npy_intp size[1] = {
@@ -3625,7 +3734,12 @@ SWIGINTERN PyObject *_wrap_SA_wrap_arr(PyObject *SWIGUNUSEDPARM(self), PyObject 
     arg18 = (double*) array_data(array18);
     arg19 = (int) array_size(array18,0);
   }
-  SA_wrap_arr(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19);
+  ecode20 = SWIG_AsVal_int(obj10, &val20);
+  if (!SWIG_IsOK(ecode20)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode20), "in method '" "SA_wrap_arr" "', argument " "20"" of type '" "int""'");
+  } 
+  arg20 = static_cast< int >(val20);
+  SA_wrap_arr(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20);
   resultobj = SWIG_Py_Void();
   {
     if (is_new_object1 && array1) Py_DECREF(array1);
@@ -3721,6 +3835,7 @@ SWIGINTERN PyObject *_wrap_P2P_c(PyObject *SWIGUNUSEDPARM(self), PyObject *args)
   double arg54 ;
   double *arg55 = (double *) 0 ;
   int arg56 ;
+  int arg57 ;
   PyArrayObject *array1 = NULL ;
   PyArrayObject *array3 = NULL ;
   PyArrayObject *array5 = NULL ;
@@ -3777,6 +3892,8 @@ SWIGINTERN PyObject *_wrap_P2P_c(PyObject *SWIGUNUSEDPARM(self), PyObject *args)
   int ecode54 = 0 ;
   PyArrayObject *array55 = NULL ;
   int is_new_object55 = 0 ;
+  int val57 ;
+  int ecode57 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -3807,8 +3924,9 @@ SWIGINTERN PyObject *_wrap_P2P_c(PyObject *SWIGUNUSEDPARM(self), PyObject *args)
   PyObject * obj27 = 0 ;
   PyObject * obj28 = 0 ;
   PyObject * obj29 = 0 ;
+  PyObject * obj30 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO:P2P_c",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13,&obj14,&obj15,&obj16,&obj17,&obj18,&obj19,&obj20,&obj21,&obj22,&obj23,&obj24,&obj25,&obj26,&obj27,&obj28,&obj29)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO:P2P_c",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13,&obj14,&obj15,&obj16,&obj17,&obj18,&obj19,&obj20,&obj21,&obj22,&obj23,&obj24,&obj25,&obj26,&obj27,&obj28,&obj29,&obj30)) SWIG_fail;
   {
     array1 = obj_to_array_no_conversion(obj0, NPY_DOUBLE);
     if (!array1 || !require_dimensions(array1,1) || !require_contiguous(array1)
@@ -4059,7 +4177,12 @@ SWIGINTERN PyObject *_wrap_P2P_c(PyObject *SWIGUNUSEDPARM(self), PyObject *args)
     arg55 = (double*) array_data(array55);
     arg56 = (int) array_size(array55,0);
   }
-  P2P_c(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29,arg30,arg31,arg32,arg33,arg34,arg35,arg36,arg37,arg38,arg39,arg40,arg41,arg42,arg43,arg44,arg45,arg46,arg47,arg48,arg49,arg50,arg51,arg52,arg53,arg54,arg55,arg56);
+  ecode57 = SWIG_AsVal_int(obj30, &val57);
+  if (!SWIG_IsOK(ecode57)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode57), "in method '" "P2P_c" "', argument " "57"" of type '" "int""'");
+  } 
+  arg57 = static_cast< int >(val57);
+  P2P_c(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26,arg27,arg28,arg29,arg30,arg31,arg32,arg33,arg34,arg35,arg36,arg37,arg38,arg39,arg40,arg41,arg42,arg43,arg44,arg45,arg46,arg47,arg48,arg49,arg50,arg51,arg52,arg53,arg54,arg55,arg56,arg57);
   resultobj = SWIG_Py_Void();
   {
     if (is_new_object9 && array9) Py_DECREF(array9);
