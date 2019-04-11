@@ -96,25 +96,11 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
     for (int j = 0; j < 3; j++){true_center[j] = center[j] - Z_u_norm[j] * absZ;}
 
     // Loop over gauss points
+
     REAL R;
-    for (int nn = -(n - 1)/2; nn < (n + 1)/2; nn++)
+    for (int nn = -10; nn < 11; nn++)
     {   
-        if (nn != 0)
-        {
-        REAL Q_i, z_i;
-        int n_abs = fabs(nn);
-        Q_i = pow(fact, n_abs);
-        z_i = nn * a + (pow(-1, nn) * center[2]);
-//        std::cout << nn;
-//        std::cout << '\n';
-        std::cout << true_center[2];
-        std::cout << '\n';
-//        std::cout << '\n';
-        R = sqrt(z_i * z_i + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
-        PHI[0] += Area * Q_i/R;
-        PHI[1] += Area * Q_i * (z_i - center[2])/(R * R * R) * Z_u_norm[2];
-        }
-        else
+        if (nn==0)
         {
             for (int i=0; i<K; i++){
                 REAL thetak, Rtheta;
@@ -124,6 +110,21 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
                 PHI[0]+= wk[i] * (R-absZ) * dtheta/2;
                 PHI[1]+= wk[i] * (z/R - signZ) * dtheta/2;
             }
+        }
+        else
+        {
+            REAL Q_i, z_i;
+            int n_abs = fabs(nn);
+            Q_i = pow(fact, n_abs);
+            z_i = nn * a + (pow(-1, nn) * center[2]);
+    //        std::cout << nn;
+    //        std::cout << '\n';
+            std::cout << true_center[2];
+            std::cout << '\n';
+    //        std::cout << '\n';
+            R = sqrt(z_i * z_i + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
+            PHI[0] += Area * Q_i/R;
+            PHI[1] += Area * Q_i * (z_i - center[2])/(R * R * R) * Z_u_norm[2];
         }
     }
     for (int i=0; i<K; i++){
