@@ -98,7 +98,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
     // Loop over gauss points
 
     REAL R;
-    for (int nn = -10; nn < 11; nn++)
+    for (int nn = -(n - 1)/2; nn < (n + 1)/2; nn++)
     {   
         if (nn==0)
         {
@@ -117,11 +117,6 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
             int n_abs = fabs(nn);
             Q_i = pow(fact, n_abs);
             z_i = nn * a + (pow(-1, nn) * center[2]);
-    //        std::cout << nn;
-    //        std::cout << '\n';
-            std::cout << true_center[2];
-            std::cout << '\n';
-    //        std::cout << '\n';
             R = sqrt(z_i * z_i + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
             PHI[0] += Area * Q_i/R;
             PHI[1] += Area * Q_i * (z_i - center[2])/(R * R * R) * Z_u_norm[2];
@@ -208,7 +203,6 @@ void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL E, REAL *xk, REAL *wk, 
         for(int i=0; i<4; i++)
             PHI[i] -= PHI_aux[i];
     }
-
 }
 
 
@@ -298,6 +292,10 @@ void SA_wrap_arr(REAL *y, int ySize, REAL *x, int xSize,
 {
     int N = pYSize;
     
+    std::cout << "WTF    ";
+    std::cout << N;
+    std::cout << '\n';
+
     for(int i=0; i<N; i++)
     {
         REAL PHI_1[4] = {0.,0.,0.,0.};
@@ -307,6 +305,9 @@ void SA_wrap_arr(REAL *y, int ySize, REAL *x, int xSize,
         dphi_Y[i] = PHI_1[1];
         phi_L[i]  = PHI_1[2];
         dphi_L[i] = PHI_1[3];
+        std::cout << '\n';
+        std::cout << "El Centro es:";
+        std::cout << '\n';
         std::cout << x_1[2];
         std::cout << '\n';
         std::cout << '\n';
