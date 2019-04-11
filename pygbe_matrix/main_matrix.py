@@ -26,6 +26,7 @@ from interactionCalculation import computeInter
 from energyCalculation      import (fill_phi, solvationEnergy, coulombicEnergy,
                             surfaceEnergy, dipoleMoment, extCrossSection)
 
+import os
 
 def read_inputs():
     """
@@ -225,3 +226,5 @@ print 'Esolv = %f + %fj kcal/mol'%(sum(Esolv).real,sum(Esolv).imag)
 print 'Esurf = %f + %fj kcal/mol'%(sum(Esurf).real,sum(Esurf).imag)
 print 'Ecoul = %f kcal/mol'%sum(Ecoul)
 print '\nTime = %f s'%(toc-tic)
+
+os.system('spd-say "Jobs done"')

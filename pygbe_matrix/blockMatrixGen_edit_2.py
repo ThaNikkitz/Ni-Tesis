@@ -214,7 +214,7 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
                 dG_Y = zeros(1)
                 G_L  = zeros(1)
                 dG_L = zeros(1)
-                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, E, array([1], dtype=int32), xk, wk, n)
+                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, E, array([1], dtype=int32), xk, wk, n, tar.Area[i])
 
                 if LorY==1:   # if Laplace
                     K_lyr[i,i]  = dG_L
