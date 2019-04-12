@@ -291,10 +291,6 @@ void SA_wrap_arr(REAL *y, int ySize, REAL *x, int xSize,
             REAL E, int *same, int sameSize, REAL *xk, int xkSize, REAL *wk, int wkSize, int n, REAL Area)
 {
     int N = pYSize;
-    
-    std::cout << "WTF    ";
-    std::cout << N;
-    std::cout << '\n';
 
     for(int i=0; i<N; i++)
     {
@@ -305,13 +301,7 @@ void SA_wrap_arr(REAL *y, int ySize, REAL *x, int xSize,
         dphi_Y[i] = PHI_1[1];
         phi_L[i]  = PHI_1[2];
         dphi_L[i] = PHI_1[3];
-        std::cout << '\n';
-        std::cout << "El Centro es:";
-        std::cout << '\n';
-        std::cout << x_1[2];
-        std::cout << '\n';
-        std::cout << '\n';
-        std::cout << '\n';
+
     }
 }
 
