@@ -102,7 +102,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
     {   
         if (nn==0)
         {
-            for (int i=0; i<K; i++){
+           for (int i=0; i<K; i++){
                 REAL thetak, Rtheta;
                 thetak = dtheta/2 * xk[i] + thetam;
                 Rtheta = x/cos(thetak);
@@ -116,10 +116,10 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
             REAL Q_i, z_i;
             int n_abs = fabs(nn);
             Q_i = pow(fact, n_abs);
-            z_i = nn * a + (pow(-1, nn) * center[2]);
-            R = sqrt(z_i * z_i + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
+            z_i = nn * a + (pow((-1.0), nn)) * center[2];
+            R = sqrt((true_center[2] - z_i)*(true_center[2] - z_i) + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
             PHI[0] += Area * Q_i/R;
-            PHI[1] += Area * Q_i * (z_i - center[2])/(R * R * R) * Z_u_norm[2];
+            PHI[1] += Area * Q_i * (z_i - true_center[2])/(R * R * R);
         }
     }
     for (int i=0; i<K; i++){
