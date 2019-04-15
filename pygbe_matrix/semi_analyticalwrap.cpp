@@ -119,7 +119,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
             z_i = nn * a + (pow((-1.0), nn)) * center[2];
             R = sqrt((true_center[2] - z_i)*(true_center[2] - z_i) + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
             PHI[0] += Area * Q_i/R;
-            PHI[1] += Area * Q_i * (z_i - true_center[2])/(R * R * R);
+            PHI[1] += Area * Q_i/3 * (z_i - true_center[2])/(R * R * R);
         }
     }
     for (int i=0; i<K; i++){

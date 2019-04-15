@@ -147,8 +147,6 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         e_pos = reshape(e_pos,(Nt, Ns*K_fine, n))
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:,nn] = W*((epsilon_m - E)/(E + epsilon_m))**abs(nn)
-#            if nn == 4:
-#                print Q_i[:,nn] - W
             for ii in range(Ns*K_fine):
                 i_pos[ii,nn] = ((-1)**nn)*Xj[ii,2] + nn*a                
         dzz = e_pos - i_pos
@@ -170,7 +168,11 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
 
 #       Adjoint Double layer 
-        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
+#        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
+
+        Kp_lyr = -Area * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis=2))*normal_tar[:,0])
+                         + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis=2))*normal_tar[:,1])
+                         + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2]) )
 
     return K_lyr, V_lyr, Kp_lyr
 

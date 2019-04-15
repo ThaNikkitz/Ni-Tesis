@@ -128,6 +128,9 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
 
     if LorY==1:   # if Laplace
 #       Double layer 
+
+        print 'LAPLACE:'
+
         K_lyr = src.Area * (sum(WK/r**3*dx, axis=2)*src.normal[:,0]
                           + sum(WK/r**3*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**3*dz, axis=2)*src.normal[:,2])
@@ -140,6 +143,8 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
                              + transpose(transpose(sum(WK/r**3*dz, axis=2))*tar.normal[:,2]) )
 
     else:           # if Yukawa
+
+        print '"YUKAWA" (RIC)'
 
         dumb_dummy = numpy.zeros((Nt, Ns, K))
         dumb_dummy_1 = numpy.zeros((Nt, Ns, K))
@@ -171,8 +176,11 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         V_lyr = src.Area * sum(dumb_dummy, axis = 2)
 
 #       Adjoint double layer
-        Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
-        
+#        Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
+        Kp_lyr = -src.Area * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis=2))*tar.normal[:,0])
+                             + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis=2))*tar.normal[:,1])
+                             + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis=2))*tar.normal[:,2]) )
+
 
     same = zeros((Nt,Ns),dtype=int32)
     if abs(src.xi[0]-tar.xi[0])<1e-10:
@@ -200,7 +208,6 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         normal_tar = tar.normal[an_integrals]
 
         K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, E, LorY, eps, n)
-#        print K_aux, V_aux, Kp_aux
         K_lyr[an_integrals,i]  = K_aux[:,0]
         V_lyr[an_integrals,i]  = V_aux[:,0]
         Kp_lyr[an_integrals,i] = Kp_aux[:,0]
@@ -228,6 +235,8 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
                 N_analytical += 1
 
     print '\t%i analytical integrals'%(N_analytical/Ns)
+
+    print sum(V_lyr), sum(K_lyr)
 
     return K_lyr, V_lyr, Kp_lyr
 

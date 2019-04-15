@@ -3120,8 +3120,7 @@ extern void SA_wrap_arr(double *y, int ySize,
                     double E, 
                     int    *same, int sameSize, 
                     double *xk, int xkSize, 
-                    double *wk, int wkSize, int n,
-                    double Area);
+                    double *wk, int wkSize, int n, double Area_i);
 
 extern void P2P_c(double *MY, int MYSize, double *dMY, int dMYSize, double *ML, int MLSize, double *dML, int dMLSize,
         double *triangle, int triangleSize, int *tri, int triSize, int *k, int kSize, 
