@@ -156,18 +156,21 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         e_pos = numpy.matlib.repmat(e_pos, n, 1)
         e_pos = reshape(e_pos,(Nt, Ns*K, n))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:,nn] = WK*((epsilon_m - E)/(epsilon_m + E))**abs(nn)
+            Q_i[:,nn+(n-1)/2] = WK*((epsilon_m - E)/(epsilon_m + E))**abs(nn)
             for ii in range(Ns*K):
-                i_pos[ii,nn] = ((-1)**nn)*src.zj[ii] + nn*a  
+                i_pos[ii,nn+(n-1)/2] = ((-1)**nn)*src.zj[ii] + nn*a  
+                print i_pos[ii,nn+(n-1)/2]
+                print nn
+                print src.zj[ii]
 
         dzz = e_pos - i_pos
         dzz = reshape(dzz,(Nt,Ns,K,n))
         r_vec_i = sqrt(dxx**2 + dyy**2 + dzz**2)
 
 #       Double layer
-        dumb_dummy_1 = 	sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
+        dumb_dummy_1 = 	sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
         dumb_dummy_2 = 	sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
-        dumb_dummy_3 = 	sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
+        dumb_dummy_3 = 	sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
 
         K_lyr = src.Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
@@ -177,9 +180,9 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
 
 #       Adjoint double layer
 #        Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
-        Kp_lyr = -src.Area * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis=2))*tar.normal[:,0])
+        Kp_lyr = -src.Area * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis=2))*tar.normal[:,2])
                              + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis=2))*tar.normal[:,1])
-                             + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis=2))*tar.normal[:,2]) )
+                             + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis=2))*tar.normal[:,0]) )
 
 
     same = zeros((Nt,Ns),dtype=int32)
