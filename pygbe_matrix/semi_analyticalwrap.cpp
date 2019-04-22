@@ -98,38 +98,37 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
     // Loop over gauss points
 
     REAL R;
-    for (int nn = -(n - 1)/2; nn < (n + 1)/2; nn++)
-    {   
-        if (nn==0)
-        {
-           for (int i=0; i<K; i++){
-                REAL thetak, Rtheta;
-                thetak = dtheta/2 * xk[i] + thetam;
-                Rtheta = x/cos(thetak);
-                R      = sqrt(Rtheta * Rtheta + z*z);
-                PHI[0]+= wk[i] * (R-absZ) * dtheta/2;
-                PHI[1]+= wk[i] * (z/R - signZ) * dtheta/2;
+        for (int nn = -(n - 1)/2; nn < (n + 1)/2; nn++)
+        {   
+            if (nn==0){
+                for (int i=0; i<K; i++){            
+                    REAL thetak, Rtheta;
+                    thetak = dtheta/2 * xk[i] + thetam;
+                    Rtheta = x/cos(thetak);
+                    R      = sqrt(Rtheta * Rtheta + z*z);
+                    PHI[0]+= wk[i] * (R-absZ) * dtheta/2;
+                    PHI[1]+= wk[i] * (z/R - signZ) * dtheta/2;
+                }
+            }
+            else
+            {
+                REAL Q_i, z_i;
+                int n_abs = fabs(nn);
+                Q_i = pow(fact, n_abs);
+                z_i = nn * a + (pow((-1.0), nn)) * center[2];
+                R = sqrt((true_center[2] - z_i)*(true_center[2] - z_i) + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
+                PHI[0] += Area * Q_i/R;
+                PHI[1] += Area * Q_i * ((z_i - true_center[2]) * Z_u_norm[2])/(R * R * R);
             }
         }
-        else
-        {
-            REAL Q_i, z_i;
-            int n_abs = fabs(nn);
-            Q_i = pow(fact, n_abs);
-            z_i = nn * a + (pow((-1.0), nn)) * center[2];
-            R = sqrt((true_center[2] - z_i)*(true_center[2] - z_i) + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1] * absZ));
-            PHI[0] += Area * Q_i/R;
-            PHI[1] += Area * Q_i * ((z_i - true_center[2]) * Z_u_norm[2])/(R * R * R);
+        for (int i=0; i<K; i++){
+            REAL thetak, Rtheta;
+            thetak = dtheta/2 * xk[i] + thetam;
+            Rtheta = x/cos(thetak);
+            R = sqrt(Rtheta * Rtheta + z * z);
+            PHI[2]+= wk[i] * (R-absZ) * dtheta/2;
+            PHI[3]+= wk[i] * (z/R - signZ) * dtheta/2;
         }
-    }
-    for (int i=0; i<K; i++){
-        REAL thetak, Rtheta;
-        thetak = dtheta/2 * xk[i] + thetam;
-        Rtheta = x/cos(thetak);
-        R = sqrt(Rtheta * Rtheta + z * z);
-        PHI[2]+= wk[i] * (R-absZ) * dtheta/2;
-        PHI[3]+= wk[i] * (z/R - signZ) * dtheta/2;
-    }
 }
 
 void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL E, REAL *xk, REAL *wk, REAL *vert_i, REAL *vert_f, REAL *center, int K, int n, REAL Area)

@@ -136,36 +136,30 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
     else:           # if Yukawa
 
-        dumb_dummy = zeros((Nt, Ns, K_fine))
-        dumb_dummy_1 = numpy.zeros((Nt, Ns, K_fine))
-        dumb_dummy_2 = numpy.zeros((Nt, Ns, K_fine))
-        dumb_dummy_3 = numpy.zeros((Nt, Ns, K_fine))
-        Q_i = zeros((K_fine, n))
-        i_pos = zeros((Ns*K_fine,n))
-        e_pos = ones((Ns*K_fine, Nt))*zi
-        e_pos = numpy.matlib.repmat(e_pos, n, 1)
-        e_pos = reshape(e_pos,(Nt, Ns*K_fine, n))
+        Q_i = numpy.zeros((K_fine,n))
+        i_pos = numpy.zeros((Ns*K_fine,n))
+        e_pos = numpy.ones((Ns*K_fine,1))*zi
+        e_pos = numpy.matlib.repmat(e_pos,n,1)
+        e_pos = reshape(e_pos,(Nt,Ns*K_fine,n))
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:,nn+(n-1)/2] = W*((epsilon_m - E)/(E + epsilon_m))**abs(nn)
             for ii in range(Ns*K_fine):
-                i_pos[ii,nn+(n-1)/2] = ((-1)**nn)*Xj[ii,2] + nn*a                
+                i_pos[ii,nn+(n-1)/2] = ((-1.0)**nn)*Xj[ii,2] + nn*a
+
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt, Ns, K_fine, n))
         r_vec_i = sqrt(dzz**2 + dxx**2 + dyy**2)
-#        r_vec_i = reshape(r_vec_i, (Nt, Ns, K_fine, n))
 
 #       Double layer 
-        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis = 2)*normal[2]
-        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis = 2)*normal[1]
-        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis = 2)*normal[0]
+        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*normal[2]
+        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*normal[1]
+        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*normal[0]
 
         K_lyr = Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
 #       Single layer
-        dumb_dummy = sum(Q_i/r_vec_i, axis = 3)
         
-        V_lyr = Area * sum(dumb_dummy, axis=2)
-
+        V_lyr = Area * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
 
 #       Adjoint Double layer 
 #        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 

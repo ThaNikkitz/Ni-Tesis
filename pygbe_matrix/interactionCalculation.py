@@ -41,6 +41,8 @@ def computeInter(surf_array, field_array, param):
 
     for f in field_array:
     
+        k_or_E = f.E
+
 #       Effect on child surfaces
         for i in f.child:
             tar = surf_array[i]
@@ -48,7 +50,7 @@ def computeInter(surf_array, field_array, param):
             for j in f.child:
                 print 'Target: %i, Source: %i'%(i,j)
                 src = surf_array[j]
-                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
+                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, k_or_E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
                 if i==j:    # Self-external
                     Diag = 2*pi*identity(len(K_lyr))
 
@@ -78,7 +80,7 @@ def computeInter(surf_array, field_array, param):
                     else:           # if Yukawa
                         tar.Kext[j][:,:] = -K_lyr[:,:]
                         tar.Kpext[j][:,:]= -Kp_lyr[:,:]
-                        tar.Vext[j][:,:] =  src.Ehat*V_lyr[:,:]
+                        tar.Vext[j][:,:] =  2. * V_lyr[:,:]#src.Ehat*V_lyr[:,:]
                         tar.KextSym[j]  += '      -KY%i%i'%(i,j) 
                         tar.KpextSym[j] += '     -KpY%i%i'%(i,j) 
                         tar.VextSym[j]  += '    Eh%iVY%i%i'%(j,i,j) 
@@ -88,7 +90,7 @@ def computeInter(surf_array, field_array, param):
                 j = f.parent[0]
                 print 'Target: %i, Source: %i'%(i,j)
                 src = surf_array[j]
-                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
+                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, k_or_E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
                 if f.LorY==1:   # if Laplace
                     tar.Kext[j][:,:] =  K_lyr[:]
                     tar.Kpext[j][:,:]=  Kp_lyr[:]
@@ -112,7 +114,7 @@ def computeInter(surf_array, field_array, param):
             for j in f.child:
                 print 'Target: %i, Source: %i'%(i,j)
                 src = surf_array[j]
-                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
+                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, k_or_E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
                 if f.LorY==1:   # if Laplace
                     tar.Kint[j] = -K_lyr[:]
                     tar.Kpint[j]= -Kp_lyr[:]
@@ -123,7 +125,7 @@ def computeInter(surf_array, field_array, param):
                 else:
                     tar.Kint[j] = -K_lyr[:]
                     tar.Kpint[j]= -Kp_lyr[:]
-                    tar.Vint[j] =  src.Ehat*V_lyr[:]
+                    tar.Vint[j] =  2.*V_lyr[:]#src.Ehat*V_lyr[:]
                     tar.KintSym[j] += '      -KY%i%i'%(i,j) 
                     tar.KpintSym[j]+= '     -KpY%i%i'%(i,j) 
                     tar.VintSym[j] += '    Eh%iVY%i%i'%(j,i,j) 
@@ -132,7 +134,7 @@ def computeInter(surf_array, field_array, param):
             j = i
             print 'Target: %i, Source: %i'%(i,j)
             src = surf_array[j]
-            K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
+            K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, k_or_E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, NNN)
             Diag = 2*pi*identity(len(K_lyr))
 
             if f.LorY==1:  # if Laplace
