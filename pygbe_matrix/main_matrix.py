@@ -227,4 +227,4 @@ print 'Esurf = %f + %fj kcal/mol'%(sum(Esurf).real,sum(Esurf).imag)
 print 'Ecoul = %f kcal/mol'%sum(Ecoul)
 print '\nTime = %f s'%(toc-tic)
 
-os.system('spd-say "ASDASDASASD!"')
+#os.system('spd-say "ASDASDASASD!"')

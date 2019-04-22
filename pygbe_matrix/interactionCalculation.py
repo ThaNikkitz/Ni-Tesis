@@ -73,14 +73,14 @@ def computeInter(surf_array, field_array, param):
                     if f.LorY==1:   # if Laplace
                         tar.Kext[j][:,:] = -K_lyr[:,:]
                         tar.Kpext[j][:,:]= -Kp_lyr[:,:]
-                        tar.Vext[j][:,:] =  src.Ehat*V_lyr[:,:]
+                        tar.Vext[j][:,:] = src.Ehat*V_lyr[:,:]
                         tar.KextSym[j]  += '      -KL%i%i'%(i,j) 
                         tar.KpextSym[j] += '     -KpL%i%i'%(i,j) 
                         tar.VextSym[j]  += '    Eh%iVL%i%i'%(j,i,j) 
                     else:           # if Yukawa
                         tar.Kext[j][:,:] = -K_lyr[:,:]
                         tar.Kpext[j][:,:]= -Kp_lyr[:,:]
-                        tar.Vext[j][:,:] =  2. * V_lyr[:,:]#src.Ehat*V_lyr[:,:]
+                        tar.Vext[j][:,:] = src.Ehat*V_lyr[:,:]
                         tar.KextSym[j]  += '      -KY%i%i'%(i,j) 
                         tar.KpextSym[j] += '     -KpY%i%i'%(i,j) 
                         tar.VextSym[j]  += '    Eh%iVY%i%i'%(j,i,j) 
@@ -125,7 +125,7 @@ def computeInter(surf_array, field_array, param):
                 else:
                     tar.Kint[j] = -K_lyr[:]
                     tar.Kpint[j]= -Kp_lyr[:]
-                    tar.Vint[j] =  2.*V_lyr[:]#src.Ehat*V_lyr[:]
+                    tar.Vint[j] = src.Ehat*V_lyr[:]
                     tar.KintSym[j] += '      -KY%i%i'%(i,j) 
                     tar.KpintSym[j]+= '     -KpY%i%i'%(i,j) 
                     tar.VintSym[j] += '    Eh%iVY%i%i'%(j,i,j) 
