@@ -110,21 +110,31 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
     K  = len(WK)
 
     a = 100. #10 nm cell membrane thickness
-    epsilon_m = 2.
+    epsilon_w = 80.
 
     dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
-    dxx = numpy.matlib.repmat(dx, n, 1)
+#    dxx = numpy.matlib.repmat(dx, n, 1)
     dy = transpose(ones((Ns*K,1))*tar.yi) - src.yj
-    dyy = numpy.matlib.repmat(dy, n, 1)
+#    dyy = numpy.matlib.repmat(dy, n, 1)
     dz = transpose(ones((Nt*K,1))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
-    dxx = reshape(dxx,(Nt, Ns, K, n))
+#    dxx = reshape(dxx,(Nt, Ns, K, n))
+    dxx = numpy.zeros((Nt,Ns,K,n))
     dy = reshape(dy,(Nt,Ns,K))
-    dyy = reshape(dyy,(Nt, Ns, K, n))
+#    dyy = reshape(dyy,(Nt, Ns, K, n))
+    dyy = numpy.zeros((Nt,Ns,K,n))
+    for i in range(n):
+        dxx[:,:,:,i] = dx
+        dyy[:,:,:,i] = dy
+
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
+
+#    print dxx[:5, :5, :, 1]
+#    print '\n'
+#    print dxx[:5, :5, :, 3]
 
     if LorY==1:   # if Laplace
 #       Double layer 
@@ -152,13 +162,13 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         e_pos = numpy.matlib.repmat(e_pos,n,1)
         e_pos = reshape(e_pos,(Nt,Ns*K,n))
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:,nn+(n-1)/2] = WK*((epsilon_m - E)/(epsilon_m + E))**abs(nn)
+            Q_i[:,nn+(n-1)/2] = WK[:]*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
             for ii in range(Ns*K):
-                i_pos[ii,nn+(n-1)/2] = ((-1.0)**nn)*src.zj[ii] + nn*a  
+                i_pos[ii,nn+(n-1)/2] = ((-1)**nn)*src.zj[ii] + nn*a
 
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt, Ns, K, n))
-        r_vec_i = sqrt(dxx**2 + dyy**2 + dzz**2)
+        r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2)
 
 #       Double layer
         dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]

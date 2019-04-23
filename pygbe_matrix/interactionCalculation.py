@@ -31,7 +31,7 @@ from semi_analytical import GQ_1D
 #from semi_analytical import GQ_1D
 from GaussIntegration import getWeights
 
-NNN = 61
+NNN = 21
 
 def computeInter(surf_array, field_array, param):
 
