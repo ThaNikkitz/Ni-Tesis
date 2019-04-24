@@ -108,25 +108,19 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     Nt = len(xi)
 
     dx = transpose(ones((Ns*K_fine,Nt))*xi) - Xj[:,0]
-#    dxx = numpy.matlib.repmat(dx, n, 1)
+    dxx = numpy.repeat(dx, n)
     dy = transpose(ones((Ns*K_fine,Nt))*yi) - Xj[:,1]
-#    dyy = numpy.matlib.repmat(dy, n, 1)
+    dyy = numpy.repeat(dy, n)
     dz = transpose(ones((Ns*K_fine,Nt))*zi) - Xj[:,2]
 
     r = sqrt(dx*dx+dy*dy+dz*dz) # Por que no usa eps**2 aca, pero si en blockMatrix?
 
     dx = reshape(dx,(Nt,Ns,K_fine))
-#    dxx = reshape(dxx, (Nt, Ns, K_fine, n))
-    dxx = numpy.zeros((Nt, Ns, K_fine, n))
+    dxx = reshape(dxx, (Nt, Ns, K_fine, n))
     dy = reshape(dy,(Nt,Ns,K_fine))
-#    dyy = reshape(dyy, (Nt, Ns, K_fine, n))
-    dyy = numpy.zeros((Nt, Ns, K_fine, n))
+    dyy = reshape(dyy, (Nt, Ns, K_fine, n))
     dz = reshape(dz,(Nt,Ns,K_fine))
     r  = reshape(r,(Nt,Ns,K_fine))
-
-    for i in range(n):
-        dxx[:,:,:,i] = dx
-        dyy[:,:,:,i] = dy
 
     if LorY==1:   # if Laplace
 #       Double layer 
@@ -144,19 +138,25 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
         Q_i = numpy.zeros((K_fine,n))
         i_pos = numpy.zeros((Ns*K_fine,n))
-        e_pos = numpy.ones((Ns*K_fine,1))*zi
-        e_pos = numpy.matlib.repmat(e_pos,n,1)
-        e_pos = reshape(e_pos,(Nt,Ns*K_fine,n))
+        e_pos = numpy.ones((Ns*K_fine,Nt))*zi
+        e_pos = numpy.repeat(e_pos,n)
+        e_pos = reshape(e_pos,(Nt,Ns*K_fine,n), 'F')
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:,nn+(n-1)/2] = W[:]*((E - epsilon_w)/(E + epsilon_w))**abs(nn)
             for ii in range(Ns*K_fine):
                 i_pos[ii,nn+(n-1)/2] = ((-1.)**nn)*Xj[ii,2] + nn*a
 
+#        dzz = numpy.zeros((Nt, Ns, K_fine, n))
+
+#        for i in range(Nt):
+#            for j in range(Ns):
+#                for kk in range(K_fine):
+#                    for nn in range(n):
+#                        dzz[i,j,kk,nn] = e_pos[i,kk*j,nn] - i_pos[kk*j,nn]
+
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt, Ns, K_fine, n))
         r_vec_i = numpy.sqrt(dzz**2 + dxx**2 + dyy**2)
-
-#        print sum(r_vec_i)
 
 #       Double layer 
         dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*normal[2]

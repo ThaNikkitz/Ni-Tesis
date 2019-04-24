@@ -112,29 +112,20 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
     a = 100. #10 nm cell membrane thickness
     epsilon_w = 80.
 
-    dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
-#    dxx = numpy.matlib.repmat(dx, n, 1)
-    dy = transpose(ones((Ns*K,1))*tar.yi) - src.yj
-#    dyy = numpy.matlib.repmat(dy, n, 1)
-    dz = transpose(ones((Nt*K,1))*tar.zi) - src.zj
+    dx = transpose(ones((Ns*K,Nt))*tar.xi) - src.xj
+    dxx = numpy.repeat(dx, n)
+    dy = transpose(ones((Ns*K,Nt))*tar.yi) - src.yj
+    dyy = numpy.repeat(dy, n)
+    dz = transpose(ones((Nt*K,Nt))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
-#    dxx = reshape(dxx,(Nt, Ns, K, n))
-    dxx = numpy.zeros((Nt,Ns,K,n))
+    dxx = reshape(dxx,(Nt, Ns, K, n))
     dy = reshape(dy,(Nt,Ns,K))
-#    dyy = reshape(dyy,(Nt, Ns, K, n))
-    dyy = numpy.zeros((Nt,Ns,K,n))
-    for i in range(n):
-        dxx[:,:,:,i] = dx
-        dyy[:,:,:,i] = dy
+    dyy = reshape(dyy,(Nt, Ns, K, n))
 
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
-
-#    print dxx[:5, :5, :, 1]
-#    print '\n'
-#    print dxx[:5, :5, :, 3]
 
     if LorY==1:   # if Laplace
 #       Double layer 
@@ -144,6 +135,7 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         K_lyr = src.Area * (sum(WK/r**3*dx, axis=2)*src.normal[:,0]
                           + sum(WK/r**3*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**3*dz, axis=2)*src.normal[:,2])
+        
 #       Single layer
         V_lyr = src.Area * sum(WK/r, axis=2)
 
@@ -159,15 +151,24 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         Q_i = numpy.zeros((K,n))
         i_pos = numpy.zeros((Ns*K,n))
         e_pos = numpy.ones((Ns*K,1))*tar.zi
-        e_pos = numpy.matlib.repmat(e_pos,n,1)
-        e_pos = reshape(e_pos,(Nt,Ns*K,n))
+        e_pos = numpy.repeat(e_pos,n)
+        e_pos = reshape(e_pos,(Nt,Ns*K,n), 'F')
         for nn in range(-(n-1)/2, (n+1)/2):
             Q_i[:,nn+(n-1)/2] = WK[:]*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
             for ii in range(Ns*K):
-                i_pos[ii,nn+(n-1)/2] = ((-1)**nn)*src.zj[ii] + nn*a
+                i_pos[ii,nn+(n-1)/2] = ((-1.)**nn)*src.zj[ii] + nn*a
+
+#        dzz = numpy.zeros((Nt,Ns,K,n))
+
+#        for i in range(Nt):
+#            for j in range(Ns):
+#                for kk in range(K):
+#                    for nn in range(n):
+#                        dzz[i,j,kk,nn] = e_pos[i,kk*j,nn] - i_pos[kk*j,nn]
 
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt, Ns, K, n))
+    
         r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2)
 
 #       Double layer
