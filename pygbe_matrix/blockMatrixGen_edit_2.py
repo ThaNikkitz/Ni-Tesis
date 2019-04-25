@@ -109,20 +109,22 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    a = 100. #10 nm cell membrane thickness
+    a = 10000000. #10 nm cell membrane thickness
     epsilon_w = 80.
 
     dx = transpose(ones((Ns*K,Nt))*tar.xi) - src.xj
-    dxx = numpy.repeat(dx, n)
+#    dxx = numpy.repeat(dx, n)
     dy = transpose(ones((Ns*K,Nt))*tar.yi) - src.yj
-    dyy = numpy.repeat(dy, n)
+#    dyy = numpy.repeat(dy, n)
     dz = transpose(ones((Nt*K,Nt))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
-    dxx = reshape(dxx,(Nt, Ns, K, n))
+    dxx = numpy.tile(dx,n)
+#    dxx = reshape(dxx,(Nt, Ns, K, n))
     dy = reshape(dy,(Nt,Ns,K))
-    dyy = reshape(dyy,(Nt, Ns, K, n))
+    dyy = numpy.tile(dy,n)
+#    dyy = reshape(dyy,(Nt, Ns, K, n))
 
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
@@ -148,33 +150,28 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
 
         print '"YUKAWA" (RIC)'
 
-        Q_i = numpy.zeros((K,n))
-        i_pos = numpy.zeros((Ns*K,n))
-        e_pos = numpy.ones((Ns*K,1))*tar.zi
-        e_pos = numpy.repeat(e_pos,n)
-        e_pos = reshape(e_pos,(Nt,Ns*K,n), 'F')
+        Q_i = numpy.zeros(n)
+        dzz = numpy.zeros((Nt,Ns,K,n))
+#        dxx = numpy.zeros((Nt,Ns,K,n))
+#        dyy = numpy.zeros((Nt,Ns,K,n))
+
+        for i in range(Nt):
+            for j in range(Ns):
+                for kk in range(K):
+                    for nn in range(-(n-1)/2,(n+1)/2):
+                        dzz[i,j,kk,nn+(n-1)/2] = tar.zi[i] - (((-1.)**nn)*src.zj[j*kk] + nn*a)
+#                        dxx[i,j,kk,nn+(n-1)/2] = dx[i,j,kk]
+#                        dyy[i,j,kk,nn+(n-1)/2] = dy[i,j,kk]
+
         for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[:,nn+(n-1)/2] = WK[:]*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
-            for ii in range(Ns*K):
-                i_pos[ii,nn+(n-1)/2] = ((-1.)**nn)*src.zj[ii] + nn*a
-
-#        dzz = numpy.zeros((Nt,Ns,K,n))
-
-#        for i in range(Nt):
-#            for j in range(Ns):
-#                for kk in range(K):
-#                    for nn in range(n):
-#                        dzz[i,j,kk,nn] = e_pos[i,kk*j,nn] - i_pos[kk*j,nn]
-
-        dzz = e_pos - i_pos
-        dzz = reshape(dzz, (Nt, Ns, K, n))
+            Q_i[nn+(n-1)/2] = ((E - epsilon_w)/(epsilon_w + E))**abs(nn)
     
         r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2)
 
 #       Double layer
-        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
-        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
-        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
+        dumb_dummy_1 = sum(WK*sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
+        dumb_dummy_2 = sum(WK*sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
+        dumb_dummy_3 = sum(WK*sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
 
         K_lyr = src.Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 

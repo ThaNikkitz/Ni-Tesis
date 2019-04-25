@@ -83,7 +83,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
     REAL thetam = (theta2 + theta1)/2;
 
     REAL epsilon_w = 80.;
-    REAL a = 100.;
+    REAL a = 10000000.;
     REAL fact = (E - epsilon_w)/(epsilon_w + E);
 
     REAL Z_unit[3], Z_u_norm[3], true_center[3];
