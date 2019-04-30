@@ -92,7 +92,7 @@ def getGaussPoints(y,triangle, n):
 
 def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, E, LorY, eps, n):
 
-    a = 10000000. #10 nm cell membrane thickness
+    a = 100. #10 nm cell membrane thickness
     epsilon_w = 80.
 
     xi = local_center[:,0]
@@ -114,9 +114,9 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     r = sqrt(dx*dx+dy*dy+dz*dz) # Por que no usa eps**2 aca, pero si en blockMatrix?
 
     dx = reshape(dx,(Nt,Ns,K_fine))
-    dxx = numpy.tile(dx,n)
+    dxx = numpy.repeat(dx[:, :, :, numpy.newaxis], n, axis=3)
     dy = reshape(dy,(Nt,Ns,K_fine))
-    dyy = numpy.tile(dy,n)
+    dyy = numpy.repeat(dy[:, :, :, numpy.newaxis], n, axis=3)
     dz = reshape(dz,(Nt,Ns,K_fine))
     r  = reshape(r,(Nt,Ns,K_fine))
 
@@ -134,38 +134,34 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
     else:           # if Yukawa
 
-        Q_i = numpy.zeros(n)
-        dzz = numpy.zeros((Nt,Ns,K_fine,n))
-#        dxx = numpy.zeros((Nt,Ns,K_fine,n))
-#        dyy = numpy.zeros((Nt,Ns,K_fine,n))
+        Q_i = numpy.zeros((K_fine,n))
+        e_pos = transpose(numpy.ones((Ns*K_fine,1))*zi)
+        e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
+        i_pos = numpy.zeros((Ns*K_fine,n))
 
-        for i in range(Nt):
-            for j in range(Ns):
-                for kk in range(K_fine):
-                    for nn in range(-(n-1)/2, (n+1)/2):
-                        dzz[i,j,kk,nn+(n-1)/2] = zi[i] - (((-1.)**nn)*Xj[j*kk,2] + nn*a)
-#                        dxx[i,j,kk,nn+(n-1)/2] = dx[i,j,kk]
-#                        dyy[i,j,kk,nn+(n-1)/2] = dy[i,j,kk]
+        for nn in range(-(n-1)/2,(n+1)/2):
+            Q_i[:,nn+(n-1)/2] = W*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
+            for i in range(Ns*K_fine):
+                i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*Xj[i,2] + a*nn
 
-        for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[nn+(n-1)/2] = ((E - epsilon_w)/(epsilon_w + E))**abs(nn)
-
+        dzz = e_pos - i_pos
+        dzz = reshape(dzz, (Nt,Ns,K_fine,n))
         r_vec_i = numpy.sqrt(dzz**2 + dxx**2 + dyy**2)
 
 #       Double layer 
-        dumb_dummy_1 = sum(W*sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*normal[2]
-        dumb_dummy_2 = sum(W*sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*normal[1]
-        dumb_dummy_3 = sum(W*sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*normal[0]
+        dumb_dummy_1 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dzz, axis = 3), axis = 2)*normal[2]
+        dumb_dummy_2 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dyy, axis = 3), axis = 2)*normal[1]
+        dumb_dummy_3 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dxx, axis = 3), axis = 2)*normal[0]
 
-        K_lyr = Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+        K_lyr = Area * (1./(4.*pi*E)) * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
 #       Single layer
         
-        V_lyr = Area * sum(W*sum(Q_i/r_vec_i, axis = 3), axis = 2)
+        V_lyr = Area * (1./(4.*pi*E)) * sum(W*sum(Q_i/r_vec_i, axis = 3), axis = 2)
 
 #       Adjoint Double layer 
 #        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
-        Kp_lyr = -Area * ( transpose(transpose(sum(W*sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2])
+        Kp_lyr = -Area * (1./(4.*pi*E)) * ( transpose(transpose(sum(W*sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2])
                          + transpose(transpose(sum(W*sum(Q_i/r_vec_i**3*dyy , axis = 3), axis=2))*normal_tar[:,1])
                          + transpose(transpose(sum(W*sum(Q_i/r_vec_i**3*dxx , axis = 3), axis=2))*normal_tar[:,0]) )
 

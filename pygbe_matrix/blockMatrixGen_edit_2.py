@@ -109,23 +109,18 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    a = 10000000. #10 nm cell membrane thickness
+    a = 100. #10 nm cell membrane thickness
     epsilon_w = 80.
 
     dx = transpose(ones((Ns*K,Nt))*tar.xi) - src.xj
-#    dxx = numpy.repeat(dx, n)
     dy = transpose(ones((Ns*K,Nt))*tar.yi) - src.yj
-#    dyy = numpy.repeat(dy, n)
     dz = transpose(ones((Nt*K,Nt))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
-    dxx = numpy.tile(dx,n)
-#    dxx = reshape(dxx,(Nt, Ns, K, n))
+    dxx = numpy.repeat(dx[:,:,:,numpy.newaxis], n, axis = 3)
     dy = reshape(dy,(Nt,Ns,K))
-    dyy = numpy.tile(dy,n)
-#    dyy = reshape(dyy,(Nt, Ns, K, n))
-
+    dyy = numpy.repeat(dy[:,:,:,numpy.newaxis], n, axis = 3)
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
 
@@ -150,38 +145,34 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
 
         print '"YUKAWA" (RIC)'
 
-        Q_i = numpy.zeros(n)
-        dzz = numpy.zeros((Nt,Ns,K,n))
-#        dxx = numpy.zeros((Nt,Ns,K,n))
-#        dyy = numpy.zeros((Nt,Ns,K,n))
+        Q_i = numpy.zeros((K,n))
+        e_pos = transpose(numpy.ones((Ns*K,1))*tar.zi)
+        e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
+        i_pos = numpy.zeros((Ns*K,n))
 
-        for i in range(Nt):
-            for j in range(Ns):
-                for kk in range(K):
-                    for nn in range(-(n-1)/2,(n+1)/2):
-                        dzz[i,j,kk,nn+(n-1)/2] = tar.zi[i] - (((-1.)**nn)*src.zj[j*kk] + nn*a)
-#                        dxx[i,j,kk,nn+(n-1)/2] = dx[i,j,kk]
-#                        dyy[i,j,kk,nn+(n-1)/2] = dy[i,j,kk]
+        for nn in range(-(n-1)/2,(n+1)/2):
+            Q_i[:,nn+(n-1)/2] = WK*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
+            for i in range(Ns*K):
+                i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*src.zj[2] + a*nn
 
-        for nn in range(-(n-1)/2, (n+1)/2):
-            Q_i[nn+(n-1)/2] = ((E - epsilon_w)/(epsilon_w + E))**abs(nn)
-    
+        dzz = e_pos - i_pos
+        dzz = reshape(dzz, (Nt,Ns,K,n))
         r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2)
 
 #       Double layer
-        dumb_dummy_1 = sum(WK*sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
-        dumb_dummy_2 = sum(WK*sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
-        dumb_dummy_3 = sum(WK*sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
+        dumb_dummy_1 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dzz, axis = 3), axis = 2)*src.normal[:,2]
+        dumb_dummy_2 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dyy, axis = 3), axis = 2)*src.normal[:,1]
+        dumb_dummy_3 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dxx, axis = 3), axis = 2)*src.normal[:,0]
 
-        K_lyr = src.Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+        K_lyr = src.Area * (1./(4.*pi*E)) * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
 #       Single layer              
 
-        V_lyr = src.Area * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
+        V_lyr = src.Area * (1./(4.*pi*E)) * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
 
 #       Adjoint double layer
 #        Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
-        Kp_lyr = -src.Area * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2))*tar.normal[:,2])
+        Kp_lyr = -src.Area * (1./(4.*pi*E)) * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2))*tar.normal[:,2])
                              + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2))*tar.normal[:,1])
                              + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2))*tar.normal[:,0]) )
 
@@ -225,7 +216,7 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
                 dG_Y = zeros(1)
                 G_L  = zeros(1)
                 dG_L = zeros(1)
-                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, E, array([1], dtype=int32), xk, wk, n, tar.Area[i])
+                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, E, array([1], dtype=int32), xk, wk, n, src.Area[i])
 
                 if LorY==1:   # if Laplace
                     K_lyr[i,i]  = dG_L

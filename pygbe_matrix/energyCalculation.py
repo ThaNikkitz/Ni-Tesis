@@ -53,7 +53,7 @@ def solvationEnergy(surf_array, field_array, param):
 #           First look at child surfaces
             for cs in f.child:
                 s = surf_array[cs]
-                phi_aux = calculate_phir(s.phi, s.Ehat*s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa)
+                phi_aux = calculate_phir(s.phi, s.Ehat*s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.E)#f.kappa)
 
                 phi_reac -= phi_aux     # Minus accounts for normals pointing out
             
@@ -61,7 +61,7 @@ def solvationEnergy(surf_array, field_array, param):
             if len(f.parent)>0:
                 ps = f.parent[0]
                 s = surf_array[ps] 
-                phi_aux = calculate_phir(s.phi, s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa)
+                phi_aux = calculate_phir(s.phi, s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.E)#f.kappa)
                 
                 phi_reac += phi_aux
 
