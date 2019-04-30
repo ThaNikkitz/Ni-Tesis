@@ -109,18 +109,20 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
     Nt = len(tar.xi)
     K  = len(WK)
 
-    a = 100. #10 nm cell membrane thickness
+    a = 40. #10 nm cell membrane thickness
     epsilon_w = 80.
 
     dx = transpose(ones((Ns*K,Nt))*tar.xi) - src.xj
+    dxx = numpy.tile(dx, n)
     dy = transpose(ones((Ns*K,Nt))*tar.yi) - src.yj
+    dyy = numpy.tile(dy, n)
     dz = transpose(ones((Nt*K,Nt))*tar.zi) - src.zj
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
-    dxx = numpy.repeat(dx[:,:,:,numpy.newaxis], n, axis = 3)
+    dxx = reshape(dxx,(Nt,Ns,K,n))
     dy = reshape(dy,(Nt,Ns,K))
-    dyy = numpy.repeat(dy[:,:,:,numpy.newaxis], n, axis = 3)
+    dyy = reshape(dyy,(Nt,Ns,K,n))
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
 
@@ -149,7 +151,6 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         e_pos = transpose(numpy.ones((Ns*K,1))*tar.zi)
         e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
         i_pos = numpy.zeros((Ns*K,n))
-
         for nn in range(-(n-1)/2,(n+1)/2):
             Q_i[:,nn+(n-1)/2] = WK*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
             for i in range(Ns*K):
@@ -160,19 +161,19 @@ def blockMatrix(tar, src, WK, E, threshold, LorY, xk, wk, K_fine, eps, n):
         r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2)
 
 #       Double layer
-        dumb_dummy_1 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dzz, axis = 3), axis = 2)*src.normal[:,2]
-        dumb_dummy_2 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dyy, axis = 3), axis = 2)*src.normal[:,1]
-        dumb_dummy_3 = sum(sum(numpy.divide(Q_i,r_vec_i**3)*dxx, axis = 3), axis = 2)*src.normal[:,0]
+        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
+        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
+        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
 
-        K_lyr = src.Area * (1./(4.*pi*E)) * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+        K_lyr = src.Area * (1./E) * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
 #       Single layer              
 
-        V_lyr = src.Area * (1./(4.*pi*E)) * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
+        V_lyr = src.Area * (1./E) * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
 
 #       Adjoint double layer
 #        Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
-        Kp_lyr = -src.Area * (1./(4.*pi*E)) * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2))*tar.normal[:,2])
+        Kp_lyr = -src.Area * (1./E) * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2))*tar.normal[:,2])
                              + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2))*tar.normal[:,1])
                              + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2))*tar.normal[:,0]) )
 

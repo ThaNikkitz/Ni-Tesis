@@ -83,7 +83,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
     REAL thetam = (theta2 + theta1)/2;
 
     REAL epsilon_w = 80.;
-    REAL a = 100.;
+    REAL a = 40.;
     REAL fact = (E - epsilon_w)/(epsilon_w + E);
 
     REAL Z_unit[3], Z_u_norm[3], true_center[3];
@@ -116,8 +116,8 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL
                 Q_i = pow(fact, fabs(nn));
                 z_i = nn * a + (pow(-1.0, nn)) * true_center[2];
                 R = sqrt((z_i - center[2]) * (z_i - center[2]) + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1]));
-                PHI[0] += Area * (1./(4.*3.1415962*E)) * Q_i/R;
-                PHI[1] += Area * (1./(4.*3.1415962*E)) * Q_i * (center[2] - z_i)*Z_u_norm[2]/(R * R * R);
+                PHI[0] += Area * (1./E) * Q_i/R;
+                PHI[1] += Area * (1./E) * Q_i * (center[2] - z_i)*Z_u_norm[2]/(R * R * R);
             }
         }
         for (int i=0; i<K; i++){
