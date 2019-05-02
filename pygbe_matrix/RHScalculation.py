@@ -166,6 +166,10 @@ def generateRHS(surf_array, field_array, Neq, ElectricField=0.):
             if len(F_sym[i][j])==0:
                 F_sym[i][j] = '           0'
 
-        
+#    file_comparison = open('RHS_3_ion.text', 'w+')
+#    for f in range(len(F)):
+#        file_comparison.write(str(F[f]))
+#        file_comparison.write('\n')
+#    file_comparison.close()
 
     return F, F_sym, X_sym, Nblock
