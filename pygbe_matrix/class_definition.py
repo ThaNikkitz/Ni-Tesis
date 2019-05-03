@@ -134,7 +134,7 @@ def initializeField(filename, param):
         field_aux = fields()
 
         try:
-            field_aux.LorY  = int(LorY[i])                          # Laplace of Yukawa
+            field_aux.LorY  = int(LorY[i])                          # Laplace or Yukawa
         except ValueError:
             field_aux.LorY  = 0 
                                                                     # Dielectric constant
@@ -150,7 +150,7 @@ def initializeField(filename, param):
         except ValueError:
             field_aux.kappa = 0 
 
-        field_aux.coulomb = int(coulomb[i])                         # do/don't coulomb interaction
+        field_aux.coul = int(coulomb[i])                         # do/don't coulomb interaction
         if int(charges[i])==1:                                      # if there are charges
             if qfile[i][-4:]=='.crd':
                 xq,q,Nq = readcrd(qfile[i], float)                  # read charges
@@ -165,7 +165,6 @@ def initializeField(filename, param):
                 field_aux.child.append(int(child[Nchild_aux+j]))    # Loop over children to get pointers
             Nchild_aux += int(Nchild[i])-1                          # Point to child for next surface
             Nchild_aux += 1
-
         field_array.append(field_aux)
     return field_array
 

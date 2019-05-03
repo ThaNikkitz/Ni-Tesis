@@ -84,17 +84,27 @@ def coulombicEnergy(field_array, param):
             y = f.xq[:,1]
             z = f.xq[:,2]
             
-            dx = transpose(ones(Nq,Nq)*x) - x
-            dy = transpose(ones(Nq,Nq)*y) - y
-            dz = transpose(ones(Nq,Nq)*z) - z
+#            dx = transpose(ones((Nq,Nq))*x) - x
+#            dy = transpose(ones((Nq,Nq))*y) - y
+#            dz = transpose(ones((Nq,Nq))*z) - z
 
-            r = sqrt(dx*dx+dy*dy+dz*dz)
+#            r = sqrt(dx*dx+dy*dy+dz*dz)
 
-            M = 1/(f.E*r)
+#            M = 1/(f.E*r)
 
-            phi_q = dot(M,f.q)
+            phi_q = 0.
+            for j in range(Nq):
+                for k in range(Nq):
+                    if j!=k:
+                        dx = x[j] - x[k]
+                        dy = y[j] - y[k]
+                        dz = z[j] - z[k]
+                        r  = sqrt(dx*dx + dy*dy + dz*dz)
+                        phi_q += f.q[k]*f.q[j]/(r*f.E)
+#            phi_q = dot(M,f.q)
 
-            Ecoul.append(0.5*C0*sum(phi_q*f.q))
+
+            Ecoul.append(0.5*C0*phi_q)#sum(phi_q*f.q))
             field_coul.append(i)
 
     return Ecoul, field_coul
