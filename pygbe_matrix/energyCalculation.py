@@ -30,7 +30,6 @@ def calculate_phir(phi, dphi, s, xq, K_fine, eps, LorY, kappa):
     dummy = array([[0,0,0]])
     for i in range(len(s.triangle)):
         panel = s.vertex[s.triangle[i]]
-
         K, V, Kp = gaussIntegration_fine(xq, panel, s.normal[i], s.Area[i], dummy, K_fine, kappa, LorY, eps)
         # s.normal is dummy: needed for Kp, which we don't use here.
         phir += (-K*phi[i] + V*dphi[i])/(4*pi)
@@ -65,7 +64,7 @@ def solvationEnergy(surf_array, field_array, param):
                 
                 phi_reac += phi_aux
 
-            Esolv.append(0.5*C0*sum(f.q*phi_reac))
+            Esolv.append(0.5*C0*dot(f.q,phi_reac))
             field_Esolv.append(i)
 
     return Esolv, field_Esolv
@@ -100,7 +99,7 @@ def coulombicEnergy(field_array, param):
                         dy = y[j] - y[k]
                         dz = z[j] - z[k]
                         r  = sqrt(dx*dx + dy*dy + dz*dz)
-                        phi_q += f.q[k]*f.q[j]/(r*f.E)
+                        phi_q += f.q[k]*f.q[j]/(r*f.E*4*pi)
 #            phi_q = dot(M,f.q)
 
 
