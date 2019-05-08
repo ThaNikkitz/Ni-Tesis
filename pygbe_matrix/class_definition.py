@@ -120,6 +120,7 @@ def readParameters(param, filename):
     param.max_iter  = int (val[8])      # Max number of iteration for GMRES
     param.eps       = float(val[10])     # Epsilon machine
     param.theta     = float(val[12])     # MAC criterion for treecode
+    param.infty     = int(val[13])       # number of iterations in RIC method + 1
 
 def initializeField(filename, param):
     
