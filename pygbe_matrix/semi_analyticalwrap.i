@@ -7,8 +7,10 @@ extern void SA_wrap_arr(double *y, int ySize,
                     double *phi_Y, int phi_YSize, 
                     double *dphi_Y, int dphi_YSize, 
                     double *phi_L, int phi_LSize, 
-                    double *dphi_L, int dphi_LSize, 
-                    double E, 
+                    double *dphi_L, int dphi_LSize,
+                    double *phi_R, int phi_RSize,
+                    double *dphi_R, int dphi_RSize,
+                    double k_or_E, 
                     int    *same, int sameSize, 
                     double *xk, int xkSize, 
                     double *wk, int wkSize, int n, double Area_i);
@@ -32,6 +34,8 @@ import_array();
 %apply (double* INPLACE_ARRAY1, int DIM1){(double *dphi_Y, int dphi_YSize)};
 %apply (double* INPLACE_ARRAY1, int DIM1){(double *phi_L, int phi_LSize)};
 %apply (double* INPLACE_ARRAY1, int DIM1){(double *dphi_L, int dphi_LSize)};
+%apply (double* INPLACE_ARRAY1, int DIM1){(double *phi_R, int phi_RSize)};
+%apply (double* INPLACE_ARRAY1, int DIM1){(double *dphi_R, int dphi_RSize)};
 %apply (int* IN_ARRAY1, int DIM1){(int *same, int sameSize)};
 %apply (double* IN_ARRAY1, int DIM1){(double *xk, int xkSize)};
 %apply (double* IN_ARRAY1, int DIM1){(double *wk, int wkSize)};
@@ -42,7 +46,9 @@ extern void SA_wrap_arr(double *y, int ySize,
                     double *phi_Y, int phi_YSize, 
                     double *dphi_Y, int dphi_YSize, 
                     double *phi_L, int phi_LSize, 
-                    double *dphi_L, int dphi_LSize, 
+                    double *dphi_L, int dphi_LSize,
+                    double *phi_R, int phi_RSize, 
+                    double *dphi_R, int dphi_RSize,  
                     double E, 
                     int    *same, int sameSize, 
                     double *xk, int xkSize, 
@@ -53,6 +59,8 @@ extern void SA_wrap_arr(double *y, int ySize,
 %clear (double *dphi_Y, int dphi_YSize);
 %clear (double *phi_L, int phi_LSize);
 %clear (double *dphi_L, int dphi_LSize);
+%clear (double *phi_R, int phi_RSize);
+%clear (double *dphi_R, int dphi_RSize);
 %clear (int *same, int sameSize);
 %clear (double *y, int ySize);
 %clear (double *x, int xSize);

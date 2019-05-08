@@ -92,7 +92,7 @@ class fields():
     def __init__(self):
         self.parent = []    # Pointer to "parent" surface
         self.child  = []    # Pointer to "children" surfaces
-        self.LorY   = []    # 1: Laplace, 2: Yukawa
+        self.LorY   = []    # 1: Laplace, 2: Yukawa, 3: RIC (membrane)
         self.kappa  = []    # inverse of Debye length
         self.E      = []    # dielectric constant
         self.xq     = []    # position of charges

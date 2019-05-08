@@ -39,7 +39,10 @@ def computeInter(surf_array, field_array, param):
 
     for f in field_array:
     
-        k_or_E = f.E
+        if f.LorY==2:
+            k_or_E = f.kappa
+        else:
+            k_or_E = f.E
 
 #       Effect on child surfaces
         for i in f.child:

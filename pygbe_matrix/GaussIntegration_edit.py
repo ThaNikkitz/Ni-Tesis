@@ -90,7 +90,7 @@ def getGaussPoints(y,triangle, n):
     return xi[:,0], xi[:,1], xi[:,2]
 
 
-def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, E, LorY, eps, n):
+def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, k_or_E, LorY, eps, n):
 
     a = 40. #10 nm cell membrane thickness
     epsilon_w = 80.
@@ -136,14 +136,26 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
                          + transpose(transpose(sum(W/r**3*dy, axis=2))*normal_tar[:,1])
                          + transpose(transpose(sum(W/r**3*dz, axis=2))*normal_tar[:,2]) )
 
-    else:           # if Yukawa
+
+    elif LorY==2:           # if Yukawa
+#       Double layer 
+        K_lyr = Area * (sum(W/r**2*exp(-k_or_E*r)*(k_or_E+1/r)*dx, axis=2)*normal[0]
+                          + sum(W/r**2*exp(-k_or_E*r)*(k_or_E+1/r)*dy, axis=2)*normal[1]
+                          + sum(W/r**2*exp(-k_or_E*r)*(k_or_E+1/r)*dz, axis=2)*normal[2])
+#       Single layer
+        V_lyr = Area * sum(W * exp(-k_or_E*r)/r, axis=2)
+#       Adjoint Double layer 
+        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED
+
+
+    else:           # if RIC - membrane
 
         Q_i = numpy.zeros((K_fine,n))
         e_pos = transpose(numpy.ones((Ns*K_fine,1))*zi)
         e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
         i_pos = numpy.zeros((Ns*K_fine,n))
         for nn in range(-(n-1)/2,(n+1)/2):
-            Q_i[:,nn+(n-1)/2] = W*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
+            Q_i[:,nn+(n-1)/2] = W*((k_or_E - epsilon_w)/(epsilon_w + k_or_E))**abs(nn)
             for i in range(Ns*K_fine):
                 i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*Xj[i,2] + a*nn
 
@@ -163,7 +175,6 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         V_lyr = Area * (1./E) * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
 
 #       Adjoint Double layer 
-#        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
         Kp_lyr = -Area * (1./E) * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2])
                          + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis=2))*normal_tar[:,1])
                          + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis=2))*normal_tar[:,0]) )
