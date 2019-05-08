@@ -19,7 +19,7 @@ from argparse               import ArgumentParser
 from class_definition       import (surfaces, parameters, readParameters, 
                             initializeField, initializeSurf, readElectricField)
 from gmres                  import gmres_mgs
-from blockMatrixGen    import (blockMatrix, generateMatrix,
+from blockMatrixGen_edit_2    import (blockMatrix, generateMatrix,
                             generatePreconditioner) #should be from blockMatrixGen import
 from RHScalculation         import charge2surf, generateRHS
 from interactionCalculation import computeInter
@@ -184,7 +184,7 @@ print '\nerror solve direct vs gmres_scipy: %s'%error_direct_scipy
 print '\nEnergy calculation'
 fill_phi(phi, surf_array)
 
-Esolv, field_Esolv = solvationEnergy(surf_array, field_array, param)
+Esolv, field_Esolv = solvationEnergy(surf_array, field_array, param, 41)
 
 Ecoul, field_Ecoul = coulombicEnergy(field_array, param)
 

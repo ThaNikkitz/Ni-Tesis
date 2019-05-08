@@ -21,22 +21,21 @@
 '''
 
 from numpy import *
-from GaussIntegration import gaussIntegration_fine
+from GaussIntegration_edit import gaussIntegration_fine
 
-
-def calculate_phir(phi, dphi, s, xq, K_fine, eps, LorY, kappa):
+def calculate_phir(phi, dphi, s, xq, K_fine, eps, LorY, k_or_E, NNN):
 
     phir = 0
     dummy = array([[0,0,0]])
     for i in range(len(s.triangle)):
         panel = s.vertex[s.triangle[i]]
-        K, V, Kp = gaussIntegration_fine(xq, panel, s.normal[i], s.Area[i], dummy, K_fine, kappa, LorY, eps)
+        K, V, Kp = gaussIntegration_fine(xq, panel, s.normal[i], s.Area[i], dummy, K_fine, k_or_E, LorY, eps, NNN)
         # s.normal is dummy: needed for Kp, which we don't use here.
         phir += (-K*phi[i] + V*dphi[i])/(4*pi)
         
     return phir
 
-def solvationEnergy(surf_array, field_array, param):
+def solvationEnergy(surf_array, field_array, param, NNN):
 
     Esolv = []
     field_Esolv = []
@@ -45,6 +44,7 @@ def solvationEnergy(surf_array, field_array, param):
 
     for i in range(len(field_array)):
         f = field_array[i]
+        k_or_E = f.E
         if len(f.xq)>0:
         
             phi_reac = 0
@@ -52,7 +52,7 @@ def solvationEnergy(surf_array, field_array, param):
 #           First look at child surfaces
             for cs in f.child:
                 s = surf_array[cs]
-                phi_aux = calculate_phir(s.phi, s.Ehat*s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa)
+                phi_aux = calculate_phir(s.phi, s.Ehat*s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, k_or_E, NNN)
 
                 phi_reac -= phi_aux     # Minus accounts for normals pointing out
             
@@ -60,7 +60,7 @@ def solvationEnergy(surf_array, field_array, param):
             if len(f.parent)>0:
                 ps = f.parent[0]
                 s = surf_array[ps] 
-                phi_aux = calculate_phir(s.phi, s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa)
+                phi_aux = calculate_phir(s.phi, s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, k_or_E, NNN)
                 
                 phi_reac += phi_aux
 

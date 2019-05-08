@@ -24,6 +24,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <time.h>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 #define REAL double
 
@@ -75,62 +78,42 @@ void ax(REAL *x, REAL *y, REAL alpha, int N)
 
 }
 
-void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL E, REAL *xk, REAL *wk, REAL *vert_i, REAL *vert_f, REAL *center, int K, int n, REAL Area)
+void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL kappa, REAL *xk, REAL *wk, int K)
 {
     REAL theta1 = atan2(v1,x);
     REAL theta2 = atan2(v2,x);
     REAL dtheta = theta2 - theta1;
-    REAL thetam = (theta2 + theta1)/2;
+    REAL thetam = (theta2 + theta1)/2; 
 
-    REAL epsilon_w = 80.;
-    REAL a = 40.;
-    REAL fact = (E - epsilon_w)/(epsilon_w + E);
 
-    REAL Z_unit[3], Z_u_norm[3], true_center[3];
     REAL absZ = fabs(z), signZ;
     if (absZ<1e-10) signZ = 0;
     else            signZ = z/absZ;
 
-    cross(vert_i, vert_f, Z_unit); //Revisar el signo del producto cruz, puede estar invertido.
-    ax(Z_unit, Z_u_norm, norm(Z_unit), 3);
-    for (int j = 0; j < 3; j++){true_center[j] = center[j] - Z_u_norm[j] * absZ;}
-
     // Loop over gauss points
-
-        for (int nn = -(n - 1)/2; nn < (n + 1)/2; nn++)
-        {   
-            REAL R;
-            if (nn==0){
-                for (int i=0; i<K; i++){            
-                    REAL thetak, Rtheta;
-                    thetak = dtheta/2 * xk[i] + thetam;
-                    Rtheta = x/cos(thetak);
-                    R      = sqrt(Rtheta * Rtheta + z*z);
-                    PHI[0]+= wk[i] * (R-absZ) * dtheta/2;
-                    PHI[1]+= wk[i] * (z/R - signZ) * dtheta/2;
-                }
-            }
-            else
-            {
-                REAL Q_i, z_i;
-                Q_i = pow(fact, fabs(nn));
-                z_i = nn * a + (pow(-1.0, nn)) * true_center[2];
-                R = sqrt((z_i - center[2]) * (z_i - center[2]) + (Z_u_norm[0] * absZ)*(Z_u_norm[0] * absZ) + (Z_u_norm[1] * absZ)*(Z_u_norm[1]));
-                PHI[0] += Area * (1./E) * Q_i/R;
-                PHI[1] += Area * (1./E) * Q_i * (center[2] - z_i)*Z_u_norm[2]/(R * R * R);
-            }
+    REAL thetak, Rtheta, R, expKr, expKz = exp(-kappa*absZ);
+    for (int i=0; i<K; i++)
+    {
+        thetak = dtheta/2*xk[i] + thetam;
+        Rtheta = x/cos(thetak);
+        R      = sqrt(Rtheta*Rtheta + z*z);
+        expKr  = exp(-kappa*R);
+        if (kappa>1e-10)
+        {
+            PHI[0]+= -wk[i]*(expKr - expKz)/kappa * dtheta/2;
+            PHI[1]+=  wk[i]*(z/R*expKr - expKz*signZ) * dtheta/2;
         }
-        for (int i=0; i<K; i++){
-            REAL thetak, Rtheta, R;
-            thetak = dtheta/2 * xk[i] + thetam;
-            Rtheta = x/cos(thetak);
-            R = sqrt(Rtheta * Rtheta + z * z);
-            PHI[2]+= wk[i] * (R-absZ) * dtheta/2;
-            PHI[3]+= wk[i] * (z/R - signZ) * dtheta/2;
+        else
+        {
+            PHI[0]+= wk[i]*(R-absZ) * dtheta/2;
+            PHI[1]+= wk[i]*(z/R - signZ) * dtheta/2;
         }
+        PHI[2]+= wk[i]*(R-absZ) * dtheta/2;
+        PHI[3]+= wk[i]*(z/R - signZ) * dtheta/2;
+    }
 }
 
-void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL E, REAL *xk, REAL *wk, REAL *vert_i, REAL *vert_f, REAL *center, int K, int n, REAL Area)
+void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL kappa, REAL *xk, REAL *wk, int K)
 {
     REAL v21[3];
     for (int i=0; i<3; i++)
@@ -149,14 +132,14 @@ void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL E, REAL *xk, REAL *wk, 
     REAL alpha = dot_prod(v21,v1)/(L21*L21);
 
     REAL rOrthog[3];
-    axpy(v21, v1, rOrthog, alpha, -1, 3); //No entiendo que cresta pasa aca
+    axpy(v21, v1, rOrthog, alpha, -1, 3);
 
-    REAL d_toEdge = norm(rOrthog); //Segun yo esto sobra
+    REAL d_toEdge = norm(rOrthog);
     REAL v1_neg[3];
     ax(v1, v1_neg, -1, 3);
     
     REAL side_vec[3];
-    cross(v21, v1_neg, side_vec); //Esto tampoco lo usa nunca xD
+    cross(v21, v1_neg, side_vec);
 
     REAL rotateToVertLine[9];
 
@@ -187,8 +170,8 @@ void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL E, REAL *xk, REAL *wk, 
     if ((v1new[1]>0 && v2new[1]<0) || (v1new[1]<0 && v2new[1]>0))
     {
         REAL PHI1[4] = {0.,0.,0.,0.} , PHI2[4] = {0.,0.,0.,0.};
-        lineInt(PHI1, p, x, 0, v1new[1], E, xk, wk, vert_i, vert_f, center, K, n, Area);
-        lineInt(PHI2, p, x, v2new[1], 0, E, xk, wk, vert_i, vert_f, center, K, n, Area);
+        lineInt(PHI1, p, x, 0, v1new[1], kappa, xk, wk, K);
+        lineInt(PHI2, p, x, v2new[1], 0, kappa, xk, wk, K);
 
         for(int i=0; i<4; i++)
             PHI[i] += PHI1[i] + PHI2[i];
@@ -196,20 +179,20 @@ void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL E, REAL *xk, REAL *wk, 
     else
     {
         REAL PHI_aux[4] = {0.,0.,0.,0.};
-        lineInt(PHI_aux, p, x, v1new[1], v2new[1], E, xk, wk, vert_i, vert_f, center, K, n, Area);
+        lineInt(PHI_aux, p, x, v1new[1], v2new[1], kappa, xk, wk, K);
 
         for(int i=0; i<4; i++)
             PHI[i] -= PHI_aux[i];
     }
+
 }
 
 
-void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL E, 
-            int same, REAL *xk, int xkSize, REAL *wk, int n, REAL Area)
+void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL kappa, 
+            int same, REAL *xk, int xkSize, REAL *wk)
 {
     // Put first panel at origin
     REAL y0_panel[3], y1_panel[3], y2_panel[3], x_panel[3];
-    REAL vert0[3], vert1[3], vert2[3];
     REAL X[3], Y[3], Z[3];
     for (int i=0; i<3;i++)
     {
@@ -217,11 +200,7 @@ void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL E,
         y0_panel[i] = 0.; 
         y1_panel[i] = y[3+i] - y[i]; 
         y2_panel[i] = y[6+i] - y[i]; 
-        X[i] = y1_panel[i];
-
-        vert0[i] = y[i];
-        vert1[i] = y[i+3];
-        vert2[i] = y[i+6];
+        X[i] = y1_panel[i]; 
     }
 
     // Find panel coordinate system X: 0->1
@@ -270,13 +249,13 @@ void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL E,
     }
 
     // Loop over sides
-    intSide(PHI, panel0_final, panel1_final, x_plane[2], E, xk, wk, vert0, vert1, x, xkSize, n, Area); // Side 0
-    intSide(PHI, panel1_final, panel2_final, x_plane[2], E, xk, wk, vert1, vert2, x, xkSize, n, Area); // Side 1
-    intSide(PHI, panel2_final, panel0_final, x_plane[2], E, xk, wk, vert2, vert0, x, xkSize, n, Area); // Side 2
+    intSide(PHI, panel0_final, panel1_final, x_plane[2], kappa, xk, wk, xkSize); // Side 0
+    intSide(PHI, panel1_final, panel2_final, x_plane[2], kappa, xk, wk, xkSize); // Side 1
+    intSide(PHI, panel2_final, panel0_final, x_plane[2], kappa, xk, wk, xkSize); // Side 2
 
     if (same==1)
     {
-//        PHI[1] = 0.;
+        PHI[1] = 0.;
         PHI[3] = 0.;
     }
 
@@ -286,20 +265,19 @@ void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL E,
 void SA_wrap_arr(REAL *y, int ySize, REAL *x, int xSize, 
             REAL *phi_Y, int pYSize, REAL *dphi_Y, int dpYSize, 
             REAL *phi_L, int pLSize, REAL *dphi_L, int dpLSize,
-            REAL E, int *same, int sameSize, REAL *xk, int xkSize, REAL *wk, int wkSize, int n, REAL Area)
+            REAL kappa, int *same, int sameSize, REAL *xk, int xkSize, REAL *wk, int wkSize)
 {
     int N = pYSize;
-
+    
     for(int i=0; i<N; i++)
     {
         REAL PHI_1[4] = {0.,0.,0.,0.};
         REAL x_1[3] = {x[3*i], x[3*i+1], x[3*i+2]};
-        SA_wrap(PHI_1, y, x_1, E, same[i], xk, xkSize, wk, n, Area);
+        SA_wrap(PHI_1, y, x_1, kappa, same[i], xk, xkSize, wk);
         phi_Y[i]  = PHI_1[0];
         dphi_Y[i] = PHI_1[1];
         phi_L[i]  = PHI_1[2];
         dphi_L[i] = PHI_1[3];
-
     }
 }
 
@@ -311,7 +289,7 @@ void P2P_c(REAL *MY, int MYSize, REAL *dMY, int dMYSize, REAL *ML, int MLSize, R
         REAL *xt, int xtSize, REAL *yt, int ytSize, REAL *zt, int ztSize,
         REAL *m, int mSize, REAL *mx, int mxSize, REAL *my, int mySize, REAL *mz, int mzSize, REAL *mclean, int mcleanSize, int *target, int targetSize,
         REAL *Area, int AreaSize, REAL *xk, int xkSize, 
-        REAL *wk, int wkSize, REAL kappa, REAL threshold, REAL eps, REAL w0, REAL *aux, int auxSize, int n, REAL Area_i)
+        REAL *wk, int wkSize, REAL kappa, REAL threshold, REAL eps, REAL w0, REAL *aux, int auxSize)
 {
     time_t start, stop;
     int N_target = targetSize;
@@ -362,7 +340,7 @@ void P2P_c(REAL *MY, int MYSize, REAL *dMY, int dMYSize, REAL *ML, int MLSize, R
                 REAL PHI_1[4] = {0., 0., 0., 0.};
                 
                 start = clock();
-                SA_wrap(PHI_1, panel, center, kappa, same, xk, xkSize, wk, n, Area_i);
+                SA_wrap(PHI_1, panel, center, kappa, same, xk, xkSize, wk);
                 stop = clock();
 
                 MY[i_aux]  += PHI_1[0] * m[j]/(w0*Area[tri[j]]);

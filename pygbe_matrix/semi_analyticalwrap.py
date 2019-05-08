@@ -96,12 +96,12 @@ except __builtin__.Exception:
     _newclass = 0
 
 
-def SA_wrap_arr(y, x, phi_Y, dphi_Y, phi_L, dphi_L, E, same, xk, wk):
-    return _semi_analyticalwrap.SA_wrap_arr(y, x, phi_Y, dphi_Y, phi_L, dphi_L, E, same, xk, wk)
+def SA_wrap_arr(y, x, phi_Y, dphi_Y, phi_L, dphi_L, E, same, xk, wk, n, Area_i):
+    return _semi_analyticalwrap.SA_wrap_arr(y, x, phi_Y, dphi_Y, phi_L, dphi_L, E, same, xk, wk, n, Area_i)
 SA_wrap_arr = _semi_analyticalwrap.SA_wrap_arr
 
-def P2P_c(MY, dMY, ML, dML, triangle, tri, k, xi, yi, zi, s_xj, s_yj, s_zj, xt, yt, zt, m, mx, my, mz, mclean, targets, Area, xk, wk, E, threshold, eps, w0, aux):
-    return _semi_analyticalwrap.P2P_c(MY, dMY, ML, dML, triangle, tri, k, xi, yi, zi, s_xj, s_yj, s_zj, xt, yt, zt, m, mx, my, mz, mclean, targets, Area, xk, wk, E, threshold, eps, w0, aux)
+def P2P_c(MY, dMY, ML, dML, triangle, tri, k, xi, yi, zi, s_xj, s_yj, s_zj, xt, yt, zt, m, mx, my, mz, mclean, targets, Area, xk, wk, E, threshold, eps, w0, aux, n, Area_i):
+    return _semi_analyticalwrap.P2P_c(MY, dMY, ML, dML, triangle, tri, k, xi, yi, zi, s_xj, s_yj, s_zj, xt, yt, zt, m, mx, my, mz, mclean, targets, Area, xk, wk, E, threshold, eps, w0, aux, n, Area_i)
 P2P_c = _semi_analyticalwrap.P2P_c
 # This file is compatible with both classic and new-style classes.
 
