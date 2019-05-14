@@ -184,7 +184,7 @@ print '\nerror solve direct vs gmres_scipy: %s'%error_direct_scipy
 print '\nEnergy calculation'
 fill_phi(phi, surf_array)
 
-Esolv, field_Esolv = solvationEnergy(surf_array, field_array, param, 41)
+Esolv, field_Esolv = solvationEnergy(surf_array, field_array, param)
 
 Ecoul, field_Ecoul = coulombicEnergy(field_array, param)
 

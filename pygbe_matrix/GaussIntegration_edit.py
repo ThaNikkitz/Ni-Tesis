@@ -90,7 +90,7 @@ def getGaussPoints(y,triangle, n):
     return xi[:,0], xi[:,1], xi[:,2]
 
 
-def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, k_or_E, LorY, eps, n):
+def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, E, LorY, eps, n):
 
     a = 40. #10 nm cell membrane thickness
     epsilon_w = 80.
@@ -107,18 +107,16 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     Ns = 1
     Nt = len(xi)
 
-    dx = transpose(ones((Ns*K_fine,Nt))*xi) - Xj[:,0]
-    dxx = numpy.tile(dx, n)
-    dy = transpose(ones((Ns*K_fine,Nt))*yi) - Xj[:,1]
-    dyy = numpy.tile(dy, n)
-    dz = transpose(ones((Ns*K_fine,Nt))*zi) - Xj[:,2]
+    dx = transpose(ones((Ns*K_fine,1))*xi) - Xj[:,0]
+    dy = transpose(ones((Ns*K_fine,1))*yi) - Xj[:,1]
+    dz = transpose(ones((Ns*K_fine,1))*zi) - Xj[:,2]
 
     r = sqrt(dx*dx+dy*dy+dz*dz) # Por que no usa eps**2 aca, pero si en blockMatrix?
 
     dx = reshape(dx,(Nt,Ns,K_fine))
-    dxx = reshape(dxx, (Nt,Ns,K_fine,n))
+    dxx = numpy.repeat(dx[:,:,:,numpy.newaxis], n, axis = 3)
     dy = reshape(dy,(Nt,Ns,K_fine))
-    dyy = reshape(dyy, (Nt,Ns,K_fine,n))
+    dyy = numpy.repeat(dy[:,:,:,numpy.newaxis], n, axis = 3)
     dz = reshape(dz,(Nt,Ns,K_fine))
     r  = reshape(r,(Nt,Ns,K_fine))
 
@@ -139,13 +137,13 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
     elif LorY==2:           # if Yukawa
 #       Double layer 
-        K_lyr = Area * (sum(W/r**2*exp(-k_or_E*r)*(k_or_E+1/r)*dx, axis=2)*normal[0]
-                          + sum(W/r**2*exp(-k_or_E*r)*(k_or_E+1/r)*dy, axis=2)*normal[1]
-                          + sum(W/r**2*exp(-k_or_E*r)*(k_or_E+1/r)*dz, axis=2)*normal[2])
+        K_lyr = Area * (sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
+                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
+                          + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*normal[2])
 #       Single layer
-        V_lyr = Area * sum(W * exp(-k_or_E*r)/r, axis=2)
+        V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
 #       Adjoint Double layer 
-        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED
+        Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
 
 
     else:           # if RIC - membrane
@@ -155,7 +153,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
         i_pos = numpy.zeros((Ns*K_fine,n))
         for nn in range(-(n-1)/2,(n+1)/2):
-            Q_i[:,nn+(n-1)/2] = W*((k_or_E - epsilon_w)/(epsilon_w + k_or_E))**abs(nn)
+            Q_i[:,nn+(n-1)/2] = W*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
             for i in range(Ns*K_fine):
                 i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*Xj[i,2] + a*nn
 
@@ -168,14 +166,14 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*normal[1]
         dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*normal[0]
 
-        K_lyr = Area * (1./E) * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+        K_lyr = Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
 
 #       Single layer
         
-        V_lyr = Area * (1./E) * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
+        V_lyr = Area * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
 
 #       Adjoint Double layer 
-        Kp_lyr = -Area * (1./E) * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2])
+        Kp_lyr = -Area  * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2])
                          + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis=2))*normal_tar[:,1])
                          + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis=2))*normal_tar[:,0]) )
 
