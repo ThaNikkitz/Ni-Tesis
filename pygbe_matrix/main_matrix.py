@@ -59,8 +59,8 @@ print 'Config file    : ' + config_file
 param = parameters()
 readParameters(param, param_file)
 
-field_array = initializeField(config_file, param)
-surf_array, Neq  = initializeSurf(field_array, param, config_file)
+field_array, membrane_param = initializeField(config_file, param)
+surf_array, Neq  = initializeSurf(field_array, membrane_param, param, config_file)
 
 electricField, wavelength = readElectricField(config_file)
 
@@ -95,11 +95,11 @@ JtoCal = 4.184
 
 #### Compute interactions
 print '\nCompute interactions'
-computeInter(surf_array, field_array, param)
+computeInter(surf_array, field_array, param, membrane_param)
 
 #### Generate RHS
 print '\nGenerate RHS'
-F, F_sym, X_sym, Nblock = generateRHS(surf_array, field_array, Neq, electricField)
+F, F_sym, X_sym, Nblock = generateRHS(surf_array, field_array, membrane_param, Neq, electricField)
 
 print '\nRHS generated...'
 
@@ -184,7 +184,7 @@ print '\nerror solve direct vs gmres_scipy: %s'%error_direct_scipy
 print '\nEnergy calculation'
 fill_phi(phi, surf_array)
 
-Esolv, field_Esolv = solvationEnergy(surf_array, field_array, param)
+Esolv, field_Esolv = solvationEnergy(surf_array, field_array, param, membrane_param)
 
 Ecoul, field_Ecoul = coulombicEnergy(field_array, param)
 

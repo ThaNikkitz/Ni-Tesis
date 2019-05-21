@@ -39,9 +39,12 @@ def charge2surf(s, xq, q, E):
 
     return F
 
-def generateRHS(surf_array, field_array, Neq, ElectricField=0.):
+def generateRHS(surf_array, field_array, membrane_param, Neq, ElectricField=0.):
 
 #   Check if there is a complex dielectric
+
+    m_E = membrane_param.mem_E
+
     complexDiel = 0
     for f in field_array:
         if type(f.E)==complex:
@@ -82,10 +85,16 @@ def generateRHS(surf_array, field_array, Neq, ElectricField=0.):
 
 #           Parent surface
             if len(f.parent)>0:
-                i = f.parent[0]
-                s = surf_array[i]
-                F[s.N0:s.N0+s.N] += charge2surf(s, f.xq, f.q, f.E)
-                F_sym[i][0] += '       sum_%i'%i
+                if f.LorY != 1 and f.LorY != 2:
+                    i = f.parent[0]
+                    s = surf_array[i]
+                    F[s.N0:s.N0+s.N] += charge2surf(s, f.xq, f.q, m_E)
+                    F_sym[i][0] += '       sum_%i'%i
+                else:
+                    i = f.parent[0]
+                    s = surf_array[i]
+                    F[s.N0:s.N0+s.N] += charge2surf(s, f.xq, f.q, f.E)
+                    F_sym[i][0] += '       sum_%i'%i
 
 
 #       Effect of charged surfaces

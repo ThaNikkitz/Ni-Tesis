@@ -100,6 +100,11 @@ class fields():
         self.coul   = []    # 1: perform Coulomb interaction calculation
                             # 0: don't do Coulomb calculation
 
+class membrane():
+    def __init__(self):
+        self.mem_E = 0.     # Membrane dielectric
+        self.mem_a = 0.     # Membrane width
+
 
 def readParameters(param, filename):
 
@@ -124,7 +129,7 @@ def readParameters(param, filename):
 
 def initializeField(filename, param):
     
-    LorY, pot, E, kappa, charges, coulomb, qfile, Nparent, parent, Nchild, child = readFields(filename)
+    LorY, pot, E, kappa, charges, coulomb, qfile, Nparent, parent, Nchild, child, mem_E, mem_a = readFields(filename)
 
     Nfield = len(LorY)
     field_array = []
@@ -167,7 +172,12 @@ def initializeField(filename, param):
             Nchild_aux += int(Nchild[i])-1                          # Point to child for next surface
             Nchild_aux += 1
         field_array.append(field_aux)
-    return field_array
+
+    Mem = membrane()
+    Mem.mem_E = float(mem_E)
+    Mem.mem_a = float(mem_a)
+
+    return field_array, Mem
 
 
 def zeroAreas(s, triangle_raw, Area_null):
@@ -181,7 +191,7 @@ def zeroAreas(s, triangle_raw, Area_null):
     return Area_null
 
 
-def initializeSurf(field_array, param, filename):
+def initializeSurf(field_array, membrane_param, param, filename):
 
     surf_array = []
 
@@ -213,8 +223,12 @@ def initializeSurf(field_array, param, filename):
                     s.Ein = field_array[j].E
             if len(field_array[j].child)>0:
                 if i in field_array[j].child:                # Outside region
-                    s.kappa_out = field_array[j].kappa
-                    s.Eout = field_array[j].E
+                    if field_array[j].LorY != 1 and field_array[j].LorY != 2:
+                        s.kappa_out = field_array[j].kappa
+                        s.Eout = membrane_param.mem_E
+                    else:
+                        s.kappa_out = field_array[j].kappa
+                        s.Eout = field_array[j].E
 
         if s.surf_type!='dirichlet_surface' and s.surf_type!='neumann_surface' and s.surf_type!='neumann_surface_hyper':
             s.Ehat = s.Ein/s.Eout

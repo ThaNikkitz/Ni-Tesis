@@ -23,19 +23,22 @@
 from numpy import *
 from GaussIntegration_edit import gaussIntegration_fine
 
-def calculate_phir(phi, dphi, s, xq, K_fine, eps, LorY, kappa, E, infty):
+def calculate_phir(phi, dphi, s, xq, K_fine, eps, LorY, kappa, E, m_E, m_a, infty):
 
     phir = 0
     dummy = array([[0,0,0]])
     for i in range(len(s.triangle)):
         panel = s.vertex[s.triangle[i]]
-        K, V, Kp = gaussIntegration_fine(xq, panel, s.normal[i], s.Area[i], dummy, K_fine, kappa, E, LorY, eps, infty)
+        K, V, Kp = gaussIntegration_fine(xq, panel, s.normal[i], s.Area[i], dummy, K_fine, kappa, E, m_E, m_a, LorY, eps, infty)
         # s.normal is dummy: needed for Kp, which we don't use here.
         phir += (-K*phi[i] + V*dphi[i])/(4*pi)
         
     return phir
 
-def solvationEnergy(surf_array, field_array, param):
+def solvationEnergy(surf_array, field_array, param, membrane_param):
+
+    m_E = membrane_param.mem_E
+    m_a = membrane_param.mem_a
 
     Esolv = []
     field_Esolv = []
@@ -51,7 +54,7 @@ def solvationEnergy(surf_array, field_array, param):
 #           First look at child surfaces
             for cs in f.child:
                 s = surf_array[cs]
-                phi_aux = calculate_phir(s.phi, s.Ehat*s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa, f.E, param.infty)
+                phi_aux = calculate_phir(s.phi, s.Ehat*s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa, f.E, m_E, m_a, param.infty)
 
                 phi_reac -= phi_aux     # Minus accounts for normals pointing out
             
@@ -59,7 +62,7 @@ def solvationEnergy(surf_array, field_array, param):
             if len(f.parent)>0:
                 ps = f.parent[0]
                 s = surf_array[ps] 
-                phi_aux = calculate_phir(s.phi, s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa, f.E, param.infty)
+                phi_aux = calculate_phir(s.phi, s.dphi, s, f.xq, param.K_fine, param.eps, f.LorY, f.kappa, f.E, m_E, m_a, param.infty)
                 
                 phi_reac += phi_aux
 

@@ -103,14 +103,11 @@ def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     return K_lyr, V_lyr
 
 
-def blockMatrix(tar, src, WK, kappa, E, threshold, LorY, xk, wk, K_fine, eps, n):
+def blockMatrix(tar, src, WK, kappa, E, m_E, m_a, threshold, LorY, xk, wk, K_fine, eps, n):
     
     Ns = len(src.xi)
     Nt = len(tar.xi)
     K  = len(WK)
-
-    a = 40. #10 nm cell membrane thickness
-    epsilon_w = 80.
 
     dx = transpose(ones((Ns*K,1))*tar.xi) - src.xj
     dy = transpose(ones((Ns*K,1))*tar.yi) - src.yj
@@ -158,9 +155,9 @@ def blockMatrix(tar, src, WK, kappa, E, threshold, LorY, xk, wk, K_fine, eps, n)
         e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
         i_pos = numpy.zeros((Ns*K,n))
         for nn in range(-(n-1)/2,(n+1)/2):
-            Q_i[:,nn+(n-1)/2] = WK*((E - epsilon_w)/(epsilon_w + E))**abs(nn)
+            Q_i[:,nn+(n-1)/2] = WK*((m_E - E)/(E + m_E))**abs(nn)
             for i in range(Ns*K):
-                i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*src.zj[i] + a*nn
+                i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*src.zj[i] + m_a*nn
 
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt,Ns,K,n))
@@ -210,7 +207,7 @@ def blockMatrix(tar, src, WK, kappa, E, threshold, LorY, xk, wk, K_fine, eps, n)
         local_center[:,2] = tar.zi[an_integrals]
         normal_tar = tar.normal[an_integrals]
 
-        K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, kappa, E, LorY, eps, n)
+        K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, kappa, E, m_E, m_a, LorY, eps, n)
         K_lyr[an_integrals,i]  = K_aux[:,0]
         V_lyr[an_integrals,i]  = V_aux[:,0]
         Kp_lyr[an_integrals,i] = Kp_aux[:,0]
@@ -227,7 +224,7 @@ def blockMatrix(tar, src, WK, kappa, E, threshold, LorY, xk, wk, K_fine, eps, n)
                 G_R  = zeros(1)
                 dG_R = zeros(1)
 #                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, kappa, array([1], dtype=int32), xk, wk) Llamar original
-                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, G_R, dG_R, kappa, E, array([1], dtype=int32), xk, wk, n, src.Area[i])
+                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, G_R, dG_R, kappa, E, m_E, m_a, array([1], dtype=int32), xk, wk, n, src.Area[i])
 
                 if LorY==1:   # if Laplace
                     K_lyr[i,i]  = dG_L

@@ -219,6 +219,8 @@ def readFields(filename):
     parent  = []
     Nchild  = []
     child   = []
+    mem_E = 0.
+    mem_a = 0.
 
     for line in file(filename):
         line = line.split()
@@ -236,8 +238,11 @@ def readFields(filename):
                 Nchild.append(line[10])
                 for i in range(int(Nchild[-1])):
                     child.append(line[11+i])
+            elif line[0] == 'MEMB':
+                mem_E = line[1]
+                mem_a = line[2]
 
-    return LorY, pot, E, kappa, charges, coulomb, qfile, Nparent, parent, Nchild, child
+    return LorY, pot, E, kappa, charges, coulomb, qfile, Nparent, parent, Nchild, child, mem_E, mem_a
 
 def read_surface(filename):
 

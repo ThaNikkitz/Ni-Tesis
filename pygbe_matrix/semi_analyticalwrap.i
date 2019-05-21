@@ -12,6 +12,8 @@ extern void SA_wrap_arr(double *y, int ySize,
                     double *dphi_R, int dphi_RSize,
                     double kappa,
                     double E,
+                    double m_E,
+                    double m_a,
                     int    *same, int sameSize, 
                     double *xk, int xkSize, 
                     double *wk, int wkSize, int n, double Area_i);
@@ -23,7 +25,7 @@ extern void P2P_c(double *MY, int MYSize, double *dMY, int dMYSize, double *ML, 
         double *xt, int xtSize, double *yt, int ytSize, double *zt, int ztSize,
         double *m, int mSize, double *mx, int mxSize, double *my, int mySize, double *mz, int mzSize, double *mclean, int mcleanSize, int *targets, int targetsSize, 
         double *Area, int AreaSize, double *xk, int xkSize, double *wk, int wkSize, 
-        double kappa, double E, double threshold, double eps, double w0, double *aux, int auxSize, int n, double Area_i);
+        double kappa, double E, double m_E, double m_a, double threshold, double eps, double w0, double *aux, int auxSize, int n, double Area_i);
 %}
 
 %include "numpy.i"
@@ -52,6 +54,8 @@ extern void SA_wrap_arr(double *y, int ySize,
                     double *dphi_R, int dphi_RSize,  
                     double kappa,
                     double E,
+                    double m_E,
+                    double m_a,
                     int    *same, int sameSize, 
                     double *xk, int xkSize, 
                     double *wk, int wkSize,
@@ -105,7 +109,7 @@ extern void P2P_c(double *MY, int MYSize, double *dMY, int dMYSize, double *ML, 
         double *xt, int xtSize, double *yt, int ytSize, double *zt, int ztSize,
         double *m, int mSize, double *mx, int mxSize, double *my, int mySize, double *mz, int mzSize, double *mclean, int mcleanSize, int *targets, int targetsSize,
         double *Area, int AreaSize, double *xk, int xkSize, double *wk, int wkSize, 
-        double kappa, double E, double threshold, double eps, double w0, double *aux, int auxSize, int n, double Area_i);
+        double kappa, double E, double m_E, double m_a, double threshold, double eps, double w0, double *aux, int auxSize, int n, double Area_i);
 %clear (double *MY, int MYSize); 
 %clear (double *dMY, int dMYSize); 
 %clear (double *ML, int MLSize); 

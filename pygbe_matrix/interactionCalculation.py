@@ -29,7 +29,10 @@ from semi_analytical import GQ_1D
 #from semi_analytical import GQ_1D
 from GaussIntegration import getWeights
 
-def computeInter(surf_array, field_array, param):
+def computeInter(surf_array, field_array, param, membrane_param):
+
+    m_E = membrane_param.mem_E
+    m_a = membrane_param.mem_a
 
     WK = getWeights(param.K)
 
@@ -44,7 +47,7 @@ def computeInter(surf_array, field_array, param):
             for j in f.child:
                 print 'Target: %i, Source: %i'%(i,j)
                 src = surf_array[j]
-                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
+                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, m_E, m_a, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
                 if i==j:    # Self-external
                     Diag = 2*pi*identity(len(K_lyr))
 
@@ -84,7 +87,7 @@ def computeInter(surf_array, field_array, param):
                 j = f.parent[0]
                 print 'Target: %i, Source: %i'%(i,j)
                 src = surf_array[j]
-                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
+                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, m_E, m_a, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
                 if f.LorY==1:   # if Laplace
                     tar.Kext[j][:,:] =  K_lyr[:]
                     tar.Kpext[j][:,:]=  Kp_lyr[:]
@@ -108,7 +111,7 @@ def computeInter(surf_array, field_array, param):
             for j in f.child:
                 print 'Target: %i, Source: %i'%(i,j)
                 src = surf_array[j]
-                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
+                K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, m_E, m_a, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
                 if f.LorY==1:   # if Laplace
                     tar.Kint[j] = -K_lyr[:]
                     tar.Kpint[j]= -Kp_lyr[:]
@@ -128,7 +131,7 @@ def computeInter(surf_array, field_array, param):
             j = i
             print 'Target: %i, Source: %i'%(i,j)
             src = surf_array[j]
-            K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
+            K_lyr,V_lyr,Kp_lyr = blockMatrix(tar, src, WK, f.kappa, f.E, m_E, m_a, param.threshold, f.LorY, xk, wk, param.K_fine, param.eps, param.infty)
             Diag = 2*pi*identity(len(K_lyr))
 
             if f.LorY==1:  # if Laplace
