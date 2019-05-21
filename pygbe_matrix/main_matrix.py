@@ -72,6 +72,8 @@ for f in field_array:
         print 'Is a Laplace region'
     elif f.LorY==2:
         print 'Is a Yukawa region'
+    elif f.LorY==3:
+        print 'Is a membrane-embedded region'
     else:
         print 'Is enclosed by a dirichlet or neumann surface'
     if len(f.parent)>0:
@@ -86,6 +88,8 @@ for f in field_array:
         print 'Parameters: kappa: %f, E: %f+%fj'%(f.kappa, f.E.real, f.E.imag)
     else:
         print 'Parameters: kappa: %f, E: %f'%(f.kappa, f.E)
+    if f.LorY==3:
+        print 'Paramenters: E = %f, thickness a = %f'%(membrane_param.mem_E, membrane_param.mem_a)
 
 print '\nTotal elements : %i'%param.N
 print 'Total equations: %i'%param.Neq
