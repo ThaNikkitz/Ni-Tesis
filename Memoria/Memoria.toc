@@ -1,0 +1,19 @@
+\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{3}
+\contentsline {section}{\numberline {2}Marco Te\IeC {\'o}rico}{4}
+\contentsline {subsection}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{4}
+\contentsline {subsection}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{5}
+\contentsline {subsubsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{6}
+\contentsline {subsubsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{8}
+\contentsline {subsection}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{8}
+\contentsline {subsection}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{9}
+\contentsline {subsection}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{11}
+\contentsline {section}{\numberline {3}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{11}
+\contentsline {subsection}{\numberline {3.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{12}
+\contentsline {subsection}{\numberline {3.2}Sistema con dos interfaces paralelas y cargas en el medio}{14}
+\contentsline {subsection}{\numberline {3.3}Definici\IeC {\'o}n de l\IeC {\'\i }mites para las sumatorias (c\IeC {\'a}lculo computacional de $\infty $)}{15}
+\contentsline {section}{\numberline {4}Lecturas relevantes al respecto}{17}
+\contentsline {subsection}{\numberline {4.1}APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite {APBSmem}}{17}
+\contentsline {subsection}{\numberline {4.2}Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model.\cite {Huimin-Lin}}{18}
+\contentsline {subsection}{\numberline {4.3}Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite {Gan}}{19}
+\contentsline {section}{\numberline {5}Conclusiones generales}{19}
+\contentsline {subsection}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{20}

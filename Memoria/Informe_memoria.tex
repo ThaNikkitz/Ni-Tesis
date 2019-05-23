@@ -1,0 +1,409 @@
+\documentclass[12pt, notitlepage]{article}
+\usepackage[margin=1in, top=0.5in]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[bottom]{footmisc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{pbox}
+\usepackage[makeroom]{cancel}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{newfloat}
+\usepackage{gensymb}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+%\usepackage{dsfont}
+%\usepackage{hyperref}
+\DeclareFloatingEnvironment[name={Gráfico}]{graph}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\setcounter{MaxMatrixCols}{20}
+
+\title{Título}
+
+\date{\today}
+\renewcommand{\contentsname}{Contenidos}
+\renewcommand\refname{Referencias}
+\renewcommand\tablename{Tabla}
+\renewcommand\figurename{Figura}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand\varpm{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle+$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({-})$\cr}}}}}
+\newcommand\varmp{\mathbin{\vcenter{\hbox{\oalign{$\scriptstyle({+})$\cr\noalign{\kern-.3ex}\hfil$\scriptscriptstyle-$\hfil\cr}}}}}
+\newcommand\votwo{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle1$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({2})$\cr}}}}}
+
+
+\geometry{letterpaper}
+
+\begin{document}
+\thispagestyle{empty}
+\setlength{\unitlength}{1 cm} %Especificar unidad de trabajo
+\begin{picture}(18,4)
+\put(0,0){\includegraphics[scale=0.38]{UTFSM_logo.png}}
+\put(10.5,0){\includegraphics[scale=0.18]{mecusm.jpg}}
+\end{picture}
+\\
+\\
+\begin{center}
+{\LARGE {Universidad Técnica Federico Santa María}}\\[0.5cm]
+{\Large Departamento de Ingeniería Mecánica}\\[2cm]
+%{\Large Redes}\\[2.3cm]
+{\Huge \textbf{Método de imágenes en un sistema de dos interfaces paralelas}}\\[0.3cm]
+%{\Huge \textbf{``Método de diferencias finitas aplicado a transferencia de calor en una placa"}}\\[0.2cm]
+{\large ICM-392 - Investigación Aplicada II}\\[8 pt]
+{\large Profesor: Christopher Cooper V., Ph.D.}\\[6cm]
+{\large Alumno: Nicolás Espinoza M.}\\
+\vspace{\fill}Valparaíso - Noviembre, 2018
+\end{center}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+En las últimas décadas ha crecido el interés por modelar de forma más precisa el comportamiento de sistemas biológicos, destacando las células y sus componentes y procesos. Es en esta línea de investigación que surgen y se desarrollan métodos para representar las interacciones que ocurren tanto dentro de la célula como a nivel extracelular.\\\\
+Sin embargo, la complejidad de estos fenómenos hace que sea imposible hasta el momento abarcar de manera completa la naturaleza del proceso biológico correspondiente. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
+Para modelar la fenomenología de los sistemas biológicos según las diferentes disciplinas científicas mencionadas se utiliza una cantidad de métodos computacionales, de los cuales quizás los más conocidos son la dinámica molecular (MD) en casos explícitos y el método de elementos finitos (FEM) en casos implícitos. Por supuesto y como todo en la vida, ambos tienen sus ventajas y desventajas; un punto en contra que tienen en común ambos tipos de modelación es que en general son lentos. Por esto es que ha empezado a tomar cada vez más fuerza el método de elementos de borde/frontera (BEM), que permite resolver problemas físicos comparativamente rápido a expensas de una formulación más compleja.\\\\
+Es con miras a definir dicha formulación que se presenta este informe. El objetivo global corresponde a \textit{definir un modelo que permita representar el comportamiento electrostático de una membrana celular, y la importancia de incluirla en modelaciones de interacciones celulares}. A través de esto se puede determinar si vale la pena considerar el aporte \textbf{electrostático} de una bicapa fosfolipídica en la energía de enlace de las proteínas de membrana celulares. Hay que tener presente que además existen otros fenómenos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza.\\\\
+El presente texto busca entonces \textit{presentar la física que ocurre tras una interacción electrostática en medios dieléctricos, trabajando un método que permita modelar una membrana celular a partir de un sistema de tres medios separados por dos interfaces, con cargas distribuidas en el medio encerrado}. Sumado a esto se presentan resúmenes de publicaciones relevantes para la línea de estudio pertinente a este escrito, y que incluso podrían servir para mejorar la precisión del modelo al representar de manera más fiel la física de las interacciones de interés, al sumar otro tipo de interacciones o fenómenos, o al plantear respuestas a interrogantes que pudieran surgir en un futuro.\\\\
+En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. Luego se procede a introducir y replicar un método que resulta muy atractivo de modelar con BEM, pero en este caso se trabaja con diferencias finitas de primer orden; el objetivo es determinar un punto en que el error numérico sea suficientemente bajo como para considerarlo despreciable. Luego se presentan los resúmenes de publicaciones antes mencionados, para terminar con una serie de conclusiones y el trabajo que se busca desarrollar a partir de todo lo visto en este informe.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Marco Teórico}
+\subsection{El campo eléctrico y el potencial eléctrico}
+El campo eléctrico correspondiente a una carga puntual $q$ que se encuentra en el vacío en la posición $\vec{x}_0$ viene dado por la conocida ecuación
+\begin{equation}
+\vec{E}_{(\vec{x})} = \frac{q}{4\pi\epsilon_0}\frac{(\vec{x} - \vec{x}_0)}{|\vec{x}-\vec{x}_0|^3}
+\end{equation}
+siendo $\epsilon_0$ la permitividad macroscópica del vacío, una medida de cómo fluye el campo eléctrico en el vacío. Por supuesto, en el caso ejemplificado en la Ec. (1), no hay un medio que reaccione, por lo que $\epsilon_0$ es nuestra referencia. De ahora en adelante se trabaja con $\epsilon$ propio de un dieléctrico; además se elabora más sobre la permitividad en la sección siguiente.\\\\
+Cuando se cuenta con N cargas puntuales, la Ecuación (1) se convierte en una sumatoria sobre todos los elementos del sistema de cargas a considerar
+\begin{equation}
+\vec{E}_{(\vec{x})} = \sum_{i=1}^N\frac{q_i}{4\pi\epsilon}\frac{(\vec{x} - \vec{x}_i)}{|\vec{x}-\vec{x}_i|^3}
+\end{equation}
+Para los casos en que nos encontramos con un medio  continuo y en que tenemos una distribución de carga $\rho_{(\vec{x})}$ de algún tipo, nuestra sumatoria se vuelve una integral, pues $N\rightarrow \infty$.
+\begin{equation}
+\vec{E}_{(\vec{x})} = \int_V\frac{\rho_{(\vec{x}_0)}}{4\pi\epsilon}\frac{(\vec{x} - \vec{x}_0)}{|\vec{x}-\vec{x}_0|^3} dV
+\end{equation}
+Si ahora consideramos el flujo del campo eléctrico a través de una superficie cerrada que rodee completamente al medio analizado, obtenemos
+\begin{equation}
+\int_{\partial V}\vec{E}_{(\vec{x})}\cdot d\vec{S} = \int_V\left(\int_{\partial V}\frac{\rho_{(\vec{x}_0)}}{4\pi\epsilon}\frac{(\vec{x} - \vec{x}_0)}{|\vec{x}-\vec{x}_0|^3}\cdot dS\right)dV = \int_V \frac{\rho}{\epsilon} dV
+\end{equation}
+Esta es la ley de Gauss en forma integral. Con el teorema de la divergencia aplicado a la Ec. (4) se llega a la ley de Gauss en forma diferencial:
+\begin{equation}
+\nabla\cdot\vec{E} = \frac{\rho}{\epsilon}
+\end{equation}
+Por otro lado, como el campo eléctrico es un campo vectorial irrotacional, se puede aplicar el teorema fundamental del cálculo para obtener su función potencial. Como $\vec{E}_{(\vec{x})}$ es una variable sólo de la diferencia de posiciones entre la de la carga y el punto de evaluación $|\vec{x} - \vec{x}_0|$ (función sólo del radio), la integración es directa si la referencia para el potencial eléctrico se toma como $0$ al infinito, quedando
+\begin{equation}
+ \vec{E} = \nabla\phi \quad\rightarrow\quad\phi_{(\vec{x})} = -\int_\infty^{\vec{x}} \vec{E}_{(\vec{x})} d\vec{x} = -\int_\infty^{\vec{x}} \frac{q}{4\pi\epsilon}\frac{(\vec{x}-\vec{x}_0)}{|\vec{x} - \vec{x}_0|^3} = \frac{q}{4\pi\epsilon}\frac{1}{|\vec{x} - \vec{x}_0|}
+\end{equation}
+Esto es en los casos en que se tenga una carga puntual, como en el caso de la Ec. (1). Para una carga distribuida se debe considerar la Ec. (4), lo que nos lleva a
+\begin{equation}
+\phi_{(\vec{x})} = \int_V \frac{\rho_{(\vec{x}_0)}}{4\pi\epsilon}\frac{1}{|\vec{x}-\vec{x}_0|}dV
+\end{equation}
+En los casos en que el medio en el que está la carga $q$ no sea el vacío, se debe considerar que la materia que lo compone si reaccionará al campo eléctrico asociado a $q$; en estos casos, $\epsilon \neq \epsilon_0$. Es decir, hay que aclarar que las Ecs. (4) y (5) no están completas, pues falta considerar el efecto de la \textit{polarización}. Además resulta interesante entender qué es realmente la permitividad, que esta relacionada directamente con la polarización del medio; a continuación se explican estos puntos.
+\subsection{La permitividad de un medio material, la polarización y el campo eléctrico microscópico}
+Se puede entender la constante dieléctrica de un material (o permitividad) como una medida del reordenamiento de las partículas de un medio a nivel molecular frente a la presencia de un campo eléctrico externo y provocando así que dichas partículas generen un \textit{campo eléctrico inducido}, que es opuesto en sentido al original, pero no necesariamente de la misma intensidad; este disminuye el flujo neto del campo eléctrico externo, por lo que impide en cierta medida su paso, dando su nombre a la propiedad - en qué grado las moléculas del material \textbf{permiten} el flujo de campo eléctrico.\\\\
+La permitividad que se utiliza en las Ecs. de la sección anterior es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se dijo que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es la referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
+
+\subsubsection{Campo eléctrico local, y polarización}
+\begin{figure}[H]
+\centering
+\input{../Figures/Fig_1.eps_tex}
+\caption{Efecto de un campo sobre la forma de un átomo. El electrón (en realidad la nube electrónica) es "jalado" por el campo, mientras que el protón es "empujado", induciendo así un dipolo.}
+\end{figure}
+Cuando se aplica un campo eléctrico externo a un cuerpo o medio (macroscópico) dieléctrico, las partículas constituyentes de los átomos se comportan de forma especial. Por ejemplo, en la Figura 1 se muestra un átomo simple de hidrógeno que se reordena bajo la acción de un campo externo que rompe el equilibrio eléctrico del átomo, generando así un campo eléctrico opuesto cuyas líneas de campo (inducido) van del protón hacia el electrón (se representa la nube electrónica con un solo electrón por simplicidad). Este efecto es la polarización, e induce un momento dipolar $\vec{p}$ en los átomos afectados por el campo eléctrico a nivel local.
+\begin{equation}
+\vec{p} = \alpha\vec{E}^{loc}
+\end{equation}
+$\alpha$ se conoce como la polarizabilidad microscópica, un coeficiente de proporcionalidad que representa qué tanto se polariza la especie analizada - la magnitud del momento dipolar inducido - en presencia de un cierto campo eléctrico local $\vec{E}^{loc}$. Por supuesto, esta es una relación constitutiva, porque $\alpha$ depende del material o elemento estudiado. Ahora hacemos la distinción entre los distintos campos eléctricos de interés para este apartado:
+\begin{gather*}
+\vec{E}^{ext} \quad \longrightarrow \quad \text{Campo eléctrico externo}\\
+\vec{E}^{loc} \quad \longrightarrow \quad \text{Campo eléctrico local}\\
+\vec{E}^{ind} \quad \longrightarrow \quad \text{Campo eléctrico inducido (microscópico)}\\
+\vec{E} \quad \longrightarrow \quad \text{Campo eléctrico macroscópico}
+\end{gather*}
+y definimos la relación entre los primeros tres como
+\begin{equation}
+\vec{E}^{loc} = \vec{E}^{ind} + \vec{E}^{ext}
+\end{equation}
+Es conveniente explicar que si bien se define uno de los campos como microscópico o local, esto no es el campo debido a un único átomo o molécula, sino el propio de un volumen macroscópicamente pequeño pero microscópicamente grande; por lo tanto, los términos local y microscópico son en realidad promedios sobre volúmenes más pequeños que el campo de las ecuaciones de Maxwell. Hay que notar también que si el campo eléctrico se transmite por el vacío, $\vec{E}^{ind} = 0$ y por ende $\vec{E}^{ext} = \vec{E}^{loc} = \vec{E}$. No se entra en detalle respecto al álgebra pues existen referencias sobre el tema, como por ejemplo el texto de Kantorovich \cite{Kantorovich}, pero después de algo de trabajo se llega a la expresión para el campo eléctrico local, también llamado campo de Lorentz, en función del campo macroscópico
+\begin{equation}
+\vec{E}^{loc} = \vec{E}(1 + \kappa)
+\end{equation}
+donde $\kappa$ es un factor de corrección que depende del ordenamiento microscópico. El campo eléctrico local es el campo que siente cada uno de los muchos volúmenes pequeños que, en conjunto, componen el medio macroscópico que estamos estudiando. Por último se presenta la definición de densidad de polarización $\vec{P}$ para cerrar el círculo de relaciones entre el dieléctrico estudiado a nivel macroscópico y microscópico. La densidad de polarización por unidad de volumen se define de dos maneras; esto sale de diversas fuentes, pero W. Cai \cite{Cai} lo resume todo de forma simple:
+\begin{gather}
+\vec{P}_{(\vec{x})} = \sum_i N_i\alpha_i\left[\vec{E}_{(\vec{x})}^{loc}\right]_i = \sum_i N_i\vec{p}_i\\
+\vec{P}_{(\vec{x})} = \epsilon_0\chi\vec{E}_{(\vec{x})}
+\end{gather}
+con $N_i$ la densidad numérica (\textit{number density}) del $i$-ésimo átomo por unidad de volumen, y $\chi$ la susceptibilidad del medio dieléctrico (que en el caso del vacío es 0). Antes de continuar el desarrollo, se procede a definir qué son la densidad de polarización y la susceptibilidad. Como concepto, la densidad de polarización es la polarización a nivel macroscópico, por unidad de volumen, debida a todos los momentos dipolares inducidos en las moléculas de dicho volumen asociados al campo eléctrico que los induce. Por otra parte, la susceptibilidad permite relacionar un campo eléctrico macroscópico con los efectos que este tiene en el momento dipolar de las partículas en un volumen a través de la densidad de polarización, como se indica en la Ec. (12); más allá de ser una constante de proporcionalidad, indica de forma promediada cómo influye el campo eléctrico en la orientación de los dipolos, y cómo varía el momentum dipolar del medio a nivel macroscópico en presencia del campo eléctrico. Hay que resaltar que esto no implica traslación o \textit{migración} electrónica, sino solo rotación del átomo o molécula para la reorientación del dipolo, intentando alinearlo con el campo.\\\\
+Para terminar esta parte del desarrollo teórico, de las Ecs. (10-12) y sabiendo que el campo macroscópico es el mismo, se puede deducir que
+\begin{equation}
+\vec{P}_{(\vec{x})} = \epsilon_0\chi\vec{E}_{(\vec{x})} = \vec{E}_{(\vec{x})}\sum_iN_i\alpha_i(1+\kappa_i) \implies \epsilon_0\chi = \sum_iN_i\alpha_i(1+\kappa_i)
+\end{equation}
+Un caso particular es la teoría de Clausius-Mossotti, en cuyo caso el valor de $\kappa_i = \kappa$ es $\chi/3$; uno de los supuestos es que la distribución molecular es una malla cúbica regular.\\\\
+Con esto se puede entender de manera general cómo se relacionan el campo eléctrico macroscópico y microscópico. El propósito de este apartado es simplemente aclarar que ambos análisis no son independientes y que el tratamiento de continuo que se dará en lo sucesivo esta fundamentado en teoría del comportamiento eléctrico molecular; es por esto que se omiten pasos y sólo se presentan resultados que se consideran importantes.
+
+\subsubsection{Permitividad de un medio macroscópico}
+Ya se explicó qué son la susceptibilidad y densidad de polarización, por lo que se procede a definir un poco mejor qué es la permitividad, profundizando en lo que se mencionó en la Sección 2.2.
+%\begin{figure}
+%\centering
+%\includegraphics[scale=]{•}
+%\caption{}
+%\end{figure}
+Primero corresponde aclarar que la permitividad es netamente una propiedad macroscópica del medio, pero se prefiere caer en la redundancia un par de veces, como en el caso del título de esta sección, para reafirmar este punto. Cuando un campo eléctrico afecta un medio dieléctrico, los dipolos no solo se intentan alinear con las líneas de campo, sino que además hay un \textit{movimiento de cargas libres} dentro del cuerpo. Sumado a esto está el hecho de que los átomos conformantes del medio rompen el estado de equilibrio, pues los protones son repelidos por el campo, mientras que los electrones son atraidos por este (Fig. 1). Dicho efecto genera que se formen nuevos dipolos y en consecuencia que haya un momento dipolar distinto al original en el medio; es por esta razón que la susceptibilidad se relaciona con la permitividad. Teniendo presentes los fenómenos recién nombrados, se reitera la definición de permitividad o constante dieléctrica como una cuantificación macroscópica promedio de la tendencia de un medio (en este caso un dieléctrico) a oponerse al flujo de campo eléctrico por alguno de los mecanismos nombrados anteriormente.\\\\
+Existen tres \textit{permitividades} de interés para este desarrollo: la permitividad del vacío $\epsilon_0$, la permitividad propia de un material $\epsilon$, y la permitividad relativa o constante dieléctrica, a la que en este caso se da más importancia
+\begin{equation}
+\epsilon_r = \frac{\epsilon}{\epsilon_0}=\epsilon_0(1+\chi)
+\end{equation}
+(llamada $k$ en algunas fuentes). De ahora en adelante, $\epsilon$ a secas pasa a ser la permitividad relativa y se denomina simplemente \textit{permitividad} o \textit{constante dieléctrica} de un medio.\footnote{En estricto rigor, la constante dieléctrica es $\epsilon_r\cdot\epsilon_0$, pero por costumbre se utiliza este término para la propiedad adimensional en este informe.}
+\subsection{Desplazamiento eléctrico y campo eléctrico en un dieléctrico}
+En lo sucesivo, todo el trabajo es relativo a un medio o campo macroscópico. En este informe no se trabaja directamente con los momentos dipolares, la susceptibilidad, o incluso con la densidad de polarización, sino que se presenta una sola ecuación que engloba todos los efectos de un campo eléctrico sobre un dieléctrico; para llegar a dicha ecuación se utilizan las ecuaciones ya introducidas y un par de relaciones nuevas.\\\\
+La Ec. (12) es una expresión que asocia el campo eléctrico y la densidad de polarización, establecida a través de la susceptibilidad y la permitividad. Además, de la Ec. (5) tenemos la ley de Gauss para una distribución de carga, que tiene que ver únicamente con la permitividad.\\\\
+Si se asume que el flujo de campo eléctrico se debe a contribuciones de la distribución de carga y de la polarización del medio unicamente, entonces se puede expresar dicho flujo de campo eléctrico como
+\begin{equation}
+\nabla\cdot\vec{E} = \frac{\rho - \nabla\cdot\vec{P}}{\epsilon_0}
+\end{equation}
+Se define entonces el \textit{desplazamiento eléctrico} como
+\begin{equation}
+\vec{D} = \vec{E} + \vec{P} = \epsilon_0\vec{E}(1 + \chi)
+\end{equation}
+lo que nos permite escribir la Ec. (15) como
+\begin{equation}
+\nabla\cdot\vec{D} = \rho
+\end{equation}
+Esto corresponde al efecto completo del flujo de campo eléctrico sobre el medio. En general, en la Ec.(16) se asocia el campo eléctrico $\vec{E}$ a las cargas libres (free charges) y la densidad de polarización $\vec{P}$ a las cargas fijas (bound charges), pero para el objetivo de este texto eso no es relevante.\\\\
+Siguiendo con la idea, recordando que ahora $\epsilon_r = \epsilon$, suponiendo que la permitividad es una propiedad isotrópica y usando la Ec. (14) en la (16), podemos obtener
+\begin{equation}
+\vec{D} = \epsilon\vec{E}\quad\biggm/\nabla\cdot\qquad\rightarrow\qquad\nabla\cdot\vec{D}=\nabla\cdot(\epsilon\vec{E}) = \nabla(\epsilon)\cdot\vec{E} + \epsilon\nabla\cdot\vec{E} = \rho
+\end{equation}
+Aún más, si la permitividad del medio es constante sobre el mismo, entonces el término $\nabla (\epsilon)\cdot\vec{E}$ se anula.\\\\
+Es así que recuperamos la ecuación de la que prácticamente parte el desarrollo de la teoría, la ley de Gauss.
+\begin{equation}
+\nabla\cdot\vec{E} = \frac{\rho}{\epsilon}
+\end{equation}
+El gran progreso es haber demostrado que no solo sirve para calcular el campo eléctrico en el vacío, sino que se puede aplicar a los dieléctricos en general y que incluso se consideran los efectos de polarización inducidos.
+
+\subsection{Método de imágenes}
+En la teoría electrostática hay ocasiones en que hay que trabajar con interfaces que separan distintos medios dieléctricos. El método de imágenes destaca por su simpleza en este tipo de escenarios. La idea es que cargas en un medio inducirán un campo opuesto en el otro, el denominado campo de reacción. A su vez este campo inducido afectará al campo en el primer medio, por lo que hay que encontrar una expresión para el comportamiento de los campos eléctricos en los dos medios; por supuesto, este problema no se soluciona simplemente con aplicar la Ec. (1).\\\\
+El método de imágenes facilita la resolución del problema de una forma simple: En vez de considerar la polarización y el consecuente campo inducido por el segundo medio como un todo, se hace más fácil poner una carga o distribución de cargas imágenes (puede ser incluso una distribución continua) de tal forma que el efecto de dicha carga sobre el primer medio sea el mismo que si hubiera un campo de reacción. Para esto uno analiza los distintos medios por separado en vez de como un sistema.\\\\
+Como la interfaz es un límite para el espacio de análisis, es aquí donde se establecen las condiciones de frontera. Para un sistema de coordenadas adecuado al problema, existen condiciones para la componente normal del campo y para su componente tangencial justo en la interfaz. Matemáticamente esto es
+\begin{gather}
+\epsilon_1\vec{E}_1\cdot\vec{n} = \epsilon_2\vec{E}_2\cdot\vec{n}\\
+\vec{E}_1\cdot\vec{t} = \vec{E}_2\cdot\vec{t}
+\end{gather}
+En este caso, $\vec{n}$ es un vector normal a la superficie interfaz, y $\vec{t}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\epsilon_1/\epsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción sólo en el medio 1.
+\begin{figure}[H]
+\vspace{2cm}
+\centering
+\input{Fig_2.eps_tex}
+\caption{Se observan las líneas de desplazamiento eléctrico, que dan cuenta del efecto de la polarización.}
+\end{figure}
+\noindent
+La idea es determinar qué valor tiene que tener la carga o conjunto de cargas necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto (discontinuidad) en la componente normal del campo eléctrico dado por
+\begin{equation}
+(\vec{E}_2 - \vec{E}_1)\cdot\vec{n} = \frac{\sigma}{\epsilon_m}
+\end{equation}
+con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
+Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
+
+\subsection{El Método de Elementos de Borde}
+Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa bajo el mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
+El método BEM se basa en definir un residuo $R$ para la ecuación diferencial en cuestión. Tomando como ejemplo la ecuación de Poisson de electrostática, el planteamiento es
+\begin{equation}
+R = \nabla^2\phi - \sum\frac{q}{\varepsilon}
+\end{equation}
+Teniendo este residuo que representa la ecuación con un error, se puede multiplicar por una función $\psi$ que corresponde a una función peso encargada de hacer 0 la integral de $R$ en ciertos puntos
+\begin{equation}
+\int_\Omega R\sum_i\psi_i d\Omega = 0
+\end{equation}
+Si en particular la función $psi$ corresponde a un función delta de Dirac ($\delta(\mathbf{r})$), tenemos el residuo evaluado en una serie de puntos que dependen del delta de Dirac
+\begin{equation}
+\int_\Omega R(\mathbf{r}')\psi(\mathbf{r}_i - \mathbf{r}')d\Omega = R(\mathbf{r}_i)
+\end{equation}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
+La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun} y en reproducir sus resultados para determinar un par de parámetros y si efectivamente resulta viable, con miras a trabajos futuros.\\\\
+En este paper se presenta un método basado en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica. La matemática del problema se presenta en primera instancia el caso con una interfaz y luego con dos interfaces paralelas.
+\subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
+\begin{figure}[H]
+\centering
+\input{Fig_3.eps_tex}
+\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}
+\end{figure}
+En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la Figura 3. El campo eléctrico viene dado por la Ec. (2), y tiene como condiciones de contorno las presentadas en las Ecs. (20) y (21).
+El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\2}} = \sqrt{r^2 + (z\pm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
+No es complejo realizar el desarrollo, remplazando la expresión para el campo en las condiciones de contorno. Con un poco de álgebra se puede llegar a una forma de escribir las cargas $q_1$ y $q_2$ en función de la carga $q$, así como de las permitividades de los medios. Se muestra a continuación un paso a paso breve de cómo se resuelve el sistema. Si $\phi_1$ es el potencial para algún punto en el medio 1, y $\phi_2$ es el potencial en el medio 2, se tiene
+\begin{gather}
+\phi_1 = \frac{1}{4\pi\epsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\\
+\phi_2 = \frac{1}{4\pi\epsilon_2}\left(\frac{q_2}{\sqrt{r^2+(z-d)^2}}\right)
+\end{gather}
+Derivando estas expresiones y remplazándolas en la condición de contorno (20) se obtiene el siguiente sistema de ecuaciones 2x2\\
+%\begin{gather*}
+%\epsilon_1\lim\limits_{z\to 0^-}\vec{E}_{(r,z)}= \epsilon_2\lim\limits_{z\to 0^+}\vec{E}_{(r,z)} \quad \longrightarrow \quad \epsilon_1\left.\frac{\partial\phi}{\partial z}\right|_{z = 0^-} = \epsilon_2\left.\frac{\partial\phi}{\partial z}\right|_{z = 0^+}\\
+%\implies \epsilon_1\frac{q}{\cancel{4\pi}\epsilon_2}\left.\frac{1}{\sqrt{r^2 + (z-d)^2}}\right|_{z=0}=\frac{q}{\cancel{4\pi}}\left.\frac{1}{\sqrt{r^2 + (z+d)^2}}\right|_{z=0}
+%\end{gather*}
+\begin{align*}
+\frac{\partial}{\partial z}\left[\bcancel{\epsilon_1}\cdot\left(\frac{q}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)\right]_{z = 0} &=\\ \frac{\partial}{\partial z}\left[\bcancel{\epsilon_2}\cdot\left(\frac{q_2}{\cancel{4\pi}\bcancel{\epsilon_2}}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)\right]_{z=0}&\\
+\implies\quad d\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}} - \frac{q_1}{\sqrt{(r^2 + d^2)^3}}\right) = d\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)
+\end{align*}
+\begin{equation}
+\implies \qquad q - q_1 = q_2
+\end{equation}
+Para el caso de la condición de contorno (21) se remplazan también las expresiones de $\partial_r\phi_1$ y $\partial_r\phi_2$, pero en este caso no se simplifican las permitividades, por lo que se llega a una expresión que las incluye:
+\begin{align*}
+\frac{\partial}{\partial r}\left(\frac{q}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z-d)^2}} + \frac{q_1}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)_{z=0}& =\\
+\frac{\partial}{\partial r}\left(\frac{q_2}{\cancel{4\pi}\epsilon_2}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)_{z=0}&\\
+\implies \frac{r}{\epsilon_1}\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}}+ \frac{q_1}{\sqrt{(r^2 + d^2)}}\right) = \frac{r}{\epsilon_2}\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)&
+\end{align*}
+\begin{equation}
+\implies \frac{1}{\epsilon_1}(q + q_1) = \frac{q_2}{\epsilon_2}
+\end{equation}
+Ahora, del sistema que conforman las Ecs. (25) y (26), se obtiene la expresión para las cargas imagen en función de los parámetros conocidos del sistema:
+\begin{gather}
+q_1 = -\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_2 + \epsilon_1}\right)\cdot q\\
+q_2 = \left(\frac{2\epsilon_2}{\epsilon_1 + \epsilon_2}\right)\cdot q
+\end{gather}
+Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (23) y (24) dependiendo de dónde se encuentra; por supuesto, esto remplazando los valores de $q_1$ y $q_2$ por los de las Ecs. (27) y (28).
+
+\subsection{Sistema con dos interfaces paralelas y cargas en el medio}
+\begin{figure}[H]
+\centering
+\input{Fig_4.eps_tex}
+\caption{La imagen superior es la situación real para el caso de una carga, mientras que la figura inferior es el sistema trabajado con el método de imágenes. Esto sigue de manera infinita, pero sólo se muestran unas pocas cargas por motivos obvios.}
+\end{figure}
+En este caso, la explicación y por consecuencia la expresión matemática que modela el problema, se tornan más complejas. Si se tienen tres medios dieléctricos 1, 2 y 3, tales que las constantes dieléctricas de los medios 1 y 3 son iguales entre si (Fig. 4), entonces una carga en el medio 2 genera un campo de reacción en los medios 1 y 3, y cada uno de estos induce una reacción en los otros medios. Se genera así un efecto cascada, lo que se traduce en una sumatoria infinita \cite{Pei-kun} como se ve a continuación
+\begin{equation}
+\phi_{(\vec{x})} = \sum_{i=-\infty}^\infty\frac{q_i}{4\pi\epsilon_2|\vec{x} - \vec{x}_i|}
+\end{equation}
+donde
+\begin{equation*}
+q_i = q\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_1 + \epsilon_2}\right)^{|i|} \qquad\qquad x_i=(-1)^ix_0 + i\cdot a
+\end{equation*}
+Cada término de la sumatoria es menor al anterior en magnitud, tendiendo a converger de forma relativamente rápida.\\\\
+Una analogía de este fenómeno y que también tiene que ver con electromagnetismo es lo que ocurre al mirar hacia uno de dos espejos paralelos enfrentados. La imagen de uno se refleja infinitamente en el otro, disminuyendo en tamaño con cada reflejo.\\\\
+Considerar un número mayor de cargas ($N$) simplemente implica sumar sobre estas, considerando el potencial debido a la interacción electrostática entre las partículas componentes del sistema, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la Ec. (29) quede
+\begin{equation}
+\phi_{(\vec{x})} = \sum_{\substack{j = 1\\j\neq i}}^N \frac{q_j}{4\pi\epsilon_2|\vec{x} - \vec{x_j}|} + \sum_{j=1}^N\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\epsilon_2|\vec{x} - \vec{x}_{j,i}|}\quad ; \quad \vec{x} \neq \vec{x}_j\quad ; \quad \vec{x} \neq \vec{x}_{j,i}
+\end{equation}
+En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.
+
+\subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
+Las Ecs. (29) y (30) contemplan sumatorias que van desde $-\infty$ a $\infty$, cosa que a nivel computacional no es posible lograr. Para eso y sabiendo que la sumatoria converge al tener un denominador que va aumentando, se puede buscar un número $n < \infty$ que resulte representativo. Se trabaja con un código simple hecho en \texttt{Python 3}, a través de la interfaz \texttt{Jupyter}. Se buscan dos valores de $n$ consecutivos tales que la diferencia porcentual entre los potenciales para cada n sea baja. Aquí $n$ corresponde a $+\infty$ y $-n$ a $-\infty$. Se evalúa la Ec. (29) con $n = 48$ y luego con $n=50$, siendo la diferencia relativa entre estos dos valores igual a $0.00936287...\%$. Además se evalúa para valores de $n = 68$ y $n=70$, lo que da un $\Delta$ porcentual de $0.00225061...\%$. Esto se calcula mediante
+\begin{equation*}
+\frac{\phi_{(n)} - \phi_{(n-1)}}{\phi_{(n-1)}}\cdot 100\%
+\end{equation*}
+Se tiene entonces un claro indicio de que aumentar el valor de $n$ mucho más allá de $50$ no es realmente útil e implica dedicar más recursos computacionales. Se presenta a continuación una gráfica para un valor de $q=1$, $\epsilon_1 = 80$ y $\epsilon_2 = 2$. La primera constante dieléctrica corresponde a la del medio externo, y la segunda a la del medio encerrado. La posición de la carga de prueba es $(0,0,0)$, y la del punto de evaluación es $(1,0,0)$ en coordenadas cartesianas. En esta gráfica se puede apreciar cómo la Ec. (29) converge a un valor del potencial $\phi$ a medida que aumenta $n$, hasta un punto en que prácticamente ya no hay diferencia. El valor para $n=120$ es $\phi = 0.0253427...\approx 0.025343$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{./Imagenes/phi_n.png}
+\caption{Convergencia del valor del potencial en función de $n$.}
+\end{figure}
+\noindent
+Se presenta también la diferencia porcentual entre los cálculos para distintos valores de $n$ en la Figura 6, con escala logarítmica en el eje de la variación para poder distinguir de mejor forma los cambios en el valor. Como ya se dijo y también como se puede ver en cualquiera de las dos gráficas, no merece la pena calcular para $n$ mucho mayores a 50, pues es poca la precisión que se gana, y para conjuntos de múltiples cargas se produce una demanda computacional innecesaria.\\\\
+Se puede observar que, teniendo en cuenta la escala logarítmica, la diferencia entre iteraciones después de la marca roja tiende a ser lineal, por lo que no se gana mucho aumentando el número de datos. Es para tener mayor certeza de la precisión del cálculo que se propone trabajar con $n = 70$. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{./Imagenes/delta_n.png}
+\caption{Variación porcentual del valor de $\phi$ en función de $n$.}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Lecturas relevantes al respecto}
+En la sección actual se presentan una serie de breves resúmenes de publicaciones relacionadas con la temática de modelos computacionales de células y/o biomoléculas, o que sean de aporte para el entendimiento de la teoría electrostática en alguna forma.
+\subsection{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite{APBSmem}}
+La publicación sobre APBSmem es más que nada una guía para la utilización del programa APBSmem, en la que se presentan además los métodos utilizados para el cálculo de energías de interés, en sistemas biológicos (proteína-membrana principalmente); esto puede ser, solvatación para iones, para proteínas, o canales transmembrana. 
+La bicapa consiste en ``planchas" de material dieléctrico con baja constante dieléctrica que se colocan de tal forma que limiten con la proteína y no sean parte de, en el caso que haya, las proteínas de canal. Para ubicar la membrana, el programa utiliza las posiciones espaciales de residuos hidrofóbicos como referencia, o también se puede acudir a la base de datos Orientations of Proteins in Membranes.\\\\
+Utilizando la ecuación PB lineal, el programa puede calcular el potencial de membrana o proteína por separado, en caso que sea requerido. Se incluyen las ecuaciones de PB para tres casos: bajo la membrana (dentro de la célula), en la membrana, y sobre esta (fuera de la célula). Esto se logra con la ecuación de Poisson-Boltzman linealizada y sumando un término para compensar por la diferencia de potencial entre el interior y el exterior; esta diferencia es producto de la concentración de iones (Potasio, Calcio, etc) al interior y exterior de la pared celular. Los potenciales del sistema vienen de la ecuación PB por fuera de la célula, PB modificado para dar cuenta de la concentración de iones dentro de la célula, y Poisson (Laplace) dentro en la membrana; para una bicapa con límites $z = L/2$ y $z = -L/2$, los potenciales son
+
+\begin{align}
+\phi_1(z) &= \frac{e}{k_BT}V_{in}\frac{1}{\frac{\epsilon_w}{\epsilon_m}\kappa L + 2}e^{\kappa(L/2 - z)} &z>L/2\\
+\phi_2(z) &= \frac{e}{k_BT}V_{in}\left(\frac{1}{2}-\frac{1}{\frac{\epsilon_w}{\epsilon_m}\kappa L + 2}\frac{\epsilon_w}{\epsilon_m}\kappa z\right) &-L/2 < z < L/2\\
+\arraycolsep=0.3in\def\arraystretch{2}
+\phi_3(z) &= \frac{e}{k_BT}V_{in}\left(1 - \frac{1}{\frac{\epsilon_w}{\epsilon_m}\kappa L + 2}e^{\kappa(z+ L/2)}\right)&z<-L/2
+\end{align}
+En este caso $\phi_{1,2,3}$ es el potencial producto de la membrana, $e$ es la carga del electrón, y $\kappa^2=\bar{\kappa}^2/\epsilon_w$ es una variable auxiliar relacionada con la longitud de Debye-Hückel $\bar{\kappa}$.\\\\
+El programa, según se escribe en la publicación, trabaja con el método de diferencias finitas para obtener el potencial. Se incluyen ejemplos para los tres casos de cálculos energéticos mencionados en el paper.
+\subsection{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model.\cite{Huimin-Lin}}
+En esta publicación se estudia la ecuación de PB linealizada aproximada mediante el método de imágenes; en particular, se modela el campo de reacción del solvente y la membrana en presencia de un canal iónico. Para esto, los investigadores obtienen imágenes para las interfaces planas de la membrana y para una interfaz propia de un cilindro, que sirve para separar al canal iónico del resto del sistema estudiado. Se determina una aproximación por el método de imágenes dentro y fuera de la membrana y del cilindro. Se integran también los aportes iónicos de la solución al modelo, lo que genera una expansión en funciones ortogonales de $sin$ y $cos$ para el potencial de Coulomb y el campo de reacción en la membrana. De la publicación se tienen las expresiones para el potencial en la membrana, sobre ella y bajo ella en $z$. Además, las imágenes y sus posiciones se obtienen por uno de dos métodos. El primero es una solución de la minimización del error $L_2$ entre la expresión propuesta por el método RIC \cite{Pei-kun} y el método de múltiples imágenes, que presenta Wei Cai en otro paper \cite{Wei-Cai}.
+\begin{align*}
+\text{Sol. RIC}\qquad\qquad \phi_{rf} = &\sum_{\substack{k = -\infty\\
+k \neq 0}}^{k = \infty} \frac{q_k}{\epsilon_m|\vec{x} - \vec{x}_k|}\\
+\text{Sol. Mult. Im. Method}\qquad\qquad \phi_{irf} = & \frac{q_s}{\epsilon_m}\sum_{l}\frac{q_k}{|\vec{x} - \vec{x}_l|}
+\end{align*}
+La segunda alternativa es utilizar un método de ajuste tipo Prony para resolver el sistema, aplicando dicho ajuste a la expansión de Fourier. En el paper se menciona que no existe actualmente una forma de modelar los efectos de la solución electrolítica sobre el canal iónico mediante el método de imágenes. Para modelar el canal intermembrana a pesar de este obstáculo es que se propone el uso de un modelo híbrido: se utiliza el método de imágenes para modelar los potenciales de la membrana y del solvente. Se utiliza un cilindro para encerrar el canal, junto con parte del solvente y la membrana, y se calculan las condiciones en las interfaces correspondientes al cilindro con el método de imágenes. Con esto se puede utilizar otro método, como dinámica molecular, para realizar los cálculos correspondientes al canal intermembrana a partir del borde del cilindro, cuyas condiciones son ya conocidas.
+\subsection{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite{Gan}}
+Se emplea el método de imágenes para simular un coloide esférico, en primera instancia sin carga. El coloide se considera un macroión, sumergido en un dieléctrico en el que hay más especies iónicas distribuidas. Para esto se ocupa la ecuación de Poisson para el potencial, que surge de aplicar $\nabla$ a la ecuación (7). Se tratan los iones del solvente como cargas puntuales, considerando de inmediato una formulación explícita del problema. Como el coloide no tiene carga, se trabaja con la ecuación de Laplace.\\\\
+Ahora, fuera del coloide esférico se tiene que
+\begin{equation*}
+\Phi(\vec{r}) = \Phi_{Coul}(\vec{r}) + \Phi_{pol}(\vec{r})
+\end{equation*}
+El potencial de polarización es el complejo en este problema, pues el de Coulomb es el ya conocido $q/(\epsilon|\vec{r}-\vec{r}_s|)$.\\\\
+Para el potencial de polarización se ubican cargas a lo largo de una recta, de tal forma que se genere la esfera para una carga $q$ real ubicada a una distancia $r_s$ del centro de referencia. Con una expansión harmónica, se puede reformular el potencial de polarización como las contribuciones de una carga $q_K = -\gamma a q/r_s$, llamada de Kelvin, y una distribución lineal de carga desde el origen hasta la posición de $q_K$. Esta se puede discretizar y llevar a una sumatoria de la forma
+\begin{gather*}
+\Phi_{pol}(\vec{r}) = \frac{q_K}{\epsilon|\vec{r} - \vec{r}_K} + \sum_{m = 1}^I \frac{q_m}{\epsilon|\vec{r} - \vec{x}_m|}\\
+q_m = \frac{\omega_m}{2}\frac{\gamma a q}{r_s}\qquad\qquad x_m = r_K\left(\frac{1-s_m}{2}\right)^{1/\sigma}
+\end{gather*}
+donde $\gamma=(\epsilon_{in} - \epsilon_{out})/(\epsilon_{in}+ \epsilon_{out})$, $\sigma = \epsilon_{out}/(\epsilon_{in} + \epsilon_{out})$, $a$ el radio del coloide esférico, $r_K$ es el radio de la carga de Kelvin desde el centro del sistema de referencia, y $q$ es la carga de prueba. A partir de esto, se puede aproximar la carga lineal distribuida mediante $I + 1$ cargas puntuales. Establecido esto, se utiliza un método de Monte Carlo para el cálculo de la energía potencial del coloide en el dieléctrico.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Conclusiones generales}
+Durante el aprendizaje que conlleva el presente trabajo se logra afianzar el conocimiento sobre la teoría electrostática, así como también familiarizarse con la ecuación de Poisson-Boltzman (a través de las lecturas pertinentes al tema), de dónde surge y todo lo que representa. Ya se señaló en un principio que la idea principal de este escrito es presentar la base teórica para poder implementar BEM, y en primera instancia eso se logra para un medio homogeneo, pues ya se cuenta con una expresión para el potencial en función de las variables de interés del problema.\\\\
+En este informe se aclara por qué es posible utilizar la teoría electrostática macroscópica para describir fenómenos a nivel molecular, dando paso a la explicación y aplicación del método de imágenes para resolver un sistema simple de una carga y una interfaz planar. Con la introducción y resolución de la teoría y el problema tipo del método de imágenes respectivamente, se procede a la implementación del método RIC. Mediante esta última herramienta se pueden trabajar sistemas de múltiples cargas en un medio encerrado por dos interfaces a través de cargas imágenes que representen el campo de reacción de los medios. Gracias a un pequeño programa es que se logra definir un número conveniente para representar el valor de $\infty$ en los límites de la sumatoria para el caso de una sola carga encerrada.
+\subsection{Continuación del trabajo}
+A continuación se plantea cómo seguir con este trabajo a partir de los fundamentos establecidos en el presente texto, pues la idea es hacer uso de la teoría incluida aquí para entregar un aporte, particularmente buscando una mejora en la velocidad de cálculo.\\\\
+Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación, se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
+El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en determinar también si el aporte de dicha membrana es realmente significativo o se puede despreciar, y en qué casos es correcto hacerlo.\\\\
+También hay otros puntos de investigación, como simular una o un sistema de cargas fuera de la membrana. Esto abriría la posibilidad de trabajar con proteínas transmembrana sin tener que cambiar de forma significativa el planteamiento del problema. Además puede ser que si se continúa con esta línea de investigación, surjan otras aristas que valga la pena explorar y sean de interés.\\\\
+Cerrando las ideas, se puede decir que el trabajo presentado en este informe consiste en adquirir conocimientos base e información sobre otros trabajos relacionados con el tema. Esto se hace para poder avanzar en lo sucesivo con el desarrollo de nuevas propuestas que permitan acelerar los cálculos energéticos de la interacción electrostática en sistemas de múltiples cargas. Queda pendiente familiarizarse con el método BEM, para poder así juntar todo en un trabajo final que englobe la teoría electrostática aplicada a interacciones moleculares de proteínas en la membrana mediante el método de elementos de borde.
+
+
+\pagebreak
+
+\begin{thebibliography}{20}
+\bibitem{Jackson}
+Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
+\bibitem{Griffiths}
+Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prentice Hall, 1999
+\bibitem{Kantorovich}
+Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition, Ch. 8; Springer, 2004
+\bibitem{Cai}
+Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
+\bibitem{Pei-kun}
+Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
+\bibitem{APBSmem}
+Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9) 2010
+\bibitem{Huimin-Lin}
+Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model}, J. Sci. Comput. 2011
+\bibitem{Wei-Cai}
+Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to charges inside or outside a dielectric sphere} J. Comput. Phys. 223, 2007
+\bibitem{Gan}
+Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface} Phys. Rev. E 84, 016705 (2011)
+\bibitem{Roux}
+Roux, B. \textit{Influence of the Membrane Potential on the Free Energy of an Intrinsic Protein} Byophysical Journal, Vol. 73, 2980--2989, 1997
+
+
+\end{thebibliography}
+
+%\pagebreak
+
+%\section*{Anexos}
+
+\end{document}
