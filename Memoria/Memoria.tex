@@ -218,22 +218,38 @@ R = \nabla^2\phi
 \end{equation}
 Teniendo este residuo que representa la ecuación con un error, se puede multiplicar por una función $\psi$ que corresponde a una función peso encargada de hacer 0 la integral de $R$ en ciertos puntos
 \begin{equation}
-\int_\Omega R\sum_i\psi_i d\Omega = 0
+\int_\Omega R\sum_i\psi_i\text{ }d\Omega = 0
 \end{equation}
-Ahora bien, si se considera la ecuación de Laplace para este caso, se tiene que para los puntos $i$,
+Ahora bien, si se considera la ecuación de Laplace para este caso, $R = \nabla^2\phi$, se tiene que para los puntos $i$,
 \begin{equation}
-\int_\Omega \nabla^2\phi\cdot\psi(\mathbf{r}_i) d\Omega
+\int_\Omega \nabla^2\phi\cdot\psi(\mathbf{r}_i)\text{ }d\Omega = 0
 \end{equation}
-Luego se procede a debilitar la ecuación de Laplace, haciendo integración por partes dos veces para pasarle derivadas a $\psi$ y dejar la integral como
+Luego se procede a debilitar la ecuación de Laplace, haciendo integración por partes para pasarle derivadas a $\psi$ y dejar la Ecuación 25 como
 \begin{equation}
-
+\int_\Omega \nabla^2\phi\cdot\psi\text{ }d\Omega = \int_\Omega \nabla(\nabla \phi\cdot\psi) - \nabla\phi\cdot\nabla\psi\text{ }d\Omega = 0
 \end{equation}
-
-
-Si en particular la función $\psi$ corresponde a una función delta de Dirac ($\delta(\mathbf{r})$), tenemos que para una función genérica $f(\mathbf{r})$ multiplicada por el delta de Dirac evaluado en una serie de puntos $(\mathbf{r}_i)$
+Respecto al integrando del lado derecho, si se aplica la ley de Gauss al primer término y se integra por partes el segundo, se llega a
 \begin{equation}
-\int_\Omega R(\mathbf{r}')\psi(\mathbf{r}_i - \mathbf{r}')d\Omega = R(\mathbf{r}_i)
+\int_{\partial\Omega} (\nabla\phi\cdot\psi)\cdot\hat{\mathbf{n}}\text{ }d\partial\Omega - \int_\Omega \nabla\cdot(\nabla\psi\cdot\phi) - \nabla^2\psi\cdot\phi\text{ }d\Omega = 0
 \end{equation}
+Por último, al aplicar nuevamente el teorema de la divergencia al primer término de la segunda integral, se obtienen dos integrales de superficie y una de volumen.
+\begin{equation}
+\int_{\partial\Omega} (\nabla\phi\cdot\psi - \nabla\psi\cdot\phi) \cdot\hat{\mathbf{n}}\text{ }d\partial\Omega = \int_\Omega \phi\cdot\nabla^2\psi\text{ }d\Omega
+\end{equation}
+Si en particular $\nabla^2\psi$ corresponde a una función delta de Dirac ($\delta(\mathbf{r})$), entonces la integral del lado derecho es $\phi$ evaluado en los puntos seleccionados por la función $\delta$. Para que se cumpla $\nabla^2\psi = \delta$, $\psi$ debe ser una función de Green,
+\begin{equation}
+\psi = G(\mathbf{r}_1,\mathbf{r}_2) = \frac{k}{|\mathbf{r}_1 - \mathbf{r}_2|}
+\end{equation}
+donde $k$ es una constante que no afecta la proporcionalidad inversa respecto del radio. De esta manera, la Ecuación 28 queda con la forma final
+\begin{equation}
+\phi(\mathbf{r}_\Omega) = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_\Omega)\cdot G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega}) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega})\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega
+\end{equation}
+En los casos en que se produzca una singularidad debido a que $\mathbf{r}_\Omega \rightarrow \mathbf{r}_\partial\Omega$, los valores de la integral de superficie tienen los siguientes valores
+\begin{gather}
+\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi\cdot G = 0\\
+\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}} G\cdot\phi = -\frac{\phi}{2}
+\end{gather}
+En este escrito se omite la demostración correspondiente debido a que no se considera relevante más allá del resultado, pero un desarrollo metódico se puede encontrar en textos de la materia, como por ejemplo el libro de Brebbia \cite{Brebbia}.\\\\
 
 
 
@@ -397,6 +413,8 @@ Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prenti
 Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition, Ch. 8; Springer, 2004
 \bibitem{Cai}
 Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
+\bibitem{Brebbia}
+Brebbia, C. A.; Dominguez J. \textit{Boundary Elements: An Introductory Course}, Second Edition, Ch. 2; WIT Press, 1992
 \bibitem{Pei-kun}
 Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
 \bibitem{APBSmem}
