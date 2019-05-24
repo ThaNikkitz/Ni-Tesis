@@ -224,7 +224,7 @@ Ahora bien, si se considera la ecuación de Laplace para este caso, $R = \nabla^
 \begin{equation}
 \int_\Omega \nabla^2\phi\cdot\psi(\mathbf{r}_i)\text{ }d\Omega = 0
 \end{equation}
-Luego se procede a debilitar la ecuación de Laplace, haciendo integración por partes para pasarle derivadas a $\psi$ y dejar la Ecuación 25 como
+Luego se procede a debilitar la ecuación de Laplace, haciendo integración por partes para pasarle derivadas a $\psi$ y dejar la Ecuación (25) como
 \begin{equation}
 \int_\Omega \nabla^2\phi\cdot\psi\text{ }d\Omega = \int_\Omega \nabla(\nabla \phi\cdot\psi) - \nabla\phi\cdot\nabla\psi\text{ }d\Omega = 0
 \end{equation}
@@ -240,7 +240,7 @@ Si en particular $\nabla^2\psi$ corresponde a una función delta de Dirac ($\del
 \begin{equation}
 \psi = G(\mathbf{r}_1,\mathbf{r}_2) = \frac{k}{|\mathbf{r}_1 - \mathbf{r}_2|}
 \end{equation}
-donde $k$ es una constante que no afecta la proporcionalidad inversa respecto del radio. De esta manera, la Ecuación 28 queda con la forma final
+donde $k$ es una constante que no afecta la proporcionalidad inversa respecto del radio. De esta manera, la Ecuación (28) queda con la forma final
 \begin{equation}
 \phi(\mathbf{r}_\Omega) = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_\Omega)\cdot G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega}) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega})\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega
 \end{equation}
@@ -250,6 +250,12 @@ En los casos en que se produzca una singularidad debido a que $\mathbf{r}_\Omega
 \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}} G\cdot\phi = -\frac{\phi}{2}
 \end{gather}
 En este escrito se omite la demostración correspondiente debido a que no se considera relevante más allá del resultado, pero un desarrollo metódico se puede encontrar en textos de la materia, como por ejemplo el libro de Brebbia \cite{Brebbia}.\\\\
+En síntesis, la Ecuación (30) nos permite obtener $\phi$ en el volumen $\Omega$ contenido por una superficie $\partial\Omega$; por otro lado, para calcular $\phi$ sobre el contorno $\partial\Omega$, se aplican los resultados (31) y (32) en la Ecuación (30) y se obtiene
+\begin{equation}
+\frac{\phi(\mathbf{r}_{\partial\Omega})}{2} = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_\Omega)\cdot G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega}) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega})\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega
+\end{equation}
+En ambos casos se puede observar que la integración es sobre $\mathbf{r}_{\partial\Omega}$, por lo que los términos que dependen de $\mathbf{r}_\Omega$ salen de las integrales como constantes. Esto es válido también luego de discretizar la superficie en paneles, suponiendo la propiedad como constante sobre un mismo panel.\\\\
+Es importante considerar que la aplicación del método BEM que se ha hecho hasta ahora es para la ecuación de Laplace. En caso de que la ecuación gobernante del fenómeno bajo estudio sea otra, corresponde hacer una derivación para dicha situación. Afortunadamente, para lo desarrollado en el presente texto no hace falta más.
 
 
 
@@ -342,6 +348,14 @@ Se puede observar que, teniendo en cuenta la escala logarítmica, la diferencia 
 \includegraphics[width=\linewidth]{./Imagenes/delta_n.png}
 \caption{Variación porcentual del valor de $\phi$ en función de $n$.}
 \end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Implementación del método de imágenes al programa PyGBE}
+El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de una molécula o membrana inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Para explicar cómo ocurre el cálculo de dichas energías, hay que mencionar y explicar brevemente un par de programas que se utilizan, uno de los cuales derechamente se modifica para incluir la capacidad de simular la situación mencionada. También hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, sólo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares que signifiquen la remoción de una sección de la membrana, hay que utilizar otra forma de modelar, puesto que el método de imágenes tal como se implementa aquí requiere que haya dos planos infinitos rodeando a la carga. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de una distribución de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad del método de imágenes como representación de una membrana y 
+PyGBE es un programa escrito en \texttt{Python} que permite calcular la energía de solvatación de una molécula o conjunto de estas en un medio, ya sea con la ecuación de Poisson o la de Poisson-Boltzmann (medio uniforme o con distribución de iones).
 
 
 
