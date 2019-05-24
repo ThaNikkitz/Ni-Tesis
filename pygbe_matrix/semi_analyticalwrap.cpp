@@ -143,7 +143,7 @@ void lineInt(REAL *PHI, REAL z, REAL x, REAL v1, REAL v2, REAL kappa, REAL E, RE
     // Loop over gauss points
 }
 
-void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL kappa, REAL E, REAL m_E, REAL m_a, REAL *xk, REAL *wk, REAL *vert_i, REAL *vert_f, REAL *center, int K, int n, REAL Area)
+void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL kappa, REAL E, REAL m_E, REAL m_a, REAL *xk, REAL *wk, REAL *vert_i, REAL *vert_f, REAL *center, int K, int n, REAL Area, int phi_size)
 {
     REAL v21[3];
     for (int i=0; i<3; i++)
@@ -199,26 +199,26 @@ void intSide(REAL *PHI, REAL *v1, REAL *v2, REAL p, REAL kappa, REAL E, REAL m_E
 
     if ((v1new[1]>0 && v2new[1]<0) || (v1new[1]<0 && v2new[1]>0))
     {
-        REAL PHI1[4] = {0.,0.,0.,0.} , PHI2[4] = {0.,0.,0.,0.};
+        REAL PHI1[phi_size] = {0.,0.,0.,0.,0.,0.} , PHI2[phi_size] = {0.,0.,0.,0.,0.,0.};
         lineInt(PHI1, p, x, 0, v1new[1], kappa, E, m_E, m_a, xk, wk, vert_i, vert_f, center, K, n, Area);
         lineInt(PHI2, p, x, v2new[1], 0, kappa, E, m_E, m_a, xk, wk, vert_i, vert_f, center, K, n, Area);
 
-        for(int i=0; i<4; i++)
+        for(int i=0; i<phi_size; i++)
             PHI[i] += PHI1[i] + PHI2[i];
     }   
     else
     {
-        REAL PHI_aux[4] = {0.,0.,0.,0.};
+        REAL PHI_aux[phi_size] = {0.,0.,0.,0.,0.,0.};
         lineInt(PHI_aux, p, x, v1new[1], v2new[1], kappa, E, m_E, m_a, xk, wk, vert_i, vert_f, center, K, n, Area);
 
-        for(int i=0; i<4; i++)
+        for(int i=0; i<phi_size; i++)
             PHI[i] -= PHI_aux[i];
     }
 }
 
 
 void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL kappa, REAL E, REAL m_E, REAL m_a,
-            int same, REAL *xk, int xkSize, REAL *wk, int n, REAL Area)
+            int same, REAL *xk, int xkSize, REAL *wk, int n, REAL Area, int phi_size)
 {
     // Put first panel at origin
     REAL y0_panel[3], y1_panel[3], y2_panel[3], x_panel[3];
@@ -283,9 +283,9 @@ void SA_wrap(REAL *PHI, REAL *y, REAL *x, REAL kappa, REAL E, REAL m_E, REAL m_a
     }
 
     // Loop over sides
-    intSide(PHI, panel0_final, panel1_final, x_plane[2], kappa, E, m_E, m_a, xk, wk, vert0, vert1, x, xkSize, n, Area); // Side 0
-    intSide(PHI, panel1_final, panel2_final, x_plane[2], kappa, E, m_E, m_a, xk, wk, vert1, vert2, x, xkSize, n, Area); // Side 1
-    intSide(PHI, panel2_final, panel0_final, x_plane[2], kappa, E, m_E, m_a, xk, wk, vert2, vert0, x, xkSize, n, Area); // Side 2
+    intSide(PHI, panel0_final, panel1_final, x_plane[2], kappa, E, m_E, m_a, xk, wk, vert0, vert1, x, xkSize, n, Area, phi_size); // Side 0
+    intSide(PHI, panel1_final, panel2_final, x_plane[2], kappa, E, m_E, m_a, xk, wk, vert1, vert2, x, xkSize, n, Area, phi_size); // Side 1
+    intSide(PHI, panel2_final, panel0_final, x_plane[2], kappa, E, m_E, m_a, xk, wk, vert2, vert0, x, xkSize, n, Area, phi_size); // Side 2
 
     if (same==1)
     {
@@ -309,7 +309,7 @@ void SA_wrap_arr(REAL *y, int ySize, REAL *x, int xSize,
     {
         REAL PHI_1[6] = {0.,0.,0.,0.,0.,0.};
         REAL x_1[3] = {x[3*i], x[3*i+1], x[3*i+2]};
-        SA_wrap(PHI_1, y, x_1, kappa, E, m_E, m_a, same[i], xk, xkSize, wk, n, Area);
+        SA_wrap(PHI_1, y, x_1, kappa, E, m_E, m_a, same[i], xk, xkSize, wk, n, Area, sizeof(PHI_1));
         phi_Y[i]  = PHI_1[0];
         dphi_Y[i] = PHI_1[1];
         phi_L[i]  = PHI_1[2];
@@ -379,7 +379,7 @@ void P2P_c(REAL *MY, int MYSize, REAL *dMY, int dMYSize, REAL *ML, int MLSize, R
                 REAL PHI_1[4] = {0., 0., 0., 0.};
                 
                 start = clock();
-                SA_wrap(PHI_1, panel, center, kappa, E, m_E, m_a, same, xk, xkSize, wk, n, Area_i);
+                SA_wrap(PHI_1, panel, center, kappa, E, m_E, m_a, same, xk, xkSize, wk, n, Area_i, sizeof(PHI_1));
                 stop = clock();
 
                 MY[i_aux]  += PHI_1[0] * m[j]/(w0*Area[tri[j]]);
