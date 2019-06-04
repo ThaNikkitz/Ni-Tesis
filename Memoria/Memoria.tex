@@ -211,8 +211,8 @@ con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dielé
 Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
 
 \subsection{El Método de Elementos de Borde}
-Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa bajo el mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
-El método BEM se basa en definir un residuo $R$ para la ecuación diferencial en cuestión. Tomando como ejemplo la ecuación de Laplace, el planteamiento es
+Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa partiendo del mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
+El método BEM se basa en definir un residuo $R$ para la ecuación diferencial en cuestión. Tomando como ejemplo la ecuación de Laplace, el planteamiento parte
 \begin{equation}
 R = \nabla^2\phi
 \end{equation}
@@ -258,6 +258,16 @@ En ambos casos se puede observar que la integración es sobre $\mathbf{r}_{\part
 Es importante considerar que la aplicación del método BEM que se ha hecho hasta ahora es para la ecuación de Laplace. En caso de que la ecuación gobernante del fenómeno bajo estudio sea otra, corresponde hacer una derivación para dicha situación. Afortunadamente, para lo desarrollado en el presente texto no hace falta más.
 
 
+\subsection{El entorno celular}
+A pesar de haber mencionado la teoría sobre el comportamiento de cargas en un medio, el método de imágenes, y el método BEM que permite llevar todo esto a aplicaciones numéricas, estos pueden aún parecer tópicos un tanto aislados unos de otros, e incluso abstractos en cierta medida. Como consecuencia se presenta el contexto biológico que motiva la búsqueda de un modelo para integrar el efecto de la membrana celular en el que se encuentran insertas algunas proteínas.\\\\
+Una célula se compone de distintas estructuras funcionales que permiten transformar moléculas en energía, enviar y recibir señales de tipo químico y eléctrico, permitir el paso de compuestos desde y hacia el exterior de la célula, entre otros. Las proteínas son probablemente el tipo de macromolécula con la mayor diversidad de funciones en el entorno celular, y su importancia en el quehacer de la membrana, sea este el flujo de elementos o la conducción de señales, por ejemplo, es fundamental. La membrana plasmática\footnote{\textit{Plasmática} se refiere a la membrana que encierra a la célula} como regla general se compone de una cadena de fosfolípidos, uno al lado del otro, que rodean el citoplasma (fluido intracelular) y separan el interior de la célula, con estructuras y todo, del fluido extracelular. Más aún, la membrana celular, también llamada bicapa fosfolipídica debido a su composición, es la encargada de definir la frontera de ciertos organelos de la célula; las lisosomas, mitocondrias y el mismo núcleo celular son algunos.\\\\
+Los fosfolípidos son un tipo de molécula conformado por dos "colas" de ácidos grasos que se unen a un glicerol. Para completar la molécula, también hay un fosfato enlazado al glicerol, que lleva por el lado opuesto una unión con una colina. Para efectos de este trabajo, lo que hay que rescatar es el hecho de que las colas son hidrófobas, mientras que la "cabeza" conformada por el glicerol, el fosfato y el compuesto polar, la colina, son la parte hidrófila del fosfolípido. La Figura 5 muestra tanto una vista en corte de la membrana como un detalle de la composición del fosfolípido.
+\begin{figure}[H]
+	\centering
+	\input{./Figures/Fig_5.eps_tex}
+	\caption{Esquema de un fosfolípido, con detalle sobre la composición de la cabeza hidrófila.}
+\end{figure}
+La importancia de la hidrofobicidad e hidrofilicidad de las colas y cabezas respectivamente, es la orientación que toman los fosfolípidos al conformar la membrana. Esto es lo mismo que sucede con las proteínas insertas en la membrana, ocupando lugares en la pared celular que permiten minimizar la exposición al agua de los aminoácidos conformantes que tengan una pobre afinidad al agua y maximizando la de los que tengan una afinidad alta. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -267,9 +277,9 @@ La presente sección se basa fundamentalmente en el desarrollo visto en la publi
 En este paper se presenta un método basado en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica. La matemática del problema se presenta en primera instancia el caso con una interfaz y luego con dos interfaces paralelas.
 \subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
 \begin{figure}[H]
-\centering
-\input{./Figures/Fig_3.eps_tex}
-\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}
+	\centering
+	\input{./Figures/Fig_3.eps_tex}
+	\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}
 \end{figure}
 En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la Figura 3. El campo eléctrico viene dado por la Ec. (2), y tiene como condiciones de contorno las presentadas en las Ecs. (20) y (21).
 El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\2}} = \sqrt{r^2 + (z\pm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
@@ -441,7 +451,8 @@ Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to cha
 Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface} Phys. Rev. E 84, 016705 (2011)
 \bibitem{Roux}
 Roux, B. \textit{Influence of the Membrane Potential on the Free Energy of an Intrinsic Protein} Byophysical Journal, Vol. 73, 2980--2989, 1997
-
+\bibitem{Campbell}
+Campbell, N.; Reece, J. \textit{Biología}, Séptima Edición, Editorial Médica Panamericana, 2007
 
 \end{thebibliography}
 
