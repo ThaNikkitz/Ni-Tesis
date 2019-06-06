@@ -278,25 +278,33 @@ La membrana es la estructura fundamental de este estudio, pero es importante no 
 
 
 
-\section{Metodología e implementación}
+\section{Metodología, funcionamiento e implementación}
 Actualmente existen dos modelos ampliamente utilizados para representar un solvente. Uno se basa en una consideración de cada átomo que conforma el solvente de forma explícita, modelando el problema con dinámica molecular, y la otra en un modelo continuo, en el que se trabaja el solvente como un medio dieléctrico con propiedades representativas ponderadas.\\\\
 El primer modelo tiene la gran ventaja de que permite una precisión enorme, pues es una consideración de todas las partículas de manera explícita, una por una, y los fenómenos que ocurren en todas las interacciones. El gran nivel de detalle de este modelo resulta también ser su gran debilidad, pues la cantidad de cálculos que hay que hacer depende del número de partículas del sistema, significando un gran costo computacional.\\\\
 El segundo modelo permite omitir la consideración de partículas individuales al seguir un enfoque continuo, pero al no ser una representación detallada del sistema, el modelo cae en impresiciones; un ejemplo de esto es no tomar en cuenta las fuerzas de van der Waals u otros fenómenos que ocurren a distancias muy pequeñas. A continuación se empieza a ensamblar la teoría presentada en la sección previa, explicando cómo el método BEM permite modelar una proteína inmersa en una solución a través de una discretización de la interfaz que los separa, cómo se genera dicha interfaz y qué es lo que se busca a partir de estos cálculos.
 \subsection{Representación del modelo de solvente implícito mediante BEM}
-Ya se caracterizó el modelo de solvente implícito y cómo funciona. Un resultado de esto es, en el caso de que haya una distribución de iones en el solvente, la ecuación de Poisson - Boltzmann, que en resumidas cuentas toma la ecuación de Poisson y aplica una distribución de Boltzmann para incluir el efecto de los iones en la solución salina.
+Ya se caracterizó el modelo de solvente implícito y cómo funciona. Un resultado de esto es, en el caso de que haya una distribución de iones en el solvente, la ecuación de Poisson - Boltzmann, que en resumidas cuentas toma la ecuación de Poisson y aplica una distribución de Boltzmann para incluir el efecto de los iones distribuidos en una solución salina.
 \begin{equation}
--\nabla\cdot(varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot exp\left(-\frac{ez_i\phi}{k_BT}\right)
+-\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot exp\left(-\frac{ez_i\phi}{k_BT}\right)
 \end{equation}
-Como esta ecuación es no lineal, se busca linealizarla para facilitar su aplicación en cálculos
+donde $e$ es la carga del electrón, $z_i$ la carga de la $i$-ésima especie de ion, $n_i^0$ es el number density de dicha especie de ion, $k_B$ es la constante de Boltzmann y $T$ la temperatura del sistema. Como esta ecuación varía con una exponencial, se busca linealizarla para facilitar su aplicación en cálculos
 \begin{equation}
--\nabla\cdot(varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot left(1 - \frac{ez_i\phi}{k_BT}\right)
+-\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot \left(1 - \frac{ez_i\phi}{k_BT}\right)
 \end{equation}
-Ambas sumas son sobre todas las $i$ especies iónicas en la solución. Por último, si además no hay una dependencia espacial de $\varepsilon$, se llega a la ecuación de Poisson - Boltzmann utilizada comúnmente en los modelos implícitos
-\begin{equation}
-\nabla^2\phi(\mathbf{r}) - \kappa^2\phi(\mathbf{r}) = - \frac{1}{\varepsilon}\rho(\mathbf{r})
-\end{equation}
+La suma es sobre todas las $i$ especies iónicas en la solución. Tras el supuesto de que la solución no tiene una carga neta, sino que es neutra ($\sum_i ez_in_i^0 = 0$) y si además no hay una dependencia espacial de $\varepsilon$, se llega a la ecuación de Poisson - Boltzmann utilizada comúnmente en los modelos implícitos
+\begin{gather}
+\nabla^2\phi(\mathbf{r}) - \kappa^2\phi(\mathbf{r}) = - \frac{1}{\varepsilon}\rho(\mathbf{r})\numberthis \\
+\kappa^2 = \frac{e}{\varepsilon k_BT}\sum_i en_i^0z_i^2
+\end{gather*}
+Siendo $\kappa$ el inverso del largo de Debye, y es una medida del apantallamiento eléctrico a causa de las cargas móviles de los iones en solución.\\\\
 Ahora, esto sirve más que nada de contexto para introducir la forma de trabajo del método BEM, así como los conceptos de Solvent Accesible Surface, Solvent Excluded Surface y energía de solvatación. Además es interesante comprender cómo atacar una distribución iónica en electrostática continua.\\\\
-El método BEM requiere una superficie que permita diferenciar dos dominios. Es esta interfaz la que se discretiza y sobre la cual se integran las ecuaciones que modelan la propiedad a trabajar. En el caso de 
+El método BEM requiere una superficie que permita diferenciar dos dominios. Es esta interfaz la que se discretiza y sobre la cual se integran las ecuaciones que modelan la propiedad a trabajar. En el caso de una proteína en un solvente existen por lo menos dos, pues la interfaz es una y hay un medio a cada lado. En primer lugar es importante saber cómo se establece esta superficie.
+\subsubsection{Solvent Excluded y Solvent Accesible Surface}
+De lo que se ha percibido a lo largo de este estudio, los dos métodos que se emplean para representar una superficie característica de una proteína son las que se indican en el título de esta parte. Ambos consisten en utilizar una \textit{sonda}, por lo general una molécula de agua, que recorre los radios de van der Waals
+
+
+
+Las ecuaciones en este caso son Poisson por dentro, pues existe una distribución de cargas puntuales en un dieléctrico uniforme, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada en los párrafos anteriores. Ambas ecuaciones se encuentran en la membrana, por lo que es ahí donde se definen las condiciones de contorno
 
 
 \section{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
