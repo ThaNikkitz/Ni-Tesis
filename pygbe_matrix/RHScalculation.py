@@ -41,10 +41,9 @@ def charge2surf(s, xq, q, E):
 
 def generateRHS(surf_array, field_array, membrane_param, Neq, ElectricField=0.):
 
-#   Check if there is a complex dielectric
-
     m_E = membrane_param.mem_E
 
+#   Check if there is a complex dielectric
     complexDiel = 0
     for f in field_array:
         if type(f.E)==complex:

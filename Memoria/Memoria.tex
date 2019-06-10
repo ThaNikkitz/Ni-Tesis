@@ -212,50 +212,42 @@ Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del pr
 
 \subsection{El Método de Elementos de Borde}
 Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa partiendo del mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
-El método BEM se basa en definir un residuo $R$ para la ecuación diferencial en cuestión. Tomando como ejemplo la ecuación de Laplace, el planteamiento parte
+El método comienza tomando la formulación débil de una ecuación diferencial, en este caso se utiliza la ecuación de Laplace, multiplicada por una función $\psi$ tal que
 \begin{equation}
-R = \nabla^2\phi
+\int\nabla^2 \phi\cdot\psi = 0
 \end{equation}
-Teniendo este residuo que representa la ecuación con un error, se puede multiplicar por una función $\psi$ que corresponde a una función peso encargada de hacer 0 la integral de $R$ en ciertos puntos
-\begin{equation}
-\int_\Omega R\sum_i\psi_i\text{ }d\Omega = 0
-\end{equation}
-Ahora bien, si se considera la ecuación de Laplace para este caso, $R = \nabla^2\phi$, se tiene que para los puntos $i$,
-\begin{equation}
-\int_\Omega \nabla^2\phi\cdot\psi(\mathbf{r}_i)\text{ }d\Omega = 0
-\end{equation}
-Luego se procede a debilitar la ecuación de Laplace, haciendo integración por partes para pasarle derivadas a $\psi$ y dejar la Ecuación (25) como
+Con esto como punto de partida, se procede a debilitar la ecuación de Laplace, integrando por partes
 \begin{equation}
 \int_\Omega \nabla^2\phi\cdot\psi\text{ }d\Omega = \int_\Omega \nabla(\nabla \phi\cdot\psi) - \nabla\phi\cdot\nabla\psi\text{ }d\Omega = 0
 \end{equation}
 Respecto al integrando del lado derecho, si se aplica la ley de Gauss al primer término y se integra por partes el segundo, se llega a
 \begin{equation}
-\int_{\partial\Omega} (\nabla\phi\cdot\psi)\cdot\hat{\mathbf{n}}\text{ }d\partial\Omega - \int_\Omega \nabla\cdot(\nabla\psi\cdot\phi) - \nabla^2\psi\cdot\phi\text{ }d\Omega = 0
+\int_{\partial\Omega} (\nabla\phi\cdot\psi)\cdot\hat{\mathbf{n}}\text{ }d\partial\Omega - \int_\Omega [\nabla\cdot(\nabla\psi\cdot\phi) - \nabla^2\psi\cdot\phi]\text{ }d\Omega = 0
 \end{equation}
 Por último, al aplicar nuevamente el teorema de la divergencia al primer término de la segunda integral, se obtienen dos integrales de superficie y una de volumen.
 \begin{equation}
-\int_{\partial\Omega} (\nabla\phi\cdot\psi - \nabla\psi\cdot\phi) \cdot\hat{\mathbf{n}}\text{ }d\partial\Omega = \int_\Omega \phi\cdot\nabla^2\psi\text{ }d\Omega
+\int_{\partial\Omega} (\nabla\phi\cdot\psi - \nabla\psi\cdot\phi) \cdot\hat{\mathbf{n}}\text{ }d\partial\Omega = -\int_\Omega \phi\cdot\nabla^2\psi\text{ }d\Omega
 \end{equation}
-Si en particular $\nabla^2\psi$ corresponde a una función delta de Dirac ($\delta(\mathbf{r})$), entonces la integral del lado derecho es $\phi$ evaluado en los puntos seleccionados por la función $\delta$. Para que se cumpla $\nabla^2\psi = \delta$, $\psi$ debe ser una función de Green,
+Si en particular $\nabla^2\psi$ corresponde a una función delta de Dirac ($\delta(\mathbf{r})$), entonces la integral del lado derecho es $\phi$ evaluado en los puntos seleccionados por la función $\delta$. Para que se cumpla $\nabla^2\psi = -\delta(\mathbf{r}^*)$, $\psi$ debe ser una función de Green
 \begin{equation}
-\psi = G(\mathbf{r}_1,\mathbf{r}_2) = \frac{k}{|\mathbf{r}_1 - \mathbf{r}_2|}
+\psi = G(\mathbf{r},\mathbf{r}^*) = \frac{k}{|\mathbf{r} - \mathbf{r}^*|}
 \end{equation}
-donde $k$ es una constante que no afecta la proporcionalidad inversa respecto del radio. De esta manera, la Ecuación (28) queda con la forma final
-\begin{equation}
-\phi(\mathbf{r}_\Omega) = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_\Omega)\cdot G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega}) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega})\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega
-\end{equation}
-En los casos en que se produzca una singularidad debido a que $\mathbf{r}_\Omega \rightarrow \mathbf{r}_{\partial\Omega}$, los valores de la integral de superficie tienen los siguientes valores
+donde $k$ es una constante que no afecta la proporcionalidad inversa respecto del radio. Aquí $\mathbf{r} = \mathbf{r}_\Omega$ y $\mathbf{r}^* = \mathbf{r}_\Omega^*$, significando que ambos corren sobre el mismo dominio de integración, pero son independientes uno del otro. De esta manera, la Ecuación \textcolor{red}{TANTO} queda con la forma final
+\begin{align*}
+\int_\Omega\phi(\mathbf{r}_\Omega)\delta(\mathbf{r}_\Omega^*)d\Omega=&\\
+\phi(\mathbf{r}_\Omega^*)=&\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_{\partial\Omega})\cdot G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega}) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega})\cdot\phi(\mathbf{r}_{\partial\Omega})\text{ }d\partial\Omega \numberthis
+\end{align*}
+En los casos en que se produzca una singularidad debido a que $\mathbf{r}_\Omega \rightarrow \mathbf{r}_{\partial\Omega}$, los valores de las integrales de superficie son
 \begin{gather}
 \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi\cdot G = 0\\
 \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}} G\cdot\phi = -\frac{\phi}{2}
 \end{gather}
 En este escrito se omite la demostración correspondiente debido a que no se considera relevante más allá del resultado, pero un desarrollo metódico se puede encontrar en textos de la materia, como por ejemplo el libro de Brebbia \cite{Brebbia}.\\\\
-En síntesis, la Ecuación (30) nos permite obtener $\phi$ en el volumen $\Omega$ contenido por una superficie $\partial\Omega$; por otro lado, para calcular $\phi$ sobre el contorno $\partial\Omega$, se aplican los resultados (31) y (32) en la Ecuación (30) y se obtiene
+En síntesis, la Ecuación (30) permite obtener $\phi$ en el dominio $\Omega$ contenido por una superficie $\partial\Omega$; por otro lado, para calcular $\phi$ sobre el contorno $\partial\Omega$, se aplican los resultados (31) y (32) en la Ecuación (30) y se obtiene
 \begin{equation}
-\frac{\phi(\mathbf{r}_{\partial\Omega})}{2} = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_\Omega)\cdot G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega}) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_\Omega,\mathbf{r}_{\partial\Omega})\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega
+\frac{\phi(\mathbf{r}_{\partial\Omega})}{2} = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_{\partial\Omega})\cdot G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*)\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega
 \end{equation}
-En ambos casos se puede observar que la integración es sobre $\mathbf{r}_{\partial\Omega}$, por lo que los términos que dependen de $\mathbf{r}_\Omega$ salen de las integrales como constantes. Esto es válido también luego de discretizar la superficie en paneles, suponiendo la propiedad como constante sobre un mismo panel.\\\\
-Es importante considerar que la aplicación del método BEM que se ha hecho hasta ahora es para la ecuación de Laplace. En caso de que la ecuación gobernante del fenómeno bajo estudio sea otra, corresponde hacer una derivación para dicha situación. Afortunadamente, para lo desarrollado en el presente texto no hace falta más.
+En ambos casos ($\mathbf{r}_{\partial\Omega}$ y $\mathbf{r}_{\partial\Omega}^*$) la aplicación es sobre la misma superficie $\partial\Omega$. Es importante considerar que la aplicación del método BEM que se ha hecho hasta ahora es para la ecuación de Laplace. En caso de que la ecuación gobernante del fenómeno bajo estudio sea otra, corresponde hacer una derivación para dicha situación. Afortunadamente, para lo desarrollado en el presente texto no hace falta más.
 
 
 \subsection{El contexto biológico de la membrana celular}
@@ -283,7 +275,7 @@ Actualmente existen dos modelos ampliamente utilizados para representar un solve
 El primer modelo tiene la gran ventaja de que permite una precisión enorme, pues es una consideración de todas las partículas de manera explícita, una por una, y los fenómenos que ocurren en todas las interacciones. El gran nivel de detalle de este modelo resulta también ser su gran debilidad, pues la cantidad de cálculos que hay que hacer depende del número de partículas del sistema, significando un gran costo computacional.\\\\
 El segundo modelo permite omitir la consideración de partículas individuales al seguir un enfoque continuo, pero al no ser una representación detallada del sistema, el modelo cae en impresiciones; un ejemplo de esto es no tomar en cuenta las fuerzas de van der Waals u otros fenómenos que ocurren a distancias muy pequeñas. A continuación se empieza a ensamblar la teoría presentada en la sección previa, explicando cómo el método BEM permite modelar una proteína inmersa en una solución a través de una discretización de la interfaz que los separa, cómo se genera dicha interfaz y qué es lo que se busca a partir de estos cálculos.
 \subsection{Representación del modelo de solvente implícito mediante BEM}
-Ya se caracterizó el modelo de solvente implícito y cómo funciona. Un resultado de esto es, en el caso de que haya una distribución de iones en el solvente, la ecuación de Poisson - Boltzmann, que en resumidas cuentas toma la ecuación de Poisson y aplica una distribución de Boltzmann para incluir el efecto de los iones distribuidos en una solución salina.
+Ya se caracterizó el modelo de solvente implícito y cómo funciona. Un resultado de esto es, en el caso de que haya una distribución de iones libres en el solvente, la ecuación de Poisson - Boltzmann, que en resumidas cuentas toma la ecuación de Poisson y aplica una distribución de Boltzmann para incluir el efecto de los iones en una solución, por ejemplo salina.
 \begin{equation}
 -\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot exp\left(-\frac{ez_i\phi}{k_BT}\right)
 \end{equation}
@@ -292,7 +284,7 @@ donde $e$ es la carga del electrón, $z_i$ la carga de la $i$-ésima especie de 
 -\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot \left(1 - \frac{ez_i\phi}{k_BT}\right)
 \end{equation}
 La suma es sobre todas las $i$ especies iónicas en la solución. Tras el supuesto de que la solución no tiene una carga neta, sino que es neutra ($\sum_i ez_in_i^0 = 0$) y si además no hay una dependencia espacial de $\varepsilon$, se llega a la ecuación de Poisson - Boltzmann utilizada comúnmente en los modelos implícitos
-\begin{gather}
+\begin{gather*}
 \nabla^2\phi(\mathbf{r}) - \kappa^2\phi(\mathbf{r}) = - \frac{1}{\varepsilon}\rho(\mathbf{r})\numberthis \\
 \kappa^2 = \frac{e}{\varepsilon k_BT}\sum_i en_i^0z_i^2
 \end{gather*}
@@ -300,12 +292,37 @@ Siendo $\kappa$ el inverso del largo de Debye, y es una medida del apantallamien
 Ahora, esto sirve más que nada de contexto para introducir la forma de trabajo del método BEM, así como los conceptos de Solvent Accesible Surface, Solvent Excluded Surface y energía de solvatación. Además es interesante comprender cómo atacar una distribución iónica en electrostática continua.\\\\
 El método BEM requiere una superficie que permita diferenciar dos dominios. Es esta interfaz la que se discretiza y sobre la cual se integran las ecuaciones que modelan la propiedad a trabajar. En el caso de una proteína en un solvente existen por lo menos dos, pues la interfaz es una y hay un medio a cada lado. En primer lugar es importante saber cómo se establece esta superficie.
 \subsubsection{Solvent Excluded y Solvent Accesible Surface}
-De lo que se ha percibido a lo largo de este estudio, los dos métodos que se emplean para representar una superficie característica de una proteína son las que se indican en el título de esta parte. Ambos consisten en utilizar una \textit{sonda}, por lo general una molécula de agua, que recorre los radios de van der Waals
+De lo que se ha percibido a lo largo de este estudio, los dos métodos que se emplean usualmente para representar una superficie característica de una proteína son los que se indican en el título de esta parte. Ambos consisten en utilizar una \textit{sonda}, por lo general una molécula de agua, que interactúa con los radios de van der Waals de los átomos de la proteína. Si por ejemplo se quiere mapear la superficie exterior de la proteína o macromolécula, se hace ``\textit{rodar}" una molécula de agua por sobre los radios de van der Waals de los átomos exteriores, de tal modo que la distancia entre los centros de un átomo de la macromolécula y el de la sonda de agua sea la suma de los radios de cada uno.\\\\
+En el caso de la Solvent Accesible Surface (SAS), el centro de la molécula de agua es lo que define la superficie de trabajo. Esto genera puntas como se puede apreciar en la Figura \textcolor{red}{TANTO} . La distancia entre el centro del átomo a sondear y la SAS es entonces la suma del radio de van der Waals de dicho átomo y el radio de la molécula de sondeo.\\\\
 
+Por otra parte, la Solvent Excluded Surface (SES) considera el borde de la sonda como la definición de la superficie de la macromolécula. La superficie generada es por tanto suave, pues siempre consta al menos de una sección de arco de la sonda. La distancia entre el centro de un átomo de la macromolécula y la SES ya no está definida de forma tan clara como en el caso de la SAS, y a pesar de que en algunos casos coincide con ser simplemente el radio de van der Waals de dicho átomo, esto no es una regla.\\\\
 
+A pesar de las diferencias, no existe una razón para preferir una sobre la otra, y depende simplemente de lo que se busque lograr en cada situación. En el caso de este trabajo, y principalmente por heredar la metodología que se venía aplicando de antes, se utiliza la Solvent Excluded Surface para definir la superficie de las moléculas de estudio.
 
-Las ecuaciones en este caso son Poisson por dentro, pues existe una distribución de cargas puntuales en un dieléctrico uniforme, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada en los párrafos anteriores. Ambas ecuaciones se encuentran en la membrana, por lo que es ahí donde se definen las condiciones de contorno
-
+\subsubsection{El método BEM y la ecuación de Poisson - Boltzmann (PB)}
+Teniendo ya la ecuación PB, se presenta rápidamente el caso del sistema para una proteína en un solvente con iones; el objetivo de esto es presentar la forma de uso del método BEM, aplicado específicamente a una discretización de superficie protéica. Para esto hay que considerar que hay dos medios en el sistema, y una interfaz: el sistema exterior, que como es usual consiste en agua salina $\Omega_1$, el ensamblaje de átomos que conforman la proteína y que será el sistema interior $\Omega_2$, y la Solvent Excluded Surface que se asume separa ambos dominios recién nombrados, encerrando al segundo de estos.\\\\
+Las ecuaciones corresponden entonces a Poisson por dentro, pues existe una distribución de cargas puntuales en un medio dieléctrico, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada anteriormente. De lo presentado sobre el método BEM en la Sección \textcolor{red}{TANTO}, se sabe que el sistema cumple con
+\begin{equation}
+\frac{\phi(\mathbf{r}_{\partial\Omega})}{2} = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_{\partial\Omega})\cdot G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*)\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega^*
+\end{equation}
+Esta ecuación es válida para ambas direcciones hacia la interfaz. Es decir, si es que la aproximación a la superficie de la proteína ocurre por fuera, la ecuación es igualmente válida que si ocurre por dentro. Ambos dominios, y por ende ambas ecuaciones gobernantes, se encuentran en la SES, por lo que es ahí donde se aplican las condiciones de contorno de electrostática presentadas en la Sección \textcolor{red}{TANTO}.
+\begin{equation}
+\phi_1 = \phi_2 \qquad\qquad \epsilon_1\frac{\partial\phi_1}{\partial n} = \epsilon_2\frac{\partial\phi_2}{\partial n}
+\end{equation}
+Llevando ambas ecuaciones a una formulación integral sobre la frontera, el sistema $2\times2$ para una proteína en solución con iones queda \cite{Cooper2015}
+\begin{gather}
+\frac{\phi_{1}(\mathbf{r}^*)}{2} - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_Y(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_Y(\mathbf{r},\mathbf{r}^*)d\partial\Omega = 0\\
+\frac{\phi_{2}(\mathbf{r}^*)}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_L(\mathbf{r},\mathbf{r}^*)d\partial\Omega = \frac{1}{4\pi\varepsilon}\sum_{i=0}^{N_q}\frac{q_i}{\mathbf{r} - \mathbf{r}_i}
+\end{gather}
+La segunda ecuación es la ecuación de Poisson de electrostática \textcolor{red}{TANTO}, con una distribución de cargas puntuales. Las variables de $\mathbf{r}$ y $\mathbf{r}^*$ corresponden a una evaluación sobre la superficie $\partial\Omega$, mientras que $\mathbf{r}_i$ son las posiciones de las mencionadas cargas puntuales. Los subíndices $L$ e $Y$ corresponde a \textit{Laplace} y \textit{Yukawa}. La función de Green de Laplace ya se presentó en \textcolor{red}{TANTO}, mientras que la función de Green de Yukawa, que corresponde a la ecuación de Poisson - Boltzmann, es
+\begin{equation}
+G_Y(\mathbf{r},\mathbf{r}^*) = \frac{\text{exp}(-\kappa\cdot|\mathbf{r} - \mathbf{r}^*|)}{4\pi|\mathbf{r} - \mathbf{r}^*|}
+\end{equation}
+Para simplificar la notación, se presentan los operadores Single y Double-Layer Potential; los subíndices $L$ e $Y$ retienen el significado del párrafo anterior.
+\begin{flalign}
+\text{Single-Layer Potential:} & \qquad\qquad V^{\mathbf{r}}(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r}^*)\cdot G(\mathbf{r},\mathbf{r}^*)\text{ }d\partial\Omega^*\\
+\text{Double-Layer Potential:} & \qquad\qquad K^{\mathbf{r}}(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r}^*)\cdot \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r},\mathbf{r}^*)\text{ }d\partial\Omega^*
+\end{flalign}
 
 \section{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
 La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun} y en reproducir sus resultados para determinar un par de parámetros y si efectivamente resulta viable, con miras a trabajos futuros.\\\\
@@ -507,16 +524,18 @@ Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, Fir
 Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
 \bibitem{Brebbia}
 Brebbia, C. A.; Dominguez J. \textit{Boundary Elements: An Introductory Course}, Second Edition, Ch. 2; WIT Press, 1992
+\bibitem{Cooper2015}
+Cooper, C. \textit{Biomolecular Electrostatics With Continuum Models: A Boundary Integral Implementation and Applications to Biosensors}, 2015
 \bibitem{Pei-kun}
 Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
 \bibitem{APBSmem}
-Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9) 2010
+Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9), 2010
 \bibitem{Huimin-Lin}
-Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model}, J. Sci. Comput. 2011
+Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model}, J. Sci. Comput., 2011
 \bibitem{Wei-Cai}
 Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to charges inside or outside a dielectric sphere} J. Comput. Phys. 223, 2007
 \bibitem{Gan}
-Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface} Phys. Rev. E 84, 016705 (2011)
+Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface} Phys. Rev. E 84, 016705, 2011
 \bibitem{Roux}
 Roux, B. \textit{Influence of the Membrane Potential on the Free Energy of an Intrinsic Protein} Byophysical Journal, Vol. 73, 2980--2989, 1997
 \bibitem{Campbell}
