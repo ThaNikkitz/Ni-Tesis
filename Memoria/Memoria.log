@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.24)  11 JUN 2019 20:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.1)  12 JUN 2019 18:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -504,10 +504,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 109--111
 
 (./Figures/Fig_1.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_1.eps>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 5663 bytes
 (epstopdf)             Output file: <./Figures/Fig_1-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 3163 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_1-eps-conver
 ted-to.pdf ./Figures/Fig_1.eps>
@@ -572,10 +572,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 191--194
 
 [9] (./Figures/Fig_2.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_2.eps>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 3790 bytes
 (epstopdf)             Output file: <./Figures/Fig_2-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 2833 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_2-eps-conver
 ted-to.pdf ./Figures/Fig_2.eps>
@@ -583,8 +583,8 @@ ted-to.pdf ./Figures/Fig_2.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_2-eps-converted-to.pdf): 
-PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+pdfTeX warning: pdflatex (file ./Figures/Fig_2-eps-converted-to.pdf): PDF inclu
+sion: found PDF version <1.7>, but at most version <1.5> allowed
 <./Figures/Fig_2-eps-converted-to.pdf, id=53, 137.51375pt x 203.76125pt>
 File: ./Figures/Fig_2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_2-eps-converted-to.pdf>
@@ -598,10 +598,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 209--212
 
 [10 <./Figures/Fig_2-eps-converted-to.pdf>] (./Figures/Fig_3.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_3.eps>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 5836 bytes
 (epstopdf)             Output file: <./Figures/Fig_3-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 3018 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_3-eps-conver
 ted-to.pdf ./Figures/Fig_3.eps>
@@ -609,8 +609,8 @@ ted-to.pdf ./Figures/Fig_3.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_3-eps-converted-to.pdf): 
-PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+pdfTeX warning: pdflatex (file ./Figures/Fig_3-eps-converted-to.pdf): PDF inclu
+sion: found PDF version <1.7>, but at most version <1.5> allowed
 <./Figures/Fig_3-eps-converted-to.pdf, id=59, 306.14375pt x 144.54pt>
 File: ./Figures/Fig_3-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_3-eps-converted-to.pdf>
@@ -735,21 +735,78 @@ Underfull \hbox (badness 10000) in paragraph at lines 413--415
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--430
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
 
  []
 
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 432--434
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Overfull \hbox (9.70847pt too wide) in paragraph at lines 417--427
+\OT1/cmr/m/n/12 El archivo \OT1/cmtt/m/n/12 .param \OT1/cmr/m/n/12 por otro lad
+o tiene in-for-maci^^Son propia del m^^Setodo de mod-elaci^^Son matem^^Satica
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+
+Overfull \hbox (3.14285pt too wide) in paragraph at lines 417--427
+\OT1/cmr/m/n/12 Para lo-grar esta dis-cretizaci^^Son, los pan-e-les le-janos se
+ tra-ba-jan con pocos pun-tos de cuadratura,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--427
+
+ []
+
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 436--438
+
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 440--442
 
  []
 
 (./Figures/Fig_4.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_4.eps>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 9935 bytes
 (epstopdf)             Output file: <./Figures/Fig_4-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-05-25 18:38:20
+(epstopdf)                    date: 2019-04-01 14:43:51
 (epstopdf)                    size: 3751 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_4-eps-conver
 ted-to.pdf ./Figures/Fig_4.eps>
@@ -757,100 +814,100 @@ ted-to.pdf ./Figures/Fig_4.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_4-eps-converted-to.pdf): 
-PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_4-eps-converted-to.pdf, id=98, 330.23375pt x 228.855pt>
+pdfTeX warning: pdflatex (file ./Figures/Fig_4-eps-converted-to.pdf): PDF inclu
+sion: found PDF version <1.7>, but at most version <1.5> allowed
+<./Figures/Fig_4-eps-converted-to.pdf, id=104, 330.23375pt x 228.855pt>
 File: ./Figures/Fig_4-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_4-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_4-eps-converted-to.pdf  used on input li
 ne 52.
 (pdftex.def)             Requested size: 361.34999pt x 250.42825pt.
-) [21]
-Underfull \hbox (badness 10000) in paragraph at lines 447--451
+) [23 <./Figures/Fig_4-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 455--459
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 447--451
-
- []
-
-[22 <./Figures/Fig_4-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 498--501
-
- []
-
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 507--510
+Underfull \hbox (badness 10000) in paragraph at lines 455--459
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 519--521
+Underfull \hbox (badness 10000) in paragraph at lines 506--509
 
  []
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 523--526
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 538--540
+Underfull \hbox (badness 10000) in paragraph at lines 515--518
 
  []
 
 [25]
-Underfull \hbox (badness 10000) in paragraph at lines 541--546
+Underfull \hbox (badness 10000) in paragraph at lines 527--529
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 541--546
+Underfull \hbox (badness 10000) in paragraph at lines 531--534
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 546--548
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 541--546
+Underfull \hbox (badness 10000) in paragraph at lines 549--554
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 541--546
+Underfull \hbox (badness 10000) in paragraph at lines 549--554
 
  []
 
-[26] [27] (./Memoria.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 549--554
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 549--554
+
+ []
+
+[27] [28] [29] (./Memoria.aux) ) 
 Here is how much of TeX's memory you used:
- 5923 strings out of 494880
- 84323 string characters out of 6179601
- 166439 words of memory out of 5000000
- 9110 multiletter control sequences out of 15000+600000
+ 5925 strings out of 494880
+ 84346 string characters out of 6179602
+ 169443 words of memory out of 5000000
+ 9112 multiletter control sequences out of 15000+600000
  14471 words of font info for 55 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  41i,21n,43p,2026b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cme
-x10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb>
-Output written on Memoria.pdf (27 pages, 393200 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb>
+Output written on Memoria.pdf (29 pages, 404348 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
+ 190 PDF objects out of 1000 (max. 8388607)
+ 131 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
