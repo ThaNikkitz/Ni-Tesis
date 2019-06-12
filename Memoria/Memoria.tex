@@ -210,6 +210,47 @@ La idea es determinar qué valor tiene que tener la carga o conjunto de cargas n
 con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
 Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
 
+\subsubsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
+\begin{figure}[H]
+	\centering
+	\input{./Figures/Fig_3.eps_tex}
+	\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}
+\end{figure}
+En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la Figura 3. El campo eléctrico viene dado por la Ec. (2), y tiene como condiciones de contorno las presentadas en las Ecs. (20) y (21).
+El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\2}} = \sqrt{r^2 + (z\pm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
+No es complejo realizar el desarrollo, remplazando la expresión para el campo en las condiciones de contorno. Con un poco de álgebra se puede llegar a una forma de escribir las cargas $q_1$ y $q_2$ en función de la carga $q$, así como de las permitividades de los medios. Se muestra a continuación un paso a paso breve de cómo se resuelve el sistema. Si $\phi_1$ es el potencial para algún punto en el medio 1, y $\phi_2$ es el potencial en el medio 2, se tiene
+\begin{gather}
+\phi_1 = \frac{1}{4\pi\epsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\\
+\phi_2 = \frac{1}{4\pi\epsilon_2}\left(\frac{q_2}{\sqrt{r^2+(z-d)^2}}\right)
+\end{gather}
+Derivando estas expresiones y remplazándolas en la condición de contorno (20) se obtiene el siguiente sistema de ecuaciones 2x2\\
+%\begin{gather*}
+%\epsilon_1\lim\limits_{z\to 0^-}\vec{E}_{(r,z)}= \epsilon_2\lim\limits_{z\to 0^+}\vec{E}_{(r,z)} \quad \longrightarrow \quad \epsilon_1\left.\frac{\partial\phi}{\partial z}\right|_{z = 0^-} = \epsilon_2\left.\frac{\partial\phi}{\partial z}\right|_{z = 0^+}\\
+%\implies \epsilon_1\frac{q}{\cancel{4\pi}\epsilon_2}\left.\frac{1}{\sqrt{r^2 + (z-d)^2}}\right|_{z=0}=\frac{q}{\cancel{4\pi}}\left.\frac{1}{\sqrt{r^2 + (z+d)^2}}\right|_{z=0}
+%\end{gather*}
+\begin{align*}
+\frac{\partial}{\partial z}\left[\bcancel{\epsilon_1}\cdot\left(\frac{q}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)\right]_{z = 0} &=\\ \frac{\partial}{\partial z}\left[\bcancel{\epsilon_2}\cdot\left(\frac{q_2}{\cancel{4\pi}\bcancel{\epsilon_2}}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)\right]_{z=0}&\\
+\implies\quad d\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}} - \frac{q_1}{\sqrt{(r^2 + d^2)^3}}\right) = d\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)
+\end{align*}
+\begin{equation}
+\implies \qquad q - q_1 = q_2
+\end{equation}
+Para el caso de la condición de contorno (21) se remplazan también las expresiones de $\partial_r\phi_1$ y $\partial_r\phi_2$, pero en este caso no se simplifican las permitividades, por lo que se llega a una expresión que las incluye:
+\begin{align*}
+\frac{\partial}{\partial r}\left(\frac{q}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z-d)^2}} + \frac{q_1}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)_{z=0}& =\\
+\frac{\partial}{\partial r}\left(\frac{q_2}{\cancel{4\pi}\epsilon_2}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)_{z=0}&\\
+\implies \frac{r}{\epsilon_1}\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}}+ \frac{q_1}{\sqrt{(r^2 + d^2)}}\right) = \frac{r}{\epsilon_2}\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)&
+\end{align*}
+\begin{equation}
+\implies \frac{1}{\epsilon_1}(q + q_1) = \frac{q_2}{\epsilon_2}
+\end{equation}
+Ahora, del sistema que conforman las Ecs. (25) y (26), se obtiene la expresión para las cargas imagen en función de los parámetros conocidos del sistema:
+\begin{gather}
+q_1 = -\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_2 + \epsilon_1}\right)\cdot q\\
+q_2 = \left(\frac{2\epsilon_2}{\epsilon_1 + \epsilon_2}\right)\cdot q
+\end{gather}
+Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (23) y (24) dependiendo de dónde se encuentra; por supuesto, esto remplazando los valores de $q_1$ y $q_2$ por los de las Ecs. (27) y (28).
+
 \subsection{El Método de Elementos de Borde}
 Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa partiendo del mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
 El método comienza tomando la formulación débil de una ecuación diferencial, en este caso se utiliza la ecuación de Laplace, multiplicada por una función $\psi$ tal que
@@ -300,7 +341,7 @@ Por otra parte, la Solvent Excluded Surface (SES) considera el borde de la sonda
 A pesar de las diferencias, no existe una razón para preferir una sobre la otra, y depende simplemente de lo que se busque lograr en cada situación. En el caso de este trabajo, y principalmente por heredar la metodología que se venía aplicando de antes, se utiliza la Solvent Excluded Surface para definir la superficie de las moléculas de estudio.
 
 \subsubsection{El método BEM y la ecuación de Poisson - Boltzmann (PB)}
-Teniendo ya la ecuación PB, se presenta rápidamente el caso del sistema para una proteína en un solvente con iones; el objetivo de esto es presentar la forma de uso del método BEM, aplicado específicamente a una discretización de superficie protéica. Para esto hay que considerar que hay dos medios en el sistema, y una interfaz: el sistema exterior, que como es usual consiste en agua salina $\Omega_1$, el ensamblaje de átomos que conforman la proteína y que será el sistema interior $\Omega_2$, y la Solvent Excluded Surface que se asume separa ambos dominios recién nombrados, encerrando al segundo de estos.\\\\
+Teniendo ya la ecuación PB, se presenta rápidamente el caso del sistema para una proteína en un solvente con iones; el objetivo de esto es presentar la forma de uso del método BEM, aplicado específicamente a una discretización de superficie protéica. Para esto hay que considerar que hay dos medios en el sistema, y una interfaz: el sistema exterior, que como es usual consiste en agua salina $\Omega_1$, el ensamblaje de $N_q$ átomos con $q_i$ cargas netas que conforman la proteína y que será el sistema interior $\Omega_2$, y la Solvent Excluded Surface que se asume separa ambos dominios recién nombrados, encerrando al segundo de estos.\\\\
 Las ecuaciones corresponden entonces a Poisson por dentro, pues existe una distribución de cargas puntuales en un medio dieléctrico, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada anteriormente. De lo presentado sobre el método BEM en la Sección \textcolor{red}{TANTO}, se sabe que el sistema cumple con
 \begin{equation}
 \frac{\phi(\mathbf{r}_{\partial\Omega})}{2} = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_{\partial\Omega})\cdot G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*)\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega^*
@@ -314,7 +355,7 @@ Llevando ambas ecuaciones a una formulación integral sobre la frontera, el sist
 \frac{\phi_{1}(\mathbf{r}^*)}{2} - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_Y(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_Y(\mathbf{r},\mathbf{r}^*)d\partial\Omega = 0\\
 \frac{\phi_{2}(\mathbf{r}^*)}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_L(\mathbf{r},\mathbf{r}^*)d\partial\Omega = \frac{1}{4\pi\varepsilon}\sum_{i=0}^{N_q}\frac{q_i}{\mathbf{r} - \mathbf{r}_i}
 \end{gather}
-La segunda ecuación es la ecuación de Poisson de electrostática \textcolor{red}{TANTO}, con una distribución de cargas puntuales. Las variables de $\mathbf{r}$ y $\mathbf{r}^*$ corresponden a una evaluación sobre la superficie $\partial\Omega$, mientras que $\mathbf{r}_i$ son las posiciones de las mencionadas cargas puntuales. Los subíndices $L$ e $Y$ corresponde a \textit{Laplace} y \textit{Yukawa}. La función de Green de Laplace ya se presentó en \textcolor{red}{TANTO}, mientras que la función de Green de Yukawa, que corresponde a la ecuación de Poisson - Boltzmann, es
+La segunda ecuación es la ecuación de Poisson de electrostática \textcolor{red}{TANTO}, con una distribución de cargas puntuales. Las variables de $\mathbf{r}$ y $\mathbf{r}^*$ corresponden a una evaluación sobre la superficie $\partial\Omega$, mientras que $\mathbf{r}_i$ son las posiciones de las mencionadas cargas puntuales. Los subíndices $L$ e $Y$ son propios de \textit{Laplace} y \textit{Yukawa}. La función de Green de Laplace ya se presentó en \textcolor{red}{TANTO}, mientras que la función de Green de Yukawa, que corresponde a la ecuación de Poisson - Boltzmann, es
 \begin{equation}
 G_Y(\mathbf{r},\mathbf{r}^*) = \frac{\text{exp}(-\kappa\cdot|\mathbf{r} - \mathbf{r}^*|)}{4\pi|\mathbf{r} - \mathbf{r}^*|}
 \end{equation}
@@ -323,52 +364,74 @@ Para simplificar la notación, se presentan los operadores Single y Double-Layer
 \text{Single-Layer Potential:} & \qquad\qquad V^{\mathbf{r}}(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r}^*)\cdot G(\mathbf{r},\mathbf{r}^*)\text{ }d\partial\Omega^*\\
 \text{Double-Layer Potential:} & \qquad\qquad K^{\mathbf{r}}(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r}^*)\cdot \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r},\mathbf{r}^*)\text{ }d\partial\Omega^*
 \end{flalign}
+Al aplicar las condiciones de contorno, el sistema de ecuaciones deriva en
+\begin{gather}
+		\frac{\phi_2(\mathbf{r})}{2} + K_L(\phi_2(\mathbf{r})) - V_L\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r}\right) = \frac{1}{4\pi\varepsilon_2}\sum_{i=0}^{N_q}\frac{q_i}{|\mathbf{r} - \mathbf{r}_i|}\\
+		\frac{\phi_2(\mathbf{r})}{2} - K_Y(\phi_2(\mathbf{r})) + \frac{\varepsilon_2}{\varepsilon_1}V_Y\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = 0
+\end{gather}
+Ahora bien, si se subdivide la superficie de la proteína en $N$ paneles, en este caso triangulares, las ecuaciones siguen siendo válidas para cada panel. Sin embargo, las propiedades que se buscan, potencial y su derivada respecto a la normal, son incógnitas. Se asume entonces que dichas propiedades son constantes sobre un mismo panel, por lo que salen de la integral respectiva en ambas ecuaciones y se genera un sistema de la forma $\underline{A}\mathbf{x} = \mathbf{b}$
+\begin{equation}
+	\renewcommand\arraystretch{1.6}
+	\begin{pmatrix}
+		\frac{1}{2} + K_L & -V_L \\ \frac{1}{2} - K_Y & V_Y
+	\end{pmatrix}
+	\begin{pmatrix}
+		\phi \\ \frac{\partial}{\partial\hat{\mathbf{n}}}\phi
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		\frac{1}{4\pi\varepsilon}\sum_{i=0}^{N_q}\frac{q_i}{|\mathbf{r} - \mathbf{r}_i|} \\ 0
+	\end{pmatrix}
+\end{equation}
+Resolviendo \textcolor{red}{TANTO (la de recién)} para los $N$ paneles se calcula la energía potencial del sistema, y multiplicando por una serie de factores de transformación de unidades, se obtiene la energía de solvatación de la proteína en el solvente. Se adjunta una definición de \textit{energía de solvatación} en el Anexo de este escrito.
 
-\section{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{Descripción del software utilizado}
+En el transcurso de este trabajo se hizo uso de una serie de programas para ayudar a implementar el modelo encontrado, probarlo, o comparar los resultados obtenidos. En esta sección se mencionan y describen, en mayor o menor profundidad, los cuatro softwares sin los cuales esta memoria no podría haberse realizado.
+
+\subsubsection{MSMS}
+Este resulta el programa menos utilizado directamente en el trabajo, pero que sin embargo es fundamental y de hecho es utilizado de una u otra forma por los siguientes programas en esta sección. MSMS permite mallar la superficie de un átomo o conjunto de átomos, entregando la Solvent Excluded Surface (SES)\footnote{Véase Anexo 1}, en función de un "radio de sondeo", habilitando al usuario a definir una variedad de parámetros que facilitan obtener modelos para realizar diferentes pruebas. El programa está escrito en lenguaje \texttt{C} y arroja un par de archivos, uno con una numeración para identificar los triángulos, y el otro con las coordenadas de los vértices de dichos triángulos. Más allá de esto, no es necesario ahondar en el funcionamiento del programa, pues su funcionalidad es lo que aquí importa.
+
+\subsubsection{APBS}
+Adaptive Poisson-Boltzmann Solver, más conocido por su sigla APBS, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación\footnote{Véase Anexo 2} de una molécula o macromolécula. El programa emplea el método FEM para parcelar un dominio de integración en $l\times m\times n$ elementos, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio. APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas de dinámica molecular (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados.
+
+\subsubsection{APBSmem}
+APBSmem es el gran programa de cálculos energéticos en sistemas proteína - membrana con teoría electrostática en continuos. Funciona de la misma forma que APBS (de hecho APBSmem solo llama a APBS con dos grupos de archivos distintos, uno pre y uno pos consideración de la membrana) y facilita el trabajo a usuarios con poco conocimiento computacional a través de una interfaz gráfica.\\\\
+Este software escrito en \texttt{Java} funciona siguiendo una serie de pasos, en función de parámetros indicados por el usuario:
+\begin{itemize}
+	\item[1.] Generar mapas de permitividades $\varepsilon$, radios de Debye o accesibilidad iónica $\kappa$, y densidad de carga $\rho$ para una proteína en disolución.
+	\item[2.] Utilizar esos mapas con el programa APBS base para calcular la energía de solvatación de una proteína en disolución.
+	\item[3.] Generar un nuevo set de mapas de las propiedades en 1., pero esta vez tomando en cuenta la inclusión de la membrana según parámetros indicados por el usuario.
+	\item[4.] Correr nuevamente APBS para obtener la energía de solvatación de la proteína inserta en la membrana.
+	\item[5.] Restar las energías de 4. y 2., entregando esta resta para indicar la afinidad de la proteína con la membrana y el resto del entorno.
+\end{itemize}
+APBSmem entrega la energía total de la proteína embebida en la membrana, que en caso de ser un estado de mínima energía constituye el estado más probable del sistema. En resumen, si el resultado entregado por APBSmem es $<0$, la proteína tiene más probabilidades de estar inserta en la membrana que en la solución salina original, y visceversa.\\\\
+Para poder comparar los resultados presentados más adelante con los de APBSmem y APBS, es necesario sumar las energías de solvatación entregadas por estos últimos dos programas de modo de obtener la energía de solvatación del sistema membrana - proteína.
+
+\subsubsection{PyGBe}
+Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza el Fast Multipole Method junto con un algoritmo de tipo treecode para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se llevó a cabo en una versión básica de PyGBe que no incluye el uso de GPUs, el uso de un algoritmo treecode ni el método de multipolos rápidos. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de pygbe utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto se modifica, como se explica en otra sección más adelante.\\\\
+PyGBe funciona leyendo una serie de archivos. Los inputs del programa son un .config y un .param. Además, el primero de estos dos archivos hace referencia a otro par de archivos, .face y .vert, así como a un .pqr o .crd. En primera instancia se profundiza en qué son estos archivos, y luego se presenta y desarrolla la estructura funcional de PyGBe (pygbe\_matrix).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\subsection{Implementación del método de imágenes al programa PyGBE}
+El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de un átomo o molécula inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, sólo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares que signifiquen la remoción de una sección de la membrana, hay que utilizar otra forma de modelar. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Además de dichas restricciones, surge otra que en vista del enfoque continuo que se da a la formulación, no incide mucho, pero aún así es importante mencionar: la bicapa fosfolipídica, tal como se muestra en el apartado 2.6, no es exactamente continua, sino que hay separación entre los fosfolípidos y, más importante, entra las cabezas polares de estos. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad de esta parte de la teoría de campos electromagnéticos como representación de una membrana.\\\\
+Como se adelanta en la sección de descripción de los programas utilizados, \texttt{PyGBE} es modificado, añadiendo una opción que permite calcular la energía de solvatación de una molécula en un sistema conformado por un medio $1$ encerrado por un medio $2$. Antes de elaborar sobre la inclusión de esta opción al software, es imperativo ahondar en la teoría electrostática para este tipo de situaciones.
+
+\subsubsection{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
 La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun} y en reproducir sus resultados para determinar un par de parámetros y si efectivamente resulta viable, con miras a trabajos futuros.\\\\
 En este paper se presenta un método basado en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica. La matemática del problema se presenta en primera instancia el caso con una interfaz y luego con dos interfaces paralelas.
-\subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
-\begin{figure}[H]
-	\centering
-	\input{./Figures/Fig_3.eps_tex}
-	\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}
-\end{figure}
-En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la Figura 3. El campo eléctrico viene dado por la Ec. (2), y tiene como condiciones de contorno las presentadas en las Ecs. (20) y (21).
-El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\2}} = \sqrt{r^2 + (z\pm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
-No es complejo realizar el desarrollo, remplazando la expresión para el campo en las condiciones de contorno. Con un poco de álgebra se puede llegar a una forma de escribir las cargas $q_1$ y $q_2$ en función de la carga $q$, así como de las permitividades de los medios. Se muestra a continuación un paso a paso breve de cómo se resuelve el sistema. Si $\phi_1$ es el potencial para algún punto en el medio 1, y $\phi_2$ es el potencial en el medio 2, se tiene
-\begin{gather}
-\phi_1 = \frac{1}{4\pi\epsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\\
-\phi_2 = \frac{1}{4\pi\epsilon_2}\left(\frac{q_2}{\sqrt{r^2+(z-d)^2}}\right)
-\end{gather}
-Derivando estas expresiones y remplazándolas en la condición de contorno (20) se obtiene el siguiente sistema de ecuaciones 2x2\\
-%\begin{gather*}
-%\epsilon_1\lim\limits_{z\to 0^-}\vec{E}_{(r,z)}= \epsilon_2\lim\limits_{z\to 0^+}\vec{E}_{(r,z)} \quad \longrightarrow \quad \epsilon_1\left.\frac{\partial\phi}{\partial z}\right|_{z = 0^-} = \epsilon_2\left.\frac{\partial\phi}{\partial z}\right|_{z = 0^+}\\
-%\implies \epsilon_1\frac{q}{\cancel{4\pi}\epsilon_2}\left.\frac{1}{\sqrt{r^2 + (z-d)^2}}\right|_{z=0}=\frac{q}{\cancel{4\pi}}\left.\frac{1}{\sqrt{r^2 + (z+d)^2}}\right|_{z=0}
-%\end{gather*}
-\begin{align*}
-\frac{\partial}{\partial z}\left[\bcancel{\epsilon_1}\cdot\left(\frac{q}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)\right]_{z = 0} &=\\ \frac{\partial}{\partial z}\left[\bcancel{\epsilon_2}\cdot\left(\frac{q_2}{\cancel{4\pi}\bcancel{\epsilon_2}}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)\right]_{z=0}&\\
-\implies\quad d\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}} - \frac{q_1}{\sqrt{(r^2 + d^2)^3}}\right) = d\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)
-\end{align*}
-\begin{equation}
-\implies \qquad q - q_1 = q_2
-\end{equation}
-Para el caso de la condición de contorno (21) se remplazan también las expresiones de $\partial_r\phi_1$ y $\partial_r\phi_2$, pero en este caso no se simplifican las permitividades, por lo que se llega a una expresión que las incluye:
-\begin{align*}
-\frac{\partial}{\partial r}\left(\frac{q}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z-d)^2}} + \frac{q_1}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)_{z=0}& =\\
-\frac{\partial}{\partial r}\left(\frac{q_2}{\cancel{4\pi}\epsilon_2}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)_{z=0}&\\
-\implies \frac{r}{\epsilon_1}\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}}+ \frac{q_1}{\sqrt{(r^2 + d^2)}}\right) = \frac{r}{\epsilon_2}\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)&
-\end{align*}
-\begin{equation}
-\implies \frac{1}{\epsilon_1}(q + q_1) = \frac{q_2}{\epsilon_2}
-\end{equation}
-Ahora, del sistema que conforman las Ecs. (25) y (26), se obtiene la expresión para las cargas imagen en función de los parámetros conocidos del sistema:
-\begin{gather}
-q_1 = -\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_2 + \epsilon_1}\right)\cdot q\\
-q_2 = \left(\frac{2\epsilon_2}{\epsilon_1 + \epsilon_2}\right)\cdot q
-\end{gather}
-Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (23) y (24) dependiendo de dónde se encuentra; por supuesto, esto remplazando los valores de $q_1$ y $q_2$ por los de las Ecs. (27) y (28).
 
-\subsection{Sistema con dos interfaces paralelas y cargas en el medio}
 \begin{figure}[H]
 \centering
 \input{./Figures/Fig_4.eps_tex}
@@ -390,57 +453,30 @@ Considerar un número mayor de cargas ($N$) simplemente implica sumar sobre esta
 \end{equation}
 En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.
 
-\subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
-Las Ecs. (29) y (30) contemplan sumatorias que van desde $-\infty$ a $\infty$, cosa que a nivel computacional no es posible lograr. Para eso y sabiendo que la sumatoria converge al tener un denominador que va aumentando, se puede buscar un número $n < \infty$ que resulte representativo. Se trabaja con un código simple hecho en \texttt{Python 3}, a través de la interfaz \texttt{Jupyter}. Se buscan dos valores de $n$ consecutivos tales que la diferencia porcentual entre los potenciales para cada n sea baja. Aquí $n$ corresponde a $+\infty$ y $-n$ a $-\infty$. Se evalúa la Ec. (29) con $n = 48$ y luego con $n=50$, siendo la diferencia relativa entre estos dos valores igual a $0.00936287...\%$. Además se evalúa para valores de $n = 68$ y $n=70$, lo que da un $\Delta$ porcentual de $0.00225061...\%$. Esto se calcula mediante
-\begin{equation*}
-\frac{\phi_{(n)} - \phi_{(n-1)}}{\phi_{(n-1)}}\cdot 100\%
-\end{equation*}
-Se tiene entonces un claro indicio de que aumentar el valor de $n$ mucho más allá de $50$ no es realmente útil e implica dedicar más recursos computacionales. Se presenta a continuación una gráfica para un valor de $q=1$, $\epsilon_1 = 80$ y $\epsilon_2 = 2$. La primera constante dieléctrica corresponde a la del medio externo, y la segunda a la del medio encerrado. La posición de la carga de prueba es $(0,0,0)$, y la del punto de evaluación es $(1,0,0)$ en coordenadas cartesianas. En esta gráfica se puede apreciar cómo la Ec. (29) converge a un valor del potencial $\phi$ a medida que aumenta $n$, hasta un punto en que prácticamente ya no hay diferencia. El valor para $n=120$ es $\phi = 0.0253427...\approx 0.025343$.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{./Imagenes/phi_n.png}
-\caption{Convergencia del valor del potencial en función de $n$.}
-\end{figure}
-\noindent
-Se presenta también la diferencia porcentual entre los cálculos para distintos valores de $n$ en la Figura 6, con escala logarítmica en el eje de la variación para poder distinguir de mejor forma los cambios en el valor. Como ya se dijo y también como se puede ver en cualquiera de las dos gráficas, no merece la pena calcular para $n$ mucho mayores a 50, pues es poca la precisión que se gana, y para conjuntos de múltiples cargas se produce una demanda computacional innecesaria.\\\\
-Se puede observar que, teniendo en cuenta la escala logarítmica, la diferencia entre iteraciones después de la marca roja tiende a ser lineal, por lo que no se gana mucho aumentando el número de datos. Es para tener mayor certeza de la precisión del cálculo que se propone trabajar con $n = 70$. 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{./Imagenes/delta_n.png}
-\caption{Variación porcentual del valor de $\phi$ en función de $n$.}
-\end{figure}
+%
+%\subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
+%Las Ecs. (29) y (30) contemplan sumatorias que van desde $-\infty$ a $\infty$, cosa que a nivel computacional no es posible lograr. Para eso y sabiendo que la sumatoria converge al tener un denominador que va aumentando, se puede buscar un número $n < \infty$ que resulte representativo. Se trabaja con un código simple hecho en \texttt{Python 3}, a través de la interfaz \texttt{Jupyter}. Se buscan dos valores de $n$ consecutivos tales que la diferencia porcentual entre los potenciales para cada n sea baja. Aquí $n$ corresponde a $+\infty$ y $-n$ a $-\infty$. Se evalúa la Ec. (29) con $n = 48$ y luego con $n=50$, siendo la diferencia relativa entre estos dos valores igual a $0.00936287...\%$. Además se evalúa para valores de $n = 68$ y $n=70$, lo que da un $\Delta$ porcentual de $0.00225061...\%$. Esto se calcula mediante
+%\begin{equation*}
+%\frac{\phi_{(n)} - \phi_{(n-1)}}{\phi_{(n-1)}}\cdot 100\%
+%\end{equation*}
+%Se tiene entonces un claro indicio de que aumentar el valor de $n$ mucho más allá de $50$ no es realmente útil e implica dedicar más recursos computacionales. Se presenta a continuación una gráfica para un valor de $q=1$, $\epsilon_1 = 80$ y $\epsilon_2 = 2$. La primera constante dieléctrica corresponde a la del medio externo, y la segunda a la del medio encerrado. La posición de la carga de prueba es $(0,0,0)$, y la del punto de evaluación es $(1,0,0)$ en coordenadas cartesianas. En esta gráfica se puede apreciar cómo la Ec. (29) converge a un valor del potencial $\phi$ a medida que aumenta $n$, hasta un punto en que prácticamente ya no hay diferencia. El valor para $n=120$ es $\phi = 0.0253427...\approx 0.025343$.
+%
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=\linewidth]{./Imagenes/phi_n.png}
+%\caption{Convergencia del valor del potencial en función de $n$.}
+%\end{figure}
+%\noindent
+%Se presenta también la diferencia porcentual entre los cálculos para distintos valores de $n$ en la Figura 6, con escala logarítmica en el eje de la variación para poder distinguir de mejor forma los cambios en el valor. Como ya se dijo y también como se puede ver en cualquiera de las dos gráficas, no merece la pena calcular para $n$ mucho mayores a 50, pues es poca la precisión que se gana, y para conjuntos de múltiples cargas se produce una demanda computacional innecesaria.\\\\
+%Se puede observar que, teniendo en cuenta la escala logarítmica, la diferencia entre iteraciones después de la marca roja tiende a ser lineal, por lo que no se gana mucho aumentando el número de datos. Es para tener mayor certeza de la precisión del cálculo que se propone trabajar con $n = 70$. 
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=\linewidth]{./Imagenes/delta_n.png}
+%\caption{Variación porcentual del valor de $\phi$ en función de $n$.}
+%\end{figure}
+%
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-\section{Descripción del software utilizado}
-En el transcurso de este trabajo se hizo uso de una serie de programas para ayudar a implementar el modelo encontrado, probarlo, o comparar los resultados obtenidos. En esta sección se mencionan y describen, en mayor o menor profundidad, los cuatro softwares sin los cuales esta memoria no podría haberse realizado.
-
-\subsection{MSMS}
-Este resulta el programa menos utilizado directamente en el trabajo, pero que sin embargo es fundamental y de hecho es utilizado de una u otra forma por los siguientes programas en esta sección. MSMS permite mallar la superficie de un átomo o conjunto de átomos, entregando la Solvent Excluded Surface (SES)\footnote{Véase Anexo 1}, en función de un "radio de sondeo", habilitando al usuario a definir una variedad de parámetros que facilitan obtener modelos para realizar diferentes pruebas. El programa está escrito en lenguaje \texttt{C} y arroja un par de archivos, uno con una numeración para identificar los triángulos, y el otro con las coordenadas de los vértices de dichos triángulos. Más allá de esto, no es necesario ahondar en el funcionamiento del programa, pues su funcionalidad es lo que aquí importa.
-
-\subsection{APBS}
-Adaptive Poisson-Boltzmann Solver, más conocido por su sigla APBS, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación\footnote{Véase Anexo 2} de una molécula o macromolécula. El programa emplea el método FEM para parcelar un dominio de integración en $l\times m\times n$ elementos, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio. APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas de dinámica molecular (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados.
-
-\subsection{APBSmem}
-APBSmem es el gran programa de cálculos energéticos en sistemas proteína - membrana con teoría electrostática en continuos. Funciona de la misma forma que APBS (de hecho APBSmem solo llama a APBS con dos grupos de archivos distintos, uno pre y uno pos consideración de la membrana) y facilita el trabajo a usuarios con poco conocimiento computacional a través de una interfaz gráfica.\\\\
-Este software escrito en \texttt{Java} funciona siguiendo una serie de pasos, en función de parámetros indicados por el usuario:
-\begin{itemize}
-\item[1.] Generar mapas de permitividades $\varepsilon$, radios de Debye o accesibilidad iónica $\kappa$, y densidad de carga $\rho$ para una proteína en disolución.
-\item[2.] Utilizar esos mapas con el programa APBS base para calcular la energía de solvatación de una proteína en disolución.
-\item[3.] Generar un nuevo set de mapas de las propiedades en 1., pero esta vez tomando en cuenta la inclusión de la membrana según parámetros indicados por el usuario.
-\item[4.] Correr nuevamente APBS para obtener la energía de solvatación de la proteína inserta en la membrana.
-\item[5.] Restar las energías de 4. y 2., entregando esta resta para indicar la afinidad de la proteína con la membrana y el resto del entorno.
-\end{itemize}
-APBSmem entrega la energía total de la proteína embebida en la membrana, que en caso de ser un estado de mínima energía constituye el estado más probable del sistema. En resumen, si el resultado entregado por APBSmem es $<0$, la proteína tiene más probabilidades de estar inserta en la membrana que en la solución salina original, y visceversa.\\\\
-Para poder comparar los resultados presentados más adelante con los de APBSmem y APBS, es necesario sumar las energías de solvatación entregadas por estos últimos dos programas de modo de obtener la energía de solvatación del sistema membrana - proteína.
-
-
-\subsection{PyGBE}
 
 
 
@@ -448,9 +484,7 @@ Para poder comparar los resultados presentados más adelante con los de APBSmem 
 
 
 
-\section{Implementación del método de imágenes al programa PyGBE}
-El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de una molécula o membrana inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Para explicar cómo ocurre el cálculo de dichas energías, hay que mencionar y explicar brevemente un par de programas que se utilizan, uno de los cuales derechamente se modifica para incluir la capacidad de simular la situación mencionada. También hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, sólo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares que signifiquen la remoción de una sección de la membrana, hay que utilizar otra forma de modelar, puesto que el método de imágenes tal como se implementa aquí requiere que haya dos planos infinitos rodeando a la carga. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de una distribución de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad del método de imágenes como representación de una membrana y 
-PyGBE es un programa escrito en \texttt{Python} que permite calcular la energía de solvatación de una molécula o conjunto de estas en un medio, ya sea con la ecuación de Poisson o la de Poisson-Boltzmann (medio uniforme o con distribución de iones).
+
 
 
 
@@ -458,7 +492,7 @@ PyGBE es un programa escrito en \texttt{Python} que permite calcular la energía
 
 
 
-\section{Lecturas relevantes al respecto}
+\section{Resultados}
 En la sección actual se presentan una serie de breves resúmenes de publicaciones relacionadas con la temática de modelos computacionales de células y/o biomoléculas, o que sean de aporte para el entendimiento de la teoría electrostática en alguna forma.
 \subsection{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite{APBSmem}}
 La publicación sobre APBSmem es más que nada una guía para la utilización del programa APBSmem, en la que se presentan además los métodos utilizados para el cálculo de energías de interés, en sistemas biológicos (proteína-membrana principalmente); esto puede ser, solvatación para iones, para proteínas, o canales transmembrana. 

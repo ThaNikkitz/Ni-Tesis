@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.1)  10 JUN 2019 18:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.24)  11 JUN 2019 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -458,7 +458,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 3.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (32.56625pt too wide) in paragraph at lines 27--27
+Overfull \hbox (32.56625pt too wide) in paragraph at lines 25--25
  [][] []\OT1/cmr/m/n/12 Image Ap-prox-i-ma-tions to Elec-tro-static Po-ten-tial
 s in Lay-ered Elec-trolytes/Dielectrics 
  []
@@ -504,10 +504,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 109--111
 
 (./Figures/Fig_1.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_1.eps>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 5663 bytes
 (epstopdf)             Output file: <./Figures/Fig_1-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 3163 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_1-eps-conver
 ted-to.pdf ./Figures/Fig_1.eps>
@@ -572,10 +572,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 191--194
 
 [9] (./Figures/Fig_2.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_2.eps>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 3790 bytes
 (epstopdf)             Output file: <./Figures/Fig_2-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 2833 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_2-eps-conver
 ted-to.pdf ./Figures/Fig_2.eps>
@@ -583,8 +583,8 @@ ted-to.pdf ./Figures/Fig_2.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file ./Figures/Fig_2-eps-converted-to.pdf): PDF inclu
-sion: found PDF version <1.7>, but at most version <1.5> allowed
+pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_2-eps-converted-to.pdf): 
+PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 <./Figures/Fig_2-eps-converted-to.pdf, id=53, 137.51375pt x 203.76125pt>
 File: ./Figures/Fig_2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_2-eps-converted-to.pdf>
@@ -596,114 +596,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 209--212
 
  []
 
-[10 <./Figures/Fig_2-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 214--216
-
- []
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 244--247
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--266
-
- []
-
-
-Overfull \hbox (7.61224pt too wide) in paragraph at lines 254--266
-\OT1/cmr/m/n/12 Una c^^Selula se com-pone de dis-tin-tas es-truc-turas fun-cion
-ales que per-miten trans-for-mar mol^^Seculas
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--266
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--266
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--266
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--266
-
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 274--277
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 274--277
-
- []
-
-[13]
-Overfull \hbox (9.30777pt too wide) in paragraph at lines 277--277
-[]\OT1/cmr/bx/n/14.4 Representaci^^Son del mod-elo de sol-vente impl^^S^^Pcito 
-me-di-ante BEM 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 290--294
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 290--294
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 295--297
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 295--297
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 295--297
-
- []
-
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 303--305
-
- []
-
-[15]
-Underfull \hbox (badness 10000) in paragraph at lines 328--330
-
- []
-
-(./Figures/Fig_3.eps_tex
+[10 <./Figures/Fig_2-eps-converted-to.pdf>] (./Figures/Fig_3.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_3.eps>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 5836 bytes
 (epstopdf)             Output file: <./Figures/Fig_3-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 3018 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_3-eps-conver
 ted-to.pdf ./Figures/Fig_3.eps>
@@ -711,30 +609,147 @@ ted-to.pdf ./Figures/Fig_3.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file ./Figures/Fig_3-eps-converted-to.pdf): PDF inclu
-sion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_3-eps-converted-to.pdf, id=75, 306.14375pt x 144.54pt>
+pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_3-eps-converted-to.pdf): 
+PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<./Figures/Fig_3-eps-converted-to.pdf, id=59, 306.14375pt x 144.54pt>
 File: ./Figures/Fig_3-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_3-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_3-eps-converted-to.pdf  used on input li
 ne 52.
 (pdftex.def)             Requested size: 321.2pt x 151.65677pt.
-) [16]
-Underfull \hbox (badness 10000) in paragraph at lines 336--339
+)
+Underfull \hbox (badness 10000) in paragraph at lines 219--222
+
+ []
+
+[11 <./Figures/Fig_3-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 225--231
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--348
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
-[17 <./Figures/Fig_3-eps-converted-to.pdf>] (./Figures/Fig_4.eps_tex
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 285--288
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 295--307
+
+ []
+
+
+Overfull \hbox (7.61224pt too wide) in paragraph at lines 295--307
+\OT1/cmr/m/n/12 Una c^^Selula se com-pone de dis-tin-tas es-truc-turas fun-cion
+ales que per-miten trans-for-mar mol^^Seculas
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--307
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--307
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--307
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--307
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 315--318
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 315--318
+
+ []
+
+
+Overfull \hbox (9.30777pt too wide) in paragraph at lines 318--318
+[]\OT1/cmr/bx/n/14.4 Representaci^^Son del mod-elo de sol-vente impl^^S^^Pcito 
+me-di-ante BEM 
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 331--335
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 331--335
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--338
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--338
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 339--340
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--340
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 344--346
+
+ []
+
+[17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 404--406
+
+ []
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 413--415
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--430
+
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 432--434
+
+ []
+
+(./Figures/Fig_4.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_4.eps>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 9935 bytes
 (epstopdf)             Output file: <./Figures/Fig_4-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-04-01 14:43:51
+(epstopdf)                    date: 2019-05-25 18:38:20
 (epstopdf)                    size: 3751 bytes
 (epstopdf)             Command: <repstopdf --outfile=./Figures/Fig_4-eps-conver
 ted-to.pdf ./Figures/Fig_4.eps>
@@ -742,133 +757,100 @@ ted-to.pdf ./Figures/Fig_4.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file ./Figures/Fig_4-eps-converted-to.pdf): PDF inclu
-sion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_4-eps-converted-to.pdf, id=86, 330.23375pt x 228.855pt>
+pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_4-eps-converted-to.pdf): 
+PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<./Figures/Fig_4-eps-converted-to.pdf, id=98, 330.23375pt x 228.855pt>
 File: ./Figures/Fig_4-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_4-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_4-eps-converted-to.pdf  used on input li
 ne 52.
 (pdftex.def)             Requested size: 361.34999pt x 250.42825pt.
-) [18]
-Underfull \hbox (badness 10000) in paragraph at lines 384--388
+) [21]
+Underfull \hbox (badness 10000) in paragraph at lines 447--451
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--388
+Underfull \hbox (badness 10000) in paragraph at lines 447--451
 
  []
 
-[19 <./Figures/Fig_4-eps-converted-to.pdf>]
-<./Imagenes/phi_n.png, id=97, 749.80125pt x 421.575pt>
-File: ./Imagenes/phi_n.png Graphic file (type png)
-<use ./Imagenes/phi_n.png>
-Package pdftex.def Info: ./Imagenes/phi_n.png  used on input line 402.
-(pdftex.def)             Requested size: 469.75502pt x 264.12056pt.
- [20]
-<./Imagenes/delta_n.png, id=102, 739.76375pt x 438.63875pt>
-File: ./Imagenes/delta_n.png Graphic file (type png)
-<use ./Imagenes/delta_n.png>
-Package pdftex.def Info: ./Imagenes/delta_n.png  used on input line 410.
-(pdftex.def)             Requested size: 469.75502pt x 278.5392pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 405--412
-
- []
-
-[21 <./Imagenes/phi_n.png>] [22 <./Imagenes/delta_n.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 430--432
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 439--441
+[22 <./Figures/Fig_4-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 498--501
 
  []
 
 [23]
-Overfull \hbox (1.93272pt too wide) in paragraph at lines 451--451
-[]\OT1/cmr/bx/n/17.28 Implementaci^^Son del m^^Setodo de im^^Sagenes al pro-gra
-ma
+Underfull \hbox (badness 10000) in paragraph at lines 507--510
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 464--467
+Underfull \hbox (badness 10000) in paragraph at lines 519--521
 
  []
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 473--476
+Underfull \hbox (badness 10000) in paragraph at lines 523--526
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 538--540
 
  []
 
 [25]
-Underfull \hbox (badness 10000) in paragraph at lines 485--487
+Underfull \hbox (badness 10000) in paragraph at lines 541--546
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 489--492
-
- []
-
-[26]
-Underfull \hbox (badness 10000) in paragraph at lines 504--506
+Underfull \hbox (badness 10000) in paragraph at lines 541--546
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--512
+Underfull \hbox (badness 10000) in paragraph at lines 541--546
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--512
+Underfull \hbox (badness 10000) in paragraph at lines 541--546
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 507--512
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 507--512
-
- []
-
-[27] [28] [29] (./Memoria.aux) ) 
+[26] [27] (./Memoria.aux) ) 
 Here is how much of TeX's memory you used:
- 5939 strings out of 494880
- 84639 string characters out of 6179602
- 169439 words of memory out of 5000000
- 9123 multiletter control sequences out of 15000+600000
- 15718 words of font info for 60 fonts, out of 8000000 for 9000
+ 5923 strings out of 494880
+ 84323 string characters out of 6179601
+ 166439 words of memory out of 5000000
+ 9110 multiletter control sequences out of 15000+600000
+ 14471 words of font info for 55 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  41i,21n,43p,2026b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb>
-Output written on Memoria.pdf (29 pages, 432623 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cme
+x10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb>
+Output written on Memoria.pdf (27 pages, 393200 bytes).
 PDF statistics:
- 194 PDF objects out of 1000 (max. 8388607)
- 131 compressed objects within 2 object streams
+ 184 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
