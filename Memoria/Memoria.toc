@@ -20,9 +20,10 @@
 \contentsline {subsubsection}{\numberline {3.2.4}PyGBe}{20}
 \contentsline {subsection}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes al programa PyGBE}{22}
 \contentsline {subsubsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{23}
-\contentsline {section}{\numberline {4}Resultados}{24}
-\contentsline {subsection}{\numberline {4.1}APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite {APBSmem}}{24}
-\contentsline {subsection}{\numberline {4.2}Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model.\cite {Huimin-Lin}}{25}
-\contentsline {subsection}{\numberline {4.3}Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite {Gan}}{26}
-\contentsline {section}{\numberline {5}Conclusiones generales}{27}
-\contentsline {subsection}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{27}
+\contentsline {subsubsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{25}
+\contentsline {section}{\numberline {4}Resultados}{25}
+\contentsline {subsection}{\numberline {4.1}APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane \cite {APBSmem}}{25}
+\contentsline {subsection}{\numberline {4.2}Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model.\cite {Huimin-Lin}}{26}
+\contentsline {subsection}{\numberline {4.3}Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface \cite {Gan}}{27}
+\contentsline {section}{\numberline {5}Conclusiones generales}{28}
+\contentsline {subsection}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{28}

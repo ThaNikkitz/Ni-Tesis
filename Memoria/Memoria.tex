@@ -434,34 +434,47 @@ Con los valores de los operadores ya calculados, se procede a generar la matriz 
 
 
 \subsection{Implementación del método de imágenes al programa PyGBE}
-El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de un átomo o molécula inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, sólo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares que signifiquen la remoción de una sección de la membrana, hay que utilizar otra forma de modelar. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Además de dichas restricciones, surge otra que en vista del enfoque continuo que se da a la formulación, no incide mucho, pero aún así es importante mencionar: la bicapa fosfolipídica, tal como se muestra en el apartado 2.6, no es exactamente continua, sino que hay separación entre los fosfolípidos y, más importante, entra las cabezas polares de estos. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad de esta parte de la teoría de campos electromagnéticos como representación de una membrana.\\\\
-Como se adelanta en la sección de descripción de los programas utilizados, \texttt{PyGBE} es modificado, añadiendo una opción que permite calcular la energía de solvatación de una molécula en un sistema conformado por un medio $1$ encerrado por un medio $2$. Antes de elaborar sobre la inclusión de esta opción al software, es imperativo ahondar en la teoría electrostática para este tipo de situaciones.
+El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de un átomo o molécula inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, sólo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares hay que buscar otra forma de modelar. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Además de dichas restricciones, surge otra que en vista del enfoque continuo que se da a la formulación, no incide mucho, pero aún así es importante mencionar: la bicapa fosfolipídica, tal como se muestra en el apartado 2.6, no es exactamente continua, sino que hay separación entre los fosfolípidos y, más importante, entre las cabezas polares de éstos. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad de esta parte de la teoría de campos electromagnéticos como representación de una membrana.\\\\
+Como se adelanta en la sección de descripción de los programas utilizados, \texttt{PyGBE} es modificado, añadiendo una opción que permite calcular la energía de solvatación de una molécula en un sistema conformado por un medio $1$ encerrado por un medio $2$ (Figura \text{red}{tanto}). Antes de elaborar sobre la inclusión de esta opción al software, es imperativo ahondar en la teoría electrostática para este tipo de situaciones.
 
 \subsubsection{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
-La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun} y en reproducir sus resultados para determinar un par de parámetros y si efectivamente resulta viable, con miras a trabajos futuros.\\\\
-En este paper se presenta un método basado en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica. La matemática del problema se presenta en primera instancia el caso con una interfaz y luego con dos interfaces paralelas.
+La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun}. La teoría electrostática puede ser encontrada en el libro de Emile Durand \cite{Durand}, pero por lo que se sabe, el grupo de Yang es el único que ha utilizado esta teoría para representar una membrana con el método de imágenes.\\\\
+En este paper se presenta una herramienta basada en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica.
 
 \begin{figure}[H]
 \centering
 \input{./Figures/Fig_4.eps_tex}
 \caption{La imagen superior es la situación real para el caso de una carga, mientras que la figura inferior es el sistema trabajado con el método de imágenes. Esto sigue de manera infinita, pero sólo se muestran unas pocas cargas por motivos obvios.}
 \end{figure}
-En este caso, la explicación y por consecuencia la expresión matemática que modela el problema, se tornan más complejas. Si se tienen tres medios dieléctricos 1, 2 y 3, tales que las constantes dieléctricas de los medios 1 y 3 son iguales entre si (Fig. 4), entonces una carga en el medio 2 genera un campo de reacción en los medios 1 y 3, y cada uno de estos induce una reacción en los otros medios. Se genera así un efecto cascada, lo que se traduce en una sumatoria infinita \cite{Pei-kun} como se ve a continuación
+
+Si se tienen tres medios dieléctricos 1, 2 y 3, tales que las constantes dieléctricas de los medios 1 y 3 son iguales entre sí $\varepsilon_1 = \varepsilon_3$ (Fig. 4), entonces una carga en el medio 2 genera un campo de reacción en los medios 1 y 3, y cada uno de estos induce una reacción en los otros medios. Se genera así un efecto cascada, lo que se traduce en una sumatoria infinita \cite{Pei-kun} como se ve a continuación
 \begin{equation}
 \phi_{(\vec{x})} = \sum_{i=-\infty}^\infty\frac{q_i}{4\pi\epsilon_2|\vec{x} - \vec{x}_i|}
 \end{equation}
 donde
-\begin{equation*}
+\begin{equation}
 q_i = q\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_1 + \epsilon_2}\right)^{|i|} \qquad\qquad x_i=(-1)^ix_0 + i\cdot a
-\end{equation*}
+\end{equation}
 Cada término de la sumatoria es menor al anterior en magnitud, tendiendo a converger de forma relativamente rápida.\\\\
 Una analogía de este fenómeno y que también tiene que ver con electromagnetismo es lo que ocurre al mirar hacia uno de dos espejos paralelos enfrentados. La imagen de uno se refleja infinitamente en el otro, disminuyendo en tamaño con cada reflejo.\\\\
-Considerar un número mayor de cargas ($N$) simplemente implica sumar sobre estas, considerando el potencial debido a la interacción electrostática entre las partículas componentes del sistema, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la Ec. (29) quede
+Considerar un número mayor de cargas ($N_q$) simplemente implica sumar sobre estas, considerando el potencial debido a la interacción electrostática entre las partículas componentes del sistema, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la Ec. (29) quede
 \begin{equation}
-\phi_{(\vec{x})} = \sum_{\substack{j = 1\\j\neq i}}^N \frac{q_j}{4\pi\epsilon_2|\vec{x} - \vec{x_j}|} + \sum_{j=1}^N\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\epsilon_2|\vec{x} - \vec{x}_{j,i}|}\quad ; \quad \vec{x} \neq \vec{x}_j\quad ; \quad \vec{x} \neq \vec{x}_{j,i}
+\phi_{(\vec{x})} = \sum_{\substack{j = 1\\j\neq i}}^{N_q} \frac{q_j}{4\pi\epsilon_2|\vec{x} - \vec{x_j}|} + \sum_{j=1}^{N_q}\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\epsilon_2|\vec{x} - \vec{x}_{j,i}|}\quad ; \quad \vec{x} \neq \vec{x}_j\quad ; \quad \vec{x} \neq \vec{x}_{j,i}
 \end{equation}
-En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.
+En este caso, $\vec{x}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.\\\\
+Lo que nos interesa es el segundo término, pues el primero ya ha sido implementado en el programa previamente. Con esto podemos modelar la reacción de los medios por fuera de las interfases de la membrana o, mejor dicho, el comprotamiento de estos debido a la presencia de las cargas de la proteína. El método BEM exige, a través de sus operadores integrales Single y Double Layer Potential, que haya una función de Green que modele el comportamiento del potencial de una carga (por ende la carga $q$ debe ser unitaria), así como la derivada de dicha función. Por lo tanto, a continuación se presentan estos dos operadores que se utilizan en la modelación de la membrana. Los operadores se denominan a continuación con el subíndice $R$, debido a que el método de la publicación de Yang \textit{et al.} se llama RIC.
+\begin{align}
+V_R(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r})\frac{1}{4\pi\varepsilon_m}\sum_{i=-\infty}^{\infty}\frac{q_i}{|\mathbf{r} - \mathbf{r}^*|}d\partial\Omega\\
+K_R(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r})\frac{1}{4\pi\varepsilon_m}\sum_{i=-\infty}^{\infty}q_i\frac{\partial}{\partial\hat{\mathbf{n}}}\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)d\partial\Omega
+\end{align}
+Los términos $q_i$ y $\mathbf{r}_i^*$ retienen las definiciones de \textcolor{red}{metodo RIC}, y siguen siendo válidas para cada panel, tal como sucedía con los operadores de la sección \textcolor{red}{LAPLACE y YUKAWA}. Se puede apreciar que la complejidad no está en la formulación, puesto que los operadores del método de imágenes son simplemente una suma lineal de operadores Single y Double Layer Potential de Laplace. El obstáculo reside en la sumatoria infinita, que demanda muchos recursos computacionales, pues como se explica en los siguientes párrafos, cada punto de cuadratura tiene $n$ imágenes por arriba y por abajo.
 
+\subsubsection{El método BEM y PyGBe con inclusión del efecto de la membrana}
+El método de imágenes presentado permite dar cuenta del efecto de dos interfaces de forma implícita, y esa es su gran fortaleza, pues no se requiere una discretización de la membrana o las interfaces membrana - solvente. En vez de eso, se reproduce el efecto de los campos de reacción en los puntos de cuadratura al modificar las funciones de Green de los operadores integrales, como ya se adelantó. Ahora se ve más detalladamente cómo se trabaja este sistema de forma numérica.\\\\
+Para empezar, se requiere la discretización tal cual se indica en el apartado \textcolor{red}{Poisson - Boltzmann}. En dicha sección no se realiza un desarrollo específico, pero ahora se procede a explicar bien cómo se trabaja matemáticamente con BEM. Para un panel de referencia $a$ que actúa como \texttt{src}, se debe calcular la interacción con cada uno de los $N-1$ paneles restantes (con contador $b$), \textbf{y} consigo mismo. El cálculo de los Single y Double Layer Potentials requiere la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $k$ puntos de Gauss sobre dicho panel para calcular los valores de los integrandos en dichos puntos
+\begin{align}
+Poner V y K para los puntos de Gauss
+\end{align}
 
 %
 %\subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
@@ -562,11 +575,11 @@ Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
 \bibitem{Griffiths}
 Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prentice Hall, 1999
 \bibitem{Kantorovich}
-Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition, Ch. 8; Springer, 2004
+Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition; Springer, 2004
 \bibitem{Cai}
-Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition, Ch. 1, 2; Cambridge University Press, 2013
+Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition; Cambridge University Press, 2013
 \bibitem{Brebbia}
-Brebbia, C. A.; Dominguez J. \textit{Boundary Elements: An Introductory Course}, Second Edition, Ch. 2; WIT Press, 1992
+Brebbia, C. A.; Dominguez J. \textit{Boundary Elements: An Introductory Course}, Second Edition; WIT Press, 1992
 \bibitem{Cooper2015}
 Cooper, C. \textit{Biomolecular Electrostatics With Continuum Models: A Boundary Integral Implementation and Applications to Biosensors}, 2015
 \bibitem{Pei-kun}
@@ -587,7 +600,8 @@ Campbell, N.; Reece, J. \textit{Biología}, Séptima Edición, Editorial Médica
 Lombard, J. \textit{Once upon a time the cell membranes: 175 years of cell boundary research} Biology Direct 9:32, 2014
 \bibitem{Zhu}
 Zhenhai, Z.; Jingfang, H.; Song, B.; White, J. \textit{Improving the Robustness of a Surface Integral Formulation for Wideband Impedance Extraction of 3D Structures} IEEE/ACM International Conference on Computer Aided Design. 592-597, 2001 
-
+\bibitem{Durand}
+Durand, E. \textit{Électrostatique Vol. III Méthodes de Calcul Diélectriques} Masson et Cie.; 1966
 \end{thebibliography}
 
 %\pagebreak
