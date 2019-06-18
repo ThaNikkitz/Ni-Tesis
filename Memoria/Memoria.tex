@@ -1,5 +1,5 @@
 \documentclass[12pt, notitlepage]{article}
-\usepackage[margin=1in, top=0.5in]{geometry}
+\usepackage[margin=3cm, left=4cm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage{fancyhdr}
 \usepackage[bottom]{footmisc}
@@ -15,6 +15,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{xcolor}
+\usepackage{times}
 %\usepackage{dsfont}
 %\usepackage{hyperref}
 \DeclareFloatingEnvironment[name={Gráfico}]{graph}
@@ -34,6 +35,7 @@
 \newcommand\varmp{\mathbin{\vcenter{\hbox{\oalign{$\scriptstyle({+})$\cr\noalign{\kern-.3ex}\hfil$\scriptscriptstyle-$\hfil\cr}}}}}
 \newcommand\votwo{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle1$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({2})$\cr}}}}}
 \newcommand{\angstrom}{\text{\normalfont\AA}}
+\renewcommand{\baselinestretch}{1.5}
 
 
 \geometry{letterpaper}
@@ -41,9 +43,8 @@
 \begin{document}
 \thispagestyle{empty}
 \setlength{\unitlength}{1 cm} %Especificar unidad de trabajo
-\begin{picture}(18,4)
-\put(0,0){\includegraphics[scale=0.38]{./Figures/UTFSM_logo.png}}
-\put(10.5,0){\includegraphics[scale=0.18]{./Figures/mecusm.jpg}}
+\begin{picture}(18,10)
+\put(0,0){\includegraphics[scale = 1]{./Figures/UTFSM_logo.png}}
 \end{picture}
 \\
 \\
@@ -59,17 +60,17 @@
 \vspace{\fill}Valparaíso - Noviembre, 2018
 \end{center}
 \newpage
-\noindent
-\\\\\\\\\\\\
-\large{``The greatest danger for most of us}
-\begin{center}
-\large{is not that our aim is too high and we miss it,}
-\end{center}
-\begin{flushright}
-\large{but that it is too low and we reach it."\\}
-\end{flushright}
-- Michelangelo
-\newpage
+%\noindent
+%\\\\\\\\\\\\
+%\large{``The greatest danger for most of us}
+%\begin{center}
+%\large{is not that our aim is too high and we miss it,}
+%\end{center}
+%\begin{flushright}
+%\large{but that it is too low and we reach it."\\}
+%\end{flushright}
+%- Michelangelo
+%\newpage
 \tableofcontents
 \newpage
 
@@ -80,7 +81,7 @@ Para modelar la fenomenología de los sistemas biológicos según las diferentes
 El objetivo global de este trabajo consiste en obtener las ecuaciones de Green que permiten representar cargas en un medio acotado por dos interfaces paralelas, implementarlo en un programa de cálculo energético, y contrastar los resultados con aquellos de código ya validado. Con esto se puede determinar si vale la pena considerar el aporte \textbf{electrostático} de una bicapa fosfolipídica en la energía de enlace de las proteínas de membrana celulares, por lo menos en ciertos casos. Hay que tener presente que además existen otros fenómenos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza.\\\\
 El presente texto busca entonces \textit{presentar la física que ocurre tras una interacción electrostática en medios dieléctricos, trabajando un método que permita modelar una membrana celular a partir de un sistema de tres medios separados por dos interfaces, con cargas distribuidas en el medio encerrado. Teniendo este modelo, se lo implementa en un código y se procede a la comparación con programas ya reconocidos}.
 %Sumado a esto se presentan resúmenes de publicaciones relevantes para la línea de estudio pertinente a este escrito, y que incluso podrían servir para mejorar la precisión del modelo al representar de manera más fiel la física de las interacciones de interés, al sumar otro tipo de interacciones o fenómenos, o al plantear respuestas a interrogantes que pudieran surgir en un futuro.\\\\
-En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. También se echa un vistazo al método BEM y cómo es la formulación, además de contextualizar aspectos básicos de la membrana. A continuación se explica cómo es la implementación del método, lo que considera una revisión del método BEM aplicado a un caso de solvente implícito, una descripción de los programas relevantes para este trabajo, y cómo se incluye el método de imágenes en la formulación del programa \texttt{PyGBe}. Por último, se presentan los resultados obtenidos y cómo se comparan con los de programas como APBS y APBSmem.
+En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. También se echa un vistazo al método BEM y cómo es la formulación, además de contextualizar aspectos básicos de la membrana. A continuación se explica cómo es la implementación del método, lo que considera una revisión del método BEM aplicado a un caso de solvente implícito, una descripción de los programas relevantes para este trabajo, y cómo se incluye el método de imágenes en la formulación del programa \texttt{PyGBe}. Por último, se presentan los resultados obtenidos y cómo se comparan con los de programas como \texttt{APBS} y \texttt{APBSmem}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,7 +89,7 @@ En primer lugar se presenta una introducción a la teoría que permite trabajar 
 
 \section{Marco Teórico}
 \subsection{El campo eléctrico y el potencial eléctrico}
-El campo eléctrico correspondiente a una carga puntual $q$ que se encuentra en el vacío en la posición $\mathbf{x}_0$ viene dado por la conocida ecuación
+El campo eléctrico correspondiente a una carga puntual $q$ que se encuentra en el vacío en la posición $\mathbf{r}_0$ viene dado por la conocida ecuación
 \begin{equation}
 \vec{E}(\mathbf{r}) = \frac{q}{4\pi\epsilon_0}\frac{(\mathbf{r} - \mathbf{r}_0)}{|\mathbf{r}-\mathbf{r}_0|^3}
 \end{equation}
@@ -145,13 +146,13 @@ Es conveniente explicar que si bien se define uno de los campos como microscópi
 \end{equation}
 donde $\kappa$ es un factor de corrección que depende del ordenamiento microscópico. El campo eléctrico local es el campo que siente cada uno de los muchos volúmenes pequeños que, en conjunto, componen el medio macroscópico que estamos estudiando. Por último se presenta la definición de densidad de polarización $\vec{P}$ para cerrar el círculo de relaciones entre el dieléctrico estudiado a nivel macroscópico y microscópico. La densidad de polarización por unidad de volumen se define de dos maneras; esto sale de diversas fuentes, pero W. Cai \cite{Cai} lo resume todo de forma simple:
 \begin{gather}
-\vec{P}_{(\vec{x})} = \sum_i N_i\alpha_i\left[\vec{E}_{(\vec{x})}^{loc}\right]_i = \sum_i N_i\mathbf{p}_i\\
-\vec{P}_{(\vec{x})} = \epsilon_0\chi\vec{E}_{(\vec{x})}
+\vec{P}(\mathbf{r}) = \sum_i N_i\alpha_i\left[\vec{E}(\mathbf{r})^{loc}\right]_i = \sum_i N_i\mathbf{p}_i\\
+\vec{P}(\mathbf{r}) = \epsilon_0\chi\vec{E}(\mathbf{r})
 \end{gather}
 con $N_i$ la densidad numérica (\textit{number density}) del $i$-ésimo átomo por unidad de volumen, y $\chi$ la susceptibilidad del medio dieléctrico (que en el caso del vacío es 0). Antes de continuar el desarrollo, se procede a definir qué son la densidad de polarización y la susceptibilidad. Como concepto, la densidad de polarización es la polarización a nivel macroscópico, por unidad de volumen, debida a todos los momentos dipolares inducidos en las moléculas de dicho volumen asociados al campo eléctrico que los induce. Por otra parte, la susceptibilidad permite relacionar un campo eléctrico macroscópico con los efectos que este tiene en el momento dipolar de las partículas en un volumen a través de la densidad de polarización, como se indica en la Ec. (12); más allá de ser una constante de proporcionalidad, indica de forma promediada cómo influye el campo eléctrico en la orientación de los dipolos, y cómo varía el momentum dipolar del medio a nivel macroscópico en presencia del campo eléctrico. Hay que resaltar que esto no implica traslación o \textit{migración} electrónica, sino solo rotación del átomo o molécula para la reorientación del dipolo, intentando alinearlo con el campo.\\\\
 Para terminar esta parte del desarrollo teórico, de las Ecs. (10-12) y sabiendo que el campo macroscópico es el mismo, se puede deducir que
 \begin{equation}
-\vec{P}_{(\vec{x})} = \epsilon_0\chi\vec{E}_{(\vec{x})} = \vec{E}_{(\vec{x})}\sum_iN_i\alpha_i(1+\kappa_i) \implies \epsilon_0\chi = \sum_iN_i\alpha_i(1+\kappa_i)
+\vec{P}(\mathbf{r}) = \epsilon_0\chi\vec{E}(\mathbf{r}) = \vec{E}(\mathbf{r})\sum_iN_i\alpha_i(1+\kappa_i) \implies \epsilon_0\chi = \sum_iN_i\alpha_i(1+\kappa_i)
 \end{equation}
 Un caso particular es la teoría de Clausius-Mossotti, en cuyo caso el valor de $\kappa_i = \kappa$ es $\chi/3$; uno de los supuestos es que la distribución molecular es una malla cúbica regular.\\\\
 Con esto se puede entender de manera general cómo se relacionan el campo eléctrico macroscópico y microscópico. El propósito de este apartado es simplemente aclarar que ambos análisis no son independientes y que el tratamiento de continuo que se dará en lo sucesivo esta fundamentado en teoría del comportamiento eléctrico molecular; es por esto que se omiten pasos y sólo se presentan resultados que se consideran importantes.
@@ -204,7 +205,7 @@ Como la interfaz es un límite para el espacio de análisis, es aquí donde se e
 \epsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \epsilon_2\vec{E}_2\cdot\hat{\mathbf{n}}\\
 \vec{E}_1\cdot\hat{\mathbf{t}} = \vec{E}_2\cdot\hat{\mathbf{t}}
 \end{gather}
-En este caso, $\vec{n}$ es un vector normal a la superficie interfaz, y $\vec{t}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\epsilon_1/\epsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción sólo en el medio 1.
+En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\epsilon_1/\epsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción sólo en el medio 1.
 \begin{figure}[H]
 \vspace{2cm}
 \centering
@@ -478,7 +479,11 @@ Los términos $q_i$ y $\mathbf{r}_i^*$ retienen las definiciones de \textcolor{r
 
 \subsubsection{El método BEM y PyGBe con inclusión del efecto de la membrana}
 El método de imágenes presentado permite dar cuenta del efecto de dos interfaces de forma implícita, y esa es su gran fortaleza, pues no se requiere una discretización de las interfaces membrana - solvente. En vez de eso, se reproduce el efecto de los campos de reacción en los puntos de cuadratura al modificar las funciones de Green de los operadores integrales, como ya se adelantó. Ahora se ve más detalladamente cómo se trabaja este sistema de forma numérica.\\\\
-Para empezar, se requiere la discretización tal cual se indica en el apartado \textcolor{red}{Poisson - Boltzmann}. En dicha sección no se realiza un desarrollo específico, pero ahora se procede a explicar bien cómo se trabaja matemáticamente con BEM. Para un panel de referencia $v$ que actúa como \texttt{src}, se debe calcular la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo. El cálculo de los Single y Double Layer Potentials requiere la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $K_G$ puntos de Gauss sobre dicho panel para calcular los valores de los integrandos en dichos puntos; $K_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico.
+Para empezar, se requiere la discretización tal cual se indica en el apartado \textcolor{red}{Poisson - Boltzmann}. En dicha sección no se realiza un desarrollo específico, pero ahora se procede a explicar bien cómo se trabaja matemáticamente con BEM. Para un panel de referencia $v$ que actúa como \texttt{src}, se debe calcular la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo. Igual que anteriormente para una situación que considera la ecuación PB por fuera de la interfaz, el sistema de ecuaciones para una molécula embebida en una membrana de espesor $a$, permitividades de membrana $\varepsilon_m$, de proteína $\varepsilon_p$ y de solvente (agua) $\varepsilon_w$ es
+\begin{align}
+\frac{\phi}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\sum_{i=-n}^{n}\frac{q_i}{4\pi|\mathbf{r} - \mathbf{r}_i^*|} d\partial\Omega - \int_{\partial\Omega}\phi(\mathbf{r})\sum_{i = -n}^{n}\frac{q_i}{4\pi}\nabla\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega
+\end{align}
+El cálculo de los Single y Double Layer Potentials requiere la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $K_G$ puntos de Gauss sobre dicho panel para calcular los valores de los integrandos en dichos puntos; $K_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico.
 \begin{align*}
 V_{v,w} &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|} \numberthis\\
 K_{v,w} &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\nabla\left(\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|}\right)\cdot\hat{\mathbf{n}} \\
@@ -500,7 +505,7 @@ El radio se compone así de la suma $H + |\mathbf{r}_\theta|$, donde $H$ es la d
 V_L = \sum_{lados}\sum_{k=1}^{K_G}\omega_k\cdot (|\mathbf{r}(\theta_k)| - |H|)\cdot\frac{\theta}{2}\\
 K_L = \sum_{lados}\sum_{k=1}^{K_G}\omega_k\cdot \left(\frac{H}{|\mathbf{r}(\theta_k)|}\right) - \text{sign}(H) \cdot\frac{\theta}{2}
 \end{gather}
-Se tienen así los valores, calculados numéricamente, de los Single y Double Layer Potentials en todos los paneles. El siguiente paso es proceder a formar la matriz del sistema de ecuaciones y proseguir con los pasos de la Sección \textcolor{red}{PB y BEM}.\\\\
+Se tienen así los valores, calculados numéricamente, de los Single y Double Layer Potentials en todos los paneles para una (macro)molécula embebida en una membrana con solvente fuera. El siguiente paso es proceder a formar la matriz del sistema de ecuaciones y proseguir con la secuencia de la Sección \textcolor{red}{PB y BEM}.\\\\
 La inclusión del método de imágenes para cálculos con membrana en \texttt{PyGBe} significó la modificación de una serie de archivos para permitir al programa leer las propiedades de la bicapa (espesor y permitividad), seleccionar el tipo de cálculo que se requiere (PB o método de imágenes), y el número de imágenes en el método, entre otros. Esto recae más en el ámbito computacional, y no se considera que requiera más énfasis que una mención rápida como la anterior. Se procede por tanto a presentar los resultados del método y lo relativo a la labor de cómputo realizada, reiterando los dos objetivos correspondientes a esta sección que se aspiran a cumplir.
 
 
@@ -543,7 +548,33 @@ La inclusión del método de imágenes para cálculos con membrana en \texttt{Py
 
 
 \section{Resultados}
-En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado, tanto en términos de precisión del cálculo como en tiempo de cómputo requerido.
+En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (APBS y APBSmem), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano.
+\subsection{Cálculo numérico de las energías}
+Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10$ respecto del origen $(0,0,0)$ en coordenadas cartesianas. Las permitividades se presentan en la Tabla 1, a continuación
+\begin{table}[H]
+\setlength{\tabcolsep}{32pt}
+\centering
+\caption{Permitividades de los tres medios trabajados}
+\begin{tabular}{ccc}\hline
+$\varepsilon_m = 2$ & $\varepsilon_p = 4$ & $\varepsilon_w = 80$\\\hline
+\end{tabular}
+\end{table}
+Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \textcolor{red}{donde se habla de permitividad relativa}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
+Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - PyGBe y APBSmem.
+\subsubsection{Resultados mediante PyGBe}
+
+
+
+\subsubsection{Resultados mediante APBS - APBSmem}
+
+
+
+\subsection{Extrapolación de Richardson y error relativo}
+Para poder comprobar de manera fehaciente que utilizar el método de imágenes acoplado a \texttt{PyGBe} es un método válido de simular una proteína embebida en una membrana, se utiliza una extrapolación de Richardson para comparar los cálculos. La extrapolación de Richardson es una herramienta que permite, como indica el nombre, realizar una extrapolación mediantes tres puntos para obtener el valor ``límite" teórico al que se llegaría si la malla se afinara consecutivamente a una tasa constante. Es por esta razón que todos los cálculos realizados previamente presentan una razón de densificación constante. La fórmula para obtener el resultado teórico extrapolado es
+\begin{equation}
+G_t = \frac{G_1\cdot G_3 - (G_2)^2}{G_1 - 2G_2 + G_3}
+\end{equation}
+Para esto se debe cumplir que $G_2:G_1 = G_3:G_2$. Con este método aclarado es que se presentan los resultados extrapolados para cada uno de los tres casos de estudio, así como también una comparación porcentual entre los resultados teóricos obtenidos mediante \texttt{PyGBe} y \texttt{APBS - APBSmem}.
 
 
 
