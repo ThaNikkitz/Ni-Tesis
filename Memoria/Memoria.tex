@@ -194,8 +194,8 @@ En la teoría electrostática hay ocasiones en que hay que trabajar con interfac
 El método de imágenes facilita la resolución del problema de una forma simple: En vez de considerar la polarización y el consecuente campo inducido por el segundo medio como un todo, se hace más fácil poner una carga o distribución de cargas imágenes (puede ser incluso una distribución continua) de tal forma que el efecto de dicha carga sobre el primer medio sea el mismo que si hubiera un campo de reacción. Para esto uno analiza los distintos medios por separado en vez de como un sistema.\\\\
 Como la interfaz es un límite para el espacio de análisis, es aquí donde se establecen las condiciones de frontera. Para un sistema de coordenadas adecuado al problema, existen condiciones para la componente normal del campo y para su componente tangencial justo en la interfaz. Matemáticamente esto es
 \begin{gather}
-\epsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \epsilon_2\vec{E}_2\cdot\hat{\mathbf{n}}\\
-\vec{E}_1\cdot\hat{\mathbf{t}} = \vec{E}_2\cdot\hat{\mathbf{t}}
+\epsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \epsilon_2\vec{E}_2\cdot\hat{\mathbf{n}} \label{eqn:jump_condition}\\
+\vec{E}_1\cdot\hat{\mathbf{t}} = \vec{E}_2\cdot\hat{\mathbf{t}} \label{eqn:pot_continuity}
 \end{gather}
 En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\epsilon_1/\epsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción sólo en el medio 1.
 \begin{figure}[H]
@@ -471,13 +471,25 @@ Los términos $q_i$ y $\mathbf{r}_i^*$ retienen las definiciones de \textcolor{r
 
 \subsection{El método BEM y PyGBe con inclusión del efecto de la membrana}
 El método de imágenes presentado permite dar cuenta del efecto de dos interfaces de forma implícita, y esa es su gran fortaleza, pues no se requiere una discretización de las interfaces membrana - solvente. En vez de eso, se reproduce el efecto de los campos de reacción en los puntos de cuadratura al modificar las funciones de Green de los operadores integrales, como ya se adelantó. Ahora se ve más detalladamente cómo se trabaja este sistema de forma numérica.\\\\
-Para empezar, se requiere la discretización tal cual se indica en el apartado \textcolor{red}{Poisson - Boltzmann}. En dicha sección no se realiza un desarrollo específico, pero ahora se procede a explicar bien cómo se trabaja matemáticamente con BEM. Para un panel de referencia $v$ que actúa como \texttt{src}, se debe calcular la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo. Igual que anteriormente para una situación que considera la ecuación PB por fuera de la interfaz, el sistema de ecuaciones para una molécula embebida en una membrana de espesor $a$, permitividades de membrana $\varepsilon_m$, de proteína $\varepsilon_p$ y de solvente (agua) $\varepsilon_w$ es
+Se debe considerar que el método de imágenes como se aplica en este caso considera que la molécula a modelar siempre está encerrada por dos interfaces paralelas ubicadas en planos $z = \pm z_0$. Con esto claro, se procede a explicar cómo se trabaja matemáticamente con BEM.\\\\
+Se tienen las ecuaciones por fuera y por dentro de la interfaz de la molécula y dentro de la membrana; la de afuera lleva implícitamente el aporte del campo de reacción del solvente. El sistema de ecuaciones para una molécula embebida en una membrana de espesor $a$, permitividades de membrana $\varepsilon_m$, de proteína $\varepsilon_p$ y de solvente (agua) $\varepsilon_w$ es
 \begin{align*}
 \frac{\phi_1(\mathbf{r})}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}&\phi_1(\mathbf{r})\sum_{i=-n}^{n}\frac{q_i}{4\pi|\mathbf{r} - \mathbf{r}_i^*|} d\partial\Omega \\
-& - \int_{\partial\Omega}\phi_1(\mathbf{r})\cdot\sum_{i = -n}^{n}\frac{q_i}{4\pi}\nabla\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega = 0\numberthis \\
+& - \int_{\partial\Omega}\phi_1(\mathbf{r})\cdot\sum_{i = -n}^{n}\frac{q_i}{4\pi}\nabla\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega = 0\numberthis \label{eqn:membrane1} \\
 \frac{\phi_2(\mathbf{r})}{2} - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}&\phi_2(\mathbf{r})\cdot\frac{1}{4\pi|\mathbf{r} - \mathbf{r}^*|} d\partial\Omega \\
-& + \int_{\partial\Omega}\phi_2(\mathbf{r})\cdot\nabla\left(\frac{1}{4\pi|\mathbf{r} - \mathbf{r}^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega = \frac{1}{4\pi}\sum_{j = 1}^{Nq}\frac{q_j}{|\mathbf{r} - \mathbf{r}^*|} \numberthis
+& + \int_{\partial\Omega}\phi_2(\mathbf{r})\cdot\nabla\left(\frac{1}{4\pi|\mathbf{r} - \mathbf{r}^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega = \frac{1}{4\pi}\sum_{j = 1}^{Nq}\frac{q_j}{|\mathbf{r} - \mathbf{r}^*|} \numberthis \label{eqn:membrane2}
 \end{align*}
+Además retienen su significado los términos siguientes
+\begin{equation*}
+q_i = q\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_1 + \epsilon_2}\right)^{|i|} \qquad\qquad z_i=(-1)^iz_0 + i\cdot a \qquad\qquad \mathbf{r}_i = (x, y, z_i)
+\end{equation*}
+Aplicando las condiciones de contorno de electrostática, continuidad del potencial y el salto en la componente normal del campo eléctrico (Ec. (\ref{eqn:jump_condition}, \ref{eqn:pot_continuity})) el sistema de ecuaciones se puede llevar a uno con incógnitas en términos de un único $\phi$ y su derivada $\partial/\partial\hat{\mathbf{n}}(\phi)$. Utilizando la notación de los operadores, se obtiene
+\begin{gather}
+
+\end{gather}
+La superficie, en este caso SES, se subdivide en $N$ paneles triangulares y las Ecuaciones \ref{eqn:membrane1} y \ref{eqn:membrane2}, tal como en el caso para Poisson - Boltzmann, son colocadas en el centroide de cada panel.
+
+Para un panel de referencia $v$ que actúa como \texttt{src}, se debe calcular la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo. Igual que anteriormente para una situación que considera la ecuación PB por fuera de la interfaz,
 El cálculo de los Single y Double Layer Potentials requiere la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $K_G$ puntos de Gauss sobre dicho panel para calcular los valores de los integrandos en dichos puntos; $K_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico.
 \begin{align*}
 V_{v,w} &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|} \numberthis\\
