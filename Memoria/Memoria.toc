@@ -1,30 +1,30 @@
-\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{5}
-\contentsline {section}{\numberline {2}Marco Te\IeC {\'o}rico}{7}
-\contentsline {subsection}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{7}
-\contentsline {subsection}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{8}
-\contentsline {subsubsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{9}
-\contentsline {subsubsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{12}
-\contentsline {subsection}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{13}
-\contentsline {subsection}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{14}
-\contentsline {subsubsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{17}
-\contentsline {subsection}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{19}
-\contentsline {subsection}{\numberline {2.6}El contexto biol\IeC {\'o}gico de la membrana celular}{21}
-\contentsline {section}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{23}
-\contentsline {subsection}{\numberline {3.1}Representaci\IeC {\'o}n del modelo de solvente impl\IeC {\'\i }cito mediante BEM}{24}
-\contentsline {subsubsection}{\numberline {3.1.1}Solvent Excluded y Solvent Accesible Surface}{25}
-\contentsline {subsubsection}{\numberline {3.1.2}El m\IeC {\'e}todo BEM y la ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB)}{26}
-\contentsline {subsection}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{28}
-\contentsline {subsubsection}{\numberline {3.2.1}MSMS}{29}
-\contentsline {subsubsection}{\numberline {3.2.2}APBS}{29}
-\contentsline {subsubsection}{\numberline {3.2.3}APBSmem}{30}
-\contentsline {subsubsection}{\numberline {3.2.4}PyGBe}{31}
-\contentsline {subsection}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{35}
-\contentsline {subsubsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{35}
-\contentsline {subsubsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{38}
-\contentsline {section}{\numberline {4}Resultados}{41}
-\contentsline {subsection}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{41}
-\contentsline {subsubsection}{\numberline {4.1.1}Resultados mediante PyGBe}{42}
-\contentsline {subsubsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{42}
-\contentsline {subsection}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{42}
-\contentsline {section}{\numberline {5}Conclusiones generales}{43}
-\contentsline {subsection}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{43}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{4}
+\contentsline {chapter}{\numberline {2}Marco Te\IeC {\'o}rico}{7}
+\contentsline {section}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{7}
+\contentsline {section}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{9}
+\contentsline {subsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{10}
+\contentsline {subsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{13}
+\contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{14}
+\contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{15}
+\contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{18}
+\contentsline {section}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{20}
+\contentsline {section}{\numberline {2.6}El contexto biol\IeC {\'o}gico de la membrana celular}{23}
+\contentsline {chapter}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{26}
+\contentsline {section}{\numberline {3.1}Representaci\IeC {\'o}n del modelo de solvente impl\IeC {\'\i }cito mediante BEM}{27}
+\contentsline {subsection}{\numberline {3.1.1}Solvent Excluded y Solvent Accesible Surface}{28}
+\contentsline {subsection}{\numberline {3.1.2}El m\IeC {\'e}todo BEM y la ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB)}{29}
+\contentsline {section}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{32}
+\contentsline {subsection}{\numberline {3.2.1}MSMS}{32}
+\contentsline {subsection}{\numberline {3.2.2}APBS}{32}
+\contentsline {subsection}{\numberline {3.2.3}APBSmem}{33}
+\contentsline {subsection}{\numberline {3.2.4}PyGBe}{35}
+\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{38}
+\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{39}
+\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{42}
+\contentsline {chapter}{\numberline {4}Resultados}{46}
+\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{46}
+\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{47}
+\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{47}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{47}
+\contentsline {chapter}{\numberline {5}Conclusiones}{48}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{49}

@@ -1,5 +1,5 @@
-\documentclass[12pt, notitlepage]{article}
-\usepackage[margin=3cm, left=4cm]{geometry}
+\documentclass[12pt, oneside, numbers, spanish]{ezthesis}
+%\usepackage[letterpaper,top=35mm,bottom=35mm,inner=30mm,outer=30mm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage{fancyhdr}
 \usepackage[bottom]{footmisc}
@@ -23,8 +23,6 @@
 \setcounter{MaxMatrixCols}{20}
 \numberwithin{equation}{section}
 
-\title{Título}
-
 \date{\today}
 \renewcommand{\contentsname}{Contenidos}
 \renewcommand\refname{Referencias}
@@ -37,28 +35,22 @@
 \newcommand{\angstrom}{\text{\normalfont\AA}}
 \renewcommand{\baselinestretch}{1.5}
 
+\author{Nicolás Espinoza Muñoz}
+\title{MODELACIÓN NUMÉRICA DE UNA PROTEÍNA INSERTA EN UNA MEMBRANA CELULAR USANDO EL MÉTODO DE ELEMENTOS DE BORDE.}
+\supervisor{Christopher D. Cooper V. Ph.D.}
+\correferent{Harvey A. Zambrano R. Ph.D.}
+\institution{UNIVERSIDAD TÉCNICA FEDERICO SANTA MARÍA}
+\department{DEPARTAMENTO DE INGENIERÍA MECÁNICA}
+\city{VALPARAISO}
+\country{CHILE}
 
-\geometry{letterpaper}
+\geometry{letterpaper,top=35mm,bottom=35mm,inner=30mm,outer=30mm}
+%\geometry{top=35mm,bottom=35mm,inner=30mm,outer=30mm}
 
 \begin{document}
-\thispagestyle{empty}
-\setlength{\unitlength}{1 cm} %Especificar unidad de trabajo
-\begin{picture}(18,10)
-\put(0,0){\includegraphics[scale = 1]{./Figures/UTFSM_logo.png}}
-\end{picture}
-\\
-\\
-\begin{center}
-{\LARGE {Universidad Técnica Federico Santa María}}\\[0.5cm]
-{\Large Departamento de Ingeniería Mecánica}\\[2cm]
-%{\Large Redes}\\[2.3cm]
-{\Huge \textbf{Método de imágenes en un sistema de dos interfaces paralelas}}\\[0.3cm]
-%{\Huge \textbf{``Método de diferencias finitas aplicado a transferencia de calor en una placa"}}\\[0.2cm]
-{\large ICM-392 - Investigación Aplicada II}\\[8 pt]
-{\large Profesor: Christopher Cooper V., Ph.D.}\\[6cm]
-{\large Alumno: Nicolás Espinoza M.}\\
-\vspace{\fill}Valparaíso - Noviembre, 2018
-\end{center}
+
+\include{Portada/anteportada}
+
 \newpage
 %\noindent
 %\\\\\\\\\\\\
@@ -74,7 +66,7 @@
 \tableofcontents
 \newpage
 
-\section{Introducción}
+\chapter{Introducción}
 En las últimas décadas ha crecido el interés por modelar de forma más precisa el comportamiento de sistemas biológicos, destacando las células y sus componentes y procesos. Es en esta línea de investigación que surgen y se desarrollan métodos para representar las interacciones que ocurren tanto dentro de la célula como a nivel extracelular.\\\\
 Sin embargo, la complejidad de estos fenómenos hace que sea imposible hasta el momento abarcar de manera completa la naturaleza del proceso biológico correspondiente. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
 Para modelar la fenomenología de los sistemas biológicos según las diferentes disciplinas científicas mencionadas se utiliza una cantidad de métodos computacionales, de los cuales quizás los más conocidos son la dinámica molecular (MD) en casos explícitos y el método de elementos finitos (FEM) en casos implícitos. Por supuesto y como todo en la vida, ambos tienen sus ventajas y desventajas; un punto en contra que tienen en común ambos tipos de modelación es que en general son lentos. Por esto es que ha empezado a tomar cada vez más fuerza el método de elementos de borde/frontera (BEM), que permite resolver problemas físicos comparativamente rápido a expensas de una formulación un tanto más compleja.\\\\
@@ -87,8 +79,8 @@ En primer lugar se presenta una introducción a la teoría que permite trabajar 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Marco Teórico}
-\subsection{El campo eléctrico y el potencial eléctrico}
+\chapter{Marco Teórico}
+\section{El campo eléctrico y el potencial eléctrico}
 El campo eléctrico correspondiente a una carga puntual $q$ que se encuentra en el vacío en la posición $\mathbf{r}_0$ viene dado por la conocida ecuación
 \begin{equation}
 \vec{E}(\mathbf{r}) = \frac{q}{4\pi\epsilon_0}\frac{(\mathbf{r} - \mathbf{r}_0)}{|\mathbf{r}-\mathbf{r}_0|^3}
@@ -115,11 +107,11 @@ Esto es en los casos en que se tenga una carga puntual, como en el caso de la Ec
 \phi(\mathbf{r}) = \int_V \frac{\rho(\mathbf{r}_0)}{4\pi\epsilon}\frac{1}{|\mathbf{r}-\mathbf{r}_0|}dV
 \end{equation}
 En los casos en que el medio en el que está la carga $q$ no sea el vacío, se debe considerar que la materia que lo compone si reaccionará al campo eléctrico asociado a $q$; en estos casos, $\epsilon \neq \epsilon_0$. Es decir, hay que aclarar que las Ecs. (4) y (5) no están completas, pues falta considerar el efecto de la \textit{polarización}. Además resulta interesante entender qué es realmente la permitividad, que esta relacionada directamente con la polarización del medio; a continuación se explican estos puntos.
-\subsection{La permitividad de un medio material, la polarización y el campo eléctrico microscópico}
+\section{La permitividad de un medio material, la polarización y el campo eléctrico microscópico}
 Se puede entender la constante dieléctrica de un material (o permitividad) como una medida del reordenamiento de las partículas de un medio a nivel molecular frente a la presencia de un campo eléctrico externo y provocando así que dichas partículas generen un \textit{campo eléctrico inducido}, que es opuesto en sentido al original, pero no necesariamente de la misma intensidad; este disminuye el flujo neto del campo eléctrico externo, por lo que impide en cierta medida su paso, dando su nombre a la propiedad - en qué grado las moléculas del material \textbf{permiten} el flujo de campo eléctrico.\\\\
 La permitividad que se utiliza en las Ecs. de la sección anterior es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se dijo que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es la referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
 
-\subsubsection{Campo eléctrico local, y polarización}
+\subsection{Campo eléctrico local, y polarización}
 \begin{figure}[H]
 \centering
 \input{./Figures/Fig_1.eps_tex}
@@ -157,7 +149,7 @@ Para terminar esta parte del desarrollo teórico, de las Ecs. (10-12) y sabiendo
 Un caso particular es la teoría de Clausius-Mossotti, en cuyo caso el valor de $\kappa_i = \kappa$ es $\chi/3$; uno de los supuestos es que la distribución molecular es una malla cúbica regular.\\\\
 Con esto se puede entender de manera general cómo se relacionan el campo eléctrico macroscópico y microscópico. El propósito de este apartado es simplemente aclarar que ambos análisis no son independientes y que el tratamiento de continuo que se dará en lo sucesivo esta fundamentado en teoría del comportamiento eléctrico molecular; es por esto que se omiten pasos y sólo se presentan resultados que se consideran importantes.
 
-\subsubsection{Permitividad de un medio macroscópico}
+\subsection{Permitividad de un medio macroscópico}
 Ya se explicó qué son la susceptibilidad y densidad de polarización, por lo que se procede a definir un poco mejor qué es la permitividad, profundizando en lo que se mencionó en la Sección 2.2.
 %\begin{figure}
 %\centering
@@ -170,7 +162,7 @@ Existen tres \textit{permitividades} de interés para este desarrollo: la permit
 \epsilon_r = \frac{\epsilon}{\epsilon_0}=\epsilon_0(1+\chi)
 \end{equation}
 (llamada $k$ en algunas fuentes). De ahora en adelante, $\epsilon$ a secas pasa a ser la permitividad relativa y se denomina simplemente \textit{permitividad} o \textit{constante dieléctrica} de un medio.\footnote{En estricto rigor, la constante dieléctrica es $\epsilon_r\cdot\epsilon_0$, pero por costumbre se utiliza este término para la propiedad adimensional en este informe.}
-\subsection{Desplazamiento eléctrico y campo eléctrico en un dieléctrico}
+\section{Desplazamiento eléctrico y campo eléctrico en un dieléctrico}
 En lo sucesivo, todo el trabajo es relativo a un medio o campo macroscópico. En este informe no se trabaja directamente con los momentos dipolares, la susceptibilidad, o incluso con la densidad de polarización, sino que se presenta una sola ecuación que engloba todos los efectos de un campo eléctrico sobre un dieléctrico; para llegar a dicha ecuación se utilizan las ecuaciones ya introducidas y un par de relaciones nuevas.\\\\
 La Ec. (12) es una expresión que asocia el campo eléctrico y la densidad de polarización, establecida a través de la susceptibilidad y la permitividad. Además, de la Ec. (5) tenemos la ley de Gauss para una distribución de carga, que tiene que ver únicamente con la permitividad.\\\\
 Si se asume que el flujo de campo eléctrico se debe a contribuciones de la distribución de carga y de la polarización del medio unicamente, entonces se puede expresar dicho flujo de campo eléctrico como
@@ -197,7 +189,7 @@ Es así que recuperamos la ecuación de la que prácticamente parte el desarroll
 \end{equation}
 El gran progreso es haber demostrado que no solo sirve para calcular el campo eléctrico en el vacío, sino que se puede aplicar a los dieléctricos en general y que incluso se consideran los efectos de polarización inducidos.
 
-\subsection{Método de imágenes}
+\section{Método de imágenes}
 En la teoría electrostática hay ocasiones en que hay que trabajar con interfaces que separan distintos medios dieléctricos. El método de imágenes destaca por su simpleza en este tipo de escenarios. La idea es que cargas en un medio inducirán un campo opuesto en el otro, el denominado campo de reacción. A su vez este campo inducido afectará al campo en el primer medio, por lo que hay que encontrar una expresión para el comportamiento de los campos eléctricos en los dos medios; por supuesto, este problema no se soluciona simplemente con aplicar la Ec. (1).\\\\
 El método de imágenes facilita la resolución del problema de una forma simple: En vez de considerar la polarización y el consecuente campo inducido por el segundo medio como un todo, se hace más fácil poner una carga o distribución de cargas imágenes (puede ser incluso una distribución continua) de tal forma que el efecto de dicha carga sobre el primer medio sea el mismo que si hubiera un campo de reacción. Para esto uno analiza los distintos medios por separado en vez de como un sistema.\\\\
 Como la interfaz es un límite para el espacio de análisis, es aquí donde se establecen las condiciones de frontera. Para un sistema de coordenadas adecuado al problema, existen condiciones para la componente normal del campo y para su componente tangencial justo en la interfaz. Matemáticamente esto es
@@ -220,7 +212,7 @@ La idea es determinar qué valor tiene que tener la carga o conjunto de cargas n
 con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
 Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
 
-\subsubsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
+\subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}
 \begin{figure}[H]
 	\centering
 	\input{./Figures/Fig_3.eps_tex}
@@ -261,7 +253,7 @@ q_2 = \left(\frac{2\epsilon_2}{\epsilon_1 + \epsilon_2}\right)\cdot q
 \end{gather}
 Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (23) y (24) dependiendo de dónde se encuentra; por supuesto, esto remplazando los valores de $q_1$ y $q_2$ por los de las Ecs. (27) y (28).
 
-\subsection{El Método de Elementos de Borde}
+\section{El Método de Elementos de Borde}
 Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa partiendo del mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
 El método comienza tomando la formulación débil de una ecuación diferencial, en este caso se utiliza la ecuación de Laplace, multiplicada por una función $\psi$ tal que
 \begin{equation}
@@ -301,7 +293,7 @@ En síntesis, la Ecuación (30) permite obtener $\phi$ en el dominio $\Omega$ co
 En ambos casos ($\mathbf{r}_{\partial\Omega}$ y $\mathbf{r}_{\partial\Omega}^*$) la aplicación es sobre la misma superficie $\partial\Omega$. Es importante considerar que la aplicación del método BEM que se ha hecho hasta ahora es para la ecuación de Laplace. En caso de que la ecuación gobernante del fenómeno bajo estudio sea otra, corresponde hacer una derivación para dicha situación. Afortunadamente, para lo desarrollado en el presente texto no hace falta más.
 
 
-\subsection{El contexto biológico de la membrana celular}
+\section{El contexto biológico de la membrana celular}
 A pesar de haber mencionado la teoría sobre el comportamiento de cargas en un medio, el método de imágenes, y el método BEM que permite llevar todo esto a aplicaciones numéricas, estos pueden aún parecer tópicos un tanto aislados unos de otros, e incluso abstractos en cierta medida. Como consecuencia se presenta el contexto biológico que motiva la búsqueda de un modelo para integrar el efecto de la membrana celular en el que se encuentran insertas algunas proteínas.\\\\
 Una célula se compone de distintas estructuras funcionales que permiten transformar moléculas en energía, enviar y recibir señales de tipo químico y eléctrico, permitir el paso de compuestos desde y hacia el exterior de la célula, entre otros. Las proteínas son probablemente el tipo de macromolécula con la mayor diversidad de funciones en el entorno celular, y su importancia en el quehacer de la membrana, sea este el flujo de elementos o la conducción de señales, por ejemplo, es fundamental. La membrana plasmática se compone de una cadena de fosfolípidos, uno al lado del otro, que rodean el citoplasma (fluido intracelular) y separan el interior de la célula, con estructuras y todo, del fluido extracelular. Más aún, la membrana celular, también llamada bicapa fosfolipídica debido a su composición, es la encargada de definir la frontera de ciertos organelos de la célula; las lisosomas, mitocondrias y el mismo núcleo celular son algunos.\\\\
 Los fosfolípidos son un tipo de molécula conformado por dos ``colas" de ácidos grasos que se unen a un glicerol. Para completar la molécula, también hay un fosfato enlazado al glicerol, que lleva por el lado opuesto una unión con una colina. Para efectos de este trabajo, lo que hay que rescatar es el hecho de que las colas son hidrófobas, mientras que la "cabeza" conformada por el glicerol, el fosfato y el compuesto polar, la colina, son la parte hidrófila del fosfolípido. La Figura 5 muestra tanto una vista en corte de la membrana como un detalle de la composición del fosfolípido.
@@ -321,12 +313,12 @@ La membrana es la estructura fundamental de este estudio, pero es importante no 
 
 
 
-\section{Metodología, funcionamiento e implementación}
+\chapter{Metodología, funcionamiento e implementación}
 Actualmente existen dos modelos ampliamente utilizados para representar un solvente. Uno se basa en una consideración de cada átomo que conforma el solvente de forma explícita, modelando el problema con dinámica molecular, y la otra en un modelo continuo, en el que se trabaja el solvente como un medio dieléctrico con propiedades representativas ponderadas.\\\\
 El primer modelo tiene la gran ventaja de que permite una precisión enorme, pues es una consideración de todas las partículas de manera explícita, una por una, y los fenómenos que ocurren en todas las interacciones. El gran nivel de detalle de este modelo resulta también ser su gran debilidad, pues la cantidad de cálculos que hay que hacer depende del número de partículas del sistema, significando un gran costo computacional.\\\\
 El segundo modelo permite omitir la consideración de partículas individuales al seguir un enfoque continuo, pero al no ser una representación detallada del sistema, el modelo cae en impresiciones; un ejemplo de esto es no tomar en cuenta las fuerzas de van der Waals u otros fenómenos que ocurren a distancias muy pequeñas. A continuación se empieza a ensamblar la teoría presentada en la sección previa, explicando cómo el método BEM permite modelar una proteína inmersa en una solución a través de una discretización de la interfaz que los separa, cómo se genera dicha interfaz y qué es lo que se busca a partir de estos cálculos.
 
-\subsection{Representación del modelo de solvente implícito mediante BEM}
+\section{Representación del modelo de solvente implícito mediante BEM}
 Ya se caracterizó el modelo de solvente implícito y cómo funciona. Un resultado de esto es, en el caso de que haya una distribución de iones libres en el solvente, la ecuación de Poisson - Boltzmann, que en resumidas cuentas toma la ecuación de Poisson y aplica una distribución de Boltzmann para incluir el efecto de los iones en una solución, por ejemplo salina.
 \begin{equation}
 -\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot exp\left(-\frac{ez_i\phi}{k_BT}\right)
@@ -343,13 +335,13 @@ La suma es sobre todas las $i$ especies iónicas en la solución. Tras el supues
 Siendo $\kappa$ el inverso del largo de Debye, y es una medida del apantallamiento eléctrico a causa de las cargas móviles de los iones en solución.\\\\
 Ahora, esto sirve más que nada de contexto para introducir la forma de trabajo del método BEM, así como los conceptos de Solvent Accesible Surface, Solvent Excluded Surface y energía de solvatación. Además es interesante comprender cómo atacar una distribución iónica en electrostática continua.\\\\
 El método BEM requiere una superficie que permita diferenciar dos dominios. Es esta interfaz la que se discretiza y sobre la cual se integran las ecuaciones que modelan la propiedad a trabajar. En el caso de una proteína en un solvente existen por lo menos dos, pues la interfaz es una y hay un medio a cada lado. En primer lugar es importante saber cómo se establece esta superficie.
-\subsubsection{Solvent Excluded y Solvent Accesible Surface}
+\subsection{Solvent Excluded y Solvent Accesible Surface}
 De lo que se ha percibido a lo largo de este estudio, los dos métodos que se emplean usualmente para representar una superficie característica de una proteína son los que se indican en el título de esta parte. Ambos consisten en utilizar una \textit{sonda}, por lo general una molécula de agua, que interactúa con los radios de van der Waals de los átomos de la proteína. Si por ejemplo se quiere mapear la superficie exterior de la proteína o macromolécula, se hace ``\textit{rodar}" una molécula de agua por sobre los radios de van der Waals de los átomos exteriores, de tal modo que la distancia entre los centros de un átomo de la macromolécula y el de la sonda de agua sea la suma de los radios de cada uno.\\\\
 En el caso de la Solvent Accesible Surface (SAS), el centro de la molécula de agua es lo que define la superficie de trabajo. Esto genera puntas como se puede apreciar en la Figura \textcolor{red}{TANTO} . La distancia entre el centro del átomo a sondear y la SAS es entonces la suma del radio de van der Waals de dicho átomo y el radio de la molécula de sondeo.\\\\
 Por otra parte, la Solvent Excluded Surface (SES) considera el borde de la sonda como la definición de la superficie de la macromolécula. La superficie generada es por tanto suave, pues siempre consta al menos de una sección de arco de la sonda. La distancia entre el centro de un átomo de la macromolécula y la SES ya no está definida de forma tan clara como en el caso de la SAS, y a pesar de que en algunos casos coincide con ser simplemente el radio de van der Waals de dicho átomo, esto no es una regla.\\\\
 A pesar de las diferencias, no existe una razón para preferir una sobre la otra, y depende simplemente de lo que se busque lograr en cada situación. En el caso de este trabajo, y principalmente por heredar la metodología que se venía aplicando de antes, se utiliza la Solvent Excluded Surface para definir la superficie de las moléculas de estudio.
 
-\subsubsection{El método BEM y la ecuación de Poisson - Boltzmann (PB)}
+\subsection{El método BEM y la ecuación de Poisson - Boltzmann (PB)}
 Teniendo ya la ecuación PB, se presenta rápidamente el caso del sistema para una proteína en un solvente con iones; el objetivo de esto es presentar la forma de uso del método BEM, aplicado específicamente a una discretización de superficie protéica. Para esto hay que considerar que hay dos medios en el sistema, y una interfaz: el sistema exterior, que como es usual consiste en agua salina $\Omega_1$, el ensamblaje de $N_q$ átomos con $q_i$ cargas netas que conforman la proteína y que será el sistema interior $\Omega_2$, y la Solvent Excluded Surface que se asume separa ambos dominios recién nombrados, encerrando al segundo de estos.\\\\
 Las ecuaciones corresponden entonces a Poisson por dentro, pues existe una distribución de cargas puntuales en un medio dieléctrico, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada anteriormente. De lo presentado sobre el método BEM en la Sección \textcolor{red}{TANTO}, se sabe que el sistema cumple con
 \begin{equation}
@@ -360,10 +352,10 @@ Esta ecuación es válida para ambas direcciones hacia la interfaz. Es decir, si
 \phi_1 = \phi_2 \qquad\qquad \epsilon_1\frac{\partial\phi_1}{\partial n} = \epsilon_2\frac{\partial\phi_2}{\partial n}
 \end{equation}
 Llevando ambas ecuaciones a una formulación integral sobre la frontera, el sistema $2\times2$ para una proteína en solución con iones queda \cite{Cooper2015}
-\begin{gather}
-\frac{\phi_{1}(\mathbf{r}^*)}{2} - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_Y(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_Y(\mathbf{r},\mathbf{r}^*)d\partial\Omega = 0\\
-\frac{\phi_{2}(\mathbf{r}^*)}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_L(\mathbf{r},\mathbf{r}^*)d\partial\Omega = \frac{1}{4\pi\varepsilon}\sum_{i=0}^{N_q}\frac{q_i}{\mathbf{r} - \mathbf{r}_i}
-\end{gather}
+\begin{flalign*}
+\frac{\phi_{1}(\mathbf{r}^*)}{2} - &\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_Y(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_Y(\mathbf{r},\mathbf{r}^*)d\partial\Omega = 0 \numberthis \\
+\frac{\phi_{2}(\mathbf{r}^*)}{2} + &\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})d\partial\Omega -\\ &\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_L(\mathbf{r},\mathbf{r}^*)d\partial\Omega = \frac{1}{4\pi\varepsilon}\sum_{i=0}^{N_q}\frac{q_i}{\mathbf{r} - \mathbf{r}_i}\numberthis
+\end{flalign*}
 La segunda ecuación es la ecuación de Poisson de electrostática \textcolor{red}{TANTO}, con una distribución de cargas puntuales. Las variables de $\mathbf{r}$ y $\mathbf{r}^*$ corresponden a una evaluación sobre la superficie $\partial\Omega$, mientras que $\mathbf{r}_i$ son las posiciones de las mencionadas cargas puntuales. Los subíndices $L$ e $Y$ son propios de \textit{Laplace} y \textit{Yukawa}. La función de Green de Laplace ya se presentó en \textcolor{red}{TANTO}, mientras que la función de Green de Yukawa, que corresponde a la ecuación de Poisson - Boltzmann, es
 \begin{equation}
 G_Y(\mathbf{r},\mathbf{r}^*) = \frac{\text{exp}(-\kappa\cdot|\mathbf{r} - \mathbf{r}^*|)}{4\pi|\mathbf{r} - \mathbf{r}^*|}
@@ -401,16 +393,16 @@ Resolviendo \textcolor{red}{TANTO (la de recién)} para los $N$ paneles se calcu
 
 
 
-\subsection{Descripción del software utilizado}
+\section{Descripción del software utilizado}
 En el transcurso de este trabajo se hizo uso de una serie de programas para ayudar a implementar el modelo encontrado, probarlo, o comparar los resultados obtenidos. En esta sección se mencionan y describen, en mayor o menor profundidad, los cuatro softwares sin los cuales esta memoria no podría haberse realizado.
 
-\subsubsection{MSMS}
+\subsection{MSMS}
 Este resulta el programa menos utilizado directamente en el trabajo, pero que sin embargo es fundamental y de hecho es utilizado de una u otra forma por los siguientes programas en esta sección. MSMS permite mallar la superficie de un átomo o conjunto de átomos, entregando la Solvent Excluded Surface (SES), en función de un ``radio de sondeo", habilitando al usuario a definir una variedad de parámetros que facilitan obtener modelos para realizar diferentes pruebas. El programa está escrito en lenguaje \texttt{C} y arroja un par de archivos, uno con una numeración para identificar los triángulos, y el otro con las coordenadas de los vértices de dichos triángulos. Más allá de esto, no es necesario ahondar en el funcionamiento del programa, pues su funcionalidad es lo que aquí importa.
 
-\subsubsection{APBS}
+\subsection{APBS}
 Adaptive Poisson-Boltzmann Solver, más conocido por su sigla APBS, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación\footnote{Véase Anexo} de una molécula o macromolécula. El programa emplea el método FEM para parcelar un dominio de integración en $l\times m\times n$ elementos, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio. APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas de dinámica molecular (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados.
 
-\subsubsection{APBSmem}
+\subsection{APBSmem}
 APBSmem es el gran programa de cálculos energéticos en sistemas proteína - membrana con teoría electrostática en continuos. Funciona de la misma forma que APBS (de hecho APBSmem solo llama a APBS con dos grupos de archivos distintos, uno pre y uno pos consideración de la membrana) y facilita el trabajo a usuarios con poco conocimiento computacional a través de una interfaz gráfica.\\\\
 Este software escrito en \texttt{Java} funciona siguiendo una serie de pasos, en función de parámetros indicados por el usuario:
 \begin{itemize}
@@ -423,7 +415,7 @@ Este software escrito en \texttt{Java} funciona siguiendo una serie de pasos, en
 APBSmem entrega la energía total de la proteína embebida en la membrana, que en caso de ser un estado de mínima energía constituye el estado más probable del sistema. En resumen, si el resultado entregado por APBSmem es $<0$, la proteína tiene más probabilidades de estar inserta en la membrana que en la solución salina original, y visceversa.\\\\
 Para poder comparar los resultados presentados más adelante con los de APBSmem y APBS, es necesario sumar las energías de solvatación entregadas por estos últimos dos programas de modo de obtener la energía de solvatación del sistema membrana - proteína.
 
-\subsubsection{PyGBe}
+\subsection{PyGBe}
 Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza el Fast Multipole Method junto con un algoritmo de tipo treecode para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se llevó a cabo en una versión básica de PyGBe que no incluye el uso de GPUs, el uso de un algoritmo treecode ni el método de multipolos rápidos. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de pygbe utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto se modifica, como se explica en otra sección más adelante.\\\\
 PyGBe funciona leyendo una serie de archivos. Los inputs del programa son un \texttt{.config} y un \texttt{.param}. Además, el primero de estos dos archivos hace referencia a otro par de archivos, .face y .vert, así como a un \texttt{.pqr} o \texttt{.crd}. En primera instancia se profundiza en qué son estos archivos, y luego se presenta y desarrolla la estructura funcional de PyGBe (pygbe\_ matrix específicamente).\\\\
 El archivo \texttt{.config} que sirve como entrada directa al programa consta de una serie de parámetros que son principalmente pertinentes a las características físicas del modelo. Se trabaja en una estructura de campos, siendo cada uno representativo de uno de los dominios de integración. Siempre habrá un \texttt{FIELD} que representa el solvente, designado con el número 0, y los campos consecutivos listan las propiedades de los otros medios a considerar. Esto permite modelar casos en los que la proteína se plegó sobre sí misma dejando solvente encerrado en pequeños huecos o cavidades. Además este set de parámetros sirve de puntero para los archivos que entregan información sobre las cargas (\texttt{.pqr} o \texttt{.crd}) y sobre la geometría del problema (\texttt{.face} y \texttt{.vert}).\\\\
@@ -441,11 +433,11 @@ Con los valores de los operadores ya calculados, se procede a generar la matriz 
 
 
 
-\subsection{Implementación del método de imágenes en el programa PyGBe}
+\section{Implementación del método de imágenes en el programa PyGBe}
 El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de un átomo o molécula inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, sólo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares hay que buscar otra forma de modelar. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Además de dichas restricciones, surge otra que en vista del enfoque continuo que se da a la formulación, no incide mucho, pero aún así es importante mencionar: la bicapa fosfolipídica, tal como se muestra en el apartado 2.6, no es exactamente continua, sino que hay separación entre los fosfolípidos y, más importante, entre las cabezas polares de éstos. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad de esta parte de la teoría de campos electromagnéticos como representación de una membrana.\\\\
 Como se adelanta en la sección de descripción de los programas utilizados, \texttt{PyGBE} es modificado, añadiendo una opción que permite calcular la energía de solvatación de una molécula en un sistema conformado por un medio $1$ encerrado por un medio $2$ (Figura \text{red}{tanto}). Antes de elaborar sobre la inclusión de esta opción al software, es imperativo ahondar en la teoría electrostática para este tipo de situaciones.
 
-\subsubsection{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
+\subsection{Modelo de un sistema de tres medios dieléctricos con dos interfaces}
 La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun}. La teoría electrostática puede ser encontrada en el libro de Emile Durand \cite{Durand}, pero por lo que se sabe, el grupo de Yang es el único que ha utilizado esta teoría para representar una membrana con el método de imágenes.\\\\
 En este paper se presenta una herramienta basada en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica.
 
@@ -477,12 +469,15 @@ K_R(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r})\frac{1}{4\pi\varep
 \end{align}
 Los términos $q_i$ y $\mathbf{r}_i^*$ retienen las definiciones de \textcolor{red}{metodo RIC}, y siguen siendo válidas para cada panel, tal como sucedía con los operadores de la sección \textcolor{red}{LAPLACE y YUKAWA}. Se puede apreciar que la complejidad no está en la formulación, puesto que los operadores del método de imágenes son simplemente una suma lineal de operadores Single y Double Layer Potential de Laplace. El obstáculo reside en la sumatoria infinita, que demanda muchos recursos computacionales, pues como se explica en los siguientes párrafos, cada punto de cuadratura tiene $n$ imágenes por arriba y por abajo, lo que da un total de $2n + 1$ imágenes.
 
-\subsubsection{El método BEM y PyGBe con inclusión del efecto de la membrana}
+\subsection{El método BEM y PyGBe con inclusión del efecto de la membrana}
 El método de imágenes presentado permite dar cuenta del efecto de dos interfaces de forma implícita, y esa es su gran fortaleza, pues no se requiere una discretización de las interfaces membrana - solvente. En vez de eso, se reproduce el efecto de los campos de reacción en los puntos de cuadratura al modificar las funciones de Green de los operadores integrales, como ya se adelantó. Ahora se ve más detalladamente cómo se trabaja este sistema de forma numérica.\\\\
 Para empezar, se requiere la discretización tal cual se indica en el apartado \textcolor{red}{Poisson - Boltzmann}. En dicha sección no se realiza un desarrollo específico, pero ahora se procede a explicar bien cómo se trabaja matemáticamente con BEM. Para un panel de referencia $v$ que actúa como \texttt{src}, se debe calcular la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo. Igual que anteriormente para una situación que considera la ecuación PB por fuera de la interfaz, el sistema de ecuaciones para una molécula embebida en una membrana de espesor $a$, permitividades de membrana $\varepsilon_m$, de proteína $\varepsilon_p$ y de solvente (agua) $\varepsilon_w$ es
-\begin{align}
-\frac{\phi}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\sum_{i=-n}^{n}\frac{q_i}{4\pi|\mathbf{r} - \mathbf{r}_i^*|} d\partial\Omega - \int_{\partial\Omega}\phi(\mathbf{r})\sum_{i = -n}^{n}\frac{q_i}{4\pi}\nabla\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega
-\end{align}
+\begin{align*}
+\frac{\phi_1(\mathbf{r})}{2} + \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}&\phi_1(\mathbf{r})\sum_{i=-n}^{n}\frac{q_i}{4\pi|\mathbf{r} - \mathbf{r}_i^*|} d\partial\Omega \\
+& - \int_{\partial\Omega}\phi_1(\mathbf{r})\cdot\sum_{i = -n}^{n}\frac{q_i}{4\pi}\nabla\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega = 0\numberthis \\
+\frac{\phi_2(\mathbf{r})}{2} - \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}&\phi_2(\mathbf{r})\cdot\frac{1}{4\pi|\mathbf{r} - \mathbf{r}^*|} d\partial\Omega \\
+& + \int_{\partial\Omega}\phi_2(\mathbf{r})\cdot\nabla\left(\frac{1}{4\pi|\mathbf{r} - \mathbf{r}^*|}\right)\cdot\hat{\mathbf{n}} d\partial\Omega = \frac{1}{4\pi}\sum_{j = 1}^{Nq}\frac{q_j}{|\mathbf{r} - \mathbf{r}^*|} \numberthis
+\end{align*}
 El cálculo de los Single y Double Layer Potentials requiere la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $K_G$ puntos de Gauss sobre dicho panel para calcular los valores de los integrandos en dichos puntos; $K_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico.
 \begin{align*}
 V_{v,w} &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|} \numberthis\\
@@ -547,9 +542,9 @@ La inclusión del método de imágenes para cálculos con membrana en \texttt{Py
 
 
 
-\section{Resultados}
+\chapter{Resultados}
 En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (APBS y APBSmem), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano.
-\subsection{Cálculo numérico de las energías}
+\section{Cálculo numérico de las energías}
 Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10$ respecto del origen $(0,0,0)$ en coordenadas cartesianas. Las permitividades se presentan en la Tabla 1, a continuación
 \begin{table}[H]
 \setlength{\tabcolsep}{32pt}
@@ -561,15 +556,15 @@ $\varepsilon_m = 2$ & $\varepsilon_p = 4$ & $\varepsilon_w = 80$\\\hline
 \end{table}
 Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \textcolor{red}{donde se habla de permitividad relativa}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
 Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - PyGBe y APBSmem.
-\subsubsection{Resultados mediante PyGBe}
+\subsection{Resultados mediante PyGBe}
 
 
 
-\subsubsection{Resultados mediante APBS - APBSmem}
+\subsection{Resultados mediante APBS - APBSmem}
 
 
 
-\subsection{Extrapolación de Richardson y error relativo}
+\section{Extrapolación de Richardson y error relativo}
 Para poder comprobar de manera fehaciente que utilizar el método de imágenes acoplado a \texttt{PyGBe} es un método válido de simular una proteína embebida en una membrana, se utiliza una extrapolación de Richardson para comparar los cálculos. La extrapolación de Richardson es una herramienta que permite, como indica el nombre, realizar una extrapolación mediantes tres puntos para obtener el valor ``límite" teórico al que se llegaría si la malla se afinara consecutivamente a una tasa constante. Es por esta razón que todos los cálculos realizados previamente presentan una razón de densificación constante. La fórmula para obtener el resultado teórico extrapolado es
 \begin{equation}
 G_t = \frac{G_1\cdot G_3 - (G_2)^2}{G_1 - 2G_2 + G_3}
@@ -619,10 +614,10 @@ Para esto se debe cumplir que $G_2:G_1 = G_3:G_2$. Con este método aclarado es 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Conclusiones generales}
+\chapter{Conclusiones}
 Durante el aprendizaje que conlleva el presente trabajo se logra afianzar el conocimiento sobre la teoría electrostática, así como también familiarizarse con la ecuación de Poisson-Boltzman (a través de las lecturas pertinentes al tema), de dónde surge y todo lo que representa. Ya se señaló en un principio que la idea principal de este escrito es presentar la base teórica para poder implementar BEM, y en primera instancia eso se logra para un medio homogeneo, pues ya se cuenta con una expresión para el potencial en función de las variables de interés del problema.\\\\
 En este informe se aclara por qué es posible utilizar la teoría electrostática macroscópica para describir fenómenos a nivel molecular, dando paso a la explicación y aplicación del método de imágenes para resolver un sistema simple de una carga y una interfaz planar. Con la introducción y resolución de la teoría y el problema tipo del método de imágenes respectivamente, se procede a la implementación del método RIC. Mediante esta última herramienta se pueden trabajar sistemas de múltiples cargas en un medio encerrado por dos interfaces a través de cargas imágenes que representen el campo de reacción de los medios. Gracias a un pequeño programa es que se logra definir un número conveniente para representar el valor de $\infty$ en los límites de la sumatoria para el caso de una sola carga encerrada.
-\subsection{Continuación del trabajo}
+\section{Continuación del trabajo}
 A continuación se plantea cómo seguir con este trabajo a partir de los fundamentos establecidos en el presente texto, pues la idea es hacer uso de la teoría incluida aquí para entregar un aporte, particularmente buscando una mejora en la velocidad de cálculo.\\\\
 Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación, se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
 El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en determinar también si el aporte de dicha membrana es realmente significativo o se puede despreciar, y en qué casos es correcto hacerlo.\\\\
