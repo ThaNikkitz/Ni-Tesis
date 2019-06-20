@@ -12,19 +12,19 @@
 \contentsline {chapter}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{26}
 \contentsline {section}{\numberline {3.1}Representaci\IeC {\'o}n del modelo de solvente impl\IeC {\'\i }cito mediante BEM}{27}
 \contentsline {subsection}{\numberline {3.1.1}Solvent Excluded y Solvent Accesible Surface}{28}
-\contentsline {subsection}{\numberline {3.1.2}El m\IeC {\'e}todo BEM y la ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB)}{29}
+\contentsline {subsection}{\numberline {3.1.2}La ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB) y la Boundary Integral Equation (BIE)}{29}
 \contentsline {section}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{32}
 \contentsline {subsection}{\numberline {3.2.1}MSMS}{32}
-\contentsline {subsection}{\numberline {3.2.2}APBS}{32}
-\contentsline {subsection}{\numberline {3.2.3}APBSmem}{33}
+\contentsline {subsection}{\numberline {3.2.2}APBS}{33}
+\contentsline {subsection}{\numberline {3.2.3}APBSmem}{34}
 \contentsline {subsection}{\numberline {3.2.4}PyGBe}{35}
 \contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{38}
 \contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{39}
 \contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{42}
-\contentsline {chapter}{\numberline {4}Resultados}{46}
-\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{46}
-\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{47}
-\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{47}
-\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{47}
-\contentsline {chapter}{\numberline {5}Conclusiones}{48}
-\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{49}
+\contentsline {chapter}{\numberline {4}Resultados}{47}
+\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{47}
+\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{48}
+\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{48}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{48}
+\contentsline {chapter}{\numberline {5}Conclusiones}{49}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{50}
