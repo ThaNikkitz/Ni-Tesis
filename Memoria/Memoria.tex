@@ -509,7 +509,6 @@ Como esta ecuación resuelve el sistema para un panel, y la superficie discretiz
 0
 \end{bmatrix}
 \end{equation}
-El lado derecho de cada ecuación varía según las condiciones de contorno. Para una condición de tipo Dirichlet, 
 El cálculo de los Single y Double Layer Potentials requiere la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $K_G$ puntos de Gauss sobre dicho panel para calcular los valores de los integrandos en dichos puntos; $K_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico.
 \begin{align*}
 V_{v,w} &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|} \numberthis\\
