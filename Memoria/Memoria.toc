@@ -5,7 +5,7 @@
 \contentsline {subsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{10}
 \contentsline {subsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{13}
 \contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{14}
-\contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{15}
+\contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{16}
 \contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{18}
 \contentsline {section}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{20}
 \contentsline {section}{\numberline {2.6}El contexto biol\IeC {\'o}gico de la membrana celular}{23}
