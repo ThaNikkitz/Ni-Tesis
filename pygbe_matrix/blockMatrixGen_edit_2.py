@@ -161,7 +161,7 @@ def blockMatrix(tar, src, WK, kappa, E, m_E, m_a, threshold, LorY, xk, wk, K_fin
 
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt,Ns,K,n))
-        r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2)
+        r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2 + eps*eps)
 
 #       Double layer
         dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
