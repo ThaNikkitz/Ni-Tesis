@@ -16,6 +16,7 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{times}
+\usepackage{tikz}
 %\usepackage{dsfont}
 %\usepackage{hyperref}
 \DeclareFloatingEnvironment[name={Gráfico}]{graph}
@@ -32,6 +33,7 @@
 \renewcommand\tablename{Tabla}
 \renewcommand\figurename{Figura}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 \newcommand\varpm{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle+$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({-})$\cr}}}}}
 \newcommand\varmp{\mathbin{\vcenter{\hbox{\oalign{$\scriptstyle({+})$\cr\noalign{\kern-.3ex}\hfil$\scriptscriptstyle-$\hfil\cr}}}}}
 \newcommand\votwo{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle1$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({2})$\cr}}}}}
@@ -102,7 +104,7 @@ Esta es la ley de Gauss en forma integral. Con el teorema de la divergencia apli
 \int_{\Omega} \nabla\cdot\vec{E} d\Omega = \int_\Omega \frac{\rho}{\varepsilon}d\Omega \implies \nabla\cdot\vec{E} = \frac{\rho}{\varepsilon} \label{eqn:Gauss_law_diff}
 \end{equation}
 Por otro lado, como el campo eléctrico es un campo vectorial irrotacional, se puede aplicar el teorema fundamental del cálculo para obtener su función potencial. Como $\vec{E}(\mathbf{r})$ es una variable solo de la diferencia de posiciones entre la de la carga y el punto de evaluación $|\mathbf{r} - \mathbf{r}_0|$ (función solo del radio), la integración es directa si la referencia para el potencial eléctrico se toma como $0$ al infinito, quedando
-\begin{align*}
+\begin{align*}\label{eqn:potential}
 \vec{E} = \nabla\phi \quad\rightarrow\quad\phi{(\mathbf{r})} & = -\int_\infty^{\mathbf{r}} \vec{E}(\mathbf{r}^*) d\mathbf{r}^* \\
 & = -\int_\infty^{\mathbf{r}} \frac{q}{4\pi\varepsilon}\frac{(\mathbf{r}^*-\mathbf{r}_0)}{|\mathbf{r}^* - \mathbf{r}_0|^3} d\mathbf{r}^* = \frac{q}{4\pi\varepsilon}\frac{1}{|\mathbf{r} - \mathbf{r}_0|}\numberthis
 \end{align*}
@@ -187,7 +189,7 @@ Siguiendo con la idea, recordando que ahora $\varepsilon_r = \varepsilon$ y supo
 \begin{equation}
 \vec{D} = \varepsilon\vec{E}\quad\biggm/\nabla\cdot\qquad\rightarrow\qquad\nabla\cdot\vec{D}=\nabla\cdot(\varepsilon\vec{E}) = \nabla(\varepsilon)\cdot\vec{E} + \varepsilon\nabla\cdot\vec{E} = \rho
 \end{equation}
-Aún más, si la permitividad del medio es constante sobre el mismo, entonces el término $\nabla (\epsilon)\cdot\vec{E}$ se anula.\\\\
+Aún más, si la permitividad del medio es constante sobre el mismo, entonces el término $\nabla (\varepsilon)\cdot\vec{E}$ se anula.\\\\
 Es así que se retorna a la ecuación de la que prácticamente parte el desarrollo de la teoría, la ley de Gauss.
 \begin{equation}
 \nabla\cdot\vec{E} = \frac{\rho}{\varepsilon}
@@ -199,10 +201,10 @@ En la teoría electrostática hay ocasiones en que hay que trabajar con interfac
 El método de imágenes facilita la resolución del problema de una forma simple: En vez de considerar la polarización y el consecuente campo inducido por el segundo medio como un todo, se hace más fácil poner una carga o distribución de cargas imágenes (puede ser incluso una distribución continua) de tal forma que el efecto de dicha carga sobre el primer medio sea el mismo que si hubiera un campo de reacción. Para esto uno analiza los distintos medios por separado en vez de como un sistema.\\\\
 Como la interfaz es un límite para el espacio de análisis, es aquí donde se establecen las condiciones de frontera. Para un sistema de coordenadas adecuado al problema, existen condiciones para la componente normal del campo y para su componente tangencial justo en la interfaz. Matemáticamente esto es
 \begin{gather}
-\epsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \epsilon_2\vec{E}_2\cdot\hat{\mathbf{n}} \label{eqn:jump_condition}\\
+\varepsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \varepsilon_2\vec{E}_2\cdot\hat{\mathbf{n}} \label{eqn:jump_condition}\\
 \vec{E}_1\cdot\hat{\mathbf{t}} = \vec{E}_2\cdot\hat{\mathbf{t}} \label{eqn:pot_continuity}
 \end{gather}
-En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\epsilon_1/\epsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\epsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción solo en el medio 1.
+En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las Ecs. (20) y (21) nos indican que hay un cambio en la componente normal del campo igual a $\varepsilon_1/\varepsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\varepsilon = cte$) en la Figura 2. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción solo en el medio 1.
 \begin{figure}[H]
 \vspace{2cm}
 \centering
@@ -212,9 +214,9 @@ En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y
 \noindent
 La idea es determinar qué valor tiene que tener la carga o conjunto de cargas necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto (discontinuidad) en la componente normal del campo eléctrico dado por
 \begin{equation}
-(\vec{E}_2 - \vec{E}_1)\cdot\hat{\mathbf{n}} = \frac{\sigma}{\epsilon_m}
+(\vec{E}_2 - \vec{E}_1)\cdot\hat{\mathbf{n}} = \frac{\sigma}{\varepsilon_m}
 \end{equation}
-con $\sigma$ la densidad superficial de carga y $\epsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
+con $\sigma$ la densidad superficial de carga y $\varepsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
 Se desarrolla más a cabalidad el tema en lo sucesivo, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
 
 \subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}\label{subsec:Reaction_Field}
@@ -227,8 +229,8 @@ En primer lugar se tiene un caso simple, presente en la mayoría de los libros d
 El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\2}} = \sqrt{r^2 + (z\pm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
 No es complejo realizar el desarrollo, remplazando la expresión para el campo en las condiciones de contorno. Con un poco de álgebra se puede llegar a una forma de escribir las cargas $q_1$ y $q_2$ en función de la carga $q$, así como de las permitividades de los medios. Se muestra a continuación un paso a paso breve de cómo se resuelve el sistema. Si $\phi_1$ es el potencial para algún punto en el medio 1, y $\phi_2$ es el potencial en el medio 2, se tiene
 \begin{gather}
-\phi_1 = \frac{1}{4\pi\epsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\\
-\phi_2 = \frac{1}{4\pi\epsilon_2}\left(\frac{q_2}{\sqrt{r^2+(z-d)^2}}\right)
+\phi_1 = \frac{1}{4\pi\varepsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\\
+\phi_2 = \frac{1}{4\pi\varepsilon_2}\left(\frac{q_2}{\sqrt{r^2+(z-d)^2}}\right)
 \end{gather}
 Derivando estas expresiones y remplazándolas en la condición de contorno (20) se obtiene el siguiente sistema de ecuaciones 2x2\\
 %\begin{gather*}
@@ -236,7 +238,7 @@ Derivando estas expresiones y remplazándolas en la condición de contorno (20) 
 %\implies \epsilon_1\frac{q}{\cancel{4\pi}\epsilon_2}\left.\frac{1}{\sqrt{r^2 + (z-d)^2}}\right|_{z=0}=\frac{q}{\cancel{4\pi}}\left.\frac{1}{\sqrt{r^2 + (z+d)^2}}\right|_{z=0}
 %\end{gather*}
 \begin{align*}
-\frac{\partial}{\partial z}\left[\bcancel{\epsilon_1}\cdot\left(\frac{q}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\cancel{4\pi}\bcancel{\epsilon_1}}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)\right]_{z = 0} &=\\ \frac{\partial}{\partial z}\left[\bcancel{\epsilon_2}\cdot\left(\frac{q_2}{\cancel{4\pi}\bcancel{\epsilon_2}}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)\right]_{z=0}&\\
+\frac{\partial}{\partial z}\left[\bcancel{\varepsilon_1}\cdot\left(\frac{q}{\cancel{4\pi}\bcancel{\varepsilon_1}}\frac{1}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\cancel{4\pi}\bcancel{\varepsilon_1}}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)\right]_{z = 0} &=\\ \frac{\partial}{\partial z}\left[\bcancel{\varepsilon_2}\cdot\left(\frac{q_2}{\cancel{4\pi}\bcancel{\varepsilon_2}}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)\right]_{z=0}&\\
 \implies\quad d\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}} - \frac{q_1}{\sqrt{(r^2 + d^2)^3}}\right) = d\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)
 \end{align*}
 \begin{equation}
@@ -244,17 +246,17 @@ Derivando estas expresiones y remplazándolas en la condición de contorno (20) 
 \end{equation}
 Para el caso de la condición de contorno (21) se remplazan también las expresiones de $\partial_r\phi_1$ y $\partial_r\phi_2$, pero en este caso no se simplifican las permitividades, por lo que se llega a una expresión que las incluye:
 \begin{align*}
-\frac{\partial}{\partial r}\left(\frac{q}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z-d)^2}} + \frac{q_1}{\cancel{4\pi}\epsilon_1}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)_{z=0}& =\\
-\frac{\partial}{\partial r}\left(\frac{q_2}{\cancel{4\pi}\epsilon_2}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)_{z=0}&\\
-\implies \frac{r}{\epsilon_1}\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}}+ \frac{q_1}{\sqrt{(r^2 + d^2)}}\right) = \frac{r}{\epsilon_2}\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)&
+\frac{\partial}{\partial r}\left(\frac{q}{\cancel{4\pi}\varepsilon_1}\frac{1}{\sqrt{r^2 + (z-d)^2}} + \frac{q_1}{\cancel{4\pi}\varepsilon_1}\frac{1}{\sqrt{r^2 + (z+d)^2}}\right)_{z=0}& =\\
+\frac{\partial}{\partial r}\left(\frac{q_2}{\cancel{4\pi}\varepsilon_2}\frac{1}{\sqrt{r^2 + (z-d)^2}}\right)_{z=0}&\\
+\implies \frac{r}{\varepsilon_1}\cdot\left(\frac{q}{\sqrt{(r^2 + (-d)^2)^3}}+ \frac{q_1}{\sqrt{(r^2 + d^2)}}\right) = \frac{r}{\varepsilon_2}\cdot\left(\frac{q_2}{\sqrt{(r^2 + (-d)^2)^3}}\right)&
 \end{align*}
 \begin{equation}
-\implies \frac{1}{\epsilon_1}(q + q_1) = \frac{q_2}{\epsilon_2}
+\implies \frac{1}{\varepsilon_1}(q + q_1) = \frac{q_2}{\varepsilon_2}
 \end{equation}
 Ahora, del sistema que conforman las Ecs. (25) y (26), se obtiene la expresión para las cargas imagen en función de los parámetros conocidos del sistema:
 \begin{gather}
-q_1 = -\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_2 + \epsilon_1}\right)\cdot q\\
-q_2 = \left(\frac{2\epsilon_2}{\epsilon_1 + \epsilon_2}\right)\cdot q
+q_1 = -\left(\frac{\varepsilon_2 - \varepsilon_1}{\varepsilon_2 + \varepsilon_1}\right)\cdot q\\
+q_2 = \left(\frac{2\varepsilon_2}{\varepsilon_1 + \varepsilon_2}\right)\cdot q
 \end{gather}
 Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (23) y (24) dependiendo de dónde se encuentra; por supuesto, esto remplazando los valores de $q_1$ y $q_2$ por los de las Ecs. (27) y (28).
 
@@ -354,7 +356,7 @@ Las ecuaciones corresponden entonces a Poisson por dentro, pues existe una distr
 \end{equation}
 Esta ecuación es válida para ambas direcciones hacia la interfaz. Es decir, si es que la aproximación a la superficie de la proteína ocurre por fuera, la ecuación es igualmente válida que si ocurre por dentro. Ambos dominios, y por ende ambas ecuaciones gobernantes, se encuentran en la SES, por lo que es ahí donde se aplican las condiciones de contorno de electrostática presentadas en la Sección \textcolor{red}{TANTO}.
 \begin{equation}
-\phi_1 = \phi_2 \qquad\qquad \epsilon_1\frac{\partial\phi_1}{\partial n} = \epsilon_2\frac{\partial\phi_2}{\partial n}
+\phi_1 = \phi_2 \qquad\qquad \varepsilon_1\frac{\partial\phi_1}{\partial n} = \varepsilon_2\frac{\partial\phi_2}{\partial n}
 \end{equation}
 Llevando ambas ecuaciones a una formulación integral sobre la frontera, el sistema $2\times2$ para una proteína en solución con iones queda \cite{Cooper2015}
 \begin{flalign*}
@@ -455,17 +457,17 @@ En este paper se presenta una herramienta basada en el método de cargas imagen 
 
 Si se tienen tres medios dieléctricos 1, 2 y 3, tales que las constantes dieléctricas de los medios 1 y 3 son iguales entre sí $\varepsilon_1 = \varepsilon_3$ (Fig. 4), entonces una carga en el medio 2 genera un campo de reacción en los medios 1 y 3, y cada uno de estos induce una reacción en los otros medios. Se genera así un efecto cascada, lo que se traduce en una sumatoria infinita \cite{Pei-kun} como se ve a continuación
 \begin{equation}
-\phi(\mathbf{r}) = \sum_{i=-\infty}^\infty\frac{q_i}{4\pi\epsilon_2|\mathbf{r} - \mathbf{r}_i|}
+\phi(\mathbf{r}) = \sum_{i=-\infty}^\infty\frac{q_i}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r}_i|}
 \end{equation}
 donde
 \begin{equation}
-q_i = q\left(\frac{\epsilon_2 - \epsilon_1}{\epsilon_1 + \epsilon_2}\right)^{|i|} \qquad\qquad x_i=(-1)^ix_0 + i\cdot a \qquad\qquad \mathbf{r}_i=(x_i,y,z)
+q_i = q\left(\frac{\varepsilon_2 - \varepsilon_1}{\varepsilon_1 + \varepsilon_2}\right)^{|i|} \qquad\qquad x_i=(-1)^ix_0 + i\cdot a \qquad\qquad \mathbf{r}_i=(x_i,y,z)
 \end{equation}
 Cada término de la sumatoria es menor al anterior en magnitud, tendiendo a converger de forma relativamente rápida.\\\\
 Una analogía de este fenómeno y que también tiene que ver con electromagnetismo es lo que ocurre al mirar hacia uno de dos espejos paralelos enfrentados. La imagen de uno se refleja infinitamente en el otro, disminuyendo en tamaño con cada reflejo.\\\\
 Considerar un número mayor de cargas ($N_q$) simplemente implica sumar sobre estas, considerando el potencial debido a la interacción electrostática entre las partículas componentes del sistema, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la Ec. (29) quede
 \begin{equation}
-\phi(\mathbf{r}) = \sum_{\substack{j = 1\\j\neq i}}^{N_q} \frac{q_j}{4\pi\epsilon_2|\mathbf{r} - \mathbf{r_j}|} + \sum_{j=1}^{N_q}\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\epsilon_2|\mathbf{r} - \mathbf{r}_{j,i}|}\quad ; \quad \mathbf{r} \neq \mathbf{r}_j\quad ; \quad \mathbf{r} \neq \mathbf{r}_{j,i}
+\phi(\mathbf{r}) = \sum_{\substack{j = 1\\j\neq i}}^{N_q} \frac{q_j}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r_j}|} + \sum_{j=1}^{N_q}\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r}_{j,i}|}\quad ; \quad \mathbf{r} \neq \mathbf{r}_j\quad ; \quad \mathbf{r} \neq \mathbf{r}_{j,i}
 \end{equation}
 En este caso, $\mathbf{r}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial en algún punto debido a las cargas, que debería resultar familiar. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.\\\\
 Lo que nos interesa es el segundo término, pues el primero ya ha sido implementado en el programa previamente. Con esto podemos modelar la reacción de los medios por fuera de las interfases de la membrana o, mejor dicho, el comprotamiento de estos debido a la presencia de las cargas de la proteína. El método BEM exige, a través de sus operadores integrales Single y Double Layer Potential, que haya una función de Green que modele el comportamiento del potencial de una carga (por ende la carga $q$ debe ser unitaria), así como la derivada de dicha función. Por lo tanto, a continuación se presentan estos dos operadores que se utilizan en la modelación de la membrana. Los operadores se denominan a continuación con el subíndice $R$, debido a que el método de la publicación de Yang \textit{et al.} se llama RIC.
@@ -473,7 +475,7 @@ Lo que nos interesa es el segundo término, pues el primero ya ha sido implement
 V_R(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r})\frac{1}{4\pi\varepsilon_m}\sum_{i=-\infty}^{\infty}\frac{q_i}{|\mathbf{r} - \mathbf{r}^*|}d\partial\Omega \label{eqn:SLOp_Memb}\\
 K_R(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r})\frac{1}{4\pi\varepsilon_m}\sum_{i=-\infty}^{\infty}q_i\frac{\partial}{\partial\hat{\mathbf{n}}}\left(\frac{1}{|\mathbf{r} - \mathbf{r}_i^*|}\right)d\partial\Omega \label{eqn:DLOp_Memb}
 \end{align}
-Los términos $q_i$ y $\mathbf{r}_i^*$ retienen las definiciones de \textcolor{red}{metodo RIC}, y siguen siendo válidas para cada panel, tal como sucedía con los operadores de la sección \textcolor{red}{LAPLACE y YUKAWA}. Se puede apreciar que la complejidad no está en la formulación, puesto que los operadores del método de imágenes son simplemente una suma lineal de operadores Single y Double Layer Potential de Laplace. El obstáculo reside en la sumatoria infinita, que demanda muchos recursos computacionales, pues como se explica en los siguientes párrafos, cada punto de cuadratura tiene $n$ imágenes por arriba y por abajo, lo que da un total de $2n + 1$ imágenes.
+Los términos $q_i$ y $\mathbf{r}_i^*$ retienen las definiciones de \textcolor{red}{metodo RIC}, y siguen siendo válidas para cada panel, tal como sucedía con los operadores de la sección \textcolor{red}{LAPLACE y YUKAWA}. Se puede apreciar que la complejidad no está en la formulación, puesto que los operadores del método de imágenes son simplemente una suma lineal de operadores Single y Double Layer Potential de Laplace. El obstáculo reside en la sumatoria infinita, que demanda muchos recursos computacionales, pues como se explica en los siguientes párrafos, cada punto de cuadratura tiene $n$ imágenes por arriba y por abajo, así como la imagen $i=0$, lo que da un total de $2n + 1$ imágenes.
 
 \subsection{El método BEM y PyGBe con inclusión del efecto de la membrana}\label{subsec:BEM_PyGBE}
 El método de imágenes presentado permite dar cuenta del efecto de dos interfaces de forma implícita, y esa es su gran fortaleza, pues no se requiere una discretización de las interfaces membrana - solvente. En vez de eso, se reproduce el efecto de los campos de reacción debido a los paneles de la proteina al modificar las funciones de Green de los operadores Single y Double Layer Potential. Ahora se ve más detalladamente cómo se trabaja este tipo de sistema de forma numérica.\\\\
@@ -487,7 +489,7 @@ Se tienen las ecuaciones por fuera y por dentro de la interfaz de la molécula y
 \end{align*}
 reteniendo su definición los términos siguientes
 \begin{equation*}
-q_i = q\left(\frac{\epsilon_p - \epsilon_m}{\epsilon_p + \epsilon_m}\right)^{|i|} \qquad\qquad z_i=(-1)^iz_0 + i\cdot a \qquad\qquad \mathbf{r}_i = (x, y, z_i)
+q_i = q\left(\frac{\varepsilon_p - \varepsilon_m}{\varepsilon_p + \varepsilon_m}\right)^{|i|} \qquad\qquad z_i=(-1)^iz_0 + i\cdot a \qquad\qquad \mathbf{r}_i = (x, y, z_i)
 \end{equation*}
 Aplicando las condiciones de contorno de electrostática - continuidad del potencial y el salto en la componente normal del campo eléctrico (Ecs. (\ref{eqn:jump_condition}, \ref{eqn:pot_continuity})) - el sistema de ecuaciones se puede llevar a uno con incógnitas en términos de un único $\phi$ y su derivada $\partial/\partial\hat{\mathbf{n}}(\phi)$. Utilizando la notación de los operadores para el método de imágenes (\ref{eqn:SLOp_Memb}, \ref{eqn:DLOp_Memb}) y los de Laplace (\textcolor{red}{HAY QUE AGREGAR EXPLICITAMENTE LOS OPERADORES PARA LAPLACE}), se obtiene la BIE para la situación estudiada
 \begin{gather}
@@ -568,8 +570,29 @@ La inclusión del método de imágenes para cálculos con membrana en \texttt{Py
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
+\subsection{El ciclo termodinámico en solvatación}
+En el cálculo de energías de solvatación es muy útil analizar los estados en que se encuentra el sistema en cuestión. Para esto se realiza un ciclo termodinámico, que facilita el entendimiento de lo que se está calculando. En este trabajo se utiliza principalmente para entender justamente qué son los resultados que se estan obteniendo, y compararlos con el programa \texttt{APBSmem}.\\\\
+Para el caso trabajado, el ciclo termodinámico común para \texttt{APBSmem} y \texttt{PyGBe} es el que se muestra en la figura \ref{fig:thermo_cycle} y que consiste de cuatro estados. El estado \circled{1} es el conjunto de cargas que componen la molécula y la membrana por separado en el vacío\footnote{Para efectos de ambos programas, el ``vacío" es en realidad un medio dieléctrico polarizable de permitividad igual a la de la molécula.}; como la membrana es un dieléctrico que no posee cargas explícitas, no hay una energía electrostática asociada, y para el caso del conjunto de cargas, la energía es simplemente la de Coulomb en el medio (Ec. (\ref{eqn:potential})). El estado \circled{2} corresponde a la membrana y el conjunto de cargas, nuevamente por separado, pero esta vez en agua en vez de en el vacío. La proteina y la membrana mantienen sus permitividades, por lo que en este caso hay una condición de salto en el borde de la proteina (Ec. (\ref{eqn:jump_condition})). El estado \circled{3} es un sistema en que la molécula esta embebida en la membrana, y este conjunto esta a su vez en el vacío, por lo que las constantes dieléctricas de la molécula y del vacío son las mismas. Finalmente, el estado \circled{4} es semejante al estado \circled{3}, pero por fuera del conjunto membrana-proteina hay agua con su respectiva permitividad. Las diferencias energéticas de la \circled{A} a la \circled{E} se detallan a continuación.
+\begin{table}[H]\label{table:thermo_cycle_details}
+	\centering
+	\caption{Expresión de las diferencias energéticas, en función de los estados \circled{1} a \circled{4}. $\Delta G$ es la diferencia en la energía libre de Gibbs entre los distintos estados del ciclo \ref{fig:thermo_cycle}.}
+	\setlength{\tabcolsep}{30pt}
+	\begin{tabular}{cc}
+		\circled{A} & $\Delta G_{\circled{2} - \circled{1}}$ \\
+		\circled{B} & $\Delta G_{\circled{3} - \circled{1}}$ \\
+		\circled{C} & $\Delta G_{\circled{4} - \circled{2}}$ \\
+		\circled{D} & $\Delta G_{\circled{4} - \circled{3}}$ \\
+		\circled{E} & $\Delta G_{\circled{4} - \circled{1}}$
+	\end{tabular}
+\end{table}
+\noindent
+Se debe resaltar que, como en cualquier ciclo termodinámico, un camino cerrado suma cero si se es consistente. Esta propiedad es sumamente importante, pues \texttt{PyGBe} solo puede calcular directamente diferencias de energías que involucren el estado \circled{1} en la figura \ref{fig:thermo_cycle}; gracias a que un camino cerrado da cero, se pueden calcular las diferencias de energía faltantes - en este caso \circled{C} y \circled{D} - a partir del resto del ciclo.
+\begin{figure}[H]
+	\centering
+	\input{./Figures/Fig_9.eps_tex}
+	\caption{Ciclo termodinámico estudiado según lo presentado en los párrafos anteriores. Lo que se calcula principalmente entre \texttt{PyGBe} y \texttt{APBS} es la diferencia}% \circled{E}.}
+	\label{fig:thermo_cycle}
+\end{figure}
 
 
 
@@ -590,6 +613,7 @@ Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con un
 $\varepsilon_m = 2$ & $\varepsilon_p = 4$ & $\varepsilon_w = 80$\\\hline
 \end{tabular}
 \end{table}
+\noindent
 Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \textcolor{red}{donde se habla de permitividad relativa}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
 Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - PyGBe y APBSmem.
 \subsection{Resultados mediante PyGBe}
