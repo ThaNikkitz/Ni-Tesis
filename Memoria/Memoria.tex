@@ -602,9 +602,9 @@ Se debe resaltar que, como en cualquier ciclo termodinámico, un camino cerrado 
 
 
 \chapter{Resultados}
-En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (APBS y APBSmem), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano.
+En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (APBS y APBSmem), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también individualmente de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano (Anexo).
 \section{Cálculo numérico de las energías}
-Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10$ respecto del origen $(0,0,0)$ en coordenadas cartesianas. Las permitividades se presentan en la Tabla 1, a continuación
+Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10 \angstrom$ respecto del origen $(0,0,0)$ en coordenadas cartesianas. Las permitividades se presentan en la Tabla 1, a continuación
 \begin{table}[H]
 \setlength{\tabcolsep}{32pt}
 \centering
@@ -614,10 +614,12 @@ $\varepsilon_m = 2$ & $\varepsilon_p = 4$ & $\varepsilon_w = 80$\\\hline
 \end{tabular}
 \end{table}
 \noindent
-Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \textcolor{red}{donde se habla de permitividad relativa}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
+Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \ref{subsec:Macro_perm}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
 Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - PyGBe y APBSmem.
 \subsection{Resultados mediante PyGBe}
-
+Para calcular las energías de solvatación con PyGBe, se utiliza \texttt{MSMS} para generar las mallas en archivos de formato \texttt{.vert} y \texttt{.face}, como se explica en la sección \ref{Sec:SW_Description}. Se crean tres mallas por caso de estudio; la densidad de elementos se aumenta a una tasa constante para poder realizar un análisis mediante extrapolación de Richardson, como se presenta más adelante. Los casos estudiados son \texttt{centered\_ion}, \texttt{3q} y \texttt{bromoethane}. El primer caso es un único ion en (0,0,0) de radio $1 \angstrom$, el segundo son 3 iones, uno de radio $4 \angstrom$ en (0,0,0) y los otros de radio $1 \angstrom$ ubicados completamente dentro del volumen del primer ion, y el tercer caso es una molécula de 8 átomos con diversos radios y cargas. Las densidades de elementos de borde utilizadas, en $\frac{nodos}{\angstrom^2}$, son 2, 4 y 8.\\\\
+Para calcular los siguientes resultados se utilizaron 3 puntos de cuadratura para elementos lejanos, 37 en los paneles cercanos, y 9 puntos para el semianalítico. Además, el número de imágenes se mantuvo constante en $N=41$ para estas pruebas; más adelante se presenta un análisis en función de variar el parámetro $N$ para ver cómo es la convergencia y mostrar que con 41 imágenes es suficiente.
+Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los resultados obtenidos para las 3 mallas, junto con los tiempos de cálculo totales
 
 
 \subsection{Resultados mediante APBS - APBSmem}
