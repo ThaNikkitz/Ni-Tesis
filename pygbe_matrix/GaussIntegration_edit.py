@@ -156,7 +156,7 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
 
         dzz = e_pos - i_pos
         dzz = reshape(dzz, (Nt,Ns,K_fine,n))
-        r_vec_i = numpy.sqrt(dzz**2 + dxx**2 + dyy**2)
+        r_vec_i = numpy.sqrt(dzz**2 + dxx**2 + dyy**2 + eps*eps)
 
 #       Double layer 
         dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*normal[2]
