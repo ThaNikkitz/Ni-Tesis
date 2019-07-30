@@ -9,6 +9,7 @@
 \usepackage[makeroom]{cancel}
 \usepackage{float}
 \usepackage{caption}
+\usepackage{multirow}
 \usepackage{newfloat}
 \usepackage{gensymb}
 \usepackage{array}
@@ -619,7 +620,35 @@ Los cálculos se realizan para tres densidades de malla, para los tres casos de 
 \subsection{Resultados mediante PyGBe}
 Para calcular las energías de solvatación con PyGBe, se utiliza \texttt{MSMS} para generar las mallas en archivos de formato \texttt{.vert} y \texttt{.face}, como se explica en la sección \ref{Sec:SW_Description}. Se crean tres mallas por caso de estudio; la densidad de elementos se aumenta a una tasa constante para poder realizar un análisis mediante extrapolación de Richardson, como se presenta más adelante. Los casos estudiados son \texttt{centered\_ion}, \texttt{3q} y \texttt{bromoethane}. El primer caso es un único ion en (0,0,0) de radio $1 \angstrom$, el segundo son 3 iones, uno de radio $4 \angstrom$ en (0,0,0) y los otros de radio $1 \angstrom$ ubicados completamente dentro del volumen del primer ion, y el tercer caso es una molécula de 8 átomos con diversos radios y cargas. Las densidades de elementos de borde utilizadas, en $\frac{nodos}{\angstrom^2}$, son 2, 4 y 8.\\\\
 Para calcular los siguientes resultados se utilizaron 3 puntos de cuadratura para elementos lejanos, 37 en los paneles cercanos, y 9 puntos para el semianalítico. Además, el número de imágenes se mantuvo constante en $N=41$ para estas pruebas; más adelante se presenta un análisis en función de variar el parámetro $N$ para ver cómo es la convergencia y mostrar que con 41 imágenes es suficiente.
-Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los resultados obtenidos para las 3 mallas, junto con los tiempos de cálculo totales
+Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los resultados obtenidos para las 3 mallas, junto con los tiempos de cálculo totales.
+
+\begin{table}[H]\label{table:centered_ion}
+	\centering
+	\caption{}
+	\begin{tabular}{cccccc}\hline
+		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
+		 & elementos &  & + Membrana) & cálculo & utilizada\\\hline
+		vert.$/\angstrom^2$ & \rule{0pt}{15pt}[-] & kcal/mol & kcal/mol & [s] & [GB] \\\hline
+		d02 & 736 & -9.919124 & 5.258441 & 45.146 & 3.6\\
+		d04 & 1572 & -9.886872 & 5.243907 & 176.890 & 15.9\\
+		d08 & 3124 & -9.872508 & 5.236550 & 696.899 & 63.9
+	\end{tabular}
+\end{table}
+\noindent
+Para el segundo caso, \texttt{3q}, las energías son mayores, por lo que como se ve más adelante, el error relativo es bastante menor que en el caso anterior (\texttt{centered\_ion}) y el que se ve después (\texttt{bromoethane}). A continuación se presenta una tabla equivalente a la anterior, pero en este caso solo se presentan las energías, pues los tiempos y la memoria consumidos varían muy poco, ya que la discretización de la superficie es la misma que en el caso anterior.
+
+\begin{table}[H]\label{table:3q}
+	\centering
+	\caption{}
+	\begin{tabular}{cccc}\hline
+		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe \\
+		& elementos &  & + Membrana) \\\hline
+		vert.$/\angstrom^2$ & \rule{0pt}{15pt}[-] & kcal/mol & kcal/mol \\\hline
+		d02 & 736 & -90.703972 & 47.973011 \\
+		d04 & 1572 & -90.391445 & 47.841024 \\
+		d08 & 3124 & -90.252742 & 47.774469
+	\end{tabular}
+\end{table}
 
 
 \subsection{Resultados mediante APBS - APBSmem}
