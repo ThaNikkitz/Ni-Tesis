@@ -657,7 +657,7 @@ Para el segundo caso, \texttt{3q}, las energías son mayores, por lo que como se
 	\begin{tabular}{cccc}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe \\
 		& elementos &  & + Membrana) \\\hline
-		vert.$/\angstrom^2$ & \rule{0pt}{15pt}[-] & kcal/mol & kcal/mol \\\hline
+		\rule{0pt}{15pt} vert.$/\angstrom^2$ & [-] & kcal/mol & kcal/mol \\\hline
 		d02 & 736 & -90.703972 & 47.973011 \\
 		d04 & 1572 & -90.391445 & 47.841024 \\
 		d08 & 3124 & -90.252742 & 47.774469
@@ -673,7 +673,7 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 	\begin{tabular}{cccccc}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
 		& elementos &  & + Membrana) & cálculo & utilizada\\\hline
-		\rule{0pt}{1pt} vert.$/\angstrom^2$ & [-] & kcal/mol & kcal/mol & [s] & [GB] \\\hline
+		\rule{0pt}{15pt} vert.$/\angstrom^2$ & [-] & kcal/mol & kcal/mol & [s] & [GB] \\\hline
 		d02 & 322 & -0.348698 & 0.218434 & 17.852 & 1.0\\
 		d04 & 694 & -0.339504 & 0.221408 & 60.248 & 4.1\\
 		d08 & 1448 & -0.339504 & 0.220199 & 224.459 & 19.2
@@ -684,19 +684,68 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 \subsection{Resultados mediante APBS - APBSmem}
 
 Para poder validar los resultados obtenidos con \texttt{PyGBe} se requiere una referencia contra la cual comparar. El software \texttt{APBSmem} se utiliza para este propósito, en vista de su renombre. Ahora bien, como el programa lo que hace es parcelar una "caja`` (el dominio de integración) nodos en los que calcula, dependiendo de las condiciones en dicho nodo, la ecuación gobernante correspondiente, se requieren setear condiciones en los bordes de la mencionada caja. \texttt{APBSmem}, al igual que \texttt{APBS}, permite establecer dichas condiciones. Para el caso trabajado existen tres, que son explicados en el apartado \ref{subsec:APBS}. Se presentan por ende tres tablas para el caso del archivo \texttt{centered\_ion}, dos para el caso \texttt{3q} (se explica el por qué al presentar los resultados), y el valor de evaluación más fino para la molécula de \texttt{bromoethane}, en vista que no se puede extrapolar un resultado con PyGBe.\\\\
-Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por un cubo de $128\,\angstrom$ de lado, con tres cantidades de elementos, de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y por lo tanto el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Para la primera prueba, los resultados son los siguientes
+Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por un cubo de $128\,\angstrom$ de lado, con tres cantidades de elementos, de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Siguiendo el mismo orden que para \texttt{PyGBe}, los resultados para el primer caso de estudio son los siguientes
 
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{|ccccccc|}\hline
+		Tipo de & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
+		condición &  & elementos &  &  & cálculo & utilizada\\\hline
+		&  $\angstrom$ & [-] & kJ/mol & kcal/mol & [s] & [GB] \\\hline
+		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{zero}}}} & 1.00 & 128 & 22.65401 & 5.41420 & 16.548 & 0.5\\
+		& 0.50 & 256 & 22.46140 & 5.36840 & 131.126 & 3.8\\
+		& 0.25 & 512 & 22.30540 & 5.33112 & 1208.873 & 29.7\\ \hline
+		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{sdh}}}} & 1.00 & 128 & 20.39885 & 4.87544 & 16.872 & 0.5\\
+		& 0.50 & 256 & 20.20733 & 4.82967 & 132.265 & 3.8\\
+		& 0.25 & 512 & 20.05135 & 4.79239 & 1150.529 & 29.7\\ \hline
+		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{mdh}}}} & 1.00 & 128 & 20.39885 & 4.87544 & 16.361 & 0.5\\
+		& 0.50 & 256 & 20.20733 & 4.82967 & 134.597 & 3.8\\
+		& 0.25 & 512 & 20.05135 & 4.79239 & 1226.290 & 30.8\\ \hline
+	\end{tabular}\label{table:apbs_centered_ion}
+\end{table}
 
+A continuación se muestran los resultados para \texttt{3q}, y la razón de solo presentar dos sets de resultados para esta molécula es que se repite el comportamiento apreciado en la tabla anterior, \ref{table:apbs_centered_ion}; las energías de solvatación para las condiciones \texttt{sdh} y \texttt{mdh} no varían, probablemente porque los casos de estudio son muy simples. Por esto es que únicamente se presentan los datos correspondientes a condiciones de contorno \texttt{zero} y \texttt{sdh}.
 
-La razón de solo presentar dos sets de resultados para la molécula denominada \texttt{3q} es que se repite el comportamiento apreciado en la tabla \ref{subsec:apbs_centered_ion}; los resultados entre las condiciones \texttt{sdh} y \texttt{mdh} varían de forma despreciable. Por esto es que únicamente se presentan los resultados para condiciones \texttt{zero} y \texttt{sdh}.
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{|ccccccc|}\hline
+		Tipo de & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
+		condición &  & elementos &  &  & cálculo & utilizada\\\hline
+		&  $\angstrom$ & [-] & kJ/mol & kcal/mol & [s] & [GB] \\\hline
+		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{zero}}}} & 1.00 & 128 & 138.95102 & 49.48957 \\
+		& 0.50 & 256 & 135.53601 & 48.97239 \\
+		& 0.25 & 512 & 134.29022 & 48.61474 &  \\ \hline
+		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{sdh}}}} & 1.00 & 128 & 20.39885 & 4.87544 \\
+		& 0.50 & 256 &  & 4.82967 \\
+		& 0.25 & 512 & 20.05135 & 4.79239 \\ \hline
+	\end{tabular}\label{table:apbs_3q}
+\end{table}
 
+Para el caso de la molécula de bromoetano se presenta simplemente el valor más fino calculado en \texttt{APBSmem}; esto para condiciones \texttt{zero} y \texttt{sdh}.
+
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{|ccccccc|}\hline
+		Tipo de & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
+		condición &  & elementos &  &  & cálculo & utilizada\\\hline
+		&  $\angstrom$ & [-] & kJ/mol & kcal/mol & [s] & [GB] \\\hline
+	\texttt{zero} & 0.25 & 512 & 138.95102 & 49.48957 \\
+	\texttt{sdh} & 0.25 & 512 & 138.95102 & 49.48957 \\ \hline
+	\end{tabular}\label{table:apbs_brom}
+\end{table}
 
 \section{Extrapolación de Richardson y error relativo}
 Para poder comprobar de manera fehaciente que utilizar el método de imágenes acoplado a \texttt{PyGBe} es un método válido de simular una proteína embebida en una membrana, se utiliza una extrapolación de Richardson para comparar los cálculos. La extrapolación de Richardson es una herramienta que permite, como indica el nombre, realizar una extrapolación mediantes tres puntos para obtener el valor ``límite" teórico al que se llegaría si la malla se afinara consecutivamente a una tasa constante. Es por esta razón que todos los cálculos realizados previamente presentan una razón de densificación constante. La fórmula para obtener el resultado teórico extrapolado es
 \begin{equation}
 G_t = \frac{G_1\cdot G_3 - (G_2)^2}{G_1 - 2G_2 + G_3}
 \end{equation}
-Para esto se debe cumplir que $G_2:G_1 = G_3:G_2$. Con este método aclarado es que se presentan los resultados extrapolados para cada uno de los tres casos de estudio, así como también una comparación porcentual entre los resultados teóricos obtenidos mediante \texttt{PyGBe} y \texttt{APBS - APBSmem}.
+Para esto se debe cumplir que $G_2:G_1 = G_3:G_2$. Con este método aclarado es que se presentan los resultados extrapolados para cada uno de los dos casos de estudio (\texttt{centered\_ion} y \texttt{3q}), así como también una comparación porcentual entre los resultados extrapolados obtenidos mediante \texttt{PyGBe} y \texttt{APBS - APBSmem}. Para el caso de \texttt{bromoethane} se calcula una diferencia porcentual entre los resultados para las mallas más finas solamente. Como \texttt{APBSmem} tiene dos resultados distintos (tres en realidad, pero se utilizan solo \texttt{zero} y \texttt{sdh} por los motivos explicados previamente) dependiendo de las condiciones de contorno utilizadas, se presentan dos errores porcentuales; sin embargo, se adelanta que el menor error corresponde a la condición de borde \texttt{zero} todos los casos estudiados. La razón principal que provoca esto, por lo que se infiere, se desarrolla en la sección de análisis de los resultados obtenidos.
 
 
 

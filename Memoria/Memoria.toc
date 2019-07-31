@@ -26,6 +26,6 @@
 \contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{50}
 \contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{51}
 \contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{53}
-\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{54}
-\contentsline {chapter}{\numberline {5}Conclusiones}{55}
-\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{56}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{55}
+\contentsline {chapter}{\numberline {5}Conclusiones}{56}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{57}
