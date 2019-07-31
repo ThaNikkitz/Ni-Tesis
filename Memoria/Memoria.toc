@@ -18,14 +18,14 @@
 \contentsline {subsection}{\numberline {3.2.2}APBS}{33}
 \contentsline {subsection}{\numberline {3.2.3}APBSmem}{34}
 \contentsline {subsection}{\numberline {3.2.4}PyGBe}{35}
-\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{38}
-\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{39}
-\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{42}
-\contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{47}
-\contentsline {chapter}{\numberline {4}Resultados}{49}
-\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{49}
-\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{50}
-\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{51}
-\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{51}
-\contentsline {chapter}{\numberline {5}Conclusiones}{53}
-\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{54}
+\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{39}
+\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{40}
+\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{43}
+\contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{48}
+\contentsline {chapter}{\numberline {4}Resultados}{50}
+\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{50}
+\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{51}
+\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{53}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{54}
+\contentsline {chapter}{\numberline {5}Conclusiones}{55}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{56}

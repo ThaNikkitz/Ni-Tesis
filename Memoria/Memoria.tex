@@ -34,7 +34,7 @@
 \renewcommand\tablename{Tabla}
 \renewcommand\figurename{Figura}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\newcommand{\circled}[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 \newcommand\varpm{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle+$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({-})$\cr}}}}}
 \newcommand\varmp{\mathbin{\vcenter{\hbox{\oalign{$\scriptstyle({+})$\cr\noalign{\kern-.3ex}\hfil$\scriptscriptstyle-$\hfil\cr}}}}}
 \newcommand\votwo{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle1$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({2})$\cr}}}}}
@@ -408,7 +408,7 @@ En el transcurso de este trabajo se hizo uso de una serie de programas para ayud
 Este resulta el programa menos utilizado directamente en el trabajo, pero que sin embargo es fundamental y de hecho es utilizado de una u otra forma por los siguientes programas en esta sección. MSMS permite mallar la superficie de un átomo o conjunto de átomos, entregando la Solvent Excluded Surface (SES), en función de un ``radio de sondeo", habilitando al usuario a definir una variedad de parámetros que facilitan obtener modelos para realizar diferentes pruebas. El programa está escrito en lenguaje \texttt{C} y arroja un par de archivos, uno con una numeración para identificar los triángulos, y el otro con las coordenadas de los vértices de dichos triángulos. Más allá de esto, no es necesario ahondar en el funcionamiento del programa, pues su funcionalidad es lo que aquí importa.
 
 \subsection{APBS}\label{subsec:APBS}
-Adaptive Poisson-Boltzmann Solver, más conocido por su sigla APBS, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación\footnote{Véase Anexo} de una molécula o macromolécula. El programa emplea el método FEM para parcelar un dominio de integración en $l\times m\times n$ elementos, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio. APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas de dinámica molecular (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados.
+Adaptive Poisson-Boltzmann Solver, más conocido por su sigla \texttt{APBS}, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación\footnote{Véase Anexo} de una molécula o macromolécula. El programa emplea el método FEM para parcelar un dominio de integración en $l\times m\times n$ elementos, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados en el solvente. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula; en definitiva, esto es calcular las energías debido a interacciones de Coulomb. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio. APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas explícitos (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados. Es importante explicar que, como se utiliza el método de elementos finitos, se debe establecer un dominio de integración que luego se subdivide en elementos. Este dominio es finito y en las superficies límites se establecen condiciones de contorno. Es importante para este estudio ahondar un poco en cómo funcionan los tres tipos de condiciones que se pueden utilizar. En primer lugar, se puede imponer la condición que tiene el potencial al infinito, que es igual a cero - esta condición es llamada \texttt{zero}. Otra alternativa es ubicar una esfera con una carga puntual, un dipolo y un cuadrupolo, cuyo radio es el de la molécula modelada; la idea es que los momentos (de la carga puntual, dipolo y cuadrupolo) sean representativos de los de la macromolécula, y es con esta información que se evalúa el potencial en el contorno - se denomina condición \texttt{sdh}. La última opción que interesa en el contexto de este trabajo consiste en tomar los átomos componentes de la molécula y formar esferas que no interactúan entre ellas, con las cargas y radios correspondientes, y evaluar el potencial en la frontera del dominio - recibe el nombre \texttt{mdh}.
 
 \subsection{APBSmem}\label{subsec:APBSmem}
 APBSmem es el gran programa de cálculos energéticos en sistemas proteína - membrana con teoría electrostática en continuos. Funciona de la misma forma que APBS (de hecho APBSmem solo llama a APBS con dos grupos de archivos distintos, uno pre y uno pos consideración de la membrana) y facilita el trabajo a usuarios con poco conocimiento computacional a través de una interfaz gráfica.\\\\
@@ -576,7 +576,7 @@ En el cálculo de energías de solvatación es muy útil analizar los estados en
 Para el caso trabajado, el ciclo termodinámico común para \texttt{APBSmem} y \texttt{PyGBe} es el que se muestra en la figura \ref{fig:thermo_cycle} y que consiste de cuatro estados. El estado \circled{1} es el conjunto de cargas que componen la molécula y la membrana por separado en el vacío\footnote{Para efectos de ambos programas, el ``vacío" es en realidad un medio dieléctrico polarizable de permitividad igual a la de la molécula.}; como la membrana es un dieléctrico que no posee cargas explícitas, no hay una energía electrostática asociada, y para el caso del conjunto de cargas, la energía es simplemente la de Coulomb en el medio (Ec. (\ref{eqn:potential})). El estado \circled{2} corresponde a la membrana y el conjunto de cargas, nuevamente por separado, pero esta vez en agua en vez de en el vacío. La proteina y la membrana mantienen sus permitividades, por lo que en este caso hay una condición de salto en el borde de la proteina (Ec. (\ref{eqn:jump_condition})). El estado \circled{3} es un sistema en que la molécula esta embebida en la membrana, y este conjunto esta a su vez en el vacío, por lo que las constantes dieléctricas de la molécula y del vacío son las mismas. Finalmente, el estado \circled{4} es semejante al estado \circled{3}, pero por fuera del conjunto membrana-proteina hay agua con su respectiva permitividad. Las diferencias energéticas de la \circled{A} a la \circled{E} se detallan a continuación.
 \begin{table}[H]\label{table:thermo_cycle_details}
 	\centering
-	\caption{Expresión de las diferencias energéticas, en función de los estados \circled{1} a \circled{4}. $\Delta G$ es la diferencia en la energía libre de Gibbs entre los distintos estados del ciclo \ref{fig:thermo_cycle}.}
+	\caption{Expresión de las diferencias energéticas, en función de los estados 1 a 4. $\Delta G$ es la diferencia en la energía libre de Gibbs entre los distintos estados del ciclo \ref{fig:thermo_cycle}.}
 	\setlength{\tabcolsep}{30pt}
 	\begin{tabular}{cc}
 		\circled{A} & $\Delta G_{\circled{2} - \circled{1}}$ \\
@@ -605,26 +605,39 @@ Se debe resaltar que, como en cualquier ciclo termodinámico, un camino cerrado 
 \chapter{Resultados}
 En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (APBS y APBSmem), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también individualmente de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano (Anexo).
 \section{Cálculo numérico de las energías}
-Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10 \angstrom$ respecto del origen $(0,0,0)$ en coordenadas cartesianas. Las permitividades se presentan en la Tabla 1, a continuación
-\begin{table}[H]
-\setlength{\tabcolsep}{32pt}
-\centering
-\caption{Permitividades de los tres medios trabajados}
-\begin{tabular}{ccc}\hline
-$\varepsilon_m = 2$ & $\varepsilon_p = 4$ & $\varepsilon_w = 80$\\\hline
-\end{tabular}
-\end{table}
-\noindent
+Las pruebas se realizaron con una membrana de espesor $a = 20 \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10 \angstrom$ respecto del origen $(0,0,0)$ en coordenadas cartesianas.\\\\%Las permitividades se presentan en la Tabla 1, a continuación
+%\begin{table}[H]
+%\setlength{\tabcolsep}{32pt}
+%\centering
+%\caption{Permitividades de los tres medios trabajados}
+%\begin{tabular}{ccc}\hline
+%$\varepsilon_m = 2$ & $\varepsilon_p = 4$ & $\varepsilon_w = 80$\\\hline
+%\end{tabular}
+%\end{table}
+%\noindent
 Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \ref{subsec:Macro_perm}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
-Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - PyGBe y APBSmem.
+Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - PyGBe y APBSmem. Los cálculos realizados corresponden a la diferencia \circled{4} - \circled{1} en el ciclo termodinámico \ref{fig:thermo_cycle}, con las siguientes propiedades
+
+\begin{table}[H]
+	\setlength{\tabcolsep}{32pt}
+	\centering
+	\caption{Permitividades en los estados de interés}
+	\begin{tabular}{cccc}\hline
+		Estado & $\varepsilon_m$ & $\varepsilon_p$ & $\varepsilon_w$\\\hline
+		\circled{1} & - & 4.0 & 4.0 \\
+		\circled{4} & 2.0 & 4.0 & 80.0
+	\end{tabular}
+\end{table}
+
 \subsection{Resultados mediante PyGBe}
-Para calcular las energías de solvatación con PyGBe, se utiliza \texttt{MSMS} para generar las mallas en archivos de formato \texttt{.vert} y \texttt{.face}, como se explica en la sección \ref{Sec:SW_Description}. Se crean tres mallas por caso de estudio; la densidad de elementos se aumenta a una tasa constante para poder realizar un análisis mediante extrapolación de Richardson, como se presenta más adelante. Los casos estudiados son \texttt{centered\_ion}, \texttt{3q} y \texttt{bromoethane}. El primer caso es un único ion en (0,0,0) de radio $1 \angstrom$, el segundo son 3 iones, uno de radio $4 \angstrom$ en (0,0,0) y los otros de radio $1 \angstrom$ ubicados completamente dentro del volumen del primer ion, y el tercer caso es una molécula de 8 átomos con diversos radios y cargas. Las densidades de elementos de borde utilizadas, en $\frac{nodos}{\angstrom^2}$, son 2, 4 y 8.\\\\
+Para calcular las energías de solvatación con PyGBe, se utiliza \texttt{MSMS} para generar las mallas en archivos de formato \texttt{.vert} y \texttt{.face}, como se explica en la sección \ref{Sec:SW_Description}. Se crean tres mallas por caso de estudio; la densidad de elementos se aumenta a una tasa constante para poder realizar un análisis mediante extrapolación de Richardson, como se presenta más adelante. Los casos estudiados son \texttt{centered\_ion}, \texttt{3q} y \texttt{bromoethane}. El primer caso es un único ion en (0,0,0) de radio $1\,\angstrom$, el segundo son 3 iones, uno de radio $4\,\angstrom$ en (0,0,0) y los otros de radio $1\,\angstrom$ ubicados completamente dentro del volumen del primer ion, y el tercer caso es una molécula de 8 átomos con diversos radios y cargas. Las densidades de elementos de borde utilizadas, en $\frac{vert}{\angstrom^2}$, son 2, 4 y 8.\\\\
 Para calcular los siguientes resultados se utilizaron 3 puntos de cuadratura para elementos lejanos, 37 en los paneles cercanos, y 9 puntos para el semianalítico. Además, el número de imágenes se mantuvo constante en $N=41$ para estas pruebas; más adelante se presenta un análisis en función de variar el parámetro $N$ para ver cómo es la convergencia y mostrar que con 41 imágenes es suficiente.
 Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los resultados obtenidos para las 3 mallas, junto con los tiempos de cálculo totales.
 
-\begin{table}[H]\label{table:centered_ion}
+\begin{table}[H]
 	\centering
 	\caption{}
+	\def\arraystretch{0.8}
 	\begin{tabular}{cccccc}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
 		 & elementos &  & + Membrana) & cálculo & utilizada\\\hline
@@ -632,14 +645,15 @@ Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los r
 		d02 & 736 & -9.919124 & 5.258441 & 45.146 & 3.6\\
 		d04 & 1572 & -9.886872 & 5.243907 & 176.890 & 15.9\\
 		d08 & 3124 & -9.872508 & 5.236550 & 696.899 & 63.9
-	\end{tabular}
+	\end{tabular}\label{table:pygbe_centered_ion}
 \end{table}
 \noindent
 Para el segundo caso, \texttt{3q}, las energías son mayores, por lo que como se ve más adelante, el error relativo es bastante menor que en el caso anterior (\texttt{centered\_ion}) y el que se ve después (\texttt{bromoethane}). A continuación se presenta una tabla equivalente a la anterior, pero en este caso solo se presentan las energías, pues los tiempos y la memoria consumidos varían muy poco, ya que la discretización de la superficie es la misma que en el caso anterior.
 
-\begin{table}[H]\label{table:3q}
+\begin{table}[H]
 	\centering
 	\caption{}
+	\def\arraystretch{0.8}
 	\begin{tabular}{cccc}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe \\
 		& elementos &  & + Membrana) \\\hline
@@ -647,12 +661,34 @@ Para el segundo caso, \texttt{3q}, las energías son mayores, por lo que como se
 		d02 & 736 & -90.703972 & 47.973011 \\
 		d04 & 1572 & -90.391445 & 47.841024 \\
 		d08 & 3124 & -90.252742 & 47.774469
-	\end{tabular}
+	\end{tabular}\label{table:pygbe_3q}
+\end{table}
+\noindent
+Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla como la \ref{table:pygbe_centered_ion}, pues la geometría en este caso es distinta a una esfera y se debió mapear la superficie. La molécula tiene un área menor, lo que se traduce en un tiempo de cálculo y consumo de memoria menores para la misma densidad de elementos. Para este caso se omite la extrapolación de Richardson debido a que los resultados de los cálculos no están en sucesión creciente o decreciente, por lo que dicho método de extrapolación no es aplicable. La tabla de resultados en cuestión es la siguiente:
+
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{cccccc}\hline
+		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
+		& elementos &  & + Membrana) & cálculo & utilizada\\\hline
+		\rule{0pt}{1pt} vert.$/\angstrom^2$ & [-] & kcal/mol & kcal/mol & [s] & [GB] \\\hline
+		d02 & 322 & -0.348698 & 0.218434 & 17.852 & 1.0\\
+		d04 & 694 & -0.339504 & 0.221408 & 60.248 & 4.1\\
+		d08 & 1448 & -0.339504 & 0.220199 & 224.459 & 19.2
+	\end{tabular}\label{table:pygbe_bromoethane}
 \end{table}
 
 
 \subsection{Resultados mediante APBS - APBSmem}
 
+Para poder validar los resultados obtenidos con \texttt{PyGBe} se requiere una referencia contra la cual comparar. El software \texttt{APBSmem} se utiliza para este propósito, en vista de su renombre. Ahora bien, como el programa lo que hace es parcelar una "caja`` (el dominio de integración) nodos en los que calcula, dependiendo de las condiciones en dicho nodo, la ecuación gobernante correspondiente, se requieren setear condiciones en los bordes de la mencionada caja. \texttt{APBSmem}, al igual que \texttt{APBS}, permite establecer dichas condiciones. Para el caso trabajado existen tres, que son explicados en el apartado \ref{subsec:APBS}. Se presentan por ende tres tablas para el caso del archivo \texttt{centered\_ion}, dos para el caso \texttt{3q} (se explica el por qué al presentar los resultados), y el valor de evaluación más fino para la molécula de \texttt{bromoethane}, en vista que no se puede extrapolar un resultado con PyGBe.\\\\
+Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por un cubo de $128\,\angstrom$ de lado, con tres cantidades de elementos, de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y por lo tanto el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Para la primera prueba, los resultados son los siguientes
+
+
+
+La razón de solo presentar dos sets de resultados para la molécula denominada \texttt{3q} es que se repite el comportamiento apreciado en la tabla \ref{subsec:apbs_centered_ion}; los resultados entre las condiciones \texttt{sdh} y \texttt{mdh} varían de forma despreciable. Por esto es que únicamente se presentan los resultados para condiciones \texttt{zero} y \texttt{sdh}.
 
 
 \section{Extrapolación de Richardson y error relativo}
