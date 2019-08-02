@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.1)  31 JUL 2019 13:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.1)  2 AUG 2019 17:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1334,7 +1334,26 @@ Overfull \hbox (2.05525pt too wide) in paragraph at lines 722--722
 [][] 
  []
 
-[54] [55]
+[54]
+Overfull \hbox (2.66223pt too wide) in paragraph at lines 747--749
+\OT1/ptm/m/n/12 sen-tan los re-sul-ta-dos ex-trap-o-la-dos para cada uno de los
+ dos ca-sos de es-tu-dio (\OT1/pcr/m/n/12 centered[]ion
+ []
+
+
+Overfull \hbox (14.39742pt too wide) in paragraph at lines 747--749
+\OT1/ptm/m/n/12 y \OT1/pcr/m/n/12 3q\OT1/ptm/m/n/12 ), as[]^^P como tambi[]en u
+na com-paraci[]on por-centual en-tre los re-sul-ta-dos ex-trap-o-la-dos obtenid
+os
+ []
+
+
+Overfull \hbox (8.97275pt too wide) in paragraph at lines 747--749
+\OT1/ptm/m/n/12 difer-en-cia por-centual en-tre los re-sul-ta-dos para las mal-
+las m[]as fi-nas so-la-mente. Como \OT1/pcr/m/n/12 APBSmem
+ []
+
+[55] [56]
 Cap\'itulo 5.
 
 Underfull \hbox (badness 10000) in paragraph at lines 794--796
@@ -1364,18 +1383,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 797--802
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [56
+ [57
 
 ]
 Underfull \vbox (badness 1701) has occurred while \output is active []
 
- [57]
+ [58]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [58]
-[59
+ [59]
+[60
 
-] [60] (./Memoria.aux (./Portada/anteportada.aux)) ) 
+] [61] (./Memoria.aux (./Portada/anteportada.aux)) ) 
 Here is how much of TeX's memory you used:
  16030 strings out of 494880
  299836 string characters out of 6179602
@@ -1404,10 +1423,10 @@ ls/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Memoria.pdf (60 pages, 415813 bytes).
+Output written on Memoria.pdf (61 pages, 416992 bytes).
 PDF statistics:
- 300 PDF objects out of 1000 (max. 8388607)
- 209 compressed objects within 3 object streams
+ 304 PDF objects out of 1000 (max. 8388607)
+ 212 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
