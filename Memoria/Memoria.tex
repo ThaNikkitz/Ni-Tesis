@@ -638,13 +638,13 @@ Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los r
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{cccccc}\hline
+	\begin{tabular}{|cccccc}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
 		 & elementos &  & + Membrana) & cálculo & utilizada\\\hline
 		vert.$/\angstrom^2$ & \rule{0pt}{15pt}[-] & kcal/mol & kcal/mol & [s] & [GB] \\\hline
 		d02 & 736 & -9.919124 & 5.258441 & 45.146 & 3.6\\
 		d04 & 1572 & -9.886872 & 5.243907 & 176.890 & 15.9\\
-		d08 & 3124 & -9.872508 & 5.236550 & 696.899 & 63.9
+		d08 & 3124 & -9.872508 & 5.236550 & 696.899 & 63.9 \\ \hline
 	\end{tabular}\label{table:pygbe_centered_ion}
 \end{table}
 \noindent
@@ -654,13 +654,13 @@ Para el segundo caso, \texttt{3q}, las energías son mayores, por lo que como se
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{cccc}\hline
+	\begin{tabular}{|cccc|}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe \\
 		& elementos &  & + Membrana) \\\hline
 		\rule{0pt}{15pt} vert.$/\angstrom^2$ & [-] & kcal/mol & kcal/mol \\\hline
 		d02 & 736 & -90.703972 & 47.973011 \\
 		d04 & 1572 & -90.391445 & 47.841024 \\
-		d08 & 3124 & -90.252742 & 47.774469
+		d08 & 3124 & -90.252742 & 47.774469 \\ \hline
 	\end{tabular}\label{table:pygbe_3q}
 \end{table}
 \noindent
@@ -670,13 +670,13 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{cccccc}\hline
+	\begin{tabular}{|cccccc|}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
 		& elementos &  & + Membrana) & cálculo & utilizada\\\hline
 		\rule{0pt}{15pt} vert.$/\angstrom^2$ & [-] & kcal/mol & kcal/mol & [s] & [GB] \\\hline
 		d02 & 322 & -0.348698 & 0.218434 & 17.852 & 1.0\\
 		d04 & 694 & -0.339504 & 0.221408 & 60.248 & 4.1\\
-		d08 & 1448 & -0.339504 & 0.220199 & 224.459 & 19.2
+		d08 & 1448 & -0.339504 & 0.220199 & 224.459 & 19.2\\ \hline
 	\end{tabular}\label{table:pygbe_bromoethane}
 \end{table}
 
@@ -685,7 +685,6 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 
 Para poder validar los resultados obtenidos con \texttt{PyGBe} se requiere una referencia contra la cual comparar. El software \texttt{APBSmem} se utiliza para este propósito, en vista de su renombre. Ahora bien, como el programa lo que hace es parcelar una "caja`` (el dominio de integración) nodos en los que calcula, dependiendo de las condiciones en dicho nodo, la ecuación gobernante correspondiente, se requieren setear condiciones en los bordes de la mencionada caja. \texttt{APBSmem}, al igual que \texttt{APBS}, permite establecer dichas condiciones. Para el caso trabajado existen tres, que son explicados en el apartado \ref{subsec:APBS}. Se presentan por ende tres tablas para el caso del archivo \texttt{centered\_ion}, dos para el caso \texttt{3q} (se explica el por qué al presentar los resultados), y el valor de evaluación más fino para la molécula de \texttt{bromoethane}, en vista que no se puede extrapolar un resultado con PyGBe.\\\\
 Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por un cubo de $128\,\angstrom$ de lado, con tres cantidades de elementos, de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Siguiendo el mismo orden que para \texttt{PyGBe}, los resultados para el primer caso de estudio son los siguientes
-
 \begin{table}[H]
 	\centering
 	\caption{}
@@ -705,9 +704,7 @@ Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular,
 		& 0.25 & 512 & 20.05135 & 4.79239 & 1226.290 & 30.8\\ \hline
 	\end{tabular}\label{table:apbs_centered_ion}
 \end{table}
-
 A continuación se muestran los resultados para \texttt{3q}, y la razón de solo presentar dos sets de resultados para esta molécula es que se repite el comportamiento apreciado en la tabla anterior, \ref{table:apbs_centered_ion}; las energías de solvatación para las condiciones \texttt{sdh} y \texttt{mdh} no varían, probablemente porque los casos de estudio son muy simples. Por esto es que únicamente se presentan los datos correspondientes a condiciones de contorno \texttt{zero} y \texttt{sdh}.
-
 \begin{table}[H]
 	\centering
 	\caption{}
@@ -741,12 +738,64 @@ Para el caso de la molécula de bromoetano se presenta simplemente el valor más
 \end{table}
 
 \section{Extrapolación de Richardson y error relativo}
-Para poder comprobar de manera fehaciente que utilizar el método de imágenes acoplado a \texttt{PyGBe} es un método válido de simular una proteína embebida en una membrana, se utiliza una extrapolación de Richardson para comparar los cálculos. La extrapolación de Richardson es una herramienta que permite, como indica el nombre, realizar una extrapolación mediantes tres puntos para obtener el valor ``límite" teórico al que se llegaría si la malla se afinara consecutivamente a una tasa constante. Es por esta razón que todos los cálculos realizados previamente presentan una razón de densificación constante. La fórmula para obtener el resultado teórico extrapolado es
-\begin{equation}
+Para poder comprobar de manera fehaciente que utilizar el método de imágenes acoplado a \texttt{PyGBe} es una forma válida de simular una proteína embebida en una membrana, se utiliza una extrapolación de Richardson para comparar los cálculos obtenidos con los dos programas. La extrapolación de Richardson es una herramienta que permite, como indica el nombre, realizar una extrapolación mediante tres puntos para obtener el valor teórico de convergencia si la malla se afinara consecutivamente a una tasa constante. Es por esta razón que todos los cálculos realizados previamente presentan un refinamiento de malla constante. La fórmula para obtener el resultado teórico extrapolado es
+
+\begin{equation}\label{eqn:Richardson_ext}
 G_t = \frac{G_1\cdot G_3 - (G_2)^2}{G_1 - 2G_2 + G_3}
 \end{equation}
-Para esto se debe cumplir que $G_2:G_1 = G_3:G_2$. Con este método aclarado es que se presentan los resultados extrapolados para cada uno de los dos casos de estudio (\texttt{centered\_ion} y \texttt{3q}), así como también una comparación porcentual entre los resultados extrapolados obtenidos mediante \texttt{PyGBe} y \texttt{APBS - APBSmem}. Para el caso de \texttt{bromoethane} se calcula una diferencia porcentual entre los resultados para las mallas más finas solamente. Como \texttt{APBSmem} tiene dos resultados distintos (tres en realidad, pero se utilizan solo \texttt{zero} y \texttt{sdh} por los motivos explicados previamente) dependiendo de las condiciones de contorno utilizadas, se presentan dos errores porcentuales; sin embargo, se adelanta que el menor error corresponde a la condición de borde \texttt{zero} todos los casos estudiados. La razón principal que provoca esto, por lo que se infiere, se desarrolla en la sección de análisis de los resultados obtenidos.
 
+Para esto se debe cumplir que $d = \Delta x_3:\Delta x_2 = \Delta x_2:\Delta x_1$, donde $G_i = G(x_i)$. Además de calcular el valor teórico extrapolado, se calcula la tasa de convergencia, que nos indica qué tan rápido converge el programa a dicha solución; mientras mayor el valor, mejor es la tasa de convergencia. La fórmula para esto es
+
+\begin{equation}\label{eqn:convergence_rating}
+	P = \dfrac{\ln{\left(\dfrac{G_3 - G_2}{G_2 - G_1}\right)}}{\ln{(d)}}
+\end{equation}
+
+Con este método aclarado es que se presentan los resultados extrapolados para los casos de estudio (\texttt{centered\_ion} y \texttt{3q}), así como también una comparación porcentual entre los resultados extrapolados obtenidos mediante \texttt{PyGBe} y \texttt{APBS - APBSmem}. Para el caso de \texttt{bromoethane} se calcula una diferencia porcentual entre los resultados para las mallas más finas solamente. Como \texttt{APBSmem} tiene dos resultados distintos (tres en realidad, pero se utilizan solo \texttt{zero} y \texttt{sdh} por los motivos explicados previamente) dependiendo de las condiciones de contorno utilizadas, se presentan dos errores porcentuales; sin embargo, se adelanta que el menor error corresponde a la condición de borde \texttt{zero} en todos los casos estudiados. La razón principal que provoca esto, por lo que se infiere, se desarrolla en la sección de análisis de los resultados obtenidos. Los valores extrapolados calculados con la fórmula \ref{eqn:Richardson_ext} - para el bromoetano el valor de la malla más fina - se presentan en la tabla siguiente
+
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{|cccc|}\hline
+		 & \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
+		\texttt{PyGBe} & 5.22901 & 47.70677 & 0.22020 \\ \hline
+		\texttt{APBSmem zero} & 5.16772 & 47.81296 & 0.21584 \\ \hline
+		\texttt{APBSmem sdh} & 4.62880 & 42.96407 & 0.21582 \\ \hline
+	\end{tabular}\label{table:Rich_extrapolation}
+\end{table}
+
+\noindent
+También se muestran a continuación las tasas de convergencia según la fórmula \ref{eqn:convergence_rating}; con esta información podemos ver la rapidez con la que los cálculos hechos convergen al resultado extrapolado, y sirve como herramienta también para discernir qué tan bueno es el modelo utilizado.
+
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{|cccc|}\hline
+		& \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
+		\texttt{PyGBe} & 0.98224 & 0.98778 & - \\ \hline
+		\texttt{APBSmem zero} & 0.29655 & 0.53213 & - \\ \hline
+		\texttt{APBSmem sdh} & 0.29617 & 0.53186 & - \\ \hline
+	\end{tabular}\label{table:Convergence_ratings}
+\end{table}
+
+\section{Análisis de Resultados}
+
+Teniendo los valores de la tabla \ref{table:Rich_extrapolation}, se pueden calcular las diferencias porcentuales entre los resultados para cada código. Como la idea es utilizar \texttt{APBSmem} para validar los resultados obtenidos con \texttt{PyGBe}, se presentan las diferencias entre estos resultados y los de las dos condiciones de contorno para \texttt{APBS}.
+
+\begin{table}[H]
+	\centering
+	\caption{}
+	\def\arraystretch{0.8}
+	\begin{tabular}{|cccc|}\hline
+		& \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
+		\texttt{APBSmem zero} & 1.18597 & 0.22209 & 2.01983 \\ \hline
+		\texttt{APBSmem sdh} & 12.96685 & 11.03877 & 2.02894 \\ \hline
+	\end{tabular}\label{table:Percent_Error}
+\end{table}
+
+\noindent
+Como se adelantó en la sección anterior, las menores diferencias se obtienen cuando se fija una condición de borde tipo \texttt{zero}, lo que tiene sentido si se considera que existe una membrana definida por dos interfaces que encierran un medio distinto del agua con sal, dichas interfaces teniendo vectores normales $(0,0,\pm 1)$. Físicamente, esto significa que la condición de contorno \texttt{sdh} debiese considerar el efecto del campo de reacción debido a las interfaces para ser válido. Distinto es el caso de una condición \texttt{zero}, que solo requiere un dominio de integración grande, ya que independiente de la reacción del medio, el potencial en cualquier dirección tiende a $0$ a medida que aumenta la distancia. 
 
 
 %En la sección actual se presentan una serie de breves resúmenes de publicaciones relacionadas con la temática de modelos computacionales de células y/o biomoléculas, o que sean de aporte para el entendimiento de la teoría electrostática en alguna forma.
