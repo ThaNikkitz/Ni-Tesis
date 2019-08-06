@@ -2,9 +2,9 @@
 \contentsline {chapter}{\numberline {2}Marco Te\IeC {\'o}rico}{7}
 \contentsline {section}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{7}
 \contentsline {section}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{9}
-\contentsline {subsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local, y polarizaci\IeC {\'o}n}{10}
+\contentsline {subsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local y polarizaci\IeC {\'o}n}{10}
 \contentsline {subsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{13}
-\contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un diel\IeC {\'e}ctrico}{14}
+\contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un medio diel\IeC {\'e}ctrico}{14}
 \contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{16}
 \contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{18}
 \contentsline {section}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{20}
@@ -21,12 +21,12 @@
 \contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{39}
 \contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{40}
 \contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{43}
-\contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{48}
+\contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{47}
 \contentsline {chapter}{\numberline {4}Resultados}{50}
 \contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{50}
 \contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{51}
 \contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{53}
-\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y error relativo}{55}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y convergencia}{55}
 \contentsline {section}{\numberline {4.3}An\IeC {\'a}lisis de Resultados}{57}
-\contentsline {chapter}{\numberline {5}Conclusiones}{58}
-\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{59}
+\contentsline {chapter}{\numberline {5}Conclusiones}{59}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{60}

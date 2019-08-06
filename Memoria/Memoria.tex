@@ -18,6 +18,7 @@
 \usepackage{xcolor}
 \usepackage{times}
 \usepackage{tikz}
+\usepackage{listings}
 %\usepackage{dsfont}
 %\usepackage{hyperref}
 \DeclareFloatingEnvironment[name={Gráfico}]{graph}
@@ -118,7 +119,7 @@ En los casos en que el medio en el que está la carga $q$ no sea el vacío, se d
 Se puede entender la constante dieléctrica de un material (o permitividad) como una medida del reordenamiento de las partículas de un medio a nivel molecular frente a la presencia de un campo eléctrico externo y provocando así que dichas partículas generen un \textit{campo eléctrico inducido}, que es opuesto en sentido al original, pero no necesariamente de la misma intensidad; este disminuye el flujo neto del campo eléctrico externo, por lo que impide en cierta medida su paso, dando su nombre a la propiedad - en qué grado las moléculas del material \textbf{permiten} el flujo de campo eléctrico.\\\\
 La permitividad que se utiliza en las Ecuaciones (\ref{eqn:charge_field} - \ref{eqn:integral_potential}) es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se menciona que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es considerada como referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
 
-\subsection{Campo eléctrico local, y polarización}\label{subsec:Local_Field}
+\subsection{Campo eléctrico local y polarización}\label{subsec:Local_Field}
 \begin{figure}[H]
 \centering
 \input{./Figures/Fig_1.eps_tex}
@@ -170,7 +171,7 @@ Existen tres \textit{permitividades} de interés para este desarrollo: la permit
 \varepsilon_r = \frac{\varepsilon}{\varepsilon_0}=\varepsilon_0(1+\chi)
 \end{equation}
 (llamada $k$ en algunas fuentes). De ahora en adelante, $\varepsilon$ a secas pasa a ser la permitividad relativa y se denomina simplemente \textit{permitividad} o \textit{constante dieléctrica} de un medio.\footnote{En estricto rigor, la constante dieléctrica es $\varepsilon_r\cdot\varepsilon_0$, pero por costumbre se utiliza este término para referirse a la propiedad adimensional en este informe.}
-\section{Desplazamiento eléctrico y campo eléctrico en un dieléctrico}\label{Sec:Elec_Displacement}
+\section{Desplazamiento eléctrico y campo eléctrico en un medio dieléctrico}\label{Sec:Elec_Displacement}
 En lo sucesivo, todo el trabajo es relativo a un medio o campo macroscópico. En este informe no se trabaja directamente con los momentos dipolares, la susceptibilidad, o incluso con la densidad de polarización, sino que se presenta una sola ecuación que engloba todos los efectos de un campo eléctrico sobre un dieléctrico; para llegar a dicha ecuación se utilizan las relaciones ya introducidas y un par de definiciones nuevas.\\\\
 La Ec. (\ref{eqn:Macro_Polarization}) es una expresión que asocia el campo eléctrico y la densidad de polarización, establecida a través de la susceptibilidad y la permitividad. Además, la Ecuación (\ref{eqn:Gauss_law_int}) es la ley de Gauss para una distribución de carga, que tiene que ver únicamente con la permitividad.\\\\
 Si se asume que el flujo de campo eléctrico se debe a contribuciones de la distribución de carga y de la polarización del medio únicamente, entonces se puede expresar dicho flujo de campo eléctrico como
@@ -435,27 +436,23 @@ Ahora se procede a explicar el funcionamiento del programa, pues este trabajo co
 Para lograr esta discretización, los paneles lejanos se trabajan con pocos puntos de cuadratura, en vista de que su distancia hasta el panel de referencia es grande respecto del parámetro \textit{threshold}. Para los paneles que están a una distancia inferior a este valor, pero aún no están suficientemente cerca, se utiliza simplemente una mayor densidad de puntos de cuadratura Gaussiana sobre la superficie y se procede a discretizar las integrales de la misma forma. Por último, para los casos en que los paneles objetivo están muy cerca de las fuentes, o el panel fuente y el objetivo son el mismo, la cuadratura Gaussiana se remplaza por un método semianalítico que reduce la integral de área a una integral de línea, siendo esta última la que se discretiza, y solo sobre los bordes del triángulo; este método surge de la publicación de Zhu \textit{et al.} \cite{Zhu}.\\\\
 Con los valores de los operadores ya calculados, se procede a generar la matriz $\underline{A}$ del sistema, ubicando cada elemento $V_L$, $K_L$, $V_Y$ y/o $K_Y$ donde corresponda. El ordenamiento de la matriz incide en el lado derecho de la ecuación, por lo que también hay organizar la ubicación de los elementos del vector solución para que corresponda al sistema físico que se busca modelar. Luego de generar un precondicionador para el sistema de ecuaciones, el código utiliza el método Generalized Minimal Residues (GMRES) para calcular el vector de incógnitas que tiene los valores de $\phi$ y $\partial/\partial\hat{\mathbf{n}}(\phi)$ para todos los paneles. Este vector se le entrega a una función que toma los valores y calcula la energía de solvatación del sistema, aplicando una discretización con cuadratura Gaussiana al campo de reacción causado por la molécula sobre la superficie de esta última. 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 \section{Implementación del método de imágenes en el programa PyGBe}\label{Sec:Implementation}
 El objetivo principal del trabajo aquí presentado es definir una forma de calcular la energía de solvatación de un átomo o molécula inserta entre dos interfaces, lo que tiene un simil biológico conocido en una proteína embebida en una membrana. Hay que recalcar que esta manera de representar las interfaces correspondientes a la membrana tiene dos restricciones importantes. En primer lugar, solo se puede aplicar a las cargas que se encuentran dentro de la membrana; para poder considerar proteínas transmembrana o similares hay que buscar otra forma de modelar. En segundo lugar, el modelo presentado y aplicado no permite incluir el efecto de iones en la disolución. Dicho de otra forma, se utiliza el método BEM para trabajar una ecuación de Poisson en vez de una ecuación de Poisson-Boltzmann. Además de dichas restricciones, surge otra que en vista del enfoque continuo que se da a la formulación, no incide mucho, pero aún así es importante mencionar: la bicapa fosfolipídica, tal como se muestra en el apartado 2.6, no es exactamente continua, sino que hay separación entre los fosfolípidos y, más importante, entre las cabezas polares de éstos. Sin perjuicio de lo anterior, la implementación exitosa del método de imágenes supone un avance, pues permite comprobar la viabilidad de esta parte de la teoría de campos electromagnéticos como representación de una membrana.\\\\
 Como se adelanta en la sección de descripción de los programas utilizados, \texttt{PyGBE} es modificado, añadiendo una opción que permite calcular la energía de solvatación de una molécula en un sistema conformado por un medio $1$ encerrado por un medio $2$ (Figura \text{red}{tanto}). Antes de elaborar sobre la inclusión de esta opción al software, es imperativo ahondar en la teoría electrostática para este tipo de situaciones.
 
-\subsection{Modelo de un sistema de tres medios dieléctricos con dos interfaces}\label{subsec:2_Inter_Images}
+\subsection{Modelo de un sistema de tres medios dieléctricos con dos interfaces} \label{subsec:2_Inter_Images}
 La presente sección se basa fundamentalmente en el desarrollo visto en la publicación de Yang, Liaw y Lim \cite{Pei-kun}. La teoría electrostática puede ser encontrada en el libro de Emile Durand \cite{Durand}, pero por lo que se sabe, el grupo de Yang es el único que ha utilizado esta teoría para representar una membrana con el método de imágenes.\\\\
 En este paper se presenta una herramienta basada en el método de cargas imagen aplicado a sistemas rectangulares con más de una interfaz, denominado método RIC - Rectangular Image Charge. Un sistema de una interfaz planar infinita tiene una solución analítica para el caso de una carga puntual, pero si se considera el caso de un sistema con dos interfaces planares paralelas y una carga puntual en el medio dieléctrico encerrado, el problema se complica.
-
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \input{./Figures/Fig_4.eps_tex}
 \caption{La imagen superior es la situación real para el caso de una carga, mientras que la figura inferior es el sistema trabajado con el método de imágenes. Esto sigue de manera infinita, pero solo se muestran unas pocas cargas por motivos obvios.}
 \label{Fig:Infty_Images}
 \end{figure}
 
+\noindent
 Si se tienen tres medios dieléctricos 1, 2 y 3, tales que las constantes dieléctricas de los medios 1 y 3 son iguales entre sí $\varepsilon_1 = \varepsilon_3$ (Fig. 4), entonces una carga en el medio 2 genera un campo de reacción en los medios 1 y 3, y cada uno de estos induce una reacción en los otros medios. Se genera así un efecto cascada, lo que se traduce en una sumatoria infinita \cite{Pei-kun} como se ve a continuación
 \begin{equation}
 \phi(\mathbf{r}) = \sum_{i=-\infty}^\infty\frac{q_i}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r}_i|}
@@ -629,7 +626,7 @@ Los cálculos se realizan para tres densidades de malla, para los tres casos de 
 	\end{tabular}
 \end{table}
 
-\subsection{Resultados mediante PyGBe}
+\subsection{Resultados mediante PyGBe}\label{resultados_pygbe}
 Para calcular las energías de solvatación con PyGBe, se utiliza \texttt{MSMS} para generar las mallas en archivos de formato \texttt{.vert} y \texttt{.face}, como se explica en la sección \ref{Sec:SW_Description}. Se crean tres mallas por caso de estudio; la densidad de elementos se aumenta a una tasa constante para poder realizar un análisis mediante extrapolación de Richardson, como se presenta más adelante. Los casos estudiados son \texttt{centered\_ion}, \texttt{3q} y \texttt{bromoethane}. El primer caso es un único ion en (0,0,0) de radio $1\,\angstrom$, el segundo son 3 iones, uno de radio $4\,\angstrom$ en (0,0,0) y los otros de radio $1\,\angstrom$ ubicados completamente dentro del volumen del primer ion, y el tercer caso es una molécula de 8 átomos con diversos radios y cargas. Las densidades de elementos de borde utilizadas, en $\frac{vert}{\angstrom^2}$, son 2, 4 y 8.\\\\
 Para calcular los siguientes resultados se utilizaron 3 puntos de cuadratura para elementos lejanos, 37 en los paneles cercanos, y 9 puntos para el semianalítico. Además, el número de imágenes se mantuvo constante en $N=41$ para estas pruebas; más adelante se presenta un análisis en función de variar el parámetro $N$ para ver cómo es la convergencia y mostrar que con 41 imágenes es suficiente.
 Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación los resultados obtenidos para las 3 mallas, junto con los tiempos de cálculo totales.
@@ -681,7 +678,7 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 \end{table}
 
 
-\subsection{Resultados mediante APBS - APBSmem}
+\subsection{Resultados mediante APBS - APBSmem}\label{resultados_apbs}
 
 Para poder validar los resultados obtenidos con \texttt{PyGBe} se requiere una referencia contra la cual comparar. El software \texttt{APBSmem} se utiliza para este propósito, en vista de su renombre. Ahora bien, como el programa lo que hace es parcelar una "caja`` (el dominio de integración) nodos en los que calcula, dependiendo de las condiciones en dicho nodo, la ecuación gobernante correspondiente, se requieren setear condiciones en los bordes de la mencionada caja. \texttt{APBSmem}, al igual que \texttt{APBS}, permite establecer dichas condiciones. Para el caso trabajado existen tres, que son explicados en el apartado \ref{subsec:APBS}. Se presentan por ende tres tablas para el caso del archivo \texttt{centered\_ion}, dos para el caso \texttt{3q} (se explica el por qué al presentar los resultados), y el valor de evaluación más fino para la molécula de \texttt{bromoethane}, en vista que no se puede extrapolar un resultado con PyGBe.\\\\
 Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por un cubo de $128\,\angstrom$ de lado, con tres cantidades de elementos, de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Siguiendo el mismo orden que para \texttt{PyGBe}, los resultados para el primer caso de estudio son los siguientes
@@ -689,9 +686,9 @@ Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular,
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{|ccccccc|}\hline
-		Tipo de & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
-		condición &  & elementos &  &  & cálculo & utilizada\\\hline
+	\begin{tabular}{|c|cccccc|}\hline
+		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
+		\multirow{2}{*}{condición} &  & elementos &  &  & cálculo & utilizada\\ \cline{2-7}
 		&  $\angstrom$ & [-] & kJ/mol & kcal/mol & [s] & [GB] \\\hline
 		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{zero}}}} & 1.00 & 128 & 22.65401 & 5.41420 & 16.548 & 0.5\\
 		& 0.50 & 256 & 22.46140 & 5.36840 & 131.126 & 3.8\\
@@ -704,14 +701,15 @@ Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular,
 		& 0.25 & 512 & 20.05135 & 4.79239 & 1226.290 & 30.8\\ \hline
 	\end{tabular}\label{table:apbs_centered_ion}
 \end{table}
+\noindent
 A continuación se muestran los resultados para \texttt{3q}, y la razón de solo presentar dos sets de resultados para esta molécula es que se repite el comportamiento apreciado en la tabla anterior, \ref{table:apbs_centered_ion}; las energías de solvatación para las condiciones \texttt{sdh} y \texttt{mdh} no varían, probablemente porque los casos de estudio son muy simples. Por esto es que únicamente se presentan los datos correspondientes a condiciones de contorno \texttt{zero} y \texttt{sdh}.
 \begin{table}[H]
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{|ccccccc|}\hline
-		Tipo de & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
-		condición &  & elementos &  &  & cálculo & utilizada\\\hline
+	\begin{tabular}{|c|cccccc|}\hline
+		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
+		\multirow{2}{*}{condición} &  & elementos &  &  & cálculo & utilizada\\\cline{2-7}
 		&  $\angstrom$ & [-] & kJ/mol & kcal/mol & [s] & [GB] \\\hline
 		\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{\texttt{zero}}}} & 1.00 & 128 & 207.06438 & 49.48957 & 0.6 & 23.602 \\
 		& 0.50 & 256 & 204.90048 & 48.97239 & 4.0 & 137.004 \\
@@ -728,35 +726,37 @@ Para el caso de la molécula de bromoetano se presenta simplemente el valor más
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{|ccccccc|}\hline
-		Tipo de & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
-		condición &  & elementos &  &  & cálculo & utilizada\\\hline
+	\begin{tabular}{|c|cccccc|}\hline
+		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
+		\multirow{2}{*}{condición} &  & elementos &  &  & cálculo & utilizada\\\cline{2-7}
 		&  $\angstrom$ & [-] & kJ/mol & kcal/mol & [s] & [GB] \\\hline
 	\texttt{zero} & 0.25 & 512 & 0.90307 & 0.21584 & 1194.226 & 30.8 \\
 	\texttt{sdh} & 0.25 & 512 & 0.90299 & 0.21582 & 1206.741 & 29.7 \\ \hline
 	\end{tabular}\label{table:apbs_brom}
 \end{table}
 
-\section{Extrapolación de Richardson y error relativo}
+\section{Extrapolación de Richardson y convergencia}
 Para poder comprobar de manera fehaciente que utilizar el método de imágenes acoplado a \texttt{PyGBe} es una forma válida de simular una proteína embebida en una membrana, se utiliza una extrapolación de Richardson para comparar los cálculos obtenidos con los dos programas. La extrapolación de Richardson es una herramienta que permite, como indica el nombre, realizar una extrapolación mediante tres puntos para obtener el valor teórico de convergencia si la malla se afinara consecutivamente a una tasa constante. Es por esta razón que todos los cálculos realizados previamente presentan un refinamiento de malla constante. La fórmula para obtener el resultado teórico extrapolado es
 
 \begin{equation}\label{eqn:Richardson_ext}
 G_t = \frac{G_1\cdot G_3 - (G_2)^2}{G_1 - 2G_2 + G_3}
 \end{equation}
 
+\noindent
 Para esto se debe cumplir que $d = \Delta x_3:\Delta x_2 = \Delta x_2:\Delta x_1$, donde $G_i = G(x_i)$. Además de calcular el valor teórico extrapolado, se calcula la tasa de convergencia, que nos indica qué tan rápido converge el programa a dicha solución; mientras mayor el valor, mejor es la tasa de convergencia. La fórmula para esto es
 
 \begin{equation}\label{eqn:convergence_rating}
 	P = \dfrac{\ln{\left(\dfrac{G_3 - G_2}{G_2 - G_1}\right)}}{\ln{(d)}}
 \end{equation}
 
+\noindent
 Con este método aclarado es que se presentan los resultados extrapolados para los casos de estudio (\texttt{centered\_ion} y \texttt{3q}), así como también una comparación porcentual entre los resultados extrapolados obtenidos mediante \texttt{PyGBe} y \texttt{APBS - APBSmem}. Para el caso de \texttt{bromoethane} se calcula una diferencia porcentual entre los resultados para las mallas más finas solamente. Como \texttt{APBSmem} tiene dos resultados distintos (tres en realidad, pero se utilizan solo \texttt{zero} y \texttt{sdh} por los motivos explicados previamente) dependiendo de las condiciones de contorno utilizadas, se presentan dos errores porcentuales; sin embargo, se adelanta que el menor error corresponde a la condición de borde \texttt{zero} en todos los casos estudiados. La razón principal que provoca esto, por lo que se infiere, se desarrolla en la sección de análisis de los resultados obtenidos. Los valores extrapolados calculados con la fórmula \ref{eqn:Richardson_ext} - para el bromoetano el valor de la malla más fina - se presentan en la tabla siguiente
 
 \begin{table}[H]
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{|cccc|}\hline
+	\begin{tabular}{|c|ccc|}\hline
 		 & \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
 		\texttt{PyGBe} & 5.22901 & 47.70677 & 0.22020 \\ \hline
 		\texttt{APBSmem zero} & 5.16772 & 47.81296 & 0.21584 \\ \hline
@@ -771,7 +771,7 @@ También se muestran a continuación las tasas de convergencia según la fórmul
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{|cccc|}\hline
+	\begin{tabular}{|c|ccc|}\hline
 		& \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
 		\texttt{PyGBe} & 0.98224 & 0.98778 & - \\ \hline
 		\texttt{APBSmem zero} & 0.29655 & 0.53213 & - \\ \hline
@@ -779,7 +779,7 @@ También se muestran a continuación las tasas de convergencia según la fórmul
 	\end{tabular}\label{table:Convergence_ratings}
 \end{table}
 
-\section{Análisis de Resultados}
+\section{Análisis de Resultados}\label{sec:analisis_resultados}
 
 Teniendo los valores de la tabla \ref{table:Rich_extrapolation}, se pueden calcular las diferencias porcentuales entre los resultados para cada código. Como la idea es utilizar \texttt{APBSmem} para validar los resultados obtenidos con \texttt{PyGBe}, se presentan las diferencias entre estos resultados y los de las dos condiciones de contorno para \texttt{APBS}.
 
@@ -787,7 +787,7 @@ Teniendo los valores de la tabla \ref{table:Rich_extrapolation}, se pueden calcu
 	\centering
 	\caption{}
 	\def\arraystretch{0.8}
-	\begin{tabular}{|cccc|}\hline
+	\begin{tabular}{|c|ccc|}\hline
 		& \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
 		\texttt{APBSmem zero} & 1.18597 & 0.22209 & 2.01983 \\ \hline
 		\texttt{APBSmem sdh} & 12.96685 & 11.03877 & 2.02894 \\ \hline
@@ -795,7 +795,11 @@ Teniendo los valores de la tabla \ref{table:Rich_extrapolation}, se pueden calcu
 \end{table}
 
 \noindent
-Como se adelantó en la sección anterior, las menores diferencias se obtienen cuando se fija una condición de borde tipo \texttt{zero}, lo que tiene sentido si se considera que existe una membrana definida por dos interfaces que encierran un medio distinto del agua con sal, dichas interfaces teniendo vectores normales $(0,0,\pm 1)$. Físicamente, esto significa que la condición de contorno \texttt{sdh} debiese considerar el efecto del campo de reacción debido a las interfaces para ser válido. Distinto es el caso de una condición \texttt{zero}, que solo requiere un dominio de integración grande, ya que independiente de la reacción del medio, el potencial en cualquier dirección tiende a $0$ a medida que aumenta la distancia. 
+Como se adelantó en la sección anterior, las menores diferencias se obtienen cuando se fija una condición de borde tipo \texttt{zero}, lo que tiene sentido si se considera que existe una membrana definida por dos interfaces que encierran un medio distinto del agua con sal, dichas interfaces teniendo vectores normales $(0,0,\pm 1)$. Físicamente, esto significa que la condición de contorno \texttt{sdh} debiese considerar el efecto del campo de reacción debido a las interfaces para ser válido. Distinto es el caso de una condición \texttt{zero}, que solo requiere un dominio de integración grande, ya que independiente de la reacción del medio, el potencial en cualquier dirección tiende a $0$ a medida que aumenta la distancia respecto de las cargas que lo generan.\\\\
+La idea es que el error respecto de \texttt{APBSmem} sea lo menor posible, de preferencia se buscaba un error menor a $2\%$, y se comprueba en la tabla \ref{table:Percent_Error} que esto se cumple en los dos primeros casos de estudio. Es difícil lograr un error menor en el caso del bromoetano, pues las energías son muy pequeñas comparadas con \texttt{centered\_ion} y \texttt{3q}.\\\\
+Con los resultados para $N=41$ imágenes ya tabulados, corresponde realizar un análisis de sensibilidad para ver qué tanto influye el número de imágenes y determinar un valor óptimo. También se muestra a partir del estudio de esta variable que $N=41$ es suficiente, como se dijo anteriormente. Para esto se utiliza el caso del ion centrado con 1572 elementos de borde, debido a que la cantidad de memoria necesaria para un número mayor de elementos volvería muy costosos los cálculos, en términos de memoria. Por motivos de una mejor visualización de los resultados, se presenta un gráfico que muestra la convergencia en función de $N$, ya que una tabla con los valores se vuelve poco clara.
+
+
 
 
 %En la sección actual se presentan una serie de breves resúmenes de publicaciones relacionadas con la temática de modelos computacionales de células y/o biomoléculas, o que sean de aporte para el entendimiento de la teoría electrostática en alguna forma.
@@ -840,19 +844,15 @@ Como se adelantó en la sección anterior, las menores diferencias se obtienen c
 
 
 \chapter{Conclusiones}
-Durante el aprendizaje que conlleva el presente trabajo se logra afianzar el conocimiento sobre la teoría electrostática, así como también familiarizarse con la ecuación de Poisson-Boltzman (a través de las lecturas pertinentes al tema), de dónde surge y todo lo que representa. Ya se señaló en un principio que la idea principal de este escrito es presentar la base teórica para poder implementar BEM, y en primera instancia eso se logra para un medio homogeneo, pues ya se cuenta con una expresión para el potencial en función de las variables de interés del problema.\\\\
-En este informe se aclara por qué es posible utilizar la teoría electrostática macroscópica para describir fenómenos a nivel molecular, dando paso a la explicación y aplicación del método de imágenes para resolver un sistema simple de una carga y una interfaz planar. Con la introducción y resolución de la teoría y el problema tipo del método de imágenes respectivamente, se procede a la implementación del método RIC. Mediante esta última herramienta se pueden trabajar sistemas de múltiples cargas en un medio encerrado por dos interfaces a través de cargas imágenes que representen el campo de reacción de los medios. Gracias a un pequeño programa es que se logra definir un número conveniente para representar el valor de $\infty$ en los límites de la sumatoria para el caso de una sola carga encerrada.
+Para poder llevar a cabo este trabajo, se dedicó mucho tiempo al aprendizaje de la teoría y a la búsqueda de una forma de utilizar el método de imágenes para representar interfaces. Esto es de esperarse, pues lo que más esfuerzo toma aprender no es cómo utilizar una herramienta - en este caso \texttt{Python} y sus bibliotecas - sino qué es lo que se debe hacer con ella y, en caso de que falle, por qué hay problemas. Con esto mencionado, corresponde regresar al objetivo planteado en la introducción de este escrito y preguntarse si efectivamente se lograron. En primer lugar, se logra averiguar sobre la forma de modelar interfaces paralelas mediantes el método de imágenes, por lo que este punto se considera un éxito. En segundo lugar, dicho método es acoplado a \texttt{PyGBe} efectivamente, y cumple con errores porcentuales bajos, lo que lleva a tachar estos objetivos de la lista, pues se cumplen. En cuanto a tiempo de cálculo, la implementación hecha es bastante competitiva, como se ya se mencionó en la sección \ref{sec:analisis_resultados}. Con todos estas metas cumplidas, la modificación hecha a \texttt{PyGBe} para incluir una forma básica de una ``membrana" se puede considerar exitosa, pero tiene una falencia clave que consiste en el alto consumo de memoria que va ligado a una matriz de $N_i \times N_e$, donde $N_i$ es el número de imágenes y $N_e$ es el número de elementos de borde. Sin embargo, la cercanía de los resultados a aquellos obtenidos con \texttt{APBSmem} da cuenta de la eficacia del método estudiado en este trabajo. Por lo tanto, y como conclusión, se puede afirmar que la prueba de concepto cumple con lo que se esperaba y de la forma que se esperaba; los tiempos de cálculo para \texttt{PyGBe} mejorarán automáticamente si se logra reducir el número de imágenes necesarias para alcanzar resultados con buena precisión. También se rescata de este trabajo que, para casos en que se requieran dominios de integración muy grandes (esto en \texttt{APBS - APBSmem}), \texttt{PyGBe} es mucho más eficiente velocidad de cálculo, debido a que el programa de referencia de generar los mapas pertinentes, luego modificarlos para incluir la membrana, y finalmente, después de todo esto, realizar los cálculos.
 \section{Continuación del trabajo}
-A continuación se plantea cómo seguir con este trabajo a partir de los fundamentos establecidos en el presente texto, pues la idea es hacer uso de la teoría incluida aquí para entregar un aporte, particularmente buscando una mejora en la velocidad de cálculo.\\\\
-Teniendo ya definida la temática y la materia cubierta en este informe, lo que queda es hacer uso de la teoría de una forma útil y eficiente. En la sección introductoria se mencionó el método de elementos de borde BEM. Pues bien, para dar continuidad a esta línea de investigación, se busca implementar dicho método a un sistema como el visto en el apartado 3.\\\\
-El objetivo ideal que se plantea es establecer una forma de modelar computacionalmente una representación de una proteina sometida a interacciones electrostáticas mientras está inserta en la membrana, y en determinar también si el aporte de dicha membrana es realmente significativo o se puede despreciar, y en qué casos es correcto hacerlo.\\\\
-También hay otros puntos de investigación, como simular una o un sistema de cargas fuera de la membrana. Esto abriría la posibilidad de trabajar con proteínas transmembrana sin tener que cambiar de forma significativa el planteamiento del problema. Además puede ser que si se continúa con esta línea de investigación, surjan otras aristas que valga la pena explorar y sean de interés.\\\\
-Cerrando las ideas, se puede decir que el trabajo presentado en este informe consiste en adquirir conocimientos base e información sobre otros trabajos relacionados con el tema. Esto se hace para poder avanzar en lo sucesivo con el desarrollo de nuevas propuestas que permitan acelerar los cálculos energéticos de la interacción electrostática en sistemas de múltiples cargas. Queda pendiente familiarizarse con el método BEM, para poder así juntar todo en un trabajo final que englobe la teoría electrostática aplicada a interacciones moleculares de proteínas en la membrana mediante el método de elementos de borde.
+Se deben realizar una serie de mejoras y cambios a \texttt{PyGBe} en su estado actual para realmente hacerlo un competidor fuerte en el cálculo de energías de sistemas molécula - mebrana. Estos cambios quedan como trabajos futuros, pero al menos en cierta forma parten de lo que se plasma en este informe. Primero esta lo más importante, que realmente lo haría funcionalmente interesante, y que corresponde a la capacidad de calcular energías para moléculas que tienen elementos dentro \textbf{y fuera} de la membrana. Es decir, moléculas o macromoléculas que en estan parcialmente embebidas en la membrana, pero que tienen residuos que son hidrofílicos y por ende también hacen que este en contacto con el solvente de forma directa.\\
+Otra modificación que se vuelve atractiva es la inclusión del efecto de iones salinos a través de la ecuación de Poisson - Boltzmann por fuera de la membrana. Ya existen trabajos al respecto, como aquel por Lin, Xu, Tang y Cai \cite{Huimin-Lin}, que formulan el método de elementos de borde para una distribución de iones dada por la ecuación PB; la idea ahora es acoplar dicha formulación para incluirla en \texttt{PyGBe}, aprovechando las otras ventajas de este software.\\\\
+Por último, una mejora evidente que se requiere es reducir la cantidad de memoria que se debe dedicar para estos cálculos mediante el método de imágenes, y que son el principal obstáculo de momento.\\\\
+Otras formas de mejorar la precisión del modelo pueden venirse a la mente, pues aún queda mucho trabajo por delante, pero remitiéndose al marco de este trabajo, se logran los objetivos principales, se prueba de forma categórica que el método de imágenes sirve para cálculos de moléculas \textbf{en} membranas, y además se crea una pequeña base teórica para hacer más fluida la continuación de esta línea de investigación en el futuro.
 
 
-\pagebreak
-
-\begin{thebibliography}{20}
+\begin{thebibliography}{30}
 \bibitem{Jackson}
 Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
 \bibitem{Griffiths}
@@ -885,10 +885,42 @@ Lombard, J. \textit{Once upon a time the cell membranes: 175 years of cell bound
 Zhenhai, Z.; Jingfang, H.; Song, B.; White, J. \textit{Improving the Robustness of a Surface Integral Formulation for Wideband Impedance Extraction of 3D Structures} IEEE/ACM International Conference on Computer Aided Design. 592-597, 2001 
 \bibitem{Durand}
 Durand, E. \textit{Électrostatique Vol. III Méthodes de Calcul Diélectriques} Masson et Cie.; 1966
+\bibitem{pdb2pqr_1}
+https://apbs-pdb2pqr.readthedocs.io/en/latest/index.html
+\bibitem{pdb2pqr_2}
+https://apbs-pdb2pqr.readthedocs.io/en/latest/formats/pqr.html
+\bibitem{glossary_of_chem_terms}
+\textit{GLOSSARY OF TERMS USED IN THEORETICAL ORGANIC CHEMISTRY} Pure Appl. Chem., Vol. 71, No. 10, pp. 1919-1981, 1999.
 \end{thebibliography}
 
-%\pagebreak
+\pagebreak
+\pagenumbering{gobble}
+\section*{Anexos}
+\subsection*{\texttt{Bromoethane.pqr}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccccccccc}
+		ATOM & 1 & C1 & TMP & 1 & 0.013000 & -0.725000 & 0.821000 & -0.094000 & 1.908000\\
+		ATOM & 2 & C2 & TMP & 1 & 1.140000 & -0.443000 & 1.786000 & -0.005700 & 1.908000\\
+		ATOM & 3 & Br1 & TMP & 1 & 2.846000 & -0.545000 & 0.859000 & -0.181800 & 2.020000\\
+		ATOM & 4 & H1 & TMP & 1 & -0.951000 & -0.668000 & 1.337000 & 0.047100 & 1.487000\\
+		ATOM & 5 & H2 & TMP & 1 & 0.000000 & -0.000000 & 0.000000 & 0.047100 & 1.487000\\
+		ATOM & 6 & H3 & TMP & 1 & 0.103000 & -1.725000 & 0.384000 & 0.047100 & 1.487000\\
+		ATOM & 7 & H4 & TMP & 1 & 1.172000 & -1.178000 & 2.594000 & 0.070000 & 1.387000\\
+		ATOM & 8 & H5 & TMP & 1 & 1.067000 & 0.563000 & 2.208000 & 0.070000 & 1.387000\\
+	\end{tabular}
+\end{table}
+Para una descripción de lo que significa cada columna, revisar la referencia \cite{pdb2pqr_2}.
 
-%\section*{Anexos}
+\subsection*{Energía de solvatación}
+La energía de solvatación es la energía de un sistema solvente - soluto; se presenta una definición extraída de la referencia \cite{glossary_of_chem_terms}.\\
+\textit{Es el cambio en la energía de Gibbs cuando un ion o molécula se transfiere desde el vacío a un solvente. Las contribuciones principales a la energía de solvatación provienen de}:
+\begin{itemize}
+	\item \textit{La energía por la formación de la cavidad en la que se ubican las especies disueltas de soluto}.
+	\item \textit{La energía de orientación de los dipolos}.
+	\item \textit{La energía de interacción isotrópica, de origen electrostático y de dispersión}.
+	\item \textit{La energía anisotrópica por interacciones específicas, por ejemplo enlaces de hidrógeno}.
+\end{itemize}
+Para efectos de este trabajo, en vista de que se trata exclusivamente el aporte electrostático en sistemas, la energía de solvatación corresponde únicamente al reordenamiento dipolar y, por ende, al campo de reacción del solvente por la inserción de la molécula.
 
 \end{document}

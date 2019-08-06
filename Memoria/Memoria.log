@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.24)  4 AUG 2019 21:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.24)  5 AUG 2019 21:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,27 +566,51 @@ File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
 zlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
 )))
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count134
+\lst@gtempboxa=\box41
+\lst@token=\toks44
+\lst@length=\count135
+\lst@currlwidth=\dimen186
+\lst@column=\count136
+\lst@pos=\count137
+\lst@lostspace=\dimen187
+\lst@width=\dimen188
+\lst@newlines=\count138
+\lst@lineno=\count139
+\lst@maxwidth=\dimen189
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count140
+\lst@skipnumbers=\count141
+\lst@framebox=\box42
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
 Package newfloat Info: New float `graph' with options `name={Gr\begingroup \let
  \relax \relax \endgroup [Pleaseinsert\PrerenderUnicode{á}intopreamble]fico}' 
-on input line 23.
-\c@graph=\count134
-Package newfloat Info: float type `graph'=4 on input line 23.
+on input line 24.
+\c@graph=\count142
+Package newfloat Info: float type `graph'=4 on input line 24.
  (./Memoria.aux (./Portada/anteportada.aux))
 \openout1 = `Memoria.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 56.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 57.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -630,17 +654,17 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count135
-\scratchdimen=\dimen186
-\scratchbox=\box41
-\nofMPsegments=\count136
-\nofMParguments=\count137
-\everyMPshowfont=\toks44
-\MPscratchCnt=\count138
-\MPscratchDim=\dimen187
-\MPnumerator=\count139
-\makeMPintoPDFobject=\count140
-\everyMPtoPDFconversion=\toks45
+\scratchcounter=\count143
+\scratchdimen=\dimen190
+\scratchbox=\box43
+\nofMPsegments=\count144
+\nofMParguments=\count145
+\everyMPshowfont=\toks45
+\MPscratchCnt=\count146
+\MPscratchDim=\dimen191
+\MPnumerator=\count147
+\makeMPintoPDFobject=\count148
+\everyMPtoPDFconversion=\toks46
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -694,20 +718,22 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \celsius on input line 56.
-Package gensymb Info: Faking symbols for \degree and \celsius on input line 56.
+LaTeX Info: Redefining \celsius on input line 57.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 57.
 
 
 
 Package gensymb Warning: Not defining \perthousand.
 
-LaTeX Info: Redefining \ohm on input line 56.
-Package gensymb Info: Using \Omega for \ohm on input line 56.
+LaTeX Info: Redefining \ohm on input line 57.
+Package gensymb Info: Using \Omega for \ohm on input line 57.
 
 Package gensymb Warning: Not defining \micro.
 
 ABD: EveryShipout initializing macros
+\c@lstlisting=\count149
 \openout2 = `Portada/anteportada.aux'.
 
  (./Portada/anteportada.tex
@@ -730,7 +756,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/sc' in size <17.28> not available
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Imagenes/utfsm_logo.pdf>
 ])
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 73.
 
 (./Memoria.toc
 LaTeX Font Info:    Try loading font information for U+msa on input line 3.
@@ -750,26 +776,26 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
  [3]
 Cap\'itulo 1.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 82.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 83.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 76--83
+Underfull \hbox (badness 10000) in paragraph at lines 77--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--83
+Underfull \hbox (badness 10000) in paragraph at lines 77--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--83
+Underfull \hbox (badness 10000) in paragraph at lines 77--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--83
+Underfull \hbox (badness 10000) in paragraph at lines 77--84
 
  []
 
@@ -785,9 +811,9 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [6]
 Cap\'itulo 2.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 89.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--96
+Underfull \hbox (badness 10000) in paragraph at lines 94--97
 
  []
 
@@ -800,12 +826,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8]
-Underfull \hbox (badness 10000) in paragraph at lines 118--120
+Underfull \hbox (badness 10000) in paragraph at lines 119--121
 
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 121.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
 (./Figures/Fig_1.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_1.eps>
 (epstopdf)                    date: 2019-05-25 18:38:20
@@ -833,17 +859,17 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
-Underfull \hbox (badness 10000) in paragraph at lines 151--154
+Underfull \hbox (badness 10000) in paragraph at lines 152--155
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--159
+Underfull \hbox (badness 10000) in paragraph at lines 157--160
 
  []
 
 
-Overfull \hbox (24.86108pt too wide) in paragraph at lines 156--159
+Overfull \hbox (24.86108pt too wide) in paragraph at lines 157--160
 \OT1/ptm/m/n/12 Con esto se puede en-ten-der de man-era gen-eral c[]omo se rela
 -cio-nan el campo el[]ectrico macrosc[]opico
  []
@@ -852,43 +878,37 @@ Overfull \hbox (24.86108pt too wide) in paragraph at lines 156--159
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [12]
-Underfull \hbox (badness 10000) in paragraph at lines 161--169
+Underfull \hbox (badness 10000) in paragraph at lines 162--170
 
  []
 
 [13]
-Overfull \hbox (30.9771pt too wide) in paragraph at lines 173--173
-[]\OT1/ptm/b/n/17.28 Desplazamiento el[]ectrico y campo el[]ectrico en un diel[
-]ectrico 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 174--177
+Underfull \hbox (badness 10000) in paragraph at lines 175--178
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 174--177
+Underfull \hbox (badness 10000) in paragraph at lines 175--178
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 187--190
+Underfull \hbox (badness 10000) in paragraph at lines 188--191
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--195
+Underfull \hbox (badness 10000) in paragraph at lines 193--196
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 201--204
+Underfull \hbox (badness 10000) in paragraph at lines 202--205
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 201--204
+Underfull \hbox (badness 10000) in paragraph at lines 202--205
 
  []
 
@@ -921,7 +941,7 @@ ne 52.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [16]
-Underfull \hbox (badness 10000) in paragraph at lines 219--222
+Underfull \hbox (badness 10000) in paragraph at lines 220--223
 
  []
 
@@ -947,18 +967,18 @@ Package pdftex.def Info: ./Figures/Fig_3-eps-converted-to.pdf  used on input li
 ne 52.
 (pdftex.def)             Requested size: 321.2pt x 151.65677pt.
 )
-Overfull \hbox (7.55685pt too wide) in paragraph at lines 229--232
+Overfull \hbox (7.55685pt too wide) in paragraph at lines 230--233
 \OT1/ptm/m/n/12 En primer lu-gar se tiene un caso sim-ple, pre-sente en la mayo
 r[]^^Pa de los li-bros de elec-trodin[]amica,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--232
+Underfull \hbox (badness 10000) in paragraph at lines 230--233
 
  []
 
 [18 <./Figures/Fig_3-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 235--241
+Underfull \hbox (badness 10000) in paragraph at lines 236--242
 
  []
 
@@ -966,7 +986,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 235--241
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [19]
-Underfull \hbox (badness 10000) in paragraph at lines 265--267
+Underfull \hbox (badness 10000) in paragraph at lines 266--268
 
  []
 
@@ -974,7 +994,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 265--267
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [21]
-Underfull \hbox (badness 10000) in paragraph at lines 295--298
+Underfull \hbox (badness 10000) in paragraph at lines 296--299
 
  []
 
@@ -982,33 +1002,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 295--298
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [22]
-Underfull \hbox (badness 10000) in paragraph at lines 305--317
+Underfull \hbox (badness 10000) in paragraph at lines 306--318
 
  []
 
 
-Overfull \hbox (7.40044pt too wide) in paragraph at lines 305--317
+Overfull \hbox (7.40044pt too wide) in paragraph at lines 306--318
 \OT1/ptm/m/n/12 Una c[]elula se com-pone de dis-tin-tas es-truc-turas fun-ciona
 les que per-miten trans-for-mar mol[]eculas
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--317
+Underfull \hbox (badness 10000) in paragraph at lines 306--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--317
+Underfull \hbox (badness 10000) in paragraph at lines 306--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--317
+Underfull \hbox (badness 10000) in paragraph at lines 306--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 305--317
+Underfull \hbox (badness 10000) in paragraph at lines 306--318
 
  []
 
@@ -1022,12 +1042,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [25]
 Cap\'itulo 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--328
+Underfull \hbox (badness 10000) in paragraph at lines 326--329
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--328
+Underfull \hbox (badness 10000) in paragraph at lines 326--329
 
  []
 
@@ -1040,32 +1060,32 @@ Underfull \vbox (badness 7308) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [27]
-Underfull \hbox (badness 10000) in paragraph at lines 342--346
+Underfull \hbox (badness 10000) in paragraph at lines 343--347
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--346
+Underfull \hbox (badness 10000) in paragraph at lines 343--347
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 347--351
+Underfull \hbox (badness 10000) in paragraph at lines 348--352
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 347--351
+Underfull \hbox (badness 10000) in paragraph at lines 348--352
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 347--351
+Underfull \hbox (badness 10000) in paragraph at lines 348--352
 
  []
 
 [28]
-Underfull \hbox (badness 10000) in paragraph at lines 353--355
+Underfull \hbox (badness 10000) in paragraph at lines 354--356
 
  []
 
@@ -1073,7 +1093,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 353--355
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [30]
-Underfull \hbox (badness 10000) in paragraph at lines 380--383
+Underfull \hbox (badness 10000) in paragraph at lines 381--384
 
  []
 
@@ -1082,75 +1102,75 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [31]
 [32] [33]
-Underfull \hbox (badness 10000) in paragraph at lines 414--416
+Underfull \hbox (badness 10000) in paragraph at lines 415--417
 
  []
 
 
-Overfull \hbox (4.72572pt too wide) in paragraph at lines 414--416
+Overfull \hbox (4.72572pt too wide) in paragraph at lines 415--417
 \OT1/ptm/m/n/12 Este soft-ware es-crito en \OT1/pcr/m/n/12 Java \OT1/ptm/m/n/12
  fun-ciona sigu-iendo una se-rie de pa-sos, en funci[]on de par[]ametros
  []
 
 [34]
-Underfull \hbox (badness 10000) in paragraph at lines 423--425
+Underfull \hbox (badness 10000) in paragraph at lines 424--426
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Overfull \hbox (4.11348pt too wide) in paragraph at lines 427--437
+Overfull \hbox (4.11348pt too wide) in paragraph at lines 428--438
 \OT1/ptm/m/n/12 de am-bos doc-u-men-tos nu-mera y or-dena los pan-e-les en los 
 que se sub-di-vide la in-ter-faz mol[]ecula
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Overfull \hbox (17.31367pt too wide) in paragraph at lines 427--437
+Overfull \hbox (17.31367pt too wide) in paragraph at lines 428--438
 \OT1/ptm/m/n/12 El archivo \OT1/pcr/m/n/12 .param \OT1/ptm/m/n/12 por otro lado
  tiene in-for-maci[]on propia del m[]etodo de mod-elaci[]on matem[]atica
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--438
 
  []
 
@@ -1161,13 +1181,13 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [37]
-Overfull \hbox (3.84877pt too wide) in paragraph at lines 444--444
+Overfull \hbox (3.84877pt too wide) in paragraph at lines 441--441
 []\OT1/ptm/b/n/17.28 Implementaci[]on del m[]etodo de im[]agenes en el pro-gram
 a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 445--447
+Underfull \hbox (badness 10000) in paragraph at lines 442--444
 
  []
 
@@ -1175,14 +1195,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 445--447
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38]
-Underfull \hbox (badness 10000) in paragraph at lines 449--451
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [39]
 (./Figures/Fig_4.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_4.eps>
 (epstopdf)                    date: 2019-05-25 18:38:20
@@ -1198,27 +1210,49 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_4-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_4-eps-converted-to.pdf, id=158, 330.23375pt x 228.855pt>
+<./Figures/Fig_4-eps-converted-to.pdf, id=155, 330.23375pt x 228.855pt>
 File: ./Figures/Fig_4-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_4-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_4-eps-converted-to.pdf  used on input li
 ne 52.
 (pdftex.def)             Requested size: 361.34999pt x 250.42825pt.
 )
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [40]
-Underfull \hbox (badness 10000) in paragraph at lines 466--470
+Underfull \hbox (badness 10000) in paragraph at lines 446--454
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 466--470
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [39]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 463--467
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 463--467
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [40]
+Underfull \hbox (badness 10000) in paragraph at lines 469--472
 
  []
 
 [41 <./Figures/Fig_4-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 472--475
+Underfull \hbox (badness 10000) in paragraph at lines 479--482
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 479--482
 
  []
 
@@ -1226,52 +1260,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 472--475
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [42]
-Underfull \hbox (badness 10000) in paragraph at lines 482--485
+[43] [44]
+Underfull \hbox (badness 10000) in paragraph at lines 522--527
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 482--485
+Underfull \hbox (badness 10000) in paragraph at lines 522--527
 
  []
 
-[43]
+
+Underfull \hbox (badness 10000) in paragraph at lines 522--527
+
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [44]
-[45]
-Underfull \hbox (badness 10000) in paragraph at lines 525--530
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 525--530
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 525--530
-
- []
-
-
+ [45]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [46]
-Underfull \hbox (badness 10000) in paragraph at lines 541--544
+Underfull \hbox (badness 10000) in paragraph at lines 538--541
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 575--588
+Underfull \hbox (badness 10000) in paragraph at lines 572--585
 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [47]
-[48] (./Figures/Fig_9.eps_tex
+[47] (./Figures/Fig_9.eps_tex
 Package epstopdf Info: Source file: <./Figures/Fig_9.eps>
 (epstopdf)                    date: 2019-07-18 21:10:21
 (epstopdf)                    size: 19259 bytes
@@ -1286,43 +1306,43 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_9-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_9-eps-converted-to.pdf, id=191, 469.755pt x 287.0725pt>
+<./Figures/Fig_9-eps-converted-to.pdf, id=188, 469.755pt x 287.0725pt>
 File: ./Figures/Fig_9-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_9-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_9-eps-converted-to.pdf  used on input li
 ne 56.
 (pdftex.def)             Requested size: 301.125pt x 184.01926pt.
-) [49 <./Figures/Fig_9-eps-converted-to.pdf>]
+) [48] [49 <./Figures/Fig_9-eps-converted-to.pdf>]
 Cap\'itulo 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 608--620
+Underfull \hbox (badness 10000) in paragraph at lines 605--617
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 608--620
+Underfull \hbox (badness 10000) in paragraph at lines 605--617
 
  []
 
 [50
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 633--636
+Underfull \hbox (badness 10000) in paragraph at lines 630--633
 
  []
 
 [51] [52]
+Overfull \hbox (2.05525pt too wide) in paragraph at lines 696--696
+[][] 
+ []
+
+
 Overfull \hbox (2.05525pt too wide) in paragraph at lines 699--699
 [][] 
  []
 
 
-Overfull \hbox (2.05525pt too wide) in paragraph at lines 702--702
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 686--706
+Underfull \hbox (badness 10000) in paragraph at lines 683--703
 
  []
 
@@ -1330,84 +1350,101 @@ Underfull \hbox (badness 10000) in paragraph at lines 686--706
 Underfull \vbox (badness 1009) has occurred while \output is active []
 
  [53]
-Overfull \hbox (2.05525pt too wide) in paragraph at lines 719--719
+Overfull \hbox (2.05525pt too wide) in paragraph at lines 717--717
 [][] 
  []
 
-[54] [55] [56] [57]
+[54] [55] [56]
+Underfull \hbox (badness 10000) in paragraph at lines 797--801
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 797--801
+
+ []
+
+[57] [58]
 Cap\'itulo 5.
 
-Underfull \hbox (badness 10000) in paragraph at lines 843--845
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 846--851
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 846--851
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 846--851
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 846--851
-
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [58
+ [59
 
 ]
-Underfull \vbox (badness 1701) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 849--853
 
- [59]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 849--853
+
+ []
+
+
+Underfull \vbox (badness 1163) has occurred while \output is active []
 
  [60]
-[61
+[61] [62
 
-] [62] (./Memoria.aux (./Portada/anteportada.aux)) ) 
+]
+Underfull \vbox (badness 1087) has occurred while \output is active []
+
+ [63]
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 899.
+
+Overfull \hbox (1.86089pt too wide) in paragraph at lines 902--912
+ [][] 
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 919.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 919.
+
+Overfull \hbox (8.61237pt too wide) in paragraph at lines 922--923
+[]\OT1/ptm/m/it/12 La en-erg[]^^Pa anisotr[]opica por in-ter-ac-ciones es-pec[]
+^^Pficas, por ejem-plo en-laces de hidr[]ogeno\OT1/ptm/m/n/12 . 
+ []
+
+[1] [2] (./Memoria.aux (./Portada/anteportada.aux)) ) 
 Here is how much of TeX's memory you used:
- 16035 strings out of 494880
- 299954 string characters out of 6179601
- 353755 words of memory out of 5000000
- 18973 multiletter control sequences out of 15000+600000
- 31322 words of font info for 73 fonts, out of 8000000 for 9000
+ 17392 strings out of 494880
+ 319337 string characters out of 6179601
+ 373395 words of memory out of 5000000
+ 20313 multiletter control sequences out of 15000+600000
+ 31837 words of font info for 75 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 55i,21n,60p,3296b,807s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-d
-ist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/latxf
-ont/line10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
-ls/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Memoria.pdf (62 pages, 421317 bytes).
+ 55i,21n,60p,3296b,811s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-
+dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/latx
+font/line10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
+ols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/urw/times/utmri8a.pfb>
+Output written on Memoria.pdf (65 pages, 435143 bytes).
 PDF statistics:
- 307 PDF objects out of 1000 (max. 8388607)
- 214 compressed objects within 3 object streams
+ 320 PDF objects out of 1000 (max. 8388607)
+ 223 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
