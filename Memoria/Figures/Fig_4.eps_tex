@@ -61,15 +61,15 @@
     \put(0.77382719,0.15225545){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23231496\unitlength}\raggedright $D$\end{minipage}}}%
     \put(0.17625181,0.15419112){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23231496\unitlength}\raggedright $d$\end{minipage}}}%
     \put(0.90446428,0.15380296){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23231496\unitlength}\raggedright $d$\end{minipage}}}%
-    \put(0.49146561,0.67417381){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.24908572,0.02117838){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.36926317,0.02002778){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.48795102,0.01842851){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.85348577,0.01665496){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.12568782,0.02175029){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.00828057,0.02219418){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.60698066,0.01764285){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
-    \put(0.7330814,0.01646433){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
+    \put(0.49146561,0.67417381){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.24908572,0.02117838){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.36926317,0.02002778){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.48795102,0.01842851){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.85348577,0.01665496){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.12568782,0.02175029){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.00828057,0.02219418){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.60698066,0.01764285){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
+    \put(0.7330814,0.01646433){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
     \put(0.47384941,0.5448652){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18444444\unitlength}\raggedright $q$\end{minipage}}}%
     \put(0.37590357,0.11608933){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18444444\unitlength}\raggedright $q_{-1}$\end{minipage}}}%
     \put(0.4694372,0.11486076){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18444444\unitlength}\raggedright $q$\end{minipage}}}%
@@ -79,8 +79,8 @@
     \put(0.94817204,0.11839051){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18444444\unitlength}\raggedright $q_{+4}$\end{minipage}}}%
     \put(0.21431587,0.11604984){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18444444\unitlength}\raggedright $q_{-2}$\end{minipage}}}%
     \put(0.1315708,0.1164706){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18444444\unitlength}\raggedright $q_{-3}$\end{minipage}}}%
-    \put(0.18776026,0.67658866){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_1$\end{minipage}}}%
-    \put(0.78712853,0.67818313){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_1$\end{minipage}}}%
-    \put(0.97811415,0.0174206){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
+    \put(0.18776026,0.67658866){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_1$\end{minipage}}}%
+    \put(0.78712853,0.67818313){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_1$\end{minipage}}}%
+    \put(0.97811415,0.0174206){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35773821\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
   \end{picture}%
 \endgroup%

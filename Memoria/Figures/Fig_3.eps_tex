@@ -55,8 +55,8 @@
     \put(0.79958623,0.32319883){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.18667777\unitlength}\raggedright $q_1$\end{minipage}}}%
     \put(0.50070503,0.49938913){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.1866778\unitlength}\raggedright $P$\end{minipage}}}%
     \put(0.35901116,0.5993981){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.26400223\unitlength}\raggedright Medio 1\end{minipage}}}%
-    \put(0.42871832,0.14736385){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35670534\unitlength}\raggedright $\epsilon_1$\end{minipage}}}%
-    \put(0.79505345,0.14876042){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35670533\unitlength}\raggedright $\epsilon_2$\end{minipage}}}%
+    \put(0.42871832,0.14736385){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35670534\unitlength}\raggedright $\varepsilon_1$\end{minipage}}}%
+    \put(0.79505345,0.14876042){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35670533\unitlength}\raggedright $\varepsilon_2$\end{minipage}}}%
     \put(0.43322182,0.41779679){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35670534\unitlength}\raggedright $R_1$\end{minipage}}}%
     \put(0.66330418,0.39959231){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35670533\unitlength}\raggedright $R_2$\end{minipage}}}%
     \put(0.76049063,0.60325868){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.26400225\unitlength}\raggedright Medio 2\end{minipage}}}%
