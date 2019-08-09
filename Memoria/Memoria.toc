@@ -12,21 +12,21 @@
 \contentsline {chapter}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{27}
 \contentsline {section}{\numberline {3.1}Representaci\IeC {\'o}n del modelo de solvente impl\IeC {\'\i }cito mediante BEM}{28}
 \contentsline {subsection}{\numberline {3.1.1}Solvent Excluded y Solvent Accesible Surface}{29}
-\contentsline {subsection}{\numberline {3.1.2}La ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB) y la Boundary Integral Equation (BIE)}{30}
-\contentsline {section}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{33}
-\contentsline {subsection}{\numberline {3.2.1}MSMS}{33}
+\contentsline {subsection}{\numberline {3.1.2}La ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB) y la Boundary Integral Equation (BIE)}{31}
+\contentsline {section}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{34}
+\contentsline {subsection}{\numberline {3.2.1}MSMS}{34}
 \contentsline {subsection}{\numberline {3.2.2}APBS}{34}
-\contentsline {subsection}{\numberline {3.2.3}APBSmem}{35}
-\contentsline {subsection}{\numberline {3.2.4}PyGBe}{36}
-\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{40}
-\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{41}
-\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{44}
+\contentsline {subsection}{\numberline {3.2.3}APBSmem}{36}
+\contentsline {subsection}{\numberline {3.2.4}PyGBe}{37}
+\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{41}
+\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{42}
+\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{45}
 \contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{49}
-\contentsline {chapter}{\numberline {4}Resultados}{51}
-\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{51}
-\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{52}
-\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{54}
-\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y convergencia}{56}
-\contentsline {section}{\numberline {4.3}An\IeC {\'a}lisis de Resultados}{58}
-\contentsline {chapter}{\numberline {5}Conclusiones}{60}
-\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{61}
+\contentsline {chapter}{\numberline {4}Resultados}{52}
+\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{52}
+\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{53}
+\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{55}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y convergencia}{57}
+\contentsline {section}{\numberline {4.3}An\IeC {\'a}lisis de Resultados}{59}
+\contentsline {chapter}{\numberline {5}Conclusiones}{61}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{62}

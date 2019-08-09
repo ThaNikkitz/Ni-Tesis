@@ -347,7 +347,13 @@ Ahora, esto sirve más que nada de contexto para introducir la forma de trabajo 
 El método BEM requiere una superficie que permita diferenciar dos dominios. Es esta interfaz la que se discretiza y sobre la cual se integran las ecuaciones que modelan la propiedad a trabajar. En el caso de una proteína en un solvente existen por lo menos dos, pues la interfaz es una y hay un medio a cada lado. En primer lugar es importante saber cómo se establece esta superficie.
 \subsection{Solvent Excluded y Solvent Accesible Surface}\label{subsec:SES_SAS}
 De lo que se ha percibido a lo largo de este estudio, los dos métodos que se emplean usualmente para representar una superficie característica de una proteína son los que se indican en el título de esta parte. Ambos consisten en utilizar una \textit{sonda}, por lo general una molécula de agua, que interactúa con los radios de van der Waals de los átomos de la proteína. Si por ejemplo se quiere mapear la superficie exterior de la proteína o macromolécula, se hace ``\textit{rodar}" una molécula de agua por sobre los radios de van der Waals de los átomos exteriores, de tal modo que la distancia entre los centros de un átomo de la macromolécula y el de la sonda de agua sea la suma de los radios de cada uno.\\\\
-En el caso de la Solvent Accesible Surface (SAS), el centro de la molécula de agua es lo que define la superficie de trabajo. Esto genera puntas como se puede apreciar en la Figura \textcolor{red}{TANTO} . La distancia entre el centro del átomo a sondear y la SAS es entonces la suma del radio de van der Waals de dicho átomo y el radio de la molécula de sondeo.\\\\
+En el caso de la Solvent Accesible Surface (SAS), el centro de la molécula de agua es lo que define la superficie de trabajo. Esto genera puntas como se puede apreciar en la Figura \ref{Fig:SAS_and_SES} . La distancia entre el centro del átomo a sondear y la SAS es entonces la suma del radio de van der Waals de dicho átomo y el radio de la molécula de sondeo.
+\begin{figure}[H]
+	\centering
+	\input{Figures/Fig_7.eps_tex}
+	\caption{}\label{Fig:SAS_and_SES}
+\end{figure}
+\noindent
 Por otra parte, la Solvent Excluded Surface (SES) considera el borde de la sonda como la definición de la superficie de la macromolécula. La superficie generada es por tanto suave, pues siempre consta al menos de una sección de arco de la sonda. La distancia entre el centro de un átomo de la macromolécula y la SES ya no está definida de forma tan clara como en el caso de la SAS, y a pesar de que en algunos casos coincide con ser simplemente el radio de van der Waals de dicho átomo, esto no es una regla.\\\\
 A pesar de las diferencias, no existe una razón para preferir una sobre la otra, y depende simplemente de lo que se busque lograr en cada situación. En el caso de este trabajo, y principalmente por heredar la metodología que se venía aplicando de antes, se utiliza la Solvent Excluded Surface para definir la superficie de las moléculas de estudio.
 
@@ -385,8 +391,14 @@ Al aplicar las condiciones de contorno, el sistema de ecuaciones deriva en
 		\frac{\phi_2(\mathbf{r})}{2} + K_L(\phi_2(\mathbf{r})) - V_L\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = \frac{1}{4\pi\varepsilon_2}\sum_{j=0}^{N_q}\frac{q_j}{|\mathbf{r} - \mathbf{r}_j|}\\
 		\frac{\phi_2(\mathbf{r})}{2} - K_Y(\phi_2(\mathbf{r})) + \frac{\varepsilon_2}{\varepsilon_1}V_Y\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = 0
 \end{gather}
-Ahora bien, si se subdivide la superficie de la proteína en $N$ paneles, en este caso triangulares, las ecuaciones siguen siendo válidas para cada panel; estas se trabajan \textit{colocándolas} en los centroides de cada panel (llamado a partir de ahora \textit{punto de colocación}), permitiendo así su discretización de forma representativa.\\\\
-Las propiedades que se buscan, potencial y su derivada respecto a la normal, son incógnitas. Se asume entonces que dichas propiedades son constantes sobre un mismo panel, por lo que salen de la integral respectiva en ambas ecuaciones y se genera un sistema de la forma $\underline{A}\mathbf{x} = \mathbf{b}$
+Ahora bien, si se subdivide la superficie de la proteína en $N$ paneles, en este caso triangulares, las ecuaciones siguen siendo válidas para cada panel; estas se trabajan \textit{colocándolas} en los centroides de cada panel (llamado a partir de ahora \textit{punto de colocación}), permitiendo así su discretización de forma representativa.
+\begin{figure}[H]
+	\centering
+	\input{Figures/BEM_scheme.eps_tex}
+	\caption{Forma 2D de dividir la frontera del dominio de integración para aplicar el método BEM a cada elemento de borde.}
+\end{figure}
+\noindent
+Las propiedades que se buscan - potencial y su derivada respecto a la normal - son incógnitas. Se asume entonces que dichas propiedades son constantes sobre un mismo panel, por lo que salen de la integral respectiva en ambas ecuaciones y se genera un sistema de la forma $\underline{A}\mathbf{x} = \mathbf{b}$
 \begin{equation}\label{eqn:PB_equation_system}
 	\renewcommand\arraystretch{1.6}
 	\begin{pmatrix}
