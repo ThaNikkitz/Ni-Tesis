@@ -169,8 +169,8 @@
 \pagenumbering{arabic}
 
 % sectioning commands
-%\def\prefacesection#1{\clearpage\phantomsection
-%	\addcontentsline{toc}{chapter}{#1}\chapter*{#1}\markboth{#1}{}}
+\def\prefacesection#1{\clearpage\phantomsection
+	\addcontentsline{toc}{chapter}{#1}\chapter*{#1}\markboth{#1}{}}
 
 % Bibliography - natbib
 \if@natbib
@@ -190,17 +190,16 @@
 % bibliography fix - makes bibliography appear
 % in table of contents, and makes it work nice
 % with hyperref
-%\def\bibliographyfix{%
-%	\let\old@bibliography\bibliography
-%	\def\bibliography{%
-%		\clearpage
-%		\phantomsection
-%		\addcontentsline{toc}{chapter}{\bibname}%
-%		\old@bibliography}}
-
-%\if@bibfix
-%	\AtBeginDocument{\bibliographyfix}
-%\fi
+\def\bibliographyfix{%
+	\let\old@bibliography\bibliography
+	\def\bibliography{%
+		\clearpage
+		\phantomsection
+		\addcontentsline{toc}{chapter}{\bibname}%
+		\old@bibliography}}
+\if@bibfix
+	\AtBeginDocument{\bibliographyfix}
+\fi
 
 % title page building blocks
 \renewenvironment{titlepage}%
@@ -233,24 +232,24 @@
 %	\providecommand\theHcorollary{\thecorollary}
 %
 %	\RequirePackage[final,breaklinks,bookmarks]{hyperref}
-%
+%%
 %	% properties of pdf file
 %	\hypersetup{%
 %		pdftitle={\inserttitle},pdfauthor={\insertauthor},
-%%		pdfsubject={\insertdegree\ Thesis, \insertdepartment}}
+%		pdfsubject={\insertdegree\ Thesis, \insertdepartment}}
 %
-%	% color links
-%	\if@colors
-%		\hypersetup{%
-%			colorlinks,linkcolor={dark-red},citecolor={dark-blue},
-%			urlcolor={medium-blue}}
-%	\fi
-%
+%%	% color links
+%%	\if@colors
+%%		\hypersetup{%
+%%			colorlinks,linkcolor={dark-red},citecolor={dark-blue},
+%%			urlcolor={medium-blue}}
+%%	\fi
+%%
 %	\renewcommand{\chapterautorefname}{Chapter}
 %	\renewcommand{\sectionautorefname}{Section}
 %	\renewcommand{\subsectionautorefname}{Section}
 %	\renewcommand{\subsubsectionautorefname}{Section}
 %	\RequirePackage[all]{hypcap}
 %}
-
-\endinput
+%
+%\endinput

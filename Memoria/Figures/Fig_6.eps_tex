@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{170bp}%
+    \setlength{\unitlength}{180bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,10 +50,10 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.66)%
+  \begin{picture}(1,0.75)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0.05){\includegraphics[width=\unitlength]{./Figures/Fig_6.eps}}%
+    \put(0,0.08){\includegraphics[width=\unitlength]{./Figures/Fig_6.eps}}%
     \put(0.75,0.04){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05364252\unitlength}\raggedright 1\end{minipage}}}%
     \put(-0.035,0.25){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05364252\unitlength}\raggedright 2\end{minipage}}}%
     \put(0.41,0.54){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05364252\unitlength}\raggedright 3\end{minipage}}}%

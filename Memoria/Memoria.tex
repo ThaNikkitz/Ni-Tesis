@@ -31,7 +31,7 @@
 
 \date{\today}
 \renewcommand{\contentsname}{Contenidos}
-\renewcommand\refname{Referencias}
+\renewcommand\bibname{Bibliografía}
 \renewcommand\tablename{Tabla}
 \renewcommand\figurename{Figura}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -59,18 +59,18 @@
 \include{Portada/anteportada}
 \include{Portada/portada}
 
-\newpage
-\noindent
-\\\\\\\\\\\\
-\large{``\textit{The greatest danger for most of us}}
-\begin{center}
-\large{\textit{is not that our aim is too high and we miss it,}}
-\end{center}
-\begin{flushright}
-\large{\textbf{but that it is too low and we reach it.}"\\}\bigskip
-- Michelangelo
-\end{flushright}
-\newpage
+%\newpage
+%\noindent
+%\\\\\\\\\\\\
+%\large{``\textit{The greatest danger for most of us}}
+%\begin{center}
+%\large{\textit{is not that our aim is too high and we miss it,}}
+%\end{center}
+%\begin{flushright}
+%\large{\textbf{but that it is too low and we reach it.}"\\}\bigskip
+%- Michelangelo
+%\end{flushright}
+%\newpage
 \tableofcontents
 \newpage
 
@@ -308,15 +308,14 @@ En ambos casos ($\mathbf{r}_{\partial\Omega}$ y $\mathbf{r}_{\partial\Omega}^*$)
 
 \section{El contexto biológico de la membrana celular}\label{Sec:Cell_Bio}
 A pesar de haber mencionado la teoría sobre el comportamiento de cargas en un medio, el método de imágenes, y el método BEM que permite llevar todo esto a aplicaciones numéricas, estos pueden aún parecer tópicos un tanto aislados unos de otros, e incluso abstractos en cierta medida. Como consecuencia se presenta el contexto biológico que motiva la búsqueda de un modelo para integrar el efecto de la membrana celular en el que se encuentran insertas algunas proteínas.\\\\
-Una célula se compone de distintas estructuras funcionales que permiten transformar moléculas en energía, enviar y recibir señales de tipo químico y eléctrico, permitir el paso de compuestos desde y hacia el exterior de la célula, entre otros. Las proteínas son probablemente el tipo de macromolécula con la mayor diversidad de funciones en el entorno celular, y su importancia en el quehacer de la membrana, sea este el flujo de elementos o la conducción de señales, por ejemplo, es fundamental. La membrana plasmática se compone de una cadena de fosfolípidos, uno al lado del otro, que rodean el citoplasma (fluido intracelular) y separan el interior de la célula, con estructuras y todo, del fluido extracelular. Más aún, la membrana celular, también llamada bicapa fosfolipídica debido a su composición, es la encargada de definir la frontera de ciertos organelos de la célula; las lisosomas, mitocondrias y el mismo núcleo celular son algunos.
-\begin{figure}[H]
+Una célula se compone de distintas estructuras funcionales que permiten transformar moléculas en energía, enviar y recibir señales de tipo químico y eléctrico, permitir el paso de compuestos desde y hacia el exterior de la célula, entre otros. Las proteínas son probablemente el tipo de macromolécula con la mayor diversidad de funciones en el entorno celular, y su importancia en el quehacer de la membrana, sea este el flujo de elementos o la conducción de señales, por ejemplo, es fundamental. La membrana plasmática se compone de una cadena de fosfolípidos, uno al lado del otro, que rodean el citoplasma (fluido intracelular) y separan el interior de la célula, con estructuras y todo, del fluido extracelular. Más aún, la membrana celular, también llamada bicapa fosfolipídica debido a su composición, es la encargada de definir la frontera de ciertos organelos de la célula; las lisosomas, mitocondrias y el mismo núcleo celular son algunos.\\\\
+Los fosfolípidos son un tipo de molécula conformado por dos ``colas" de ácidos grasos que se unen a un glicerol. Para completar la molécula, también hay un fosfato enlazado al glicerol, que lleva por el lado opuesto una unión con una colina. Para efectos de este trabajo, lo que hay que rescatar es el hecho de que las colas son hidrófobas, mientras que la ``cabeza" conformada por el glicerol, el fosfato y el compuesto polar - la colina - son la parte hidrófila del fosfolípido. La Figura \ref{Fig:Fig_5-2} muestra una sección de la membrana, mientras que la Figura \ref{Fig:Fig_5} corresponde al detalle de un fosfolípido.
+\begin{figure}[h]
 	\centering
 	\input{./Figures/Fig_5-2.eps_tex}
 	\caption{Tramo de la bicapa con proteína inserta. Esta última se orienta de tal forma que la parte hidrofílica (polar) quede en contacto con el agua en el exterior, de igual forma que las cabezas de los fosfolípidos.} \label{Fig:Fig_5-2}
 \end{figure}
-
 \noindent
-Los fosfolípidos son un tipo de molécula conformado por dos ``colas" de ácidos grasos que se unen a un glicerol. Para completar la molécula, también hay un fosfato enlazado al glicerol, que lleva por el lado opuesto una unión con una colina. Para efectos de este trabajo, lo que hay que rescatar es el hecho de que las colas son hidrófobas, mientras que la ``cabeza" conformada por el glicerol, el fosfato y el compuesto polar - la colina - son la parte hidrófila del fosfolípido. La Figura \ref{Fig:Fig_5-2} muestra una sección de la membrana, mientras que la Figura \ref{Fig:Fig_5} corresponde al detalle de un fosfolípido.
 %\begin{figure}[H]
 %	\centering
 %	\input{./Figures/Fig_5.eps_tex}
@@ -456,7 +455,7 @@ Para poder comparar los resultados presentados más adelante con los de APBSmem 
 
 \subsection{PyGBe}\label{subsec:PyGBe}
 Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza el Fast Multipole Method junto con un algoritmo de tipo treecode para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se llevó a cabo en una versión básica de PyGBe que no incluye el uso de GPUs, de un algoritmo treecode, ni del método de multipolos rápidos. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de \texttt{PyGBe} utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto lo que se modifica para incluir el aporte de membrana de forma implícita, como se explica más adelante.\\\\
-PyGBe funciona leyendo una serie de archivos. Los inputs del programa son un \texttt{.config} y un \texttt{.param}. Además, el primero de estos dos archivos hace referencia a otro par de archivos, \texttt{.face} y \texttt{.vert}, así como a un \texttt{.pqr} o \texttt{.crd}. En primera instancia se profundiza en qué son estos archivos, y luego se presenta y desarrolla la estructura funcional de \texttt{PyGBe} (\texttt{pygbe\_matrix} específicamente).\\\\
+PyGBe funciona leyendo una serie de archivos. Los inputs del programa son un \texttt{.config} y un \texttt{.param}. Además, el primero de estos dos archivos hace referencia a otro par de archivos, \texttt{.face} y \texttt{.vert}, así como a un \texttt{.pqr} o \texttt{.crd}. En primera instancia se profundiza en qué son estos archivos, y luego se presenta y desarrolla la estructura funcional de \texttt{PyGBe} (\texttt{pygbe\_matrix} específicamente).
 
 \subsubsection{Archivo \texttt{.config}}
 El archivo \texttt{.config} que sirve como entrada directa al programa consta de una serie de parámetros que atañen principalmente a las características físicas del modelo. Se trabaja en una estructura de campos, siendo cada uno representativo de uno de los dominios de integración. Siempre habrá un \texttt{FIELD} que representa el solvente exterior a la proteína, designado con el número 0, y los campos consecutivos listan las propiedades de los otros medios a considerar. Esto permite modelar casos en los que la proteína se plegó sobre sí misma dejando solvente encerrado en pequeños huecos o cavidades. Además este set de parámetros sirve de puntero para los archivos que entregan información sobre las cargas (\texttt{.pqr} o \texttt{.crd}) y sobre la geometría del problema (\texttt{.face} y \texttt{.vert}).\\\\
@@ -866,7 +865,7 @@ A pesar de lo bueno de este hecho, también se puede apreciar que el valor extra
 \end{graph}
 \noindent
 Del gráfico \ref{graph:Error} se puede rescatar que, como se espera que suceda en una expansión, a medida que se agregan términos, la variación entre los valores va disminuyendo; esto es claro a partir del gráfico de Potencial v/s $N$, pero se hace más evidente en este caso. Para ver qué tipo de decaimiento tiene el error, se grafica dicho eje (el de las ordenadas) en escala logarítmica. Como se ven en el gráfico \ref{graph:Error_log}, la relación se torna lineal, por lo que el error disminuye con el logaritmo de $N$.
-\begin{graph}[H]
+\begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error_log}
 	\caption{}\label{graph:Error_log}
@@ -918,13 +917,14 @@ Con esto queda definido que el método de imágenes aplicado a través de BEM si
 \chapter{Conclusiones}
 Para poder llevar a cabo este trabajo, se dedicó mucho tiempo al aprendizaje de la teoría y a la búsqueda de una forma de utilizar el método de imágenes para representar interfaces. Esto es de esperarse, pues lo que más esfuerzo toma aprender no es cómo utilizar una herramienta - en este caso \texttt{Python} y sus bibliotecas - sino qué es lo que se debe hacer con ella y, en caso de que falle, por qué hay problemas. Con esto mencionado, corresponde regresar a los objetivos planteado en la introducción de este escrito y preguntarse si efectivamente se lograron. En primer lugar, se logra averiguar sobre la forma de modelar interfaces paralelas mediante el método de imágenes, por lo que este punto se considera un éxito. En segundo lugar, dicho método es acoplado a \texttt{PyGBe} efectivamente, y cumple con errores porcentuales bajos, lo que lleva a tachar estos objetivos de la lista, pues se cumplen. En cuanto a tiempo de cálculo, la implementación hecha es bastante competitiva, como se ya se mencionó en la sección \ref{Sec:analisis_resultados}. Con todos estas metas cumplidas, la modificación hecha a \texttt{PyGBe} para incluir una forma básica de una ``membrana" se puede considerar exitosa, pero tiene una falencia clave que consiste en el alto consumo de memoria que va ligado a $N_i$, el número de imágenes \textbf{por} elemento de borde. Sin embargo, la cercanía de los resultados a aquellos obtenidos con \texttt{APBSmem} da cuenta de la eficacia del método estudiado en este trabajo. Por lo tanto, y como conclusión, se puede afirmar que la prueba de concepto cumple con lo que se esperaba y de la forma que se esperaba; los tiempos de cálculo para \texttt{PyGBe} mejorarán automáticamente si se logra reducir el número de imágenes necesarias para alcanzar resultados con buena precisión. También se rescata de este trabajo que, para casos en que se requieran dominios de integración muy grandes (esto en \texttt{APBS - APBSmem}), \texttt{PyGBe} es mucho más eficiente en cuanto a velocidad de cálculo, debido a que el programa de referencia debe generar los mapas pertinentes, luego modificarlos para incluir la membrana, y finalmente, después de todo esto, realizar los cálculos.
 \section{Continuación del trabajo}
-Se deben realizar una serie de mejoras y cambios a \texttt{PyGBe} en su estado actual para realmente hacerlo un competidor fuerte en el cálculo de energías de sistemas molécula - mebrana. Estos cambios quedan como trabajos futuros, pero al menos en cierta forma parten de lo que se plasma en este informe. Primero esta lo más importante, que realmente lo haría funcionalmente interesante, y que corresponde a la capacidad de calcular energías para moléculas que tienen elementos dentro \textbf{y fuera} de la membrana. Es decir, moléculas o macromoléculas que están parcialmente embebidas en la membrana, pero que tienen residuos que son hidrofílicos y por ende también hacen que esté en contacto con el solvente de forma directa (Fig. \ref{Fig:Fig_5-2} por ejemplo).\\
+Se deben realizar una serie de mejoras y cambios a \texttt{PyGBe} en su estado actual para realmente hacerlo un competidor fuerte en el cálculo de energías de sistemas molécula - mebrana. Estos cambios quedan como trabajos futuros, pero al menos en cierta forma parten de lo que se plasma en este informe. Primero esta lo más importante, que realmente lo haría funcionalmente interesante, y que corresponde a la capacidad de calcular energías para moléculas que tienen elementos dentro \textbf{y fuera} de la membrana. Es decir, moléculas o macromoléculas que están parcialmente embebidas en la membrana, pero que tienen residuos que son hidrofílicos y por ende también hacen que esté en contacto con el solvente de forma directa (Fig. \ref{Fig:Fig_5-2} por ejemplo).\\\\
 Otra modificación que se vuelve atractiva es la inclusión del efecto de iones salinos a través de la ecuación de Poisson - Boltzmann por fuera de la membrana. Ya existen trabajos al respecto, como aquel por Lin, Xu, Tang y Cai \cite{Huimin-Lin}, que formulan el método de elementos de borde para una distribución de iones dada por la ecuación PB; la idea ahora es acoplar dicha formulación para incluirla en \texttt{PyGBe}, aprovechando las otras ventajas de este software.\\\\
 Por último, una mejora evidente que se requiere es reducir la cantidad de memoria que se debe dedicar para estos cálculos mediante el método de imágenes, pues este resulta el principal obstáculo en este momento.\\\\
 Otras formas de mejorar la precisión del modelo pueden venirse a la mente, pues aún queda mucho trabajo por delante, pero remitiéndose al marco de esta investigación, se logran los objetivos principales, se prueba de forma categórica que el método de imágenes sirve para cálculos de moléculas \textbf{en} membranas, y además se crea una pequeña base teórica para hacer más fluida la continuación de esta línea de investigación en el futuro, dado el caso.
 
+\pagebreak
 
-\begin{thebibliography}{30}
+\begin{thebibliography}{150}
 \bibitem{Jackson}
 Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
 \bibitem{Griffiths}
@@ -965,34 +965,36 @@ https://apbs-pdb2pqr.readthedocs.io/en/latest/formats/pqr.html
 \textit{GLOSSARY OF TERMS USED IN THEORETICAL ORGANIC CHEMISTRY} Pure Appl. Chem., Vol. 71, No. 10, pp. 1919-1981, 1999.
 \end{thebibliography}
 
-\pagebreak
-\pagenumbering{gobble}
-\section*{Anexos}
-\subsection*{\texttt{Bromoethane.pqr}}
-\begin{table}[H]
-	\centering
-	\begin{tabular}{cccccccccc}
-		ATOM & 1 & C1 & TMP & 1 & 0.013000 & -0.725000 & 0.821000 & -0.094000 & 1.908000\\
-		ATOM & 2 & C2 & TMP & 1 & 1.140000 & -0.443000 & 1.786000 & -0.005700 & 1.908000\\
-		ATOM & 3 & Br1 & TMP & 1 & 2.846000 & -0.545000 & 0.859000 & -0.181800 & 2.020000\\
-		ATOM & 4 & H1 & TMP & 1 & -0.951000 & -0.668000 & 1.337000 & 0.047100 & 1.487000\\
-		ATOM & 5 & H2 & TMP & 1 & 0.000000 & -0.000000 & 0.000000 & 0.047100 & 1.487000\\
-		ATOM & 6 & H3 & TMP & 1 & 0.103000 & -1.725000 & 0.384000 & 0.047100 & 1.487000\\
-		ATOM & 7 & H4 & TMP & 1 & 1.172000 & -1.178000 & 2.594000 & 0.070000 & 1.387000\\
-		ATOM & 8 & H5 & TMP & 1 & 1.067000 & 0.563000 & 2.208000 & 0.070000 & 1.387000\\
-	\end{tabular}
-\end{table}
-Para una descripción de lo que significa cada columna, revisar la referencia \cite{pdb2pqr_2}.
 
-\subsection*{Energía de solvatación}
-La energía de solvatación es la energía de un sistema solvente - soluto; se presenta una definición extraída de la referencia \cite{glossary_of_chem_terms}.\\
-\textit{Es el cambio en la energía de Gibbs cuando un ion o molécula se transfiere desde el vacío a un solvente. Las contribuciones principales a la energía de solvatación provienen de}:
-\begin{itemize}
-	\item \textit{La energía por la formación de la cavidad en la que se ubican las especies disueltas de soluto}.
-	\item \textit{La energía de orientación de los dipolos}.
-	\item \textit{La energía de interacción isotrópica, de origen electrostático y de dispersión}.
-	\item \textit{La energía anisotrópica por interacciones específicas, por ejemplo enlaces de hidrógeno}.
-\end{itemize}
-Para efectos de este trabajo, en vista de que se trata exclusivamente el aporte electrostático en sistemas, la energía de solvatación corresponde únicamente al reordenamiento dipolar y, por ende, al campo de reacción del solvente por la inserción de la molécula.
+%\pagebreak
+%\pagenumbering{gobble}
+
+%\section*{Anexos}
+%\subsection*{\texttt{Bromoethane.pqr}}
+%\begin{table}[H]
+%	\centering
+%	\begin{tabular}{cccccccccc}
+%		ATOM & 1 & C1 & TMP & 1 & 0.013000 & -0.725000 & 0.821000 & -0.094000 & 1.908000\\
+%		ATOM & 2 & C2 & TMP & 1 & 1.140000 & -0.443000 & 1.786000 & -0.005700 & 1.908000\\
+%		ATOM & 3 & Br1 & TMP & 1 & 2.846000 & -0.545000 & 0.859000 & -0.181800 & 2.020000\\
+%		ATOM & 4 & H1 & TMP & 1 & -0.951000 & -0.668000 & 1.337000 & 0.047100 & 1.487000\\
+%		ATOM & 5 & H2 & TMP & 1 & 0.000000 & -0.000000 & 0.000000 & 0.047100 & 1.487000\\
+%		ATOM & 6 & H3 & TMP & 1 & 0.103000 & -1.725000 & 0.384000 & 0.047100 & 1.487000\\
+%		ATOM & 7 & H4 & TMP & 1 & 1.172000 & -1.178000 & 2.594000 & 0.070000 & 1.387000\\
+%		ATOM & 8 & H5 & TMP & 1 & 1.067000 & 0.563000 & 2.208000 & 0.070000 & 1.387000\\
+%	\end{tabular}
+%\end{table}
+%Para una descripción de lo que significa cada columna, revisar la referencia \cite{pdb2pqr_2}.
+%
+%\subsection*{Energía de solvatación}
+%La energía de solvatación es la energía de un sistema solvente - soluto; se presenta una definición extraída de la referencia \cite{glossary_of_chem_terms}.\\
+%\textit{Es el cambio en la energía de Gibbs cuando un ion o molécula se transfiere desde el vacío a un solvente. Las contribuciones principales a la energía de solvatación provienen de}:
+%\begin{itemize}
+%	\item \textit{La energía por la formación de la cavidad en la que se ubican las especies disueltas de soluto}.
+%	\item \textit{La energía de orientación de los dipolos}.
+%	\item \textit{La energía de interacción isotrópica, de origen electrostático y de dispersión}.
+%	\item \textit{La energía anisotrópica por interacciones específicas, por ejemplo enlaces de hidrógeno}.
+%\end{itemize}
+%Para efectos de este trabajo, en vista de que se trata exclusivamente el aporte electrostático en sistemas, la energía de solvatación corresponde únicamente al reordenamiento dipolar y, por ende, al campo de reacción del solvente por la inserción de la molécula.
 
 \end{document}
