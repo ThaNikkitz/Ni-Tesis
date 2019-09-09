@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{250.51060872bp}%
+    \setlength{\unitlength}{200bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,25 +50,26 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,1.81556424)%
+  \begin{picture}(1,1.4)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength]{./Figures/Fig_5.eps}}%
-    \put(-0.15994267,1.68140171){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.6308544\unitlength}\raggedright \end{minipage}}}%
-    \put(0.2003928,1.34993594){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright CH$_2$\end{minipage}}}%
-    \put(0.5305828,1.34609147){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright CH$_2$\end{minipage}}}%
-    \put(0.40655042,1.34234913){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright CH\end{minipage}}}%
-    \put(0.22089556,1.25057172){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.42539585,1.25591795){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.22170473,1.15220121){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright C\end{minipage}}}%
-    \put(0.42996298,1.14685499){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright C\end{minipage}}}%
-    \put(0.5173509,1.14685498){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.30189809,1.15273582){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.55156673,1.45693596){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.4767196,1.52322913){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.62641385,1.53178308){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.55156673,1.60235323){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.52202884,1.71925788){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright CH$_2$\end{minipage}}}%
-    \put(0.52202884,1.8176284){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.23095682\unitlength}\raggedright CH$_2$\end{minipage}}}%
+    \put(0,0.1){\includegraphics[width=\unitlength]{./Figures/Fig_5.eps}}%
+    \put(0.55738655,-0.62196822){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.6983074\unitlength}\raggedright \end{minipage}}}%
+    \put(0.374,0.83){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.33,0.935){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14836003\unitlength}\raggedright CH$_2$\end{minipage}}}%
+    \put(0.495,0.933){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.06067262\unitlength}\raggedright CH\end{minipage}}}%
+    \put(0.642,0.935){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14836003\unitlength}\raggedright CH$_2$\end{minipage}}}%
+    \put(0.511,0.8282){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.665,1.04){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.671,1.146){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05699391\unitlength}\raggedright P\end{minipage}}}%
+    \put(0.555,1.145){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.77,1.1497){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.665,1.255){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.61,1.408){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.31248603\unitlength}\raggedright Colina\end{minipage}}}%
+    \put(0.94,1.42){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.19027199\unitlength}\centering Grupo\\ Hidrofílico\end{minipage}}}%
+    \put(0.982,1.17){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.22183785\unitlength}\centering Grupo\\ Fosfato\end{minipage}}}%
+    \put(0.98,0.878){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14116954\unitlength}\centering Glicerol\end{minipage}}}%
+    \put(0.92,0.455){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.24375858\unitlength}\centering Colas\\ (hidrofóbicas)\end{minipage}}}%
+    \put(-0.26,1.14){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21570004\unitlength}\centering Cabeza\\ (hidrofílica)\end{minipage}}}%
   \end{picture}%
 \endgroup%
