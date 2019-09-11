@@ -57,9 +57,11 @@
 \begin{document}
 
 \include{Portada/anteportada}
+\include{Portada/portada}
 \pagebreak
 \include{Resumen}
-\include{Portada/portada}
+\pagebreak
+\include{Abstract}
 
 %\newpage
 %\noindent
@@ -77,8 +79,7 @@
 \newpage
 
 \chapter{Introducción}\label{Chap:Intro}
-En las últimas décadas ha crecido el interés por modelar de forma más precisa el comportamiento de sistemas biológicos, destacando las células y sus componentes y procesos. Es en esta línea de investigación que surgen y se desarrollan métodos para representar las interacciones que ocurren tanto dentro de la célula como a nivel extracelular.\\\\
-Sin embargo, la complejidad de estos fenómenos hace que sea imposible hasta el momento abarcar de manera completa la naturaleza del proceso biológico correspondiente. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
+La complejidad de los fenómenos biológicos hace que sea imposible hasta el momento analizar de manera completa su naturalez. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
 Para modelar la fenomenología de los sistemas biológicos según las diferentes disciplinas científicas mencionadas se utiliza una cantidad de métodos computacionales, de los cuales quizás los más conocidos son la dinámica molecular (MD) en casos explícitos y el método de elementos finitos (FEM) en casos implícitos. Por supuesto y como todo en la vida, ambos tienen sus ventajas y desventajas; un punto en contra que tienen en común ambos tipos de modelación es que en general son lentos (MD más que FEM). Por esto es que ha empezado a tomar cada vez más fuerza el método de elementos de borde/frontera (BEM), que permite resolver problemas físicos comparativamente rápido a expensas de una formulación un tanto más compleja.\\\\
 Por tanto y utilizando este método, el objetivo global de este trabajo consiste en obtener las ecuaciones de Green que permiten representar cargas en un medio acotado por dos interfaces paralelas, implementarlo en un programa de cálculo energético, y contrastar los resultados con aquellos de códigos o programas ya validados. Sumado a esto, la idea es que dicha implementación sea computacionalmente barata, conserve un buen nivel de precisión, y que la velocidad de cálculo sea competitiva frente a un programa de referencia en casos de estudio seleccionados. Hay que tener presente que existen otros fenómenos además de los electrostáticos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza; este trabajo se remite a electrostática de proteínas totalmente embebidas en la membrana.\\\\
 El presente texto busca entonces \textit{presentar la física que hay tras una interacción electrostática en medios dieléctricos, trabajando un método que permita modelar una membrana celular a partir de un sistema de tres medios separados por dos interfaces, con cargas distribuidas en el medio encerrado. Teniendo este modelo, se lo implementa en un código y se procede a la comparación con programas ya reconocidos}.
@@ -457,7 +458,7 @@ APBSmem entrega la energía total de la proteína embebida en la membrana menos 
 Para poder comparar los resultados presentados más adelante con los de APBSmem y APBS, es necesario sumar las energías de solvatación entregadas por estos últimos dos programas a modo de obtener la energía de solvatación del sistema membrana - proteína. Otro camino es modificar el archivo de entrada \texttt{.solv.in} para que calcule directamente lo mismo que \texttt{PyGBe}.
 
 \subsection{PyGBe}\label{subsec:PyGBe}
-Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza el Fast Multipole Method junto con un algoritmo de tipo treecode para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se llevó a cabo en una versión básica de PyGBe que no incluye el uso de GPUs, de un algoritmo treecode, ni del método de multipolos rápidos. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de \texttt{PyGBe} utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto lo que se modifica para incluir el aporte de membrana de forma implícita, como se explica más adelante.\\\\
+Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza un algoritmo de tipo treecode a modo de implementación del Fast Multipole Method para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se llevó a cabo en una versión básica de PyGBe que no incluye el uso de GPUs, de un algoritmo treecode, ni del método de multipolos rápidos. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de \texttt{PyGBe} utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto lo que se modifica para incluir el aporte de membrana de forma implícita, como se explica más adelante.\\\\
 PyGBe funciona leyendo una serie de archivos. Los inputs del programa son un \texttt{.config} y un \texttt{.param}. Además, el primero de estos dos archivos hace referencia a otro par de archivos, \texttt{.face} y \texttt{.vert}, así como a un \texttt{.pqr} o \texttt{.crd}. En primera instancia se profundiza en qué son estos archivos, y luego se presenta y desarrolla la estructura funcional de \texttt{PyGBe} (\texttt{pygbe\_matrix} específicamente).
 
 \subsubsection{Archivo \texttt{.config}}
@@ -571,7 +572,7 @@ K_{v,w}^M &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\nabla\left(\frac{\omega_k\c
 Aquí, $\omega_k$ son los pesos de la cuadratura Gaussiana, $q_i$ mantiene su definición según \ref{eqn:RIC_terms} con carga $q = 1$, $\mathbf{r}_{v,k,i}^*$ es la posición de la $i$-ésima imagen del $k$-ésimo punto de cuadratura del panel $v$, y $A_v$ es el área de dicho panel.\\\\
 Lo anterior aplica para el panel $v$ como \texttt{src} y $w$ como \texttt{tar} (es decir, se esta calculando el potencial debido a $v$ en el punto de colocación del panel $w$), por lo que cada término en la matriz del sistema \ref{eqn:Mem_matrix_form} tiene dimensiones de la cantidad de paneles objetivo $\times$ cantidad de paneles fuente, y el sistema completo tiene una cantidad de $2\times$(paneles objetivo $\times$ paneles fuente) elementos. El método recién explicado funciona bien cuando los paneles objetivo están a una cierta distancia del panel fuente; en general, estando a más de $10^{-10} [\angstrom]$, no se tienen problemas. Esto es, para paneles \textit{lejanos} se utilizan pocos puntos de cuadratura, para paneles bajo cierto umbral pero que aún no están bajo los mencionados $10^{-10} [\angstrom]$, simplemente se aumenta la densidad de puntos.\\\\
 Distinto es el caso del panel propio, que requiere la mencionada integración semianalítica, pues las distancias serían muy pequeñas entre los puntos de cuadratura y el centro del panel (distancia \texttt{tar} - \texttt{src}), y el denominador de las funciones de Green se volvería prácticamente cero. Esta forma de integración se utiliza, en el caso del método de imágenes, para el término 0 del contador, pues todos los demás están al menos a una distancia $(a - z_0)$ con respecto al punto de cuadratura; $z_0$ es la tercera coordenada del punto de cuadratura.\\\\
-El método que se utiliza para integrar de forma semianalítica se inicia tomando el punto de colocación y proyectándolo sobre el plano del panel. Esto permite formar tres triángulos ($\Delta_{O12}$, $\Delta_{O23}$, $\Delta_{O13}$). Al trabajar una función que se quiera integrar sobre este grupo de triángulos en coordenadas polares, se puede integrar de forma analítica en la variable $r$, de tal forma que solo es necesario variar el ángulo de integración para recorrer cada uno de los tres lados de cada triángulo que se forma, como se muestra a continuación en la Figura \ref{Fig:Fig_6}.
+El método que se utiliza para integrar de forma semianalítica se inicia tomando el punto de colocación y proyectándolo sobre el plano del panel. Esto permite formar tres triángulos ($\Delta_{O12}$, $\Delta_{O23}$, $\Delta_{O13}$). Al trabajar una función que se quiera integrar sobre este grupo de triángulos en coordenadas polares, se puede integrar analíticamente en la variable $r$, de tal forma que solo es necesario variar el ángulo de integración para recorrer cada uno de los tres lados de cada triángulo del conjunto, como se muestra a continuación en la Figura \ref{Fig:Fig_6}.
 
 \begin{figure}[H]
 \centering
@@ -687,7 +688,7 @@ Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación las e
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Energías de solvatación calculadas, tiempos de cálculo y memoria RAM utilizada para los cómputos según la densidad de malla probada, para el archivo \texttt{centered\_ion}.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|cccccc|}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
@@ -703,7 +704,7 @@ Para el segundo caso, \texttt{3q}, las energías son mayores, por lo que como se
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Energías de solvatación calculadas según la densidad de malla para el archivo \texttt{3q}.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|cccc|}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe \\
@@ -719,7 +720,7 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Energías de solvatación calculadas, tiempos de cálculo y memoria RAM para cada una de las tres mallas de la molécula de \texttt{bromoethane}.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|cccccc|}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
@@ -735,10 +736,10 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 \subsection{Resultados mediante APBS - APBSmem}\label{subsec:resultados_apbs}
 
 Para poder validar los resultados obtenidos con \texttt{PyGBe} se requiere una referencia contra la cual comparar. El software \texttt{APBSmem} se utiliza para este propósito, en vista de su renombre. Ahora bien, el programa lo que hace es parcelar una ``caja" (el dominio de integración) en nodos en los que calcula, dependiendo de la ubicación y condiciones de dicho nodo, la ecuación gobernante correspondiente. Por eso es que se requiere setear condiciones en los bordes de la mencionada caja. \texttt{APBSmem}, al igual que \texttt{APBS}, permite establecer dichas condiciones. Para el caso trabajado existen tres, que son explicados en el apartado \ref{subsec:APBS}. Se presentan por ende tres tablas para el caso del archivo \texttt{centered\_ion}, dos para el caso \texttt{3q} (se explica el por qué al presentar los resultados), y el valor de evaluación más fino para la molécula de \texttt{bromoethane}, en vista que se omite la extrapolación de Richardson para esta molécula.\\\\
-Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por un cubo de $128\,\angstrom$ de lado, con tres cantidades de elementos de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$; de esta forma se mantiene una tasa de refinación de malla constante. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Siguiendo el mismo orden que para \texttt{PyGBe}, los resultados para el primer caso de estudio son los siguientes
+Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por uno cúbico de $128\,\angstrom$ de lado, con tres cantidades de elementos de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$; de esta forma se mantiene una tasa de refinación de malla constante. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Siguiendo el mismo orden que para \texttt{PyGBe}, los resultados para el primer caso de estudio son los siguientes
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Resultados, tiempos de cálculo y RAM utilizada para el cálculo sobre el archivo \texttt{centered\_ion}, mediante APBS.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|c|cccccc|}\hline
 		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
@@ -759,7 +760,7 @@ Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular,
 A continuación se muestran los resultados para \texttt{3q}, y la razón de solo presentar dos sets de resultados para esta molécula es que se repite el comportamiento apreciado en la tabla anterior, \ref{table:apbs_centered_ion}; las energías de solvatación para las condiciones \texttt{sdh} y \texttt{mdh} no varían, probablemente porque los casos de estudio son muy simples. Por esto es que únicamente se presentan los datos correspondientes a condiciones de contorno \texttt{zero} y \texttt{sdh}.
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Resultados, tiempos de cálculo y RAM utilizada para las tras mallas en el caso de estudio \texttt{3q}, mediante APBS.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|c|cccccc|}\hline
 		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
@@ -779,7 +780,7 @@ Para el caso de la molécula de bromoetano se presenta simplemente el valor más
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Resultado, tiempo de cálculo y RAM utilizada para la malla más fina en el caso de estudio de \texttt{bromoethane}, mediante APBS.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|c|cccccc|}\hline
 		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
@@ -809,7 +810,7 @@ Con este método aclarado es que se presentan los resultados extrapolados para l
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Valores teóricos extrapolados mediante extrapolación de Richardson de los distintos casos de estudio.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|c|ccc|}\hline
 		 & \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
@@ -820,11 +821,11 @@ Con este método aclarado es que se presentan los resultados extrapolados para l
 \end{table}
 
 \noindent
-También se muestran a continuación las tasas de convergencia según la fórmula \ref{eqn:convergence_rating}; con esta información podemos ver la rapidez con la que los cálculos hechos convergen al resultado extrapolado, y sirve como herramienta también para discernir qué tan bueno es el modelo utilizado. Mientras mayor el valor, más rápida es la convergencia.
+También se muestran a continuación las tasas de convergencia según la fórmula \ref{eqn:convergence_rating}; con esta información podemos ver la rapidez con la que los cálculos hechos convergen al resultado extrapolado, y sirve como herramienta también para discernir qué tan bueno es el modelo utilizado; mientras mayor el valor, más rápida es la convergencia.
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Convergencia al valor teórico extrapolado de los resultados, para PyGBE y las dos condiciones importantes de APBS.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|c|ccc|}\hline
 		& \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
@@ -840,7 +841,7 @@ Teniendo los valores de la tabla \ref{table:Rich_extrapolation}, se pueden calcu
 
 \begin{table}[H]
 	\centering
-	\caption{}
+	\caption{Diferencia de PyGBe con inclusión de membrana, con las dos condiciones de contorno de APBS.}
 	\def\arraystretch{0.8}
 	\begin{tabular}{|c|ccc|}\hline
 		& \texttt{centered\_ion} & \texttt{3q} & \texttt{bromoethane} \\ \hline
@@ -857,21 +858,21 @@ Viendo el gráfico \ref{graph:Potencial}, resulta evidente la naturaleza oscilat
 \begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Potencial}
-	\caption{}\label{graph:Potencial}
+	\caption{Resultados de PyGBE con membrana para el caso \texttt{centered\_ion}, según se varía el número de cargas imagen del método.}\label{graph:Potencial}
 \end{graph}
 \noindent
-A pesar de lo bueno de este hecho, también se puede apreciar que el valor extrapolado fue trabajado con $N=41$ y se aprecia su cercanía justamente al potencial con ese número de cargas imagen. Por otro lado, se ve que dentro de todo la convergencia no es rápida, y para asegurar un resultado con un buen nivel de precisión se requieren muchos términos en la sumatoria.
+A pesar de lo bueno de este hecho, también se puede apreciar que el valor extrapolado fue trabajado con $N=41$ y es clara su cercanía justamente al potencial con ese número de cargas imagen. Por otro lado, se ve que dentro de todo la convergencia no es rápida, y para asegurar un resultado con un buen nivel de precisión se requieren muchos términos en la sumatoria.
 \begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error}
-	\caption{}\label{graph:Error}
+	\caption{Variación porcentual en el resultado, en función del número de imágenes empleado.}\label{graph:Error}
 \end{graph}
 \noindent
 Del gráfico \ref{graph:Error} se puede rescatar que, como se espera que suceda en una expansión, a medida que se agregan términos, la variación entre los valores va disminuyendo; esto es claro a partir del gráfico de Potencial v/s $N$, pero se hace más evidente en este caso. Para ver qué tipo de decaimiento tiene el error, se grafica dicho eje (el de las ordenadas) en escala logarítmica. Como se ven en el gráfico \ref{graph:Error_log}, la relación se torna lineal, por lo que el error disminuye con el logaritmo de $N$.
 \begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error_log}
-	\caption{}\label{graph:Error_log}
+	\caption{Variación porcentual, mostrada en escala logarítmica, de los resultados en función del número de cargas imagen.}\label{graph:Error_log}
 \end{graph}
 Con esto queda definido que el método de imágenes aplicado a través de BEM sirve para modelar el potencial de una molécula, macromolécula o similar, embebida en una membrana con otro medio dieléctrico por fuera de las interfaces de esta última. El siguiente capítulo cierra las ideas desarrolladas en este escrito, y presenta además puntos que se considera importantes trabajar si es que se desea mejorar o continuar el hilo desarrollado en el presente texto.
 
@@ -918,9 +919,9 @@ Con esto queda definido que el método de imágenes aplicado a través de BEM si
 
 
 \chapter{Conclusiones}
-Para poder llevar a cabo este trabajo, se dedicó mucho tiempo al aprendizaje de la teoría y a la búsqueda de una forma de utilizar el método de imágenes para representar interfaces. Esto es de esperarse, pues lo que más esfuerzo toma aprender no es cómo utilizar una herramienta - en este caso \texttt{Python} y sus bibliotecas - sino qué es lo que se debe hacer con ella y, en caso de que falle, por qué hay problemas. Con esto mencionado, corresponde regresar a los objetivos planteado en la introducción de este escrito y preguntarse si efectivamente se lograron. En primer lugar, se logra averiguar sobre la forma de modelar interfaces paralelas mediante el método de imágenes, por lo que este punto se considera un éxito. En segundo lugar, dicho método es acoplado a \texttt{PyGBe} efectivamente, y cumple con errores porcentuales bajos, lo que lleva a tachar estos objetivos de la lista, pues se cumplen. En cuanto a tiempo de cálculo, la implementación hecha es bastante competitiva, como se ya se mencionó en la sección \ref{Sec:analisis_resultados}. Con todos estas metas cumplidas, la modificación hecha a \texttt{PyGBe} para incluir una forma básica de una ``membrana" se puede considerar exitosa, pero tiene una falencia clave que consiste en el alto consumo de memoria que va ligado a $N_i$, el número de imágenes \textbf{por} elemento de borde. Sin embargo, la cercanía de los resultados a aquellos obtenidos con \texttt{APBSmem} da cuenta de la eficacia del método estudiado en este trabajo. Por lo tanto, y como conclusión, se puede afirmar que la prueba de concepto cumple con lo que se esperaba y de la forma que se esperaba; los tiempos de cálculo para \texttt{PyGBe} mejorarán automáticamente si se logra reducir el número de imágenes necesarias para alcanzar resultados con buena precisión. También se rescata de este trabajo que, para casos en que se requieran dominios de integración muy grandes (esto en \texttt{APBS - APBSmem}), \texttt{PyGBe} es mucho más eficiente en cuanto a velocidad de cálculo, debido a que el programa de referencia debe generar los mapas pertinentes, luego modificarlos para incluir la membrana, y finalmente, después de todo esto, realizar los cálculos.
+Para poder llevar a cabo este trabajo, se dedicó mucho tiempo al aprendizaje de la teoría y a la búsqueda de una forma de utilizar el método de imágenes para representar interfaces. Esto es de esperarse, pues lo que más esfuerzo toma aprender no es cómo utilizar una herramienta - en este caso \texttt{Python} y sus bibliotecas - sino qué es lo que se debe hacer con ella y, en caso de que falle, por qué hay problemas. Con esto mencionado, corresponde regresar a los objetivos planteados en la introducción de este escrito y preguntarse si efectivamente se lograron. En primer lugar, se logra averiguar sobre la forma de modelar interfaces paralelas mediante el método de imágenes, por lo que este punto se considera un éxito. En segundo lugar, dicho método es acoplado a \texttt{PyGBe} efectivamente, y cumple con errores porcentuales bajos, lo que lleva a tachar estos objetivos de la lista, pues se cumplen. En cuanto a tiempo de cálculo, la implementación hecha es bastante competitiva, como se ya se mencionó en la sección \ref{Sec:analisis_resultados}. Con todos estas metas cumplidas, la modificación hecha a \texttt{PyGBe} para incluir una forma básica de una ``membrana" se puede considerar exitosa, pero tiene una falencia clave que consiste en el alto consumo de memoria que va ligado a $N_i$, el número de imágenes \textbf{por} elemento de borde. Sin embargo, la cercanía de los resultados a aquellos obtenidos con \texttt{APBSmem} da cuenta de la eficacia del método estudiado en este trabajo. Por lo tanto, y como conclusión, se puede afirmar que la prueba de concepto cumple con lo que se esperaba y de la forma que se esperaba; los tiempos de cálculo para \texttt{PyGBe} mejorarán automáticamente si se logra reducir el número de imágenes necesarias para alcanzar resultados con buena precisión. También se rescata de este trabajo que, para casos en que se requieran dominios de integración muy grandes (esto en \texttt{APBS - APBSmem}), \texttt{PyGBe} es mucho más eficiente en cuanto a velocidad de cálculo, debido a que el programa de referencia debe generar los mapas pertinentes, luego modificarlos para incluir la membrana, y finalmente, después de todo esto, realizar los cálculos.
 \section{Continuación del trabajo}
-Se deben realizar una serie de mejoras y cambios a \texttt{PyGBe} en su estado actual para realmente hacerlo un competidor fuerte en el cálculo de energías de sistemas molécula - mebrana. Estos cambios quedan como trabajos futuros, pero al menos en cierta forma parten de lo que se plasma en este informe. Primero esta lo más importante, que realmente lo haría funcionalmente interesante, y que corresponde a la capacidad de calcular energías para moléculas que tienen elementos dentro \textbf{y fuera} de la membrana. Es decir, moléculas o macromoléculas que están parcialmente embebidas en la membrana, pero que tienen residuos que son hidrofílicos y por ende también hacen que esté en contacto con el solvente de forma directa (Fig. \ref{Fig:Fig_5-2} por ejemplo).\\\\
+Se deben realizar una serie de mejoras y cambios a \texttt{PyGBe} en su estado actual para realmente hacerlo un competidor fuerte en el cálculo de energías de sistemas molécula - mebrana. Estos cambios quedan como trabajos futuros, pero al menos en cierta forma parten de lo que se plasma en este informe. Primero esta lo más importante, que realmente lo haría funcionalmente interesante, y que corresponde a la capacidad de calcular energías para moléculas que tienen elementos dentro \textbf{y fuera} de la membrana: las proteínas transmembrana. Es decir, moléculas o macromoléculas que están parcialmente embebidas en la membrana, pero que tienen residuos que son hidrofílicos y por ende también hacen que esté en contacto con el solvente de forma directa (Fig. \ref{Fig:Fig_5-2} por ejemplo).\\\\
 Otra modificación que se vuelve atractiva es la inclusión del efecto de iones salinos a través de la ecuación de Poisson - Boltzmann por fuera de la membrana. Ya existen trabajos al respecto, como aquel por Lin, Xu, Tang y Cai \cite{Huimin-Lin}, que formulan el método de elementos de borde para una distribución de iones dada por la ecuación PB; la idea ahora es acoplar dicha formulación para incluirla en \texttt{PyGBe}, aprovechando las otras ventajas de este software.\\\\
 Por último, una mejora evidente que se requiere es reducir la cantidad de memoria que se debe dedicar para estos cálculos mediante el método de imágenes, pues este resulta el principal obstáculo en este momento.\\\\
 Otras formas de mejorar la precisión del modelo pueden venirse a la mente, pues aún queda mucho trabajo por delante, pero remitiéndose al marco de esta investigación, se logran los objetivos principales, se prueba de forma categórica que el método de imágenes sirve para cálculos de moléculas \textbf{en} membranas, y además se crea una pequeña base teórica para hacer más fluida la continuación de esta línea de investigación en el futuro, dado el caso.
