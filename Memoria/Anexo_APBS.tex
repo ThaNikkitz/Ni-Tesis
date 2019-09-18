@@ -1,4 +1,4 @@
-
+\section*{Funcionamiento de APBSmem}
 \noindent
 APBSmem funciona por defecto a través de una interfaz gráfica, pero esto puede resultar limitante, pues el resultado entregado es una energía de solvatación entre estados fijos, y hasta donde se sabe, no hay forma de modificar esto por GUI. Afortunadamente se puede trabajar con APBSmem mediante terminal, lo que permite un mayor grado de flexibilidad a la hora de realizar cálculos.\\\\
 Se presenta a continuación una estructura de trabajo que se puede aplicar para obtener los resultados de APBSmem utilizando solo una de sus rutinas acoplada al programa APBS base; esto está basado en un post en un foro oficial de sourceforge por parte de uno de los desarrolladores de APBSmem. También se explica paso a paso las acciones que realiza cada parte de este instructivo, al menos según el entendimiento del autor.
@@ -31,5 +31,5 @@ z_m0 l_m pdie sdie mdie idie V I R_m1 R_m0 a0 flood focus
 	\texttt{a0} especifica el espesor de las cabezas hidrofílicas de la membrana, en $\angstrom$.\\
 	\texttt{flood} es un booleano, que define si se emplea el método flooding. Este método permite al programa identificar el solvente a remplazar como todo lo que este alrededor y por fuera de la proteína, evitando así sobreescribir cavidades y canales de paso como membrana.\\
 	\texttt{focus} corresponde al nivel de focusing que se utiliza para la generación del set de mapas. Hay más información al respecto en \cite{pdb2pqr_1} sobre el método de focusing.
-	\item 
+	\item Finalmente, se llama nuevamente a APBS con los mapas creados en el ítem anterior, que incluyen la membrana, y se calcula la diferencia entre los estados de interés; por defecto estos son la proteína en la membrana y la proteína en el solvente.
 \end{enumerate}

@@ -53,23 +53,23 @@
   \begin{picture}(1,1.4)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0.1){\includegraphics[width=\unitlength]{./Figures/Fig_5.eps}}%
+    \put(0,0.05){\includegraphics[width=\unitlength]{./Figures/Fig_5.eps}}%
     \put(0.55738655,-0.62196822){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.6983074\unitlength}\raggedright \end{minipage}}}%
-    \put(0.374,0.83){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.33,0.935){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14836003\unitlength}\raggedright CH$_2$\end{minipage}}}%
-    \put(0.495,0.933){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.06067262\unitlength}\raggedright CH\end{minipage}}}%
-    \put(0.642,0.935){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14836003\unitlength}\raggedright CH$_2$\end{minipage}}}%
-    \put(0.511,0.8282){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.665,1.04){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.671,1.146){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05699391\unitlength}\raggedright P\end{minipage}}}%
-    \put(0.555,1.145){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.77,1.1497){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.665,1.255){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
-    \put(0.61,1.408){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.31248603\unitlength}\raggedright Colina\end{minipage}}}%
-    \put(0.94,1.42){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.19027199\unitlength}\centering Grupo\\ Hidrofílico\end{minipage}}}%
-    \put(0.982,1.17){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.22183785\unitlength}\centering Grupo\\ Fosfato\end{minipage}}}%
-    \put(0.98,0.878){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14116954\unitlength}\centering Glicerol\end{minipage}}}%
-    \put(0.92,0.455){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.24375858\unitlength}\centering Colas\\ (hidrofóbicas)\end{minipage}}}%
-    \put(-0.26,1.14){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21570004\unitlength}\centering Cabeza\\ (hidrofílica)\end{minipage}}}%
+    \put(0.374,0.78){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.33,0.885){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14836003\unitlength}\raggedright CH$_2$\end{minipage}}}%
+    \put(0.495,0.883){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.06067262\unitlength}\raggedright CH\end{minipage}}}%
+    \put(0.642,0.885){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14836003\unitlength}\raggedright CH$_2$\end{minipage}}}%
+    \put(0.511,0.7782){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.664,0.99){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.671,1.096){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.05699391\unitlength}\raggedright P\end{minipage}}}%
+    \put(0.555,1.095){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.77,1.1){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.664,1.205){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.04738663\unitlength}\raggedright O\end{minipage}}}%
+    \put(0.61,1.358){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.31248603\unitlength}\raggedright Colina\end{minipage}}}%
+    \put(0.94,1.37){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.19027199\unitlength}\centering Grupo\\ Hidrofílico\end{minipage}}}%
+    \put(0.982,1.12){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.22183785\unitlength}\centering Grupo\\ Fosfato\end{minipage}}}%
+    \put(0.98,0.828){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14116954\unitlength}\centering Glicerol\end{minipage}}}%
+    \put(0.92,0.405){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.24375858\unitlength}\centering Colas\\ (hidrofóbicas)\end{minipage}}}%
+    \put(-0.26,1.09){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21570004\unitlength}\centering Cabeza\\ (hidrofílica)\end{minipage}}}%
   \end{picture}%
 \endgroup%

@@ -63,28 +63,37 @@
 \pagebreak
 \include{Abstract}
 
-%\newpage
-%\noindent
-%\\\\\\\\\\\\
-%\large{``\textit{The greatest danger for most of us}}
-%\begin{center}
-%\large{\textit{is not that our aim is too high and we miss it,}}
-%\end{center}
-%\begin{flushright}
-%\large{\textbf{but that it is too low and we reach it.}"\\}\bigskip
-%- Michelangelo
-%\end{flushright}
-%\newpage
+\newpage
+\noindent
+\\\\\\\\\\\\
+\large{``\textit{The greatest danger for most of us}}
+\begin{center}
+\large{\textit{is not that our aim is too high and we miss it,}}
+\end{center}
+\begin{flushright}
+\large{\textbf{but that it is too low and we reach it.}"\\}\bigskip
+- Michelangelo
+\end{flushright}
+\newpage
 \tableofcontents
 \newpage
 
 \chapter{Introducción}\label{Chap:Intro}
-La complejidad de los fenómenos biológicos hace que sea imposible hasta el momento analizar de manera completa su naturalez. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
+La complejidad de los fenómenos biológicos hace que sea imposible hasta el momento analizar de manera completa su naturaleza. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
 Para modelar la fenomenología de los sistemas biológicos según las diferentes disciplinas científicas mencionadas se utiliza una cantidad de métodos computacionales, de los cuales quizás los más conocidos son la dinámica molecular (MD) en casos explícitos y el método de elementos finitos (FEM) en casos implícitos. Por supuesto y como todo en la vida, ambos tienen sus ventajas y desventajas; un punto en contra que tienen en común ambos tipos de modelación es que en general son lentos (MD más que FEM). Por esto es que ha empezado a tomar cada vez más fuerza el método de elementos de borde/frontera (BEM), que permite resolver problemas físicos comparativamente rápido a expensas de una formulación un tanto más compleja.\\\\
-Por tanto y utilizando este método, el objetivo global de este trabajo consiste en obtener las ecuaciones de Green que permiten representar cargas en un medio acotado por dos interfaces paralelas, implementarlo en un programa de cálculo energético, y contrastar los resultados con aquellos de códigos o programas ya validados. Sumado a esto, la idea es que dicha implementación sea computacionalmente barata, conserve un buen nivel de precisión, y que la velocidad de cálculo sea competitiva frente a un programa de referencia en casos de estudio seleccionados. Hay que tener presente que existen otros fenómenos además de los electrostáticos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza; este trabajo se remite a electrostática de proteínas totalmente embebidas en la membrana.\\\\
+Por tanto y utilizando este método, el objetivo global de este trabajo consiste en obtener las ecuaciones de Green que permiten representar cargas en un medio acotado por dos interfaces paralelas, implementarlo en un programa de cálculo energético, y contrastar los resultados con aquellos de códigos o programas ya validados. Sumado a esto, la idea es que dicha implementación sea computacionalmente barata, conserve un buen nivel de precisión, y que la velocidad de cálculo sea competitiva frente a un programa de referencia en casos de estudio seleccionados.\\\\
+La física de lo que buscamos representar consiste en una molécula totalmente embebida en una membrana de cierto espesor $a$, cuyos límites son superficies planas infinitas. Este sistema se modela a través de cargas imágenes mediante el método BEM, y esquemáticamente se muestra en la figura \ref{Fig:Intro}.
+
+\begin{figure}[h]
+\centering
+\input{./Figures/Fig_Intro.eps_tex}
+\caption{Esquema de la situación física que se quiere modelar; una proteína en una membrana.}\label{Fig:Intro}
+\end{figure}
+\noindent
+Hay que tener presente que existen otros fenómenos además de los electrostáticos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza; este trabajo se remite a electrostática de proteínas totalmente embebidas en la membrana.\\\\
 El presente texto busca entonces \textit{presentar la física que hay tras una interacción electrostática en medios dieléctricos, trabajando un método que permita modelar una membrana celular a partir de un sistema de tres medios separados por dos interfaces, con cargas distribuidas en el medio encerrado. Teniendo este modelo, se lo implementa en un código y se procede a la comparación con programas ya reconocidos}.
 %Sumado a esto se presentan resúmenes de publicaciones relevantes para la línea de estudio pertinente a este escrito, y que incluso podrían servir para mejorar la precisión del modelo al representar de manera más fiel la física de las interacciones de interés, al sumar otro tipo de interacciones o fenómenos, o al plantear respuestas a interrogantes que pudieran surgir en un futuro.\\\\
-En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. También se echa un vistazo a la formulación que da pie al método BEM, la denominada Boundary Integral Equation de un sistema de ecuaciones diferencial, además de contextualizar sobre aspectos básicos de la membrana para entender qué es lo que se busca. A continuación se presenta un ejemplo de formulación integral de frontera con el caso de la ecuación de Poisson - Boltzmann, que no se trabaja directamente en esta investigación, pero que va de la mano con la metodología de solvente implícito; además, en el caso de no haber una distribución de iones ($\kappa = 0$), se recupera una ecuación de Laplace, la que si se utiliza en este trabajo. Junto a esto, se describen los programas relevantes para este trabajo. Entrando a la parte fundamental de esta investigación, se desarrolla el método de imágenes para un sistema con dos interfaces paralelas, y cómo se incluye en la formulación, además de su implementación al programa \texttt{PyGBe}. Por último, se presentan los resultados obtenidos y cómo se comparan con los de programas como \texttt{APBS - APBSmem}; esto considera también la forma en que influye la variación de parámetros del método de imágenes en el resultado y los tiempos de cálculo. Tras tener estos resultados se termina presentando las conclusiones extraídas de este trabajo.
+En primer lugar se presenta una introducción a la teoría que permite trabajar los sistemas dieléctricos con interfaz de forma macroscópica y mediante el método de imágenes. También se echa un vistazo a la formulación que da pie al método BEM, la denominada Boundary Integral Equation de un sistema de ecuaciones diferencial, además de contextualizar sobre aspectos básicos de la membrana para entender qué es lo que se busca. A continuación se presenta un ejemplo de formulación integral de frontera con el caso de la ecuación de Poisson - Boltzmann, que no se trabaja directamente en esta investigación, pero que va de la mano con la metodología de solvente implícito; además, en el caso de no haber una distribución de iones ($\kappa = 0$), se recupera una ecuación de Laplace, la que si se utiliza en este trabajo. Junto a esto, se describen los programas relevantes para lograr los objetivos planteados. Entrando a la parte fundamental de esta investigación, se desarrolla el método de imágenes para un sistema con dos interfaces paralelas, y cómo se incluye en la formulación, además de su implementación al programa \texttt{PyGBe}. Por último, se presentan los resultados obtenidos y cómo se comparan con los de programas como \texttt{APBS - APBSmem}; esto considera también la forma en que influye la variación del número de cargas del método de imágenes en el resultado. Tras tener estos resultados se termina presentando las conclusiones extraídas de este trabajo.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,23 +115,29 @@ Para un caso con una distribución continua de carga, se define el flujo de camp
 \int_{\partial\Omega}\vec{E}(\mathbf{r})\cdot \hat{\mathbf{n}}\, d\partial\Omega = \int_{\Omega} \frac{\rho}{\varepsilon}\, d\Omega \label{eqn:Gauss_law_int}
 \end{equation}
 Esta es la ley de Gauss en forma integral. Con el teorema de la divergencia aplicado a la ecuación (\ref{eqn:Gauss_law_int}) se llega a la ley de Gauss en forma diferencial:
+
 \begin{equation}
 \int_{\Omega} \nabla\cdot\vec{E} \, d\Omega = \int_\Omega \frac{\rho}{\varepsilon}\, d\Omega \quad\implies\quad \nabla\cdot\vec{E} = \frac{\rho}{\varepsilon} \label{eqn:Gauss_law_diff}
 \end{equation}
+\noindent
 Por otro lado, como el campo eléctrico es un campo vectorial irrotacional, se puede aplicar el teorema fundamental del cálculo para obtener su función potencial. Como $\vec{E}(\mathbf{r})$ es una variable solo de la diferencia de posiciones entre la de la carga y el punto de evaluación $|\mathbf{r} - \mathbf{r}_0|$ (función solo del radio), la integración es directa si la referencia para el potencial eléctrico se toma como $0$ al infinito, quedando
+
 \begin{align*}\label{eqn:potential}
 \vec{E} = \nabla\phi \quad\rightarrow\quad\phi{(\mathbf{r})} & = -\int_\infty^{\mathbf{r}} \vec{E}(\mathbf{r}^*) d\mathbf{r}^* \\
 & = -\int_\infty^{\mathbf{r}} \frac{q}{4\pi\varepsilon}\frac{(\mathbf{r}^*-\mathbf{r}_0)}{|\mathbf{r}^* - \mathbf{r}_0|^3} d\mathbf{r}^* = \frac{q}{4\pi\varepsilon}\frac{1}{|\mathbf{r} - \mathbf{r}_0|}\numberthis
 \end{align*}
+\noindent
 Esto es en los casos en que se tenga una carga puntual, haciendo el paralelo con la ecuación (\ref{eqn:charge_field}). Para una carga distribuida se debe considerar la ecuación (\ref{eqn:Gauss_law_int}), y siguiendo la misma lógica se llega a
+
 \begin{equation}\label{eqn:integral_potential}
 \phi(\mathbf{r}) = \int_\Omega \frac{\rho(\mathbf{r}_0)}{4\pi\varepsilon}\frac{1}{|\mathbf{r}-\mathbf{r}_0|}d\Omega
 \end{equation}
-En los casos en que el medio en el que está la carga $q$ no sea el vacío, se debe considerar que la materia que lo compone si reaccionará al campo eléctrico asociado a $q$; en estos casos, $\varepsilon \neq \varepsilon_0$. Es decir, hay que aclarar que las Ecs. (\ref{eqn:Gauss_law_int}) y (\ref{eqn:Gauss_law_diff}) no están completas, pues falta considerar el efecto de la \textit{polarización}. Además resulta interesante entender qué es realmente la permitividad, que esta relacionada directamente con la polarización del medio; a continuación se explican estos puntos.
+\noindent
+En los casos en que el medio en el que está la carga $q$ no sea el vacío, se debe considerar que la materia que lo compone si reaccionará al campo eléctrico asociado a $q$; en estos casos, $\varepsilon \neq \varepsilon_0$. Es decir, hay que aclarar que las ecuaciones (\ref{eqn:Gauss_law_int}) y (\ref{eqn:Gauss_law_diff}) no están completas, pues falta considerar el efecto de la \textit{polarización}. Además resulta interesante entender qué es realmente la permitividad, que está relacionada directamente con la polarización del medio; a continuación se explican estos puntos.
 
 \section{La permitividad de un medio material, la polarización y el campo eléctrico microscópico}\label{Sec:perm_polarization_mic_E_field}
 Se puede entender la constante dieléctrica de un material (o permitividad) como una medida del reordenamiento de las partículas de un medio a nivel molecular frente a la presencia de un campo eléctrico externo, y provocando así que dichas partículas generen un \textit{campo eléctrico inducido}, que es opuesto en sentido al original, pero no necesariamente de la misma intensidad; este disminuye el flujo neto del campo eléctrico externo, por lo que impide en cierta medida su paso, dando su nombre a la propiedad - en qué grado los átomos del material \textbf{permiten} el flujo de campo eléctrico.\\\\
-La permitividad que se utiliza en las Ecuaciones (\ref{eqn:charge_field} - \ref{eqn:integral_potential}) es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se menciona que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es considerada como referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
+La permitividad que se utiliza en las ecuaciones (\ref{eqn:charge_field} - \ref{eqn:integral_potential}) es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se menciona que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es considerada como referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
 
 \subsection{Campo eléctrico local y polarización}\label{subsec:Local_Field}
 \begin{figure}[H]
@@ -131,10 +146,13 @@ La permitividad que se utiliza en las Ecuaciones (\ref{eqn:charge_field} - \ref{
 \caption{Efecto de un campo sobre la forma de un átomo. El electrón (en realidad la nube electrónica) es ``halado" por el campo, mientras que el protón (o núcleo atómico) es ``empujado", induciendo así un dipolo.}
 \label{fig:Polarization}
 \end{figure}
+\noindent
 Cuando se aplica un campo eléctrico externo a un cuerpo o medio (macroscópico) dieléctrico, las partículas constituyentes de los átomos se comportan de forma especial. Por ejemplo, en la figura \ref{fig:Polarization} se muestra un átomo simple de hidrógeno que se reordena bajo la acción de un campo externo que rompe el equilibrio eléctrico del átomo, generando así un campo eléctrico opuesto con líneas de campo (inducido) que van del protón hacia el electrón (se representa la nube electrónica con un solo electrón por simplicidad). Este efecto es la polarización, e induce un momento dipolar $\mathbf{p}$ en los átomos afectados por el campo eléctrico a nivel local.
+
 \begin{equation}
 \mathbf{p} = \alpha\vec{E}^{loc}
 \end{equation}
+\noindent
 $\alpha$ se conoce como la polarizabilidad microscópica, un coeficiente de proporcionalidad que representa qué tanto se polariza la especie analizada - la magnitud del momento dipolar inducido - en presencia de un cierto campo eléctrico local $\vec{E}^{loc}$. Por supuesto, esta es una relación constitutiva, porque $\alpha$ depende del material o elemento estudiado. Ahora se hace la distinción entre los distintos campos eléctricos de interés para este apartado:
 \begin{gather*}
 \vec{E}^{ext} \quad \longrightarrow \quad \text{Campo eléctrico externo}\\
@@ -142,28 +160,37 @@ $\alpha$ se conoce como la polarizabilidad microscópica, un coeficiente de prop
 \vec{E}^{ind} \quad \longrightarrow \quad \text{Campo eléctrico inducido (microscópico)}\\
 \vec{E} \quad \longrightarrow \quad \text{Campo eléctrico macroscópico}
 \end{gather*}
+\noindent
 y se define la relación entre los primeros tres como
+
 \begin{equation}
 \vec{E}^{loc} = \vec{E}^{ind} + \vec{E}^{ext}
 \end{equation}
+\noindent
 Es conveniente explicar que si bien se define uno de los campos como microscópico o local, esto no es el campo debido a un único átomo o molécula, sino el propio de un volumen macroscópicamente pequeño pero microscópicamente grande; por lo tanto, los términos local y microscópico son en realidad promedios sobre volúmenes más pequeños que el campo de las ecuaciones de Maxwell. Hay que notar también que si el campo eléctrico se transmite por el vacío, $\vec{E}^{ind} = 0$, y por ende $\vec{E}^{ext} = \vec{E}^{loc} = \vec{E}$. No se entra en detalle respecto al álgebra pues existen referencias sobre el tema, como por ejemplo el texto de Kantorovich \cite{Kantorovich}, pero después de algo de trabajo se llega a la expresión para el campo eléctrico local, también llamado campo de Lorentz, en función del campo macroscópico
+
 \begin{equation}
 \vec{E}^{loc} = \vec{E}(1 + \kappa)\label{eqn:Local_Field}
 \end{equation}
+\noindent
 donde $\kappa$ es un factor de corrección que depende del ordenamiento microscópico. El campo eléctrico local es el campo que siente cada uno de los muchos volúmenes pequeños que, en conjunto, componen el medio macroscópico que se esta estudiando. Por último se presenta la definición de densidad de polarización $\vec{P}$ para cerrar el círculo de relaciones entre el dieléctrico estudiado a nivel macroscópico y microscópico. La densidad de polarización por unidad de volumen se define de dos maneras; esto sale de diversas fuentes, pero W. Cai \cite{Cai} lo resume todo de forma simple:
+
 \begin{gather}
 \vec{P}(\mathbf{r}) = \sum_i N_i\alpha_i\left[\vec{E}(\mathbf{r})^{loc}\right]_i = \sum_i N_i\mathbf{p}_i\label{eqn:Micro_Polarization_sumation}\\
 \vec{P}(\mathbf{r}) = \varepsilon_0\chi\vec{E}(\mathbf{r})\label{eqn:Macro_Polarization}
 \end{gather}
+\noindent
 con $N_i$ la densidad numérica (\textit{number density}) del $i$-ésimo átomo por unidad de volumen, y $\chi$ la susceptibilidad del medio dieléctrico (que en el caso del vacío es 0). Antes de continuar el desarrollo, se procede a definir qué son la densidad de polarización y la susceptibilidad.\\\\
 Como concepto, la densidad de polarización es la polarización a nivel macroscópico, por unidad de volumen, causada por todos los momentos dipolares inducidos en las moléculas de dicho volumen asociados al campo eléctrico que los induce. Por otra parte, la susceptibilidad permite relacionar un campo eléctrico macroscópico con los efectos que este tiene en el momento dipolar de las partículas en un volumen a través de la densidad de polarización, como se indica en la ecuación \ref{eqn:Macro_Polarization}; más allá de ser una constante de proporcionalidad, la susceptibilidad indica de forma promediada cómo influye el campo eléctrico en la orientación de los dipolos, y cómo varía el momento dipolar del medio a nivel macroscópico en presencia del campo eléctrico. Hay que resaltar que esto no implica traslación o \textit{migración} electrónica, sino solo rotación del átomo o molécula para la reorientación del dipolo, intentando alinearlo con el campo.\\\\
-Para terminar esta parte del desarrollo teórico, de las Ecs. (\ref{eqn:Local_Field} - \ref{eqn:Macro_Polarization}) y sabiendo que el campo macroscópico es el mismo, se puede deducir que
+Para terminar esta parte del desarrollo teórico, de las ecuaciones (\ref{eqn:Local_Field} - \ref{eqn:Macro_Polarization}) y sabiendo que el campo macroscópico es el mismo, se puede deducir que
+
 \begin{align*}
 \vec{P}(\mathbf{r}) &= \varepsilon_0\chi\vec{E}(\mathbf{r}) = \vec{E}(\mathbf{r})\sum_iN_i\alpha_i(1+\kappa_i)\\
 &\implies\quad \varepsilon_0\chi = \sum_iN_i\alpha_i(1+\kappa_i) \numberthis
 \end{align*}
+\noindent
 Un caso particular es la teoría de Clausius-Mossotti. Aquí el valor de $\kappa_i = \kappa$ es $\chi/3$; uno de los supuestos es que la distribución molecular es una malla cúbica regular.\\\\
-Con esto se puede entender de manera general cómo se relacionan el campo eléctrico macroscópico y microscópico. El propósito de este apartado es simplemente aclarar que ambos análisis no son independientes y que el tratamiento de continuo que se ve en lo sucesivo esta fundamentado en teoría del comportamiento eléctrico molecular; es por esto que se omiten pasos y solo se presentan resultados que se consideran importantes.
+Con esto se puede entender de manera general cómo se relacionan el campo eléctrico macros-cópico y microscópico. El propósito de este apartado es simplemente aclarar que ambos análisis no son independientes y que el tratamiento de continuo que se ve en lo sucesivo está fundamentado en teoría del comportamiento eléctrico molecular; es por esto que se omiten pasos y solo se presentan resultados que se consideran importantes.
 
 \subsection{Permitividad de un medio macroscópico}\label{subsec:Macro_perm}
 Ya se explicó qué son la susceptibilidad y densidad de polarización, por lo que se procede a definir un poco mejor qué es la permitividad, profundizando en lo que se mencionó al principio de la sección \ref{Sec:perm_polarization_mic_E_field}.
@@ -172,27 +199,35 @@ Ya se explicó qué son la susceptibilidad y densidad de polarización, por lo q
 %\includegraphics[scale=]{•}
 %\caption{}
 %\end{figure}
-Primero corresponde aclarar que la permitividad es netamente una propiedad macroscópica del medio, pero se prefiere caer en la redundancia un par de veces, como en el caso del título de esta sección, para reafirmar este punto. Cuando un campo eléctrico afecta un medio dieléctrico, los dipolos no solo se intentan alinear con las líneas de campo, sino que además hay un \textit{movimiento de cargas libres} dentro del cuerpo. Sumado a esto está el hecho de que los átomos conformantes del medio rompen el estado de equilibrio, pues los protones son repelidos por el campo, mientras que los electrones son atraidos por este (figura \ref{fig:Polarization}). Dicho efecto genera que se formen nuevos dipolos y en consecuencia que haya un momento dipolar distinto al original en el medio; es por esta razón que la susceptibilidad se relaciona con la permitividad. Teniendo presentes los fenómenos recién nombrados, se reitera la definición de permitividad o constante dieléctrica como una cuantificación macroscópica promedio de la tendencia de un medio (en este caso un dieléctrico) a oponerse al flujo de campo eléctrico por alguno de los mecanismos nombrados anteriormente.\\\\
+Primero corresponde aclarar que la permitividad es netamente una propiedad macroscópica del medio, pero se prefiere caer en la redundancia un par de veces, como en el caso del título de esta sección, para reafirmar este punto. Cuando un campo eléctrico afecta un medio dieléctrico, los dipolos no solo se intentan alinear con las líneas de campo, sino que además hay un \textit{movimiento de cargas libres} dentro del cuerpo. Sumado a esto está el hecho de que los átomos conformantes del medio rompen el estado de equilibrio, pues los protones son repelidos por el campo, mientras que los electrones son atraídos por este (figura \ref{fig:Polarization}). Dicho efecto genera que se formen nuevos dipolos y en consecuencia que haya un momento dipolar distinto al original en el medio; es por esta razón que la susceptibilidad se relaciona con la permitividad. Teniendo presentes los fenómenos recién nombrados, se reitera la definición de permitividad o constante dieléctrica como una cuantificación macroscópica promedio de la tendencia de un medio (en este caso un dieléctrico) a oponerse al flujo de campo eléctrico por alguno de los mecanismos nombrados anteriormente.\\\\
 Existen tres \textit{permitividades} de interés para este desarrollo: la permitividad del vacío $\varepsilon_0$, la permitividad propia de un material $\varepsilon$, y la permitividad relativa o constante dieléctrica, a la que en este caso se da más importancia
+
 \begin{equation}\label{eqn:Permittivity_definition}
 \varepsilon_r = \frac{\varepsilon}{\varepsilon_0}=\varepsilon_0(1+\chi)
 \end{equation}
+\noindent
 (llamada $k$ en algunas fuentes). De ahora en adelante, $\varepsilon$ a secas pasa a ser la permitividad relativa y se denomina simplemente \textit{permitividad} o \textit{constante dieléctrica} de un medio.\footnote{En estricto rigor, la constante dieléctrica es $\varepsilon_r\cdot\varepsilon_0$, pero por costumbre se utiliza este término para referirse a la propiedad adimensional en este informe.}
 \section{Desplazamiento eléctrico y campo eléctrico en un medio dieléctrico}\label{Sec:Elec_Displacement}
 En lo sucesivo, todo el trabajo es relativo a un medio o campo macroscópico. En este informe no se trabaja directamente con los momentos dipolares, la susceptibilidad, o incluso con la densidad de polarización, sino que se presenta una sola ecuación que engloba todos los efectos de un campo eléctrico sobre un dieléctrico; para llegar a dicha ecuación se utilizan las relaciones ya introducidas y un par de definiciones nuevas.\\\\
 La ecuación (\ref{eqn:Macro_Polarization}) es una expresión que asocia el campo eléctrico y la densidad de polarización, establecida a través de la susceptibilidad y la permitividad. Además, la ecuación (\ref{eqn:Gauss_law_int}) es la ley de Gauss para una distribución de carga, que tiene que ver únicamente con la permitividad.\\\\
 Si se asume que el flujo de campo eléctrico se debe a contribuciones de la distribución de carga y de la polarización del medio únicamente, entonces se puede expresar dicho flujo de campo eléctrico como
+
 \begin{equation}\label{eqn:Field_pol_rho_relation}
 \nabla\cdot\vec{E} = \frac{\rho - \nabla\cdot\vec{P}}{\varepsilon_0}
 \end{equation}
+\noindent
 Se define entonces el \textit{desplazamiento eléctrico} como
+
 \begin{equation}\label{eqn:Electric_Displacement}
 \vec{D} = \vec{E} + \vec{P} = \varepsilon_0\vec{E}(1 + \chi)
 \end{equation}
+\noindent
 lo que permite escribir la ecuación (\ref{eqn:Field_pol_rho_relation}) como
+
 \begin{equation}
 \nabla\cdot\vec{D} = \rho
 \end{equation}
+\noindent
 Esto corresponde al efecto completo del flujo de campo eléctrico sobre el medio. En general, en la ecuación (\ref{eqn:Electric_Displacement}) se asocia el campo eléctrico $\vec{E}$ a las cargas libres (free charges) y la densidad de polarización $\vec{P}$ a las cargas fijas (bound charges), pero para el objetivo de este texto eso no es relevante.\\\\
 Siguiendo con la idea, recordando que ahora $\varepsilon_r = \varepsilon$ y suponiendo que la permitividad es una propiedad isotrópica, al usar la ecuación (\ref{eqn:Permittivity_definition}) en (\ref{eqn:Electric_Displacement}), se puede obtener
 \begin{align*}
@@ -213,7 +248,7 @@ Como la interfaz es un límite para el espacio de análisis, es aquí donde se e
 \varepsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \varepsilon_2\vec{E}_2\cdot\hat{\mathbf{n}} \label{eqn:jump_condition}\\
 \vec{E}_1\cdot\hat{\mathbf{t}} = \vec{E}_2\cdot\hat{\mathbf{t}} \label{eqn:pot_continuity}
 \end{gather}
-En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las Ecs. (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}) indican que hay un cambio en la componente normal del campo igual a $\varepsilon_1/\varepsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\varepsilon = cte$) en la figura \ref{Fig:Fig_2}.
+En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las ecuaciones (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}) indican que hay un cambio en la componente normal del campo igual a $\varepsilon_1/\varepsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\varepsilon = cte$) en la figura \ref{Fig:Fig_2}.
 \begin{figure}[H]
 	\vspace{2cm}
 	\centering
@@ -229,13 +264,15 @@ con $\sigma$ la densidad superficial de carga y $\varepsilon_m$ la constante die
 Se desarrolla más a cabalidad el tema en secciones posteriores, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
 
 \subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}\label{subsec:Reaction_Field}
-\begin{figure}[H]
+En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodiná-mica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la figura \ref{Fig:Fig_3}. El campo eléctrico viene dado por la ecuación (\ref{eqn:charge_field}), y tiene como condiciones de contorno las presentadas en las Ecs. (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}).
+El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\(2)}} = \sqrt{r^2 + (z \varpm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.
+
+\begin{figure}[h]
 	\centering
 	\input{./Figures/Fig_3.eps_tex}
 	\caption{Sistema de una carga real y dos imaginarias para representar el campo de reacción, con el cambio de medio en $z=0$. Se consideran dos espacios semi-infinitos a partir de este plano.}\label{Fig:Fig_3}
 \end{figure}
-En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodinámica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la figura \ref{Fig:Fig_3}. El campo eléctrico viene dado por la ecuación (\ref{eqn:charge_field}), y tiene como condiciones de contorno las presentadas en las Ecs. (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}).
-El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\(2)}} = \sqrt{r^2 + (z \varpm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.\\\\
+\noindent
 No es complejo realizar el desarrollo, remplazando la expresión para el campo en las condiciones de contorno. Con un poco de álgebra se puede llegar a una forma de escribir las cargas $q_1$ y $q_2$ en función de la carga $q$, así como de las permitividades de los medios. Se muestra a continuación un paso a paso breve de cómo se resuelve el sistema. Si $\phi_1$ es el potencial para algún punto en el medio 1, y $\phi_2$ es el potencial en el medio 2, se tiene
 \begin{gather}
 \phi_1 = \frac{1}{4\pi\varepsilon_1}\left(\frac{q}{\sqrt{r^2+(z-d)^2}}+\frac{q_1}{\sqrt{r^2+(z+d)^2}}\right)\label{eqn:potential_system_image_method_1}\\
@@ -262,16 +299,16 @@ Para el caso de la condición de contorno (\ref{eqn:pot_continuity}) se remplaza
 \begin{equation}\label{eqn:image_system_eq2}
 \implies \frac{1}{\varepsilon_1}(q + q_1) = \frac{q_2}{\varepsilon_2}
 \end{equation}
-Ahora, del sistema que conforman las Ecs. (\ref{eqn:image_system_eq1}) y (\ref{eqn:image_system_eq2}), se obtiene la expresión para las cargas imagen en función de los parámetros conocidos del sistema:
+Ahora, del sistema que conforman las ecuaciones (\ref{eqn:image_system_eq1}) y (\ref{eqn:image_system_eq2}), se obtiene la expresión para las cargas imagen en función de los parámetros conocidos del sistema:
 \begin{gather}
 q_1 = -\left(\frac{\varepsilon_2 - \varepsilon_1}{\varepsilon_2 + \varepsilon_1}\right)\cdot q \label{eqn:image_q_1}\\
 q_2 = \left(\frac{2\varepsilon_2}{\varepsilon_1 + \varepsilon_2}\right)\cdot q \label{eqn:image_q_2}
 \end{gather}
-Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las Ecs. (\ref{eqn:potential_system_image_method_1}) y (\ref{eqn:potential_system_image_method_2}) dependiendo de dónde se encuentra; por supuesto, esto remplazando $q_1$ y $q_2$ por sus valores de las Ecs. (\ref{eqn:image_q_1}) y (\ref{eqn:image_q_2}).
+Luego, el potencial en cualquier punto en el espacio se trabaja dependiendo de en qué medio se ubica dicho punto, y para calcular su valor se utilizan las ecuaciones (\ref{eqn:potential_system_image_method_1}) y (\ref{eqn:potential_system_image_method_2}) dependiendo de dónde se encuentra; por supuesto, esto remplazando $q_1$ y $q_2$ por sus valores de las ecuaciones (\ref{eqn:image_q_1}) y (\ref{eqn:image_q_2}).
 
 \section{El Método de Elementos de Borde}\label{Sec:BEM_theory}
 Previamente ya se mencionó el uso del método de elementos de borde (BEM) para aplicar el modelo derivado del método de imágenes para membranas. El método BEM actúa partiendo del mismo principio de debilitar una ecuación diferencial que el método de elementos finitos FEM, pero en este caso la discretización no ocurre sobre el dominio de integración de la ecuación diferencial, sino sobre su contorno.\\\\
-El método comienza tomando la formulación débil de una ecuación diferencial, en este caso se utiliza la ecuación de Laplace, multiplicada por una función $\psi$ tal que
+El método comienza tomando la formulación débil de una ecuación diferencial. En este caso se utiliza la ecuación de Laplace, multiplicada por una función $\psi$ tal que
 \begin{equation*}
 \int\nabla^2 \phi\cdot\psi = 0
 \end{equation*}
@@ -311,9 +348,10 @@ En ambos casos ($\mathbf{r}_{\partial\Omega}$ y $\mathbf{r}_{\partial\Omega}^*$)
 
 \section{El contexto biológico de la membrana celular}\label{Sec:Cell_Bio}
 A pesar de haber mencionado la teoría sobre el comportamiento de cargas en un medio, el método de imágenes, y el método BEM que permite llevar todo esto a aplicaciones numéricas, estos pueden aún parecer tópicos un tanto aislados unos de otros, e incluso abstractos en cierta medida. Como consecuencia se presenta el contexto biológico que motiva la búsqueda de un modelo para integrar el efecto de la membrana celular en el que se encuentran insertas algunas proteínas.\\\\
-Una célula se compone de distintas estructuras funcionales que permiten transformar moléculas en energía, enviar y recibir señales de tipo químico y eléctrico, permitir el paso de compuestos desde y hacia el exterior de la célula, entre otros. Las proteínas son probablemente el tipo de macromolécula con la mayor diversidad de funciones en el entorno celular, y su importancia en el quehacer de la membrana, sea este el flujo de elementos o la conducción de señales, por ejemplo, es fundamental. La membrana plasmática se compone de una cadena de fosfolípidos, uno al lado del otro, que rodean el citoplasma (fluido intracelular) y separan el interior de la célula, con estructuras y todo, del fluido extracelular. Más aún, la membrana celular, también llamada bicapa fosfolipídica debido a su composición, es la encargada de definir la frontera de ciertos organelos de la célula; las lisosomas, mitocondrias y el mismo núcleo celular son algunos.\\\\
-Los fosfolípidos son un tipo de molécula conformado por dos ``colas" de ácidos grasos que se unen a un glicerol. Para completar la molécula, también hay un fosfato enlazado al glicerol, que lleva por el lado opuesto una unión con un grupo de carácter polar. Para efectos de este trabajo, lo que hay que rescatar es el hecho de que las colas son hidrófobas, mientras que la ``cabeza" conformada por el glicerol, el fosfato y el compuesto polar - la colina - son la parte hidrófila del fosfolípido. La figura \ref{Fig:Fig_5-2} muestra una sección de la membrana, mientras que la figura \ref{Fig:Fig_5} corresponde al detalle de un fosfolípido.
-\begin{figure}[H]
+Una célula se compone de distintas estructuras funcionales que permiten transformar molécu-las en energía, enviar y recibir señales de tipo químico y eléctrico, permitir el paso de compuestos desde y hacia el exterior de la célula, entre otros. Las proteínas son probablemente el tipo de macromolécula con la mayor diversidad de funciones en el entorno celular, y su importancia en el quehacer de la membrana, sea este el flujo de elementos o la conducción de señales, por ejemplo, es fundamental. La membrana plasmática se compone de una cadena de fosfolípidos, uno al lado del otro, que rodean el citoplasma (fluido intracelular) y separan el interior de la célula, con estructuras y todo, del fluido extracelular. Más aún, la membrana celular, también llamada bicapa fosfolipídica debido a su composición, es la encargada de definir la frontera de ciertos organelos de la célula; las lisosomas, mitocondrias y el mismo núcleo celular son algunos.\\\\
+Los fosfolípidos son un tipo de molécula conformado por dos ``colas" de ácidos grasos que se unen a un glicerol. Para completar la molécula, también hay un fosfato enlazado al glicerol, que lleva por el lado opuesto una unión con un grupo de carácter polar. Para efectos de este trabajo, lo que hay que rescatar es el hecho de que las colas son hidrófobas, mientras que la ``cabeza" conformada por el glicerol, el fosfato y el compuesto polar - generalmente una colina - son la parte hidrófila del fosfolípido. La figura \ref{Fig:Fig_5-2} muestra una sección de la membrana, mientras que la figura \ref{Fig:Fig_5} corresponde al detalle de un fosfolípido.
+
+\begin{figure}[h]
 	\centering
 	\input{./Figures/Fig_5-2.eps_tex}
 	\caption{Tramo de la bicapa con proteína inserta. Esta última se orienta de tal forma que la parte hidrofílica (polar) quede en contacto con el agua en el exterior, de igual forma que las cabezas de los fosfolípidos.} \label{Fig:Fig_5-2}
@@ -323,12 +361,12 @@ La importancia de la hidrofobicidad e hidrofilicidad de las colas y cabezas resp
 \begin{figure}[h]
 	\centering
 	\input{./Figures/Fig_5.eps_tex}
-	\caption{Esquema de un fosfolípido, con detalle sobre la composición de la cabeza hidrófila.\cite{Alberts}}\label{Fig:Fig_5}
+	\caption{Esquema de un fosfolípido, con detalle sobre la composición de la cabeza hidrófila \cite{Alberts}.}\label{Fig:Fig_5}
 \end{figure}
 \\\\
-La pared celular no tiene un espesor definido, sino que varía en función de la sección que se está analizando y de las proteínas de membrana que haya insertas, y de forma más considerable según qué célula se esta estudiando. Sin embargo, actualmente existe un valor aceptado y definido para \textit{células estándar} de 8 $[nm]$ \cite{Lombard}. Para efectos de las proteínas embebidas y la mayoría de los eventos que ocurren y tienen relación con la membrana celular, el espesor es la única dimensión de importancia y para efectos prácticos la membrana puede considerarse un mar infinito de fosfolípidos y proteínas.\\\\
+La pared celular no tiene un espesor definido, sino que varía en función de la sección que se está analizando y de las proteínas de membrana que haya insertas, y de forma más considerable según qué célula se está estudiando. Sin embargo, actualmente existe un valor aceptado y definido para \textit{células estándar} de 8 $[nm]$ \cite{Lombard}. Al trabajar con las proteínas embebidas y la mayoría de los eventos que ocurren y tienen relación con la membrana celular, el espesor es la única dimensión de importancia y para efectos prácticos la membrana puede considerarse un mar infinito de fosfolípidos y proteínas.\\\\
 Como última propiedad de interés, se menciona que la membrana no es en ningún caso plana, ni tampoco rígida. Por el contrario, los fosfolípidos están en constante movimiento, provocando una ondulación en la bicapa, permitiendo entre otras cosas la formación de vacuolas y el desplazamiento de la célula. Entre los movimientos en que incurren los fosfolípidos están el desplazamiento ``horizontal" (siguiendo la referencia de la figura \ref{Fig:Fig_5-2}), que se efectúa en el plano de la membrana y es muy común, y el denominado ``\textit{flip - flop}", que corresponde a un cambio de ubicación entre dos fosfolípidos de forma transversal a la membrana; se puede decir que es un intercambio de lugar.\\\\
-La membrana es la estructura fundamental de este estudio, pero es importante no dejar fuera el medio en el que esta inmerso. Ya se nombraron los fluidos intra y extracelular, por lo que corresponde caracterizarlos un poco. El primer factor a considerar es que el ambiente en el que está la membrana es principalmente salino o, dicho más formalmente, una disolución con una cierta concentración de especies iónicas. En segundo lugar, dicha solución no es homogenea, sino que sigue una distribución que, junto a ciertas propiedades como la diferencia de potencial, propicia el intercambio iónico a través de la membrana.
+La membrana es la estructura fundamental de este estudio, pero es importante no dejar fuera el medio en el que está inmerso. Ya se nombraron los fluidos intra y extracelular, por lo que corresponde caracterizarlos un poco. El primer factor a considerar es que el ambiente en el que está la membrana es principalmente salino o, dicho más formalmente, una disolución con una cierta concentración de especies iónicas. En segundo lugar, dicha solución no es homogénea, sino que sigue una distribución que, junto a ciertas propiedades como la diferencia de potencial, propicia el intercambio iónico a través de la membrana.
 
 
 
@@ -371,8 +409,14 @@ Por otra parte, la Solvent Excluded Surface (SES) considera el borde de la sonda
 A pesar de las diferencias, no existe una razón para preferir una sobre la otra, y depende simplemente de lo que se busque lograr en cada situación. En el caso de este trabajo, y principalmente por heredar la metodología que se venía aplicando de antes, se utiliza la Solvent Excluded Surface para definir la superficie de las moléculas de estudio, puesto que, como se dijo, la superficie resultante es suave.
 
 \subsection{La ecuación de Poisson - Boltzmann (PB) y la Boundary Integral Equation (BIE)}\label{subsec:BIE_PB}
-Teniendo ya la ecuación PB, se presenta rápidamente el caso del sistema para una proteína en un solvente con iones; el objetivo de esto es presentar la forma de uso del método BEM, aplicado específicamente a una discretización de superficie proteínica. Para esto hay que considerar que hay dos medios en el sistema, y una interfaz: el sistema exterior, que como es usual consiste en agua salina $\Omega_1$, el ensamblaje de $N_q$ átomos con $q_i$ cargas netas que conforman la proteína y que será el sistema interior $\Omega_2$, y la Solvent Excluded Surface que se asume separa ambos dominios recién nombrados, encerrando al segundo de estos.\\\\
-Las ecuaciones corresponden entonces a Poisson por dentro, pues existe una distribución de cargas puntuales en un medio dieléctrico, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada anteriormente. De lo presentado sobre el método BEM en la sección \ref{Sec:BEM_theory}, se sabe que el sistema cumple con la ecuación (\ref{eqn:BEM_equation}).
+Teniendo ya la ecuación PB, se presenta rápidamente el caso del sistema para una proteína en un solvente con iones; el objetivo de esto es mostrar cómo se usa el método BEM, aplicado específicamente a una discretización de superficie proteínica. Para esto hay que considerar que hay dos medios en el sistema, y una interfaz: el sistema exterior, que como es usual consiste en agua salina $\Omega_1$, el ensamblaje de $N_q$ átomos con $q_j$ cargas netas que conforman la proteína y que será el sistema interior $\Omega_2$, y la Solvent Excluded Surface que se asume separa ambos dominios recién nombrados, encerrando al segundo de estos.\\\\
+Las ecuaciones corresponden entonces a Poisson por dentro, pues existe una distribución de cargas puntuales en un medio dieléctrico, y Poisson - Boltzmann por fuera, lo que considera la teoría explicada anteriormente.
+\begin{align*}
+\text{En el soluto:}&\qquad\nabla^2\phi_1(\mathbf{r}) = -\frac{\rho(\mathbf{r})}{\varepsilon}\\
+\text{En el solvente}&\qquad\nabla^2\phi_2(\mathbf{r}) = \kappa^2(\mathbf{r})\phi_2(\mathbf{r})\\
+\text{Con condiciones de borde:}&\qquad \frac{\partial\phi_1}{\partial\hat{\mathbf{n}}} = \frac{\varepsilon_2}{\varepsilon_1}\frac{\partial\phi_2}{\partial\hat{\mathbf{n}}}\quad ; \quad \phi_1 = \phi_2
+\end{align*}
+De lo presentado sobre el método BEM en la sección \ref{Sec:BEM_theory}, se sabe que el sistema cumple con la ecuación (\ref{eqn:BEM_equation}).
 %\begin{equation*}
 %\frac{\phi(\mathbf{r}_{\partial\Omega})}{2} = \int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_{\partial\Omega})\cdot G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*) - \frac{\partial}{\partial\hat{\mathbf{n}}}G(\mathbf{r}_{\partial\Omega},\mathbf{r}_{\partial\Omega}^*)\cdot\phi(\mathbf{r}_\Omega)\text{ }d\partial\Omega^*
 %\end{equation*}
@@ -387,7 +431,7 @@ Llevando ambas ecuaciones a una formulación integral sobre la frontera, el sist
 \frac{\phi_{2}(\mathbf{r}^*)}{2}\, + &\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r},\mathbf{r}^*)\cdot\phi(\mathbf{r})\, d\partial\Omega\,\, -
 \\ &\int_{\partial\Omega}\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r})\cdot G_L(\mathbf{r},\mathbf{r}^*)\, d\partial\Omega = \frac{1}{4\pi\varepsilon}\sum_{j=0}^{N_q}\frac{q_j}{\mathbf{r} - \mathbf{r}_j}\label{eqn:BEM_Laplace}\numberthis
 \end{flalign*}
-Se puede reconocer, con algo de imaginación, que \ref{eqn:BEM_Laplace} es la ecuación de Poisson de electrostática (\ref{eqn:Laplace_potential}), con una distribución de cargas puntuales, siendo todo el lado izquierdo de la igualdad el potencial sobre la superficie. Este último hecho también es válido para \ref{eqn:BEM_Yukawa}; el lado izquierdo es el potencial sobre la superficie. Las variables de $\mathbf{r}$ y $\mathbf{r}^*$ corresponden a una evaluación sobre la superficie $\partial\Omega$, mientras que $\mathbf{r}_i$ son las posiciones de las mencionadas cargas puntuales. Los subíndices $L$ e $Y$ son propios de \textit{Laplace} y \textit{Yukawa}. La función de Green para la ecuación de Laplace ya se presentó en la sección \ref{Sec:BEM_theory}, mientras que la función de Green desarrollada por Yukawa, que corresponde a la ecuación de Poisson - Boltzmann, es
+Se puede reconocer, con algo de imaginación, que (\ref{eqn:BEM_Laplace}) es la ecuación de Poisson de electrostática (\ref{eqn:Laplace_potential}), con una distribución de cargas puntuales, siendo todo el lado izquierdo de la igualdad el potencial sobre la superficie. Este último hecho también es válido para (\ref{eqn:BEM_Yukawa}); el lado izquierdo es el potencial sobre la superficie. Las variables de $\mathbf{r}$ y $\mathbf{r}^*$ corresponden a una evaluación sobre la superficie $\partial\Omega$, mientras que $\mathbf{r}_j$ son las posiciones de las mencionadas cargas puntuales. Los subíndices $L$ e $Y$ son propios de \textit{Laplace} y \textit{Yukawa}. La función de Green para la ecuación de Laplace ya se presentó en la sección \ref{Sec:BEM_theory}, mientras que la función de Green desarrollada por Yukawa, que corresponde a la ecuación de Poisson - Boltzmann, es
 \begin{equation}
 G_Y(\mathbf{r},\mathbf{r}^*) = \frac{\text{exp}(-\kappa\cdot|\mathbf{r} - \mathbf{r}^*|)}{4\pi|\mathbf{r} - \mathbf{r}^*|}
 \end{equation}
@@ -407,7 +451,7 @@ Al aplicar las condiciones de contorno, el sistema de ecuaciones deriva en
 		\frac{\phi_2(\mathbf{r})}{2} - K_Y(\phi_2(\mathbf{r})) + \frac{\varepsilon_2}{\varepsilon_1}V_Y\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = 0
 \end{gather}
 Ahora bien, si se subdivide la superficie de la proteína en $N$ paneles, en este caso triangulares, las ecuaciones siguen siendo válidas para cada panel; estas se trabajan \textit{colocándolas} en los centroides de cada panel (llamado a partir de ahora \textit{punto de colocación}), permitiendo así su discretización de forma representativa.
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\input{Figures/BEM_scheme.eps_tex}
 	\caption{Forma 2D de dividir la frontera del dominio de integración para aplicar el método BEM a cada elemento de borde.}
@@ -424,7 +468,7 @@ Las propiedades que se buscan - potencial y su derivada respecto a la normal - s
 	\end{pmatrix}
 	=
 	\begin{pmatrix}
-		\frac{1}{4\pi\varepsilon}\sum_{i=0}^{N_q}\frac{q_i}{|\mathbf{r} - \mathbf{r}_i|} \\ 0
+		\frac{1}{4\pi\varepsilon}\sum_{j=0}^{N_q}\frac{q_j}{|\mathbf{r} - \mathbf{r}_j|} \\ 0
 	\end{pmatrix}
 \end{equation}
 Resolviendo (\ref{eqn:PB_equation_system}) para los $N$ paneles se calcula la energía potencial del sistema, y multiplicando por una serie de factores de transformación de unidades, se obtiene la energía sobre la superficie de la proteína. Con estos valores se puede entrar a calcular la reacción del medio sobre dicha superficie, lo que corresponde a la energía de solvatación. Se adjunta una definición de \textit{energía de solvatación} en el Anexo de este escrito. Se profundiza más sobre el cálculo energético en el siguiente apartado, particularmente en la descripción del programa \texttt{PyGBe}.
@@ -442,15 +486,17 @@ En el transcurso de este trabajo se hizo uso de una serie de programas para ayud
 Este resulta el programa menos utilizado directamente en el trabajo, pero que sin embargo es fundamental y de hecho es empleado de una u otra forma por los otros en esta sección. MSMS permite mallar la superficie de un átomo o conjunto de átomos en paneles triangulares, entregando la Solvent Excluded Surface (SES) en función de un ``radio de sondeo", habilitando además al usuario para definir una variedad de parámetros que facilitan obtener modelos para realizar diferentes pruebas. El programa está escrito en lenguaje \texttt{C} y arroja un par de archivos, uno con una numeración para identificar los triángulos, y el otro con las coordenadas de los vértices de dichos triángulos. Más allá de esto, no es necesario ahondar en el funcionamiento del programa, pues su funcionalidad es lo que aquí importa.
 
 \subsection{APBS}\label{subsec:APBS}
-Adaptive Poisson-Boltzmann Solver, más conocido por su sigla \texttt{APBS}, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación de una molécula o macromolécula. El programa emplea el método de diferencias finitas por defecto, o si se desea también está disponible FEM, para parcelar un dominio de integración en $l\times m\times n$ elementos en los ejes $x$, $y$ y $z$, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados en el solvente. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula; en definitiva, esto es calcular las energías debido a interacciones de Coulomb. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio. APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas explícitos (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados. Es importante explicar que, como se utiliza el método de diferencias finitas, se debe establecer un dominio de integración que luego se subdivide en puntos o nodos. Este dominio es finito y en las superficies límites se establecen condiciones de contorno. Es importante para este estudio ahondar un poco en cómo funcionan los tres tipos de condiciones que se pueden utilizar. En primer lugar, se puede imponer la condición que tiene el potencial al infinito, que es igual a cero - esta condición es llamada \texttt{zero}. Otra alternativa es ubicar una esfera con una carga puntual, un dipolo y un cuadrupolo, cuyo radio es el de la molécula modelada; la idea es que los momentos (de la carga puntual, dipolo y cuadrupolo) sean representativos de los de la macromolécula, y es con esta información que se evalúa el potencial en el contorno - se denomina condición \texttt{sdh}. La última opción que interesa en el contexto de este trabajo consiste en tomar los átomos componentes de la molécula y formar esferas que no interactúan entre ellas, con las cargas y radios correspondientes, y evaluar el potencial en la frontera del dominio - recibe el nombre \texttt{mdh}. Todo esto se puede encontrar en el sitio dedicado al programa \cite{pdb2pqr_1}
+Adaptive Poisson-Boltzmann Solver, más conocido por su sigla \texttt{APBS}, es un código escrito en \texttt{C} que permite calcular distintos tipos de energías en un sistema molécula o macromolécula - solvente. De particular interés resulta en este caso la energía de solvatación de una molécula o macromolécula. El programa emplea el método de diferencias finitas por defecto, o si se desea también está disponible FEM, para parcelar un dominio de integración en $l\times m\times n$ elementos en los ejes $x$, $y$ y $z$, resolviendo el sistema de ecuaciones con teoría electrostática clásica, es decir considerando una descripción macroscópica del problema. Ahora bien, la gracia de este software es la capacidad de resolver la ecuación de Poisson-Boltzmann para una concentración, carga y radio de iones solicitados en el solvente. El programa realiza el cálculo energético de la molécula o macromolécula en dos situaciones: en el solvente, ya en su situación final (con o sin distribución de Boltzmann, según se requiera), y en un punto de referencia que corresponde a los átomos que conforman a la (macro)molécula en un dieléctrico correspondiente a la permitividad de dicha (macro)molécula; en definitiva, esto es calcular las energías debido a interacciones de Coulomb. Luego, las energías se restan, lo que corresponde a la energía de solvatación, siguiendo su definición, del cuerpo bajo estudio.\\\\
+APBS tiene gran fama de ser confiable y con una rapidez de cómputo relativamente alta, esto último en especial en comparación con programas explícitos (MD) como CHARMM o LAMMPS, pero debido al método de modelación que utiliza, puede ser problemático representar secciones de una molécula que tengan interacciones que requieran una alta refinación de la malla, como por ejemplo en el caso en que un ion pase por un canal iónico, pues las energías dependen de la distancia ion - proteína y la geometría de la proteína. Esto no quita que el programa sea altamente confiable, y es por eso y por la formulación en electrostática en continuos que emplea que se utiliza como referencia para comparar resultados.\\\\
+Es importante explicar que, como se utiliza el método de diferencias finitas, se debe establecer un dominio de integración que luego se subdivide en puntos o nodos. Este dominio es finito y en las superficies límites se establecen condiciones de contorno. Es importante para este estudio ahondar un poco en cómo funcionan los tres tipos de condiciones que se pueden utilizar. En primer lugar, se puede imponer la condición que tiene el potencial al infinito, que es igual a cero - esta condición es llamada \texttt{zero}. Otra alternativa es ubicar una esfera con una carga puntual, un dipolo y un cuadrupolo, cuyo radio es el de la molécula modelada; la idea es que los momentos (de la carga puntual, dipolo y cuadrupolo) sean representativos de los de la macromolécula, y es con esta información que se evalúa el potencial en el contorno - se denomina condición \texttt{sdh}. La última opción que interesa en el contexto de este trabajo consiste en tomar los átomos componentes de la molécula y formar esferas que no interactúan entre ellas, con las cargas y radios correspondientes, y evaluar el potencial en la frontera del dominio - recibe el nombre \texttt{mdh}. Todo esto se puede encontrar en el sitio dedicado al programa \cite{pdb2pqr_1}
 
 \subsection{APBSmem}\label{subsec:APBSmem}
-APBSmem es un programa de cálculos energéticos en sistemas proteína - membrana con teoría electrostática en continuos. Funciona de la misma forma que APBS (de hecho APBSmem solo llama a APBS con dos grupos de archivos distintos, uno pre y uno pos consideración de la membrana) y facilita el trabajo a usuarios con poco conocimiento computacional a través de una interfaz gráfica.\\\\
+APBSmem es un programa de cálculos energéticos en sistemas proteína - membrana con teoría electrostática en continuos. Funciona de la misma forma que APBS (APBSmem es de hecho una GUI que solo llama a APBS con dos grupos de archivos distintos, uno pre y uno pos consideración de la membrana) y facilita el trabajo a usuarios con poco conocimiento computacional a través de una interfaz gráfica.\\\\
 Este software escrito en \texttt{Java} funciona siguiendo una serie de pasos, en función de parámetros indicados por el usuario:
 \begin{itemize}
 	\item[1.] Generar mapas de permitividades $\varepsilon$, radios de Debye o accesibilidad iónica $\kappa$, y densidad de carga $\rho$ para una proteína en disolución.
 	\item[2.] Utilizar esos mapas con el programa APBS base para calcular la energía de solvatación de una proteína en disolución.
-	\item[3.] Generar un nuevo set de mapas de las propiedades en 1., pero esta vez tomando en cuenta la inclusión de la membrana según parámetros indicados por el usuario.
+	\item[3.] Generar un nuevo set de mapas de las propiedades en 1., pero esta vez incluyendo la membrana según parámetros indicados por el usuario (espesor y permitividad principalmente).
 	\item[4.] Correr nuevamente APBS para obtener la energía de solvatación de la proteína inserta en la membrana.
 	\item[5.] Restar las energías de 4. y 2., entregando esta resta para indicar la afinidad de la proteína con la membrana y el resto del entorno.
 \end{itemize}
@@ -458,7 +504,7 @@ APBSmem entrega la energía total de la proteína embebida en la membrana menos 
 Para poder comparar los resultados presentados más adelante con los de APBSmem y APBS, es necesario sumar las energías de solvatación entregadas por estos últimos dos programas a modo de obtener la energía de solvatación del sistema membrana - proteína. Otro camino es modificar el archivo de entrada \texttt{.solv.in} para que calcule directamente lo mismo que \texttt{PyGBe}.
 
 \subsection{PyGBe}\label{subsec:PyGBe}
-Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza un algoritmo de tipo treecode a modo de implementación del Fast Multipole Method para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se llevó a cabo en una versión básica de PyGBe que no incluye el uso de GPUs, de un algoritmo treecode, ni del método de multipolos rápidos. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de \texttt{PyGBe} utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto lo que se modifica para incluir el aporte de membrana de forma implícita, como se explica más adelante.\\\\
+Python, GPUs and Boundary elements for biomolecular electrostatics (PyGBe) es una biblioteca de \texttt{Python} que permite, entre otras cosas, calcular energías de solvatación en macromoléculas. El programa utiliza un algoritmo de tipo treecode a modo de implementación del Fast Multipole Method (FMM) para desarrollar cálculos, y además si estos son muy demandantes, pueden llevarse a cabo en GPU en vez de en CPU. Este trabajo se realizó en una versión básica de PyGBe que no incluye el uso de GPUs ni del FMM. Sin embargo, el resultado es el mismo, pues las características de las que carece son métodos de aceleración y no modifican la solución. La versión de \texttt{PyGBe} utilizada forma y resuelve un sistema de ecuaciones mediante la generación de una matriz $\underline{A}$, y es esto lo que se modifica para incluir el aporte de membrana de forma implícita, como se explica más adelante.\\\\
 PyGBe funciona leyendo una serie de archivos. Los inputs del programa son un \texttt{.config} y un \texttt{.param}. Además, el primero de estos dos archivos hace referencia a otro par de archivos, \texttt{.face} y \texttt{.vert}, así como a un \texttt{.pqr} o \texttt{.crd}. En primera instancia se profundiza en qué son estos archivos, y luego se presenta y desarrolla la estructura funcional de \texttt{PyGBe} (\texttt{pygbe\_matrix} específicamente).
 
 \subsubsection{Archivo \texttt{.config}}
@@ -472,7 +518,7 @@ Ahora se procede a explicar el funcionamiento del programa, pues este trabajo co
 
 \subsubsection{Forma de operación del programa}
 \texttt{PyGBe} funciona siguiendo una serie de pasos para el cálculo de energías. En primer lugar, el programa lee los archivos \texttt{.config} y \texttt{.param} y guarda los parámetros correspondientes. Con esta información y la geometría importada (existe una función que se encarga de eliminar los paneles con áreas muy pequeñas, tendiendo a 0), la meta es crear un sistema como \ref{eqn:PB_equation_system} que se cumpla para todos los paneles de la discretización. Se generan entonces dos sets de arreglos que correspoden a la clases definida como \textit{superficie}, uno que guarda las fuentes (\texttt{src}) y otro que guarda los objetivos (\texttt{tar}). El programa calcula las interacciones electrostáticas entre todos los objetivos y todas las fuentes: para un panel arbitrario, todos los paneles del ensamblaje tienen influencia, incluyéndose a si mismo. Para generar la matriz del sistema, se requieren los single y double layer operators de cada panel para la ecuación por fuera y por dentro, y como son operadores integrales, se utiliza cuadratura Gaussiana para discretizarlos. Las denominadas fuentes son los puntos de cuadratura de Gauss, que representan el efecto del panel. Esto es, si los paneles objetivo están más allá de cierto rango con respecto a las fuentes. La información sobre qué operador se debe utilizar (Laplace o Yukawa) para cada \texttt{FIELD} viene del archivo \texttt{.config}, así como los parámetros físicos requeridos en cada ecuación ($\kappa$ y $\varepsilon$, por ejemplo).\\\\
-Para lograr esta discretización y dado un panel arbitrario, los paneles lejanos se trabajan con pocos puntos de cuadratura, en vista de que su distancia hasta el panel de referencia es grande respecto del parámetro \textit{threshold}. Para los paneles que están a una distancia inferior a este valor, pero aún no están suficientemente cerca, se utiliza simplemente una mayor densidad de puntos de cuadratura Gaussiana sobre la superficie y se procede a discretizar las integrales de la misma forma. Por último, para los casos en que los paneles objetivo están muy cerca de las fuentes, o el panel fuente y el objetivo son el mismo, la cuadratura Gaussiana se remplaza por un método semianalítico que reduce la integral de área a una integral de línea, siendo esta última la que se discretiza, y solo sobre los bordes del triángulo; este método surge de la publicación de Zhu \textit{et al.} \cite{Zhu} y se explica a fondo en la sección \ref{subsec:BEM_PyGBE}.\\\\
+Para lograr esta discretización y dado un panel arbitrario, los paneles lejanos se trabajan con pocos puntos de cuadratura, en vista de que su distancia hasta el panel de referencia es grande respecto del parámetro \textit{threshold}. Para los paneles que están a una distancia inferior a este valor, pero aún no están suficientemente cerca, se utiliza simplemente una mayor densidad de puntos de cuadratura Gaussiana sobre la superficie y se procede a discretizar las integrales de la misma forma. Por último, para los casos en que los paneles objetivo están muy cerca de las fuentes, o el panel fuente y el objetivo son el mismo, la cuadratura Gaussiana se remplaza por un método semianalítico que reduce la integral de área a una integral de línea, siendo esta última la que se discretiza, y solo sobre los bordes del triángulo; este método surge de la publicación de Hess y Smith \cite{Hess} para el caso de Laplace, y Zhu \textit{et al.} \cite{Zhu} para el caso de Yukawa, y se explica a fondo en la sección \ref{subsec:BEM_PyGBE}.\\\\
 Con los valores de los operadores ya calculados, se procede a generar la matriz $\underline{A}$ del sistema, ubicando cada elemento $V_L$, $K_L$, $V_Y$ y/o $K_Y$ donde corresponda\footnote{Se escribe y/o porque es el sistema físico/real el que se compone de una proteína rodeada de una solución, pero se podría realizar cualquier combinación de casos, como por ejemplo agua por dentro y por fuera.}. El ordenamiento de la matriz incide en el lado derecho de la ecuación, por lo que también hay que organizar la ubicación de los elementos del vector solución para que corresponda al sistema físico que se busca modelar. Luego de generar un precondicionador para el sistema de ecuaciones, el código utiliza el método Generalized Minimal Residues (GMRES) para calcular el vector de incógnitas que tiene los valores de $\phi$ y $\partial/\partial\hat{\mathbf{n}}(\phi)$ para todos los paneles. Este vector se le entrega a una función que toma los valores y calcula la energía de solvatación del sistema, aplicando una discretización con cuadratura Gaussiana al campo de reacción causado por la molécula sobre la superficie de esta última. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -504,10 +550,10 @@ Cada término de la sumatoria es menor al anterior en magnitud, tendiendo a conv
 Una analogía de este fenómeno y que también tiene que ver con electromagnetismo es lo que ocurre al mirar hacia uno de dos espejos paralelos enfrentados. La imagen de uno se refleja infinitamente en el otro, disminuyendo en tamaño con cada reflejo.\\\\
 Considerar un número mayor de cargas ($N_q$) simplemente implica sumar sobre estas, considerando el potencial debido a la interacción electrostática entre las partículas componentes del sistema, pues la sumatoria entre $-\infty$ e $\infty$ da cuenta del campo de reacción, haciendo que la ecuación (\ref{eqn:RIC_single}) quede
 \begin{equation}\label{eqn:RIC_multi}
-\phi(\mathbf{r}) = \sum_{\substack{j = 1\\j\neq i}}^{N_q} \frac{q_j}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r_j}|} + \sum_{j=1}^{N_q}\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r}_{j,i}|}\quad ; \quad \mathbf{r} \neq \mathbf{r}_j\quad ; \quad \mathbf{r} \neq \mathbf{r}_{j,i}
+\phi(\mathbf{r}) = \sum_{\substack{j = 1\\j\neq i}}^{N_q} \frac{q_j}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r}_j|} + \sum_{j=1}^{N_q}\sum_{\substack{i=-\infty\\i\neq 0}}^\infty\frac{q_{j,i}}{4\pi\varepsilon_2|\mathbf{r} - \mathbf{r}_{j,i}|}\quad ; \quad \mathbf{r} \neq \mathbf{r}_j\quad ; \quad \mathbf{r} \neq \mathbf{r}_{j,i}
 \end{equation}
 En este caso, $\mathbf{r}_{j,i}$ corresponde a la posición de la $i$-ésima imagen de la $j$-ésima carga del arreglo de cargas. Así también se define $q_{j,i}$ como la $i$-ésima imagen de la $j$-ésima carga del arreglo. El primer término es el potencial de Coulomb en algún punto debido a las cargas. El segundo término corresponde al efecto del campo de reacción a causa del conjunto de cargas.\\\\
-Lo que interesa es el segundo término, pues el primero ya ha sido implementado en el programa previamente. Con esto se puede modelar la reacción de los medios por fuera de las interfases de la membrana o, mejor dicho, el comportamiento de estos debido a la presencia de las cargas de la proteína. Esto es importante, pues nunca se modela directamente una membrana, sino que queda todo implícito sobre la superficie de la proteína. Es más, el solvente correspondiente al agua se omite, quedando solo representado mediante la ecuación (\ref{eqn:RIC_single}); la molécula esta ahora en un medio con las propiedades de la membrana, y es a través de la expresión para el campo de reacción que se incluye el efecto de las interfaces que por fuera tienen agua.\\\\
+Lo que interesa es el segundo término, pues el primero ya ha sido implementado en el programa previamente. Con esto se puede modelar la reacción de los medios por fuera de las interfaces de la membrana o, mejor dicho, el comportamiento de estos debido a la presencia de las cargas de la proteína. Esto es importante, pues nunca se modela directamente una membrana, sino que queda todo implícito sobre la superficie de la proteína. Es más, el solvente correspondiente al agua se omite, quedando solo representado mediante la ecuación (\ref{eqn:RIC_single}); la molécula esta ahora en un medio con las propiedades de la membrana, y es a través de la expresión para el campo de reacción que se incluye el efecto de las interfaces que por fuera tienen agua.\\\\
 El método BEM exige, a través de sus operadores integrales Single y Double Layer Potential, que haya una función de Green que modele el comportamiento del potencial de una carga (por ende la carga $q$ debe ser unitaria), así como la derivada de dicha función. Por lo tanto, a continuación se presentan estos dos operadores que se utilizan en la modelación de la membrana. Los operadores se denominan a continuación con el subíndice $M$, por ser propios de un sistema con membrana.
 \begin{align}
 V_M(\phi(\mathbf{r})) = \int_{\partial\Omega}\phi(\mathbf{r})\frac{1}{4\pi}\sum_{i=-\infty}^{\infty}\frac{q_i}{|\mathbf{r} - \mathbf{r}^*|}d\partial\Omega \label{eqn:SLOp_Memb}\\
@@ -529,12 +575,13 @@ reteniendo su definición los términos \ref{eqn:RIC_terms} y definiendo el radi
 \begin{equation*}
 q_i = q\left(\frac{\varepsilon_p - \varepsilon_m}{\varepsilon_p + \varepsilon_m}\right)^{|i|} \qquad\qquad z_i=(-1)^iz_0 + i\cdot a \qquad\qquad \mathbf{r}^*_i = (x, y, z_i)
 \end{equation*}
-Aplicando las condiciones de contorno de electrostática - continuidad del potencial y el salto en la componente normal del campo eléctrico (Ecs. (\ref{eqn:jump_condition}, \ref{eqn:pot_continuity})) - el sistema de ecuaciones se puede llevar a uno con incógnitas en términos de un único $\phi$ y su derivada $\partial/\partial\hat{\mathbf{n}}(\phi)$. Utilizando la notación de los operadores Single y Double Layer Potential para el método de imágenes (\ref{eqn:SLOp_Memb}, \ref{eqn:DLOp_Memb}) y los de Laplace (\ref{eqn:SLO_Laplace}, \ref{eqn:DLO_Laplace}), se obtiene la BIE para la situación estudiada
+Aplicando las condiciones de contorno de electrostática - continuidad del potencial y el salto en la componente normal del campo eléctrico (ecuaciones (\ref{eqn:jump_condition}, \ref{eqn:pot_continuity})) - el sistema de ecuaciones se puede llevar a uno con incógnitas en términos de un único $\phi$ y su derivada $\partial/\partial\hat{\mathbf{n}}(\phi)$. Utilizando la notación de los operadores Single y Double Layer Potential para el método de imágenes (\ref{eqn:SLOp_Memb}, \ref{eqn:DLOp_Memb}) y los de Laplace (\ref{eqn:SLO_Laplace}, \ref{eqn:DLO_Laplace}), se obtiene la BIE para la situación estudiada
 \begin{gather}
 \frac{\phi_2(\mathbf{r})}{2} + K_L(\phi_2(\mathbf{r})) - V_L\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = \frac{1}{4\pi\varepsilon_p}\sum_{j = 1}^{N_q}\frac{q_j}{|\mathbf{r} - \mathbf{r}_j|}\label{eqn:BIE_membrane1}\\
 \frac{\phi_2(\mathbf{r})}{2} - K_M(\phi_2(\mathbf{r})) + \frac{\varepsilon_2}{\varepsilon_1}V_M\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = 0\label{eqn:BIE_membrane2}
 \end{gather}
-Estas ecuaciones están siendo aplicadas sobre la superficie de la molécula, en este trabajo de carácter Solvent Excluded. Para resolver de forma numérica, la SES se subdivide en $N$ paneles triangulares y las Ecuaciones \ref{eqn:BIE_membrane1} y \ref{eqn:BIE_membrane2} son colocadas en el centroide de cada panel. Las variables dependientes desconocidas están dentro de la integral, por lo que para resolver el sistema se asume que $\phi(\mathbf{r})$ y $\partial_{\hat{\mathbf{n}}}\phi(\mathbf{r})$ son constantes, permitiendo sacarlas de las integrales correspondientes; como toda la formulación se realiza sobre la interfaz, se necesita calcular la interacción de la superficie de la molécula consigo misma\footnote{En casos en que haya más de una superficie, es necesario calcular las combinaciones entre todas ellas.}. Omitiendo el subíndice $2$, para un panel de referencia $v$, la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo se muestra a continuación
+Estas ecuaciones están siendo aplicadas sobre la superficie de la molécula, en este trabajo de carácter Solvent Excluded. Para resolver de forma numérica, la SES se subdivide en $N$ paneles triangulares y las ecuaciones \ref{eqn:BIE_membrane1} y \ref{eqn:BIE_membrane2} son colocadas en el centroide de cada panel. Las variables dependientes desconocidas están dentro de la integral, por lo que para resolver el sistema se asume que $\phi(\mathbf{r})$ y $\partial_{\hat{\mathbf{n}}}\phi(\mathbf{r})$ son constantes, permitiendo sacarlas de las integrales correspondientes; como toda la formulación se realiza sobre la interfaz, se necesita calcular la interacción de la superficie de la molécula consigo misma\footnote{En casos en que haya más de una superficie, es necesario calcular las combinaciones entre todas ellas.}. Omitiendo el subíndice $2$, para un panel de referencia $v$, la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo se muestra a continuación
+
 \begin{flalign*}
 \frac{\phi(\mathbf{r}_v)}{2} + \phi(\mathbf{r}_v)&\sum_{w=0}^N \int_{\partial\Omega_v}\left(\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r}_v, \mathbf{r}_w)\right)\, d\partial\Omega_v \\
 - \left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_v)\right)& \sum_{w=0}^N\int_{\partial\Omega_v} G_L(\mathbf{r}_v, \mathbf{r}_w)\, d\partial\Omega_v = \frac{1}{4\pi\varepsilon_p}\sum_{j = 1}^{N_q}\frac{q_j}{|\mathbf{r}_v - \mathbf{r}_j|} \numberthis
@@ -556,12 +603,12 @@ Como este par de ecuaciones resuelve el sistema para un panel, y la superficie d
 0
 \end{bmatrix}
 \end{equation}
-El cálculo de los Single y Double Layer Potentials requiere a su vez la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $K_G$ puntos de Gauss sobre un panel para calcular los valores de los integrandos en dichos puntos; $K_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico. Como ejemplo, para los operadores que consideran la ecuación de Laplace por fuera de la molécula, se tiene
+El cálculo de los Single y Double Layer Potentials requiere a su vez la discretización del panel para el cómputo numérico de las integrales, lo que supone en este caso distribuir $k_G$ puntos de Gauss sobre un panel para calcular los valores de los integrandos en dichos puntos; $k_G$ varía según si se consideran paneles lejanos, cercanos, o cuando corresponde usar un método semianalítico. Como ejemplo, para los operadores que consideran la ecuación de Laplace por fuera de la molécula, se tiene
 
 \begin{align*}
-V_{v,w}^M &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|} \numberthis\\
-K_{v,w}^M &= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\nabla\left(\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|}\right)\cdot\hat{\mathbf{n}} \\
-&= A_v\cdot\sum_{k=1}^{K_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi}\cdot\nabla\left(\frac{1}{|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|}\right)\cdot\hat{\mathbf{n}}\numberthis
+V_{v,w}^M &= A_v\cdot\sum_{k=1}^{k_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|} \numberthis\\
+K_{v,w}^M &= A_v\cdot\sum_{k=1}^{k_G}\sum_{i=-n}^{n}\nabla\left(\frac{\omega_k\cdot q_i}{4\pi|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|}\right)\cdot\hat{\mathbf{n}} \\
+&= A_v\cdot\sum_{k=1}^{k_G}\sum_{i=-n}^{n}\frac{\omega_k\cdot q_i}{4\pi}\cdot\nabla\left(\frac{1}{|\mathbf{r}_w - \mathbf{r}_{v,k,i}^*|}\right)\cdot\hat{\mathbf{n}}\numberthis
 \end{align*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -592,8 +639,8 @@ V_L = \sum_{lados}\sum_{k=1}^{K_G}\omega_k\cdot (|\mathbf{r}(\theta_k)| - |H|)\c
 K_L = \sum_{lados}\sum_{k=1}^{K_G}\omega_k\cdot \left(\frac{H}{|\mathbf{r}(\theta_k)|}\right) - \text{sign}(H) \cdot\frac{\theta}{2}
 \end{gather}
 Se tienen así los valores, calculados numéricamente, de los Single y Double Layer Potentials en todos los paneles para una (macro)molécula embebida en una membrana con solvente fuera. El siguiente paso es proceder a formar la matriz del sistema de ecuaciones y proseguir con la secuencia descrita en la sección \ref{Sec:SW_Description} para \texttt{PyGBe}.\\\\
-La inclusión del método de imágenes para cálculos con membrana en \texttt{PyGBe} significó la modificación de una serie de archivos para permitir al programa leer las propiedades de la bicapa (espesor y permitividad), seleccionar el tipo de cálculo que se requiere (PB o método de imágenes), y el número de imágenes en el método, entre otros. Se presentan estas modificaciones y una descripción (cuando se considere necesario) como Anexo. Se procede por tanto a presentar los resultados del método y lo relativo a la labor de cómputo realizada, pero previo a esto se introduce una herramienta que facilita de gran forma el trabajo de entendimiento y comparación de los programas.
-
+La inclusión del método de imágenes para cálculos con membrana en \texttt{PyGBe} significó la modificación de una serie de archivos para permitir al programa leer las propiedades de la bicapa (espesor y permitividad), seleccionar el tipo de cálculo que se requiere (PB o método de imágenes), y el número de imágenes en el método, entre otros. Se procede por tanto a presentar los resultados del método y lo relativo a la labor de cómputo realizada, pero previo a esto se introduce una herramienta que facilita de gran forma el trabajo de entendimiento y comparación de los programas.
+%Se presentan estas modificaciones y una descripción (cuando se considere necesario) como Anexo. 
 
 %
 %\subsection{Definición de límites para las sumatorias (cálculo computacional de $\infty$)}
@@ -737,6 +784,7 @@ Finalmente, para la molécula de bromoetano se presenta nuevamente una tabla com
 
 Para poder validar los resultados obtenidos con \texttt{PyGBe} se requiere una referencia contra la cual comparar. El software \texttt{APBSmem} se utiliza para este propósito, en vista de su renombre. Ahora bien, el programa lo que hace es parcelar una ``caja" (el dominio de integración) en nodos en los que calcula, dependiendo de la ubicación y condiciones de dicho nodo, la ecuación gobernante correspondiente. Por eso es que se requiere setear condiciones en los bordes de la mencionada caja. \texttt{APBSmem}, al igual que \texttt{APBS}, permite establecer dichas condiciones. Para el caso trabajado existen tres, que son explicados en el apartado \ref{subsec:APBS}. Se presentan por ende tres tablas para el caso del archivo \texttt{centered\_ion}, dos para el caso \texttt{3q} (se explica el por qué al presentar los resultados), y el valor de evaluación más fino para la molécula de \texttt{bromoethane}, en vista que se omite la extrapolación de Richardson para esta molécula.\\\\
 Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular, se opta por uno cúbico de $128\,\angstrom$ de lado, con tres cantidades de elementos de modo que cada uno de estos sea de $0.25\,\angstrom, 0.5\,\angstrom$ y $1\,\angstrom$; de esta forma se mantiene una tasa de refinación de malla constante. Se utiliza \texttt{APBS} con mapas dieléctricos modificados para incluir la membrana, y el programa entrega la misma diferencia que \texttt{PyGBE}, pero en unidades de $kJ/mol$. Esto no requiere más que una división por $4.184\, kJ/kcal$ para hacer los resultados directamente comparables. Siguiendo el mismo orden que para \texttt{PyGBe}, los resultados para el primer caso de estudio son los siguientes
+
 \begin{table}[h]
 	\centering
 	\caption{Resultados, tiempos de cálculo y RAM utilizada para el cálculo sobre el archivo \texttt{centered\_ion}, mediante APBS.}
@@ -756,12 +804,13 @@ Como en \texttt{APBSmem} hay que definir un dominio de integración rectangular,
 		& 0.25 & 512 & 20.05135 & 4.79239 & 1226.290 & 30.8\\ \hline
 	\end{tabular}\label{table:apbs_centered_ion}
 \end{table}
+
 \noindent
 A continuación se muestran los resultados para \texttt{3q}, y la razón de solo presentar dos sets de resultados para esta molécula es que se repite el comportamiento apreciado en la tabla anterior, \ref{table:apbs_centered_ion}; las energías de solvatación para las condiciones \texttt{sdh} y \texttt{mdh} no varían, probablemente porque los casos de estudio son muy simples. Por esto es que únicamente se presentan los datos correspondientes a condiciones de contorno \texttt{zero} y \texttt{sdh}.
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\caption{Resultados, tiempos de cálculo y RAM utilizada para las tras mallas en el caso de estudio \texttt{3q}, mediante APBS.}
-	\def\arraystretch{0.8}
+	\def\arraystretch{1.2}
 	\begin{tabular}{|c|cccccc|}\hline
 		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
 		\multirow{2}{*}{condición} &  & elementos &  &  & cálculo & utilizada\\\cline{2-7}
@@ -778,10 +827,10 @@ A continuación se muestran los resultados para \texttt{3q}, y la razón de solo
 \noindent
 Para el caso de la molécula de bromoetano se presenta simplemente el valor más fino calculado en \texttt{APBSmem}; esto para condiciones \texttt{zero} y \texttt{sdh}.
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\caption{Resultado, tiempo de cálculo y RAM utilizada para la malla más fina en el caso de estudio de \texttt{bromoethane}, mediante APBS.}
-	\def\arraystretch{0.8}
+	\def\arraystretch{1.2}
 	\begin{tabular}{|c|cccccc|}\hline
 		\multirow{2}{*}{Tipo de} & \multirow{2}{*}{$\Delta$x} & Número de & \multirow{2}{*}{E\_solv} & \multirow{2}{*}{E\_solv} & Tiempo de & RAM\\
 		\multirow{2}{*}{condición} &  & elementos &  &  & cálculo & utilizada\\\cline{2-7}
@@ -858,17 +907,17 @@ Viendo el gráfico \ref{graph:Potencial}, resulta evidente la naturaleza oscilat
 \begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Potencial}
-	\caption{Resultados de PyGBE con membrana para el caso \texttt{centered\_ion}, según se varía el número de cargas imagen del método.}\label{graph:Potencial}
+	\caption{Resultados de PyGBE con membrana para el caso \texttt{centered\_ion}, según se varía el número de cargas imagen del método. La línea roja es el resultado extrapolado para $41$ cargas imagen.}\label{graph:Potencial}
 \end{graph}
 \noindent
 A pesar de lo bueno de este hecho, también se puede apreciar que el valor extrapolado fue trabajado con $N=41$ y es clara su cercanía justamente al potencial con ese número de cargas imagen. Por otro lado, se ve que dentro de todo la convergencia no es rápida, y para asegurar un resultado con un buen nivel de precisión se requieren muchos términos en la sumatoria.
 \begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error}
-	\caption{Variación porcentual en el resultado, en función del número de imágenes empleado.}\label{graph:Error}
+	\caption{Variación porcentual en el resultado, en función del número de imágenes empleado. La línea roja es el resultado extrapolado para $41$ cargas imagen.}\label{graph:Error}
 \end{graph}
 \noindent
-Del gráfico \ref{graph:Error} se puede rescatar que, como se espera que suceda en una expansión, a medida que se agregan términos, la variación entre los valores va disminuyendo; esto es claro a partir del gráfico de Potencial v/s $N$, pero se hace más evidente en este caso. Para ver qué tipo de decaimiento tiene el error, se grafica dicho eje (el de las ordenadas) en escala logarítmica. Como se ven en el gráfico \ref{graph:Error_log}, la relación se torna lineal, por lo que el error disminuye con el logaritmo de $N$.
+Del gráfico \ref{graph:Error} se puede rescatar que, como se espera que suceda en una expansión, a medida que se agregan términos, la variación entre los valores va disminuyendo; esto es claro a partir del gráfico de Potencial v/s $N$, pero se hace más evidente en este caso. Para ver qué tipo de decaimiento tiene el error, se grafica dicho eje (el de las ordenadas) en escala logarítmica. Como se ve en el gráfico \ref{graph:Error_log}, la relación se torna lineal, por lo que el error disminuye con el logaritmo de $N$.
 \begin{graph}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error_log}
@@ -928,6 +977,13 @@ Otras formas de mejorar la precisión del modelo pueden venirse a la mente, pues
 
 \pagebreak
 
+\include{Anexo_Bromoethane}
+\pagebreak
+\include{Anexo_Solv_Energy}
+\pagebreak
+\include{Anexo_APBS}
+\pagebreak
+
 \begin{thebibliography}{150}
 \bibitem{Jackson}
 Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
@@ -974,39 +1030,5 @@ https://apbs-pdb2pqr.readthedocs.io/en/latest/formats/pqr.html
 \bibitem{apbsmem_website}
 https://apbsmem.sourceforge.io
 \end{thebibliography}
-
-\include{Anexo_APBS}
-
-
-%\pagebreak
-%\pagenumbering{gobble}
-
-%\section*{Anexos}
-%\subsection*{\texttt{Bromoethane.pqr}}
-%\begin{table}[H]
-%	\centering
-%	\begin{tabular}{cccccccccc}
-%		ATOM & 1 & C1 & TMP & 1 & 0.013000 & -0.725000 & 0.821000 & -0.094000 & 1.908000\\
-%		ATOM & 2 & C2 & TMP & 1 & 1.140000 & -0.443000 & 1.786000 & -0.005700 & 1.908000\\
-%		ATOM & 3 & Br1 & TMP & 1 & 2.846000 & -0.545000 & 0.859000 & -0.181800 & 2.020000\\
-%		ATOM & 4 & H1 & TMP & 1 & -0.951000 & -0.668000 & 1.337000 & 0.047100 & 1.487000\\
-%		ATOM & 5 & H2 & TMP & 1 & 0.000000 & -0.000000 & 0.000000 & 0.047100 & 1.487000\\
-%		ATOM & 6 & H3 & TMP & 1 & 0.103000 & -1.725000 & 0.384000 & 0.047100 & 1.487000\\
-%		ATOM & 7 & H4 & TMP & 1 & 1.172000 & -1.178000 & 2.594000 & 0.070000 & 1.387000\\
-%		ATOM & 8 & H5 & TMP & 1 & 1.067000 & 0.563000 & 2.208000 & 0.070000 & 1.387000\\
-%	\end{tabular}
-%\end{table}
-%Para una descripción de lo que significa cada columna, revisar la referencia \cite{pdb2pqr_2}.
-%
-%\subsection*{Energía de solvatación}
-%La energía de solvatación es la energía de un sistema solvente - soluto; se presenta una definición extraída de la referencia \cite{glossary_of_chem_terms}.\\
-%\textit{Es el cambio en la energía de Gibbs cuando un ion o molécula se transfiere desde el vacío a un solvente. Las contribuciones principales a la energía de solvatación provienen de}:
-%\begin{itemize}
-%	\item \textit{La energía por la formación de la cavidad en la que se ubican las especies disueltas de soluto}.
-%	\item \textit{La energía de orientación de los dipolos}.
-%	\item \textit{La energía de interacción isotrópica, de origen electrostático y de dispersión}.
-%	\item \textit{La energía anisotrópica por interacciones específicas, por ejemplo enlaces de hidrógeno}.
-%\end{itemize}
-%Para efectos de este trabajo, en vista de que se trata exclusivamente el aporte electrostático en sistemas, la energía de solvatación corresponde únicamente al reordenamiento dipolar y, por ende, al campo de reacción del solvente por la inserción de la molécula.
 
 \end{document}
