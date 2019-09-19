@@ -8,6 +8,7 @@
 \usepackage{pbox}
 \usepackage[makeroom]{cancel}
 \usepackage{float}
+\usepackage{titlesec}
 \usepackage{caption}
 \usepackage{multirow}
 \usepackage{newfloat}
@@ -19,6 +20,7 @@
 \usepackage{times}
 \usepackage{tikz}
 \usepackage{listings}
+\usepackage[labelfont=bf]{caption}
 %\usepackage{dsfont}
 \DeclareFloatingEnvironment[name={Gráfico}]{graph}
 %\numberwithin{graph}{section}
@@ -30,8 +32,11 @@
 
 
 \date{\today}
+\renewcommand{\listtablename}{Índice de tablas}
+\renewcommand{\listfigurename}{Índice de figuras}
 \renewcommand{\contentsname}{Contenidos}
 \renewcommand\bibname{Bibliografía}
+\renewcommand\appendixname{Apéndice}
 \renewcommand\tablename{Tabla}
 \renewcommand\figurename{Figura}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -51,10 +56,16 @@
 \city{VALPARAISO}
 \country{CHILE}
 
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
 \geometry{letterpaper,top=35mm,bottom=35mm,inner=30mm,outer=30mm}
 %\geometry{top=35mm,bottom=35mm,inner=30mm,outer=30mm}
 
 \begin{document}
+\pagenumbering{roman}
+\sloppy
 
 \include{Portada/anteportada}
 \include{Portada/portada}
@@ -64,20 +75,30 @@
 \include{Abstract}
 
 \newpage
+\thispagestyle{empty}
 \noindent
-\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\
 \large{``\textit{The greatest danger for most of us}}
 \begin{center}
 \large{\textit{is not that our aim is too high and we miss it,}}
 \end{center}
 \begin{flushright}
-\large{\textbf{but that it is too low and we reach it.}"\\}\bigskip
+\large{\textit{but that it is too low and we reach it.}"\\}\bigskip
 - Michelangelo
 \end{flushright}
 \newpage
 \tableofcontents
 \newpage
-
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+%%%% Indice de tablas
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\newpage
+\pagenumbering{arabic}
 \chapter{Introducción}\label{Chap:Intro}
 La complejidad de los fenómenos biológicos hace que sea imposible hasta el momento analizar de manera completa su naturaleza. Es por esto que actualmente se estudian de manera exhaustiva nuevas formas de representar los sistemas biológicos o sus elementos conformantes, recurriendo a múltiples disciplinas y enfoques. Por nombrar ejemplos de ramas de la ciencia relevantes se tienen la electrodinámica, la termodinámica, la mecánica de sólidos, y mecánica estadística, aunque de ninguna manera son las únicas. Además, al igual que en muchas otras áreas, la computación se tomó gran parte del escenario, volviéndose quizás la herramienta más útil y usada en las investigaciones y avances en la comprensión de la biología celular.\\\\
 Para modelar la fenomenología de los sistemas biológicos según las diferentes disciplinas científicas mencionadas se utiliza una cantidad de métodos computacionales, de los cuales quizás los más conocidos son la dinámica molecular (MD) en casos explícitos y el método de elementos finitos (FEM) en casos implícitos. Por supuesto y como todo en la vida, ambos tienen sus ventajas y desventajas; un punto en contra que tienen en común ambos tipos de modelación es que en general son lentos (MD más que FEM). Por esto es que ha empezado a tomar cada vez más fuerza el método de elementos de borde/frontera (BEM), que permite resolver problemas físicos comparativamente rápido a expensas de una formulación un tanto más compleja.\\\\
@@ -87,7 +108,7 @@ La física de lo que buscamos representar consiste en una molécula totalmente e
 \begin{figure}[h]
 \centering
 \input{./Figures/Fig_Intro.eps_tex}
-\caption{Esquema de la situación física que se quiere modelar; una proteína en una membrana.}\label{Fig:Intro}
+\caption{Esquema de la situación física que se quiere modelar: una proteína en una membrana.}\label{Fig:Intro}
 \end{figure}
 \noindent
 Hay que tener presente que existen otros fenómenos además de los electrostáticos que no se consideran por la gran complejidad que conllevan; por ejemplo, la inversión de carga de la membrana, la onda mecánica consecuente (o causal), etc, ya que en algunos casos ni siquiera se entiende bien su naturaleza; este trabajo se remite a electrostática de proteínas totalmente embebidas en la membrana.\\\\
@@ -975,7 +996,7 @@ Otra modificación que se vuelve atractiva es la inclusión del efecto de iones 
 Por último, una mejora evidente que se requiere es reducir la cantidad de memoria que se debe dedicar para estos cálculos mediante el método de imágenes, pues este resulta el principal obstáculo en este momento.\\\\
 Otras formas de mejorar la precisión del modelo pueden venirse a la mente, pues aún queda mucho trabajo por delante, pero remitiéndose al marco de esta investigación, se logran los objetivos principales, se prueba de forma categórica que el método de imágenes sirve para cálculos de moléculas \textbf{en} membranas, y además se crea una pequeña base teórica para hacer más fluida la continuación de esta línea de investigación en el futuro, dado el caso.
 
-\pagebreak
+\appendix
 
 \include{Anexo_Bromoethane}
 \pagebreak
