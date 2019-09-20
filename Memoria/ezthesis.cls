@@ -123,10 +123,10 @@
 
 %% margins
 \RequirePackage[
-  top     = 40mm, bottom     = 33mm,
-  outer   = 25mm, inner      = 40mm,
-  headsep = 10mm, headheight = 15pt,
-  marginparwidth = 15mm ]{geometry}
+top     = 30mm, bottom     = 30mm,
+outer   = 30mm, inner      = 40mm,
+headsep = 10mm, headheight = 15pt,
+marginparwidth = 15mm ]{geometry}
 
 %% page styles
 \if@fancyhdr
@@ -139,20 +139,20 @@
     \fancyhead[LE,RO]{\itshape\thepage}
     \fancyfoot[C]{\draftmark}
 
-    \fancypagestyle{plain}{%
-    \fancyhf{}
-    \fancyfoot[LE,RO]{\itshape\thepage}
-    \fancyfoot[RE,LO]{\draftmark}}
+	\fancypagestyle{plain}{%
+	\fancyhf{}
+	\fancyfoot[LE,RO]{\itshape\thepage}
+	\fancyfoot[RE,LO]{\draftmark}}
   \else
-    \fancyhf{}
-    \fancyhead[L]{\itshape\nouppercase\leftmark}
-    \fancyhead[R]{\itshape\thepage}
-    \fancyfoot[C]{\draftmark}
+	\fancyhf{}
+	\fancyhead[L]{\itshape\nouppercase\leftmark}
+	\fancyfoot[R]{\itshape\thepage}
+	\fancyfoot[C]{\draftmark}
 
-    \fancypagestyle{plain}{%
-    \fancyhf{}
-    \fancyfoot[R]{\itshape\thepage}
-    \fancyfoot[L]{\draftmark}}
+	\fancypagestyle{plain}{%
+	\fancyhf{}
+	\fancyfoot[R]{\itshape\thepage}
+	\fancyfoot[L]{\draftmark}}
   \fi
 
   \fancypagestyle{empty}{%

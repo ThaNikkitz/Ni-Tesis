@@ -1,43 +1,44 @@
 \contentsline {chapter}{Resumen}{iii}{section*.1}
 \contentsline {paragraph}{Palabras Clave}{iii}{paragraph*.3}
 \contentsline {chapter}{Abstract}{iv}{section*.4}
-\contentsline {chapter}{\IeC {\'I}ndice de figuras}{ix}{section*.7}
-\contentsline {chapter}{\IeC {\'I}ndice de tablas}{xi}{section*.9}
+\contentsline {paragraph}{Keywords}{iv}{paragraph*.6}
+\contentsline {chapter}{\IeC {\'I}ndice de figuras}{ix}{section*.8}
+\contentsline {chapter}{\IeC {\'I}ndice de tablas}{xi}{section*.10}
 \contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.1}
 \contentsline {chapter}{\numberline {2}Marco Te\IeC {\'o}rico}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{5}{section.2.1}
 \contentsline {section}{\numberline {2.2}La permitividad de un medio material, la polarizaci\IeC {\'o}n y el campo el\IeC {\'e}ctrico microsc\IeC {\'o}pico}{7}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Campo el\IeC {\'e}ctrico local y polarizaci\IeC {\'o}n}{8}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{13}{subsection.2.2.2}
-\contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un medio diel\IeC {\'e}ctrico}{15}{section.2.3}
-\contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{17}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{20}{subsection.2.4.1}
-\contentsline {section}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{24}{section.2.5}
-\contentsline {section}{\numberline {2.6}El contexto biol\IeC {\'o}gico de la membrana celular}{27}{section.2.6}
-\contentsline {chapter}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{32}{chapter.3}
-\contentsline {section}{\numberline {3.1}Representaci\IeC {\'o}n del modelo de solvente impl\IeC {\'\i }cito mediante BEM}{33}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Solvent Excluded y Solvent Accesible Surface}{35}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}La ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB) y la Boundary Integral Equation (BIE)}{37}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{42}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}MSMS}{42}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}APBS}{43}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}APBSmem}{45}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}PyGBe}{47}{subsection.3.2.4}
-\contentsline {subsubsection}{Archivo \texttt {.config}}{48}{subsubsection*.33}
-\contentsline {subsubsection}{Archivo \texttt {.param}}{49}{subsubsection*.34}
-\contentsline {subsubsection}{Forma de operaci\IeC {\'o}n del programa}{50}{subsubsection*.35}
-\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{52}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{53}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{58}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{66}{subsection.3.3.3}
-\contentsline {chapter}{\numberline {4}Resultados}{69}{chapter.4}
-\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{69}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{70}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{73}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y convergencia}{76}{section.4.2}
-\contentsline {section}{\numberline {4.3}An\IeC {\'a}lisis de Resultados}{78}{section.4.3}
-\contentsline {chapter}{\numberline {5}Conclusiones}{83}{chapter.5}
-\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{84}{section.5.1}
-\contentsline {chapter}{\numberline {A}Archivo Bromoethane.pqr}{86}{appendix.A}
-\contentsline {chapter}{\numberline {B}Energ\IeC {\'\i }a de solvataci\IeC {\'o}n}{87}{appendix.B}
-\contentsline {chapter}{\numberline {C}Funcionamiento de APBSmem}{89}{appendix.C}
+\contentsline {subsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{12}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un medio diel\IeC {\'e}ctrico}{13}{section.2.3}
+\contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{15}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{18}{subsection.2.4.1}
+\contentsline {section}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{20}{section.2.5}
+\contentsline {section}{\numberline {2.6}El contexto biol\IeC {\'o}gico de la membrana celular}{23}{section.2.6}
+\contentsline {chapter}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{27}{chapter.3}
+\contentsline {section}{\numberline {3.1}Representaci\IeC {\'o}n del modelo de solvente impl\IeC {\'\i }cito mediante BEM}{28}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Solvent Excluded y Solvent Accesible Surface}{29}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}La ecuaci\IeC {\'o}n de Poisson - Boltzmann (PB) y la Boundary Integral Equation (BIE)}{31}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Descripci\IeC {\'o}n del software utilizado}{35}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}MSMS}{35}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}APBS}{36}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}APBSmem}{38}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}PyGBe}{39}{subsection.3.2.4}
+\contentsline {subsubsection}{Archivo \texttt {.config}}{40}{subsubsection*.34}
+\contentsline {subsubsection}{Archivo \texttt {.param}}{41}{subsubsection*.35}
+\contentsline {subsubsection}{Forma de operaci\IeC {\'o}n del programa}{42}{subsubsection*.36}
+\contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{44}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{45}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{48}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{55}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Resultados}{57}{chapter.4}
+\contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{57}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Resultados mediante PyGBe}{58}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Resultados mediante APBS - APBSmem}{60}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Extrapolaci\IeC {\'o}n de Richardson y convergencia}{63}{section.4.2}
+\contentsline {section}{\numberline {4.3}An\IeC {\'a}lisis de Resultados}{65}{section.4.3}
+\contentsline {chapter}{\numberline {5}Conclusiones}{69}{chapter.5}
+\contentsline {section}{\numberline {5.1}Continuaci\IeC {\'o}n del trabajo}{70}{section.5.1}
+\contentsline {chapter}{\numberline {A}Archivo Bromoethane.pqr}{72}{appendix.A}
+\contentsline {chapter}{\numberline {B}Energ\IeC {\'\i }a de solvataci\IeC {\'o}n}{73}{appendix.B}
+\contentsline {chapter}{\numberline {C}Funcionamiento de APBSmem}{74}{appendix.C}

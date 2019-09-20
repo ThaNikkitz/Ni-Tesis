@@ -48,13 +48,13 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,1.2)%
-    \put(0,0){\includegraphics[width=\unitlength]{./Figures/Fig_2.eps}}%
-    \put(0.10482234,1.04875453){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{1.666545\unitlength}\raggedright $\vec{D}_1$\end{minipage}}}%
-    \put(0.0073312,0.68304092){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.22066901\unitlength}\raggedright $q$\end{minipage}}}%
-    \put(0.81362697,0.66898436){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35241171\unitlength}\raggedright $q_i$\end{minipage}}}%
-    \put(0.81177849,1.07323106){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{1.66654491\unitlength}\raggedright $\vec{D}_2$\end{minipage}}}%
-    \put(-0.0582276,1.34608514){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.70558155\unitlength}\raggedright Medio 1\end{minipage}}}%
-    \put(0.76192798,1.34316334){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.70558155\unitlength}\raggedright Medio 2\end{minipage}}}%
+  \begin{picture}(1,1.5)%
+    \put(0,0.05){\includegraphics[width=\unitlength]{./Figures/Fig_2.eps}}%
+    \put(0.10482234,1.09875453){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{1.666545\unitlength}\raggedright $\vec{D}_1$\end{minipage}}}%
+    \put(0.0073312,0.73304092){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.22066901\unitlength}\raggedright $q$\end{minipage}}}%
+    \put(0.81362697,0.71898436){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35241171\unitlength}\raggedright $q_i$\end{minipage}}}%
+    \put(0.81177849,1.12323106){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{1.66654491\unitlength}\raggedright $\vec{D}_2$\end{minipage}}}%
+    \put(-0.0582276,1.39608514){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.70558155\unitlength}\raggedright Medio 1\end{minipage}}}%
+    \put(0.76192798,1.39316334){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.70558155\unitlength}\raggedright Medio 2\end{minipage}}}%
   \end{picture}%
 \endgroup%

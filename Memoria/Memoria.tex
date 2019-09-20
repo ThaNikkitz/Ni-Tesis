@@ -1,4 +1,4 @@
-\documentclass[12pt, oneside, numbers, spanish]{ezthesis}
+\documentclass[12pt, twoside, onehalfspace, numbers, spanish]{ezthesis}
 %\usepackage[letterpaper,top=35mm,bottom=35mm,inner=30mm,outer=30mm]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage{fancyhdr}
@@ -45,7 +45,8 @@
 \newcommand\varmp{\mathbin{\vcenter{\hbox{\oalign{$\scriptstyle({+})$\cr\noalign{\kern-.3ex}\hfil$\scriptscriptstyle-$\hfil\cr}}}}}
 \newcommand\votwo{\mathbin{\vcenter{\hbox{\oalign{\hfil$\scriptstyle1$\hfil\cr\noalign{\kern-.3ex}$\scriptscriptstyle({2})$\cr}}}}}
 \newcommand{\angstrom}{\text{\normalfont\AA}}
-\renewcommand{\baselinestretch}{1.5}
+%\renewcommand{\baselinestretch}{1.5}
+\linespread{1.25}
 
 \author{Nicolás Espinoza Muñoz}
 \title{MODELACIÓN NUMÉRICA DE UNA PROTEÍNA INSERTA EN UNA MEMBRANA CELULAR USANDO EL MÉTODO DE ELEMENTOS DE BORDE.}
@@ -60,7 +61,7 @@
 {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{0pt}{20pt}
 
-\geometry{letterpaper,top=35mm,bottom=35mm,inner=30mm,outer=30mm}
+%\geometry{letterpaper,top=35mm,bottom=35mm,inner=30mm,outer=30mm}
 %\geometry{top=35mm,bottom=35mm,inner=30mm,outer=30mm}
 
 \begin{document}
@@ -161,7 +162,7 @@ Se puede entender la constante dieléctrica de un material (o permitividad) como
 La permitividad que se utiliza en las ecuaciones (\ref{eqn:charge_field} - \ref{eqn:integral_potential}) es llamada también \textit{constante dieléctrica} del medio, y en realidad es un concepto derivado de la susceptibilidad eléctrica y de lo que ocurre a nivel molecular en el medio dieléctrico afectado por un campo eléctrico. En el caso del vacío se menciona que no existe un medio que reaccione a la presencia de una carga (y por ende no ``siente" el campo eléctrico), por lo que la constante dieléctrica del vacío es considerada como referencia. Por el contrario, en un dieléctrico si se tiene una reacción al campo eléctrico; en este caso es importante explicar qué pasa con el campo eléctrico a nivel microscópico y cómo eso se relaciona con la susceptibilidad eléctrica. Los términos microscópico y local se utilizan indistintamente \cite{Kantorovich}.
 
 \subsection{Campo eléctrico local y polarización}\label{subsec:Local_Field}
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \input{./Figures/Fig_1.eps_tex}
 \caption{Efecto de un campo sobre la forma de un átomo. El electrón (en realidad la nube electrónica) es ``halado" por el campo, mientras que el protón (o núcleo atómico) es ``empujado", induciendo así un dipolo.}
@@ -269,21 +270,18 @@ Como la interfaz es un límite para el espacio de análisis, es aquí donde se e
 \varepsilon_1\vec{E}_1\cdot\hat{\mathbf{n}} = \varepsilon_2\vec{E}_2\cdot\hat{\mathbf{n}} \label{eqn:jump_condition}\\
 \vec{E}_1\cdot\hat{\mathbf{t}} = \vec{E}_2\cdot\hat{\mathbf{t}} \label{eqn:pot_continuity}
 \end{gather}
-En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las ecuaciones (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}) indican que hay un cambio en la componente normal del campo igual a $\varepsilon_1/\varepsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\varepsilon = cte$) en la figura \ref{Fig:Fig_2}.
-\begin{figure}[H]
-	\vspace{2cm}
-	\centering
-	\input{./Figures/Fig_2.eps_tex}
-	\caption{Se observan las líneas de desplazamiento eléctrico, que dan cuenta del efecto de la polarización.}\label{Fig:Fig_2}
-\end{figure}
-\noindent
-Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción solo en el medio 1. La idea es determinar qué valor tiene que tener la carga o conjunto de cargas necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto (discontinuidad) en la componente normal del campo eléctrico dado por
+En este caso, $\hat{\mathbf{n}}$ es un vector normal a la superficie interfaz, y $\hat{\mathbf{t}}$ un vector tangencial a la misma. En palabras, las ecuaciones (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}) indican que hay un cambio en la componente normal del campo igual a $\varepsilon_1/\varepsilon_2$; esto es, hay un salto en la componente normal. Como ejemplo se tiene el caso más simple, con dos dieléctricos homogéneos isotrópicos ($\varepsilon = cte$) en la figura \ref{Fig:Fig_2}. Hay que notar que, como se dijo, al trabajar de esta forma se analizan los medios por separado, y se debe considerar el efecto de la carga imagen que representa el campo de reacción solo en el medio 1. La idea es determinar qué valor tiene que tener la carga o conjunto de cargas necesarias, que pueden ser continuas o discretas, en función de los parámetros que si se conocen en el sistema. En el caso particular de que la interfaz sea una placa cargada de espesor infinitesimal y los medios a analizar tengan la misma constante dieléctrica, se llega al resultado elemental de un salto (discontinuidad) en la componente normal del campo eléctrico dado por
 \begin{equation}
 (\vec{E}_2 - \vec{E}_1)\cdot\hat{\mathbf{n}} = \frac{\sigma}{\varepsilon_m}
 \end{equation}
 con $\sigma$ la densidad superficial de carga y $\varepsilon_m$ la constante dieléctrica de los medios que rodean al plano. \\\\
 Se desarrolla más a cabalidad el tema en secciones posteriores, ya que forma parte del problema clave que motiva este escrito. Se presenta un desarrollo del caso planteado con el sistema de ecuaciones, y se analiza un sistema con dos interfaces paralelas, todo mediante el método de imágenes. 
-
+\begin{figure}[h]
+	\centering
+	\input{./Figures/Fig_2.eps_tex}
+	\caption{Se observan las líneas de desplazamiento eléctrico, que dan cuenta del efecto de la polarización.}\label{Fig:Fig_2}
+\end{figure}
+\noindent
 \subsection{Campo de reacción en un sistema con una interfaz y una carga puntual}\label{subsec:Reaction_Field}
 En primer lugar se tiene un caso simple, presente en la mayoría de los libros de electrodiná-mica, que consiste en una carga en un medio 1 y una interfaz que separa a este último de un medio 2; el caso en cuestión se presenta en la figura \ref{Fig:Fig_3}. El campo eléctrico viene dado por la ecuación (\ref{eqn:charge_field}), y tiene como condiciones de contorno las presentadas en las Ecs. (\ref{eqn:jump_condition}) y (\ref{eqn:pot_continuity}).
 El potencial en algún punto $P$ en el medio 1 viene dado por el potencial de una carga $q$ real y la carga imagen $q_1$, que representa el campo de reacción del medio 2 a causa de $q$. Además el potencial en el medio 2 ya no es debido únicamente a la carga $q$, pues el medio dieléctrico reacciona; esto se representa por una nueva carga imagen $q_2$. En este caso, $R_{\substack{1\\(2)}} = \sqrt{r^2 + (z \varpm d)^2}$, el signo dependiendo de si la carga, ya sea imaginaria o real, esta hacia la izquierda o derecha del plano $z=0$.
@@ -420,7 +418,8 @@ El método BEM requiere una superficie que permita diferenciar dos dominios. Es 
 \subsection{Solvent Excluded y Solvent Accesible Surface}\label{subsec:SES_SAS}
 De lo que se ha percibido a lo largo de este estudio, los dos métodos que se emplean usualmente para representar una superficie característica de una proteína son los que se indican en el título de esta parte. Ambos consisten en utilizar una \textit{sonda}, por lo general una molécula de agua, que interactúa con los radios de van der Waals de los átomos de la proteína. Si por ejemplo se quiere mapear la superficie exterior de la proteína o macromolécula, se hace ``\textit{rodar}" una molécula de agua por sobre la superficie de van der Waals de los átomos exteriores, de tal modo que la distancia entre los centros de un átomo de la macromolécula y el de la sonda de agua sea la suma de los radios de cada uno.\\\\
 En el caso de la Solvent Accesible Surface (SAS), el centro de la molécula de agua es lo que define la superficie de trabajo. Esto genera puntas como se puede apreciar en la figura \ref{Fig:SAS_and_SES} . La distancia entre el centro del átomo a sondear y la SAS es entonces la suma del radio de van der Waals de dicho átomo y el radio de la molécula de sondeo.
-\begin{figure}[H]
+
+\begin{figure}[h]
 	\centering
 	\input{Figures/Fig_7.eps_tex}
 	\caption{Solvent Excluded y Solvent Accesible Surface, presentadas de forma esquemática.}\label{Fig:SAS_and_SES}
@@ -471,14 +470,17 @@ Al aplicar las condiciones de contorno, el sistema de ecuaciones deriva en
 		\frac{\phi_2(\mathbf{r})}{2} + K_L(\phi_2(\mathbf{r})) - V_L\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = \frac{1}{4\pi\varepsilon_2}\sum_{j=0}^{N_q}\frac{q_j}{|\mathbf{r} - \mathbf{r}_j|}\\
 		\frac{\phi_2(\mathbf{r})}{2} - K_Y(\phi_2(\mathbf{r})) + \frac{\varepsilon_2}{\varepsilon_1}V_Y\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = 0
 \end{gather}
-Ahora bien, si se subdivide la superficie de la proteína en $N$ paneles, en este caso triangulares, las ecuaciones siguen siendo válidas para cada panel; estas se trabajan \textit{colocándolas} en los centroides de cada panel (llamado a partir de ahora \textit{punto de colocación}), permitiendo así su discretización de forma representativa.
+Ahora bien, si se subdivide la superficie de la proteína en $N$ paneles, en este caso triangulares, las ecuaciones siguen siendo válidas para cada panel; estas se trabajan \textit{colocándolas} en los centroides de cada panel (llamado a partir de ahora \textit{punto de colocación}), permitiendo así su discretización de forma representativa.\\\\
+
 \begin{figure}[h]
 	\centering
 	\input{Figures/BEM_scheme.eps_tex}
 	\caption{Forma 2D de dividir la frontera del dominio de integración para aplicar el método BEM a cada elemento de borde.}
 \end{figure}
+
 \noindent
 Las propiedades que se buscan - potencial y su derivada respecto a la normal - son incógnitas. Se asume entonces que dichas propiedades son constantes sobre un mismo panel, por lo que salen de la integral respectiva en ambas ecuaciones y se genera un sistema de la forma $\underline{A}\mathbf{x} = \mathbf{b}$
+
 \begin{equation}\label{eqn:PB_equation_system}
 	\renewcommand\arraystretch{1.6}
 	\begin{pmatrix}
@@ -492,7 +494,8 @@ Las propiedades que se buscan - potencial y su derivada respecto a la normal - s
 		\frac{1}{4\pi\varepsilon}\sum_{j=0}^{N_q}\frac{q_j}{|\mathbf{r} - \mathbf{r}_j|} \\ 0
 	\end{pmatrix}
 \end{equation}
-Resolviendo (\ref{eqn:PB_equation_system}) para los $N$ paneles se calcula la energía potencial del sistema, y multiplicando por una serie de factores de transformación de unidades, se obtiene la energía sobre la superficie de la proteína. Con estos valores se puede entrar a calcular la reacción del medio sobre dicha superficie, lo que corresponde a la energía de solvatación. Se adjunta una definición de \textit{energía de solvatación} en el Anexo de este escrito. Se profundiza más sobre el cálculo energético en el siguiente apartado, particularmente en la descripción del programa \texttt{PyGBe}.
+\noindent
+Resolviendo (\ref{eqn:PB_equation_system}) para los $N$ paneles se calcula la energía potencial del sistema, y multiplicando por una serie de factores de transformación de unidades, se obtiene la energía sobre la superficie de la proteína. Con estos valores se puede entrar a calcular la reacción del medio sobre dicha superficie, lo que corresponde a la energía de solvatación. Se adjunta una definición de \textit{energía de solvatación} en el Apéndice \ref{Anexo:Solv_Energy} de este escrito. Se profundiza más sobre el cálculo energético en el siguiente apartado, particularmente en la descripción del programa \texttt{PyGBe}.
 
 
 
@@ -602,7 +605,6 @@ Aplicando las condiciones de contorno de electrostática - continuidad del poten
 \frac{\phi_2(\mathbf{r})}{2} - K_M(\phi_2(\mathbf{r})) + \frac{\varepsilon_2}{\varepsilon_1}V_M\left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi_2(\mathbf{r})\right) = 0\label{eqn:BIE_membrane2}
 \end{gather}
 Estas ecuaciones están siendo aplicadas sobre la superficie de la molécula, en este trabajo de carácter Solvent Excluded. Para resolver de forma numérica, la SES se subdivide en $N$ paneles triangulares y las ecuaciones \ref{eqn:BIE_membrane1} y \ref{eqn:BIE_membrane2} son colocadas en el centroide de cada panel. Las variables dependientes desconocidas están dentro de la integral, por lo que para resolver el sistema se asume que $\phi(\mathbf{r})$ y $\partial_{\hat{\mathbf{n}}}\phi(\mathbf{r})$ son constantes, permitiendo sacarlas de las integrales correspondientes; como toda la formulación se realiza sobre la interfaz, se necesita calcular la interacción de la superficie de la molécula consigo misma\footnote{En casos en que haya más de una superficie, es necesario calcular las combinaciones entre todas ellas.}. Omitiendo el subíndice $2$, para un panel de referencia $v$, la interacción con cada uno de los $N-1$ paneles restantes (aquí con subíndice $w$), \textbf{y} consigo mismo se muestra a continuación
-
 \begin{flalign*}
 \frac{\phi(\mathbf{r}_v)}{2} + \phi(\mathbf{r}_v)&\sum_{w=0}^N \int_{\partial\Omega_v}\left(\frac{\partial}{\partial\hat{\mathbf{n}}}G_L(\mathbf{r}_v, \mathbf{r}_w)\right)\, d\partial\Omega_v \\
 - \left(\frac{\partial}{\partial\hat{\mathbf{n}}}\phi(\mathbf{r}_v)\right)& \sum_{w=0}^N\int_{\partial\Omega_v} G_L(\mathbf{r}_v, \mathbf{r}_w)\, d\partial\Omega_v = \frac{1}{4\pi\varepsilon_p}\sum_{j = 1}^{N_q}\frac{q_j}{|\mathbf{r}_v - \mathbf{r}_j|} \numberthis
@@ -642,7 +644,7 @@ Lo anterior aplica para el panel $v$ como \texttt{src} y $w$ como \texttt{tar} (
 Distinto es el caso del panel propio, que requiere la mencionada integración semianalítica, pues las distancias serían muy pequeñas entre los puntos de cuadratura y el centro del panel (distancia \texttt{tar} - \texttt{src}), y el denominador de las funciones de Green se volvería prácticamente cero. Esta forma de integración se utiliza, en el caso del método de imágenes, para el término 0 del contador, pues todos los demás están al menos a una distancia $(a - z_0)$ con respecto al punto de cuadratura; $z_0$ es la tercera coordenada del punto de cuadratura.\\\\
 El método que se utiliza para integrar de forma semianalítica se inicia tomando el punto de colocación y proyectándolo sobre el plano del panel \cite{Zhu}. Esto permite formar tres triángulos ($\Delta_{O12}$, $\Delta_{O23}$, $\Delta_{O13}$). Al trabajar una función que se quiera integrar sobre este grupo de triángulos en coordenadas polares, se puede integrar analíticamente en la variable $r$, de tal forma que solo es necesario variar el ángulo de integración para recorrer cada uno de los tres lados de cada triángulo del conjunto, como se muestra a continuación en la figura \ref{Fig:Fig_6}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \input{./Figures/Fig_6.eps_tex}
 \caption{Aplicación del método semianalítico sobre un panel triangular.}\label{Fig:Fig_6}
@@ -694,7 +696,8 @@ La inclusión del método de imágenes para cálculos con membrana en \texttt{Py
 \subsection{El ciclo termodinámico en solvatación}
 En el cálculo de energías de solvatación es muy útil analizar los estados en que se encuentra el sistema en cuestión. Para esto se realiza un ciclo termodinámico, que facilita el entendimiento de lo que se está calculando. En este trabajo se utiliza principalmente para entender justamente qué son los resultados que se estan obteniendo, y compararlos con el programa \texttt{APBSmem}.\\\\
 Para el caso trabajado, el ciclo termodinámico común para \texttt{APBSmem} y \texttt{PyGBe} es el que se muestra en la figura \ref{fig:thermo_cycle} y que consiste de cuatro estados. El estado \circled{1} es la membrana y el conjunto de cargas que componen la molécula, por separado, en el vacío\footnote{Para efectos de ambos programas, el ``vacío" es en realidad un medio dieléctrico polarizable de permitividad igual a la de la molécula.}; como la membrana es un dieléctrico que no posee cargas explícitas, no hay una energía electrostática asociada, y para el caso del conjunto de cargas, la energía es simplemente la de Coulomb en el medio (ecuación (\ref{eqn:potential})). El estado \circled{2} corresponde a la membrana y el conjunto de cargas, nuevamente por separado, pero esta vez en agua en vez de en el vacío. La proteína y la membrana mantienen sus permitividades, por lo que en este caso hay una condición de salto en el borde de la proteína (ecuación (\ref{eqn:jump_condition})). El estado \circled{3} es un sistema en que la molécula esta embebida en la membrana, y este conjunto esta a su vez en el vacío; las permitividades de este último y la de la molécula siguen siendo iguales entre sí. Finalmente, el estado \circled{4} es semejante al estado \circled{3}, pero por fuera del conjunto membrana-proteína hay agua con su respectiva permitividad. Las diferencias energéticas de la \circled{A} a la \circled{E} se detallan a continuación.
-\begin{table}[H]\label{table:thermo_cycle_details}
+
+\begin{table}[h]\label{table:thermo_cycle_details}
 	\centering
 	\caption{Expresión de las diferencias energéticas, en función de los estados 1 a 4. $\Delta G$ es la diferencia en la energía de Gibbs entre los distintos estados del ciclo \ref{fig:thermo_cycle}.}
 	\setlength{\tabcolsep}{30pt}
@@ -706,9 +709,10 @@ Para el caso trabajado, el ciclo termodinámico común para \texttt{APBSmem} y \
 		\circled{E} & $\Delta G_{\circled{4} - \circled{1}}$
 	\end{tabular}
 \end{table}
+
 \noindent
 Se debe resaltar que, como en cualquier ciclo termodinámico, un camino cerrado suma cero si se es consistente. Esta propiedad es sumamente importante, pues \texttt{PyGBe} solo puede calcular directamente diferencias de energías que involucren el estado \circled{1} en la figura \ref{fig:thermo_cycle}; gracias a que un camino cerrado da cero, se pueden calcular las diferencias de energía faltantes - en este caso \circled{C} y \circled{D} - a partir del resto del ciclo.
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\input{./Figures/Fig_9.eps_tex}
 	\caption{Ciclo termodinámico estudiado según lo presentado en los párrafos anteriores. Lo que se calcula con \texttt{PyGBe} y \texttt{APBS} es la diferencia $1\rightarrow 4$.}% \circled{E}.}
@@ -723,7 +727,7 @@ Se debe resaltar que, como en cualquier ciclo termodinámico, un camino cerrado 
 
 
 \chapter{Resultados}
-En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (\texttt{APBS} y \texttt{APBSmem}), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también individualmente de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano (Anexo).
+En primer lugar se recuerda que la meta de todo este trabajo es simular energías de solvatación de proteínas embebidas en membranas, analizando tres casos simples y contrastando resultados con un programa ampliamente aceptado y usado (\texttt{APBS} y \texttt{APBSmem}), tanto en términos de precisión del cálculo como en tiempo de cómputo requerido. Los tres casos simples son un ion de carga unitaria, un arreglo de tres iones, también individualmente de carga unitaria, uno de ellos de radio tal que encierra a los otros, y el tercer caso es una molécula de bromoetano (Apéndice \ref{Anexo:Bromoethane}).
 \section{Cálculo numérico de las energías}
 Las pruebas se realizaron con una membrana de espesor $a = 20\, \angstrom$, con una de las dos interfaces ubicada en el plano $z=-10\, \angstrom$ respecto del origen $(0,0,0)$ en coordenadas cartesianas, y la otra en $z = 10\, \angstrom$.\\\\%Las permitividades se presentan en la Tabla 1, a continuación
 %\begin{table}[H]
@@ -738,7 +742,7 @@ Las pruebas se realizaron con una membrana de espesor $a = 20\, \angstrom$, con 
 Las permitividades están adimensionalizadas, su valor siendo el descrito en el apartado \ref{subsec:Macro_perm}. Los subíndices son, respectivamente de izquierda a derecha, indicadores de \textit{membrane (membrana)}, \textit{protein (proteína)} y \textit{water (agua)}.\\\\
 Los cálculos se realizan para tres densidades de malla, para los tres casos de prueba, y para los dos programas - \texttt{PyGBe} y \texttt{APBSmem}. Los cálculos realizados corresponden a la diferencia \circled{4} - \circled{1} en el ciclo termodinámico \ref{fig:thermo_cycle}, con las siguientes propiedades
 
-\begin{table}[H]
+\begin{table}[h]
 	\setlength{\tabcolsep}{32pt}
 	\centering
 	\caption{Permitividades en los estados de interés.}
@@ -754,10 +758,10 @@ Para calcular las energías de solvatación con PyGBe, se utiliza \texttt{MSMS} 
 Para calcular los siguientes resultados se utilizaron 3 puntos de cuadratura para elementos lejanos, 37 en los paneles cercanos, y 9 puntos para el caso semianalítico. Además, el número de imágenes se mantuvo constante en $N=41$ para estas pruebas; más adelante se presenta un análisis en función de variar el parámetro $N$ para ver cómo es la convergencia. Para el caso del bromoetano, como la molécula tiene una superficie menor (y por ende tiene menos paneles), se decide aumentar el número de imágenes a $N=61$. Esto para mejorar la precisión y porque el consumo de memoria lo permite.
 Sobre el primer caso, \texttt{centered\_ion}, se presentan a continuación las energías de solvatación (E\_solv) obtenidas para las 3 mallas, junto con los tiempos de cálculo totales y la memoria utilizada. Se puede ver que la convergencia es proporcional a la de \texttt{PyGBe} sin membrana.
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\caption{Energías de solvatación calculadas, tiempos de cálculo y memoria RAM utilizada para los cómputos según la densidad de malla probada, para el archivo \texttt{centered\_ion}.}
-	\def\arraystretch{0.8}
+	\def\arraystretch{1.2}
 	\begin{tabular}{|cccccc|}\hline
 		\multirow{2}{*}{Densidad} & Número de & \multirow{2}{*}{E\_solv (PyGBe)} & E\_solv (PyGBe & Tiempo de & RAM\\
 		 & elementos &  & + Membrana) & cálculo & utilizada\\\hline
@@ -925,25 +929,25 @@ Como se adelantó en la sección anterior, las menores diferencias se obtienen c
 La idea es que el error respecto de \texttt{APBSmem} sea lo menor posible, por supuesto; de preferencia se apuntaba a un error menor a $2\%$, y se comprueba en la tabla \ref{table:Percent_Error} que esto se cumple en los dos primeros casos de estudio. Es difícil lograr un error menor en el caso del bromoetano, pues las energías de solvatación son muy pequeñas comparadas con \texttt{centered\_ion} y \texttt{3q}.\\\\
 Con los resultados para $N=41$ cargas imagen ya tabulados, corresponde realizar un análisis de sensibilidad para ver qué tanto influye el número de imágenes y determinar un valor óptimo. También se muestra a partir del estudio de esta variable que $N=41$ es suficiente para el espectro que cubre este trabajo. Para esto se utiliza el caso del ion centrado con 1572 elementos de borde (d04), por razones de costo computacional principalmente. Se estudia el rango de la variable entre $[21,61]$, yendo en aumentos de 2 $(21, 23, 25...)$ y se presentan tanto las energías para el caso del ion centrado como las diferencias porcentuales entre distintos $N$. Se recuerda que, como ejemplo, $N=21$ significa que hay $10$ imágenes por arriba ($+z$), $10$ por abajo ($-z$), y el punto de cuadratura mismo (término $i = 0$ en la sumatoria \ref{eqn:RIC_single}).\\\\
 Viendo el gráfico \ref{graph:Potencial}, resulta evidente la naturaleza oscilatoria de la convergencia, lo que no es anormal en modelos de este tipo; el método de imágenes es, a fin de cuentas, una expansión cuyo signo va variando término a término. La línea horizontal roja indica el valor extrapolado mediante la fórmula de Richardson, y la idea es mostrar que este no difiere significativamente del valor al que tiende a converger el potencial.
-\begin{graph}[h]
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Potencial}
 	\caption{Resultados de PyGBE con membrana para el caso \texttt{centered\_ion}, según se varía el número de cargas imagen del método. La línea roja es el resultado extrapolado para $41$ cargas imagen.}\label{graph:Potencial}
-\end{graph}
+\end{figure}
 \noindent
 A pesar de lo bueno de este hecho, también se puede apreciar que el valor extrapolado fue trabajado con $N=41$ y es clara su cercanía justamente al potencial con ese número de cargas imagen. Por otro lado, se ve que dentro de todo la convergencia no es rápida, y para asegurar un resultado con un buen nivel de precisión se requieren muchos términos en la sumatoria.
-\begin{graph}[h]
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error}
 	\caption{Variación porcentual en el resultado, en función del número de imágenes empleado. La línea roja es el resultado extrapolado para $41$ cargas imagen.}\label{graph:Error}
-\end{graph}
+\end{figure}
 \noindent
 Del gráfico \ref{graph:Error} se puede rescatar que, como se espera que suceda en una expansión, a medida que se agregan términos, la variación entre los valores va disminuyendo; esto es claro a partir del gráfico de Potencial v/s $N$, pero se hace más evidente en este caso. Para ver qué tipo de decaimiento tiene el error, se grafica dicho eje (el de las ordenadas) en escala logarítmica. Como se ve en el gráfico \ref{graph:Error_log}, la relación se torna lineal, por lo que el error disminuye con el logaritmo de $N$.
-\begin{graph}[h]
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale = 0.5]{./Figures/Error_log}
 	\caption{Variación porcentual, mostrada en escala logarítmica, de los resultados en función del número de cargas imagen.}\label{graph:Error_log}
-\end{graph}
+\end{figure}
 Con esto queda definido que el método de imágenes aplicado a través de BEM sirve para modelar el potencial de una molécula, macromolécula o similar, embebida en una membrana con otro medio dieléctrico por fuera de las interfaces de esta última. El siguiente capítulo cierra las ideas desarrolladas en este escrito, y presenta además puntos que se considera importantes trabajar si es que se desea mejorar o continuar el hilo desarrollado en el presente texto.
 
 
