@@ -4,6 +4,7 @@
 \contentsline {paragraph}{Keywords}{iv}{paragraph*.6}
 \contentsline {chapter}{\IeC {\'I}ndice de figuras}{ix}{section*.8}
 \contentsline {chapter}{\IeC {\'I}ndice de tablas}{xi}{section*.10}
+\contentsline {chapter}{Nomenclatura}{xiii}{section*.12}
 \contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.1}
 \contentsline {chapter}{\numberline {2}Marco Te\IeC {\'o}rico}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}El campo el\IeC {\'e}ctrico y el potencial el\IeC {\'e}ctrico}{5}{section.2.1}
@@ -12,7 +13,7 @@
 \contentsline {subsection}{\numberline {2.2.2}Permitividad de un medio macrosc\IeC {\'o}pico}{12}{subsection.2.2.2}
 \contentsline {section}{\numberline {2.3}Desplazamiento el\IeC {\'e}ctrico y campo el\IeC {\'e}ctrico en un medio diel\IeC {\'e}ctrico}{13}{section.2.3}
 \contentsline {section}{\numberline {2.4}M\IeC {\'e}todo de im\IeC {\'a}genes}{15}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{18}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.1}Campo de reacci\IeC {\'o}n en un sistema con una interfaz y una carga puntual}{17}{subsection.2.4.1}
 \contentsline {section}{\numberline {2.5}El M\IeC {\'e}todo de Elementos de Borde}{20}{section.2.5}
 \contentsline {section}{\numberline {2.6}El contexto biol\IeC {\'o}gico de la membrana celular}{23}{section.2.6}
 \contentsline {chapter}{\numberline {3}Metodolog\IeC {\'\i }a, funcionamiento e implementaci\IeC {\'o}n}{27}{chapter.3}
@@ -24,12 +25,12 @@
 \contentsline {subsection}{\numberline {3.2.2}APBS}{36}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}APBSmem}{38}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}PyGBe}{39}{subsection.3.2.4}
-\contentsline {subsubsection}{Archivo \texttt {.config}}{40}{subsubsection*.34}
-\contentsline {subsubsection}{Archivo \texttt {.param}}{41}{subsubsection*.35}
-\contentsline {subsubsection}{Forma de operaci\IeC {\'o}n del programa}{42}{subsubsection*.36}
+\contentsline {subsubsection}{Archivo \texttt {.config}}{40}{subsubsection*.38}
+\contentsline {subsubsection}{Archivo \texttt {.param}}{41}{subsubsection*.39}
+\contentsline {subsubsection}{Forma de operaci\IeC {\'o}n del programa}{42}{subsubsection*.40}
 \contentsline {section}{\numberline {3.3}Implementaci\IeC {\'o}n del m\IeC {\'e}todo de im\IeC {\'a}genes en el programa PyGBe}{44}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Modelo de un sistema de tres medios diel\IeC {\'e}ctricos con dos interfaces}{45}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con inclusi\IeC {\'o}n del efecto de la membrana}{48}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.2}El m\IeC {\'e}todo BEM y PyGBe con el efecto de la membrana}{48}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}El ciclo termodin\IeC {\'a}mico en solvataci\IeC {\'o}n}{55}{subsection.3.3.3}
 \contentsline {chapter}{\numberline {4}Resultados}{57}{chapter.4}
 \contentsline {section}{\numberline {4.1}C\IeC {\'a}lculo num\IeC {\'e}rico de las energ\IeC {\'\i }as}{57}{section.4.1}
@@ -42,4 +43,4 @@
 \contentsline {chapter}{\numberline {A}Archivo Bromoethane.pqr}{72}{appendix.A}
 \contentsline {chapter}{\numberline {B}Energ\IeC {\'\i }a de solvataci\IeC {\'o}n}{73}{appendix.B}
 \contentsline {chapter}{\numberline {C}Funcionamiento de APBSmem}{74}{appendix.C}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{79}{section*.69}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{79}{section*.75}
