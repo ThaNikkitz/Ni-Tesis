@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.8.27)  19 SEP 2019 23:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.8.27)  22 SEP 2019 15:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -718,8 +718,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip67
 )
 (./Memoria.aux (./Portada/anteportada.aux) (./Portada/portada.aux)
-(./Resumen.aux) (./Abstract.aux) (./Anexo_Bromoethane.aux)
-(./Anexo_Solv_Energy.aux) (./Anexo_APBS.aux))
+(./Resumen.aux) (./Abstract.aux) (./Anexos/Anexo_Bromoethane.aux)
+(./Anexos/Anexo_Solv_Energy.aux) (./Anexos/Anexo_APBS.aux))
 \openout1 = `Memoria.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
@@ -848,7 +848,7 @@ LaTeX Info: Redefining \nameref on input line 67.
 \openout2 = `Portada/anteportada.aux'.
 
  (./Portada/anteportada.tex
-<Imagenes/utfsm_logo.pdf, id=163, 347.2975pt x 252.945pt>
+<Imagenes/utfsm_logo.pdf, id=167, 347.2975pt x 252.945pt>
 File: Imagenes/utfsm_logo.pdf Graphic file (type pdf)
 <use Imagenes/utfsm_logo.pdf>
 Package pdftex.def Info: Imagenes/utfsm_logo.pdf  used on input line 44.
@@ -1028,7 +1028,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_Intro-eps-converted-to.pd
 f): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_Intro-eps-converted-to.pdf, id=381, 270.00874pt x 145.54375pt>
+<./Figures/Fig_Intro-eps-converted-to.pdf, id=386, 270.00874pt x 145.54375pt>
 File: ./Figures/Fig_Intro-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_Intro-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_Intro-eps-converted-to.pdf  used on inpu
@@ -1088,7 +1088,7 @@ Package epstopdf Info: Source file: <./Figures/Fig_1.eps>
 ted-to.pdf ./Figures/Fig_1.eps>
 (epstopdf)             \includegraphics on input line 52.
 Package epstopdf Info: Output file is already uptodate.
-<./Figures/Fig_1-eps-converted-to.pdf, id=432, 249.93375pt x 107.40125pt>
+<./Figures/Fig_1-eps-converted-to.pdf, id=437, 249.93375pt x 107.40125pt>
 File: ./Figures/Fig_1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_1-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_1-eps-converted-to.pdf  used on input li
@@ -1192,7 +1192,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_2-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_2-eps-converted-to.pdf, id=507, 137.51375pt x 203.76125pt>
+<./Figures/Fig_2-eps-converted-to.pdf, id=512, 137.51375pt x 203.76125pt>
 File: ./Figures/Fig_2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_2-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_2-eps-converted-to.pdf  used on input li
@@ -1224,7 +1224,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_3-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_3-eps-converted-to.pdf, id=525, 306.14375pt x 144.54pt>
+<./Figures/Fig_3-eps-converted-to.pdf, id=530, 306.14375pt x 144.54pt>
 File: ./Figures/Fig_3-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_3-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_3-eps-converted-to.pdf  used on input li
@@ -1308,7 +1308,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_5-2-eps-converted-to.pdf)
 : PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_5-2-eps-converted-to.pdf, id=586, 488.82625pt x 240.9pt>
+<./Figures/Fig_5-2-eps-converted-to.pdf, id=591, 488.82625pt x 240.9pt>
 File: ./Figures/Fig_5-2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_5-2-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_5-2-eps-converted-to.pdf  used on input 
@@ -1333,7 +1333,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_5-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_5-eps-converted-to.pdf, id=587, 570.13pt x 772.8875pt>
+<./Figures/Fig_5-eps-converted-to.pdf, id=592, 570.13pt x 772.8875pt>
 File: ./Figures/Fig_5-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_5-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_5-eps-converted-to.pdf  used on input li
@@ -1413,7 +1413,9 @@ Underfull \vbox (badness 3428) has occurred while \output is active []
  [27
 
 ]
-[28]
+Underfull \vbox (badness 1748) has occurred while \output is active []
+
+ [28]
 Underfull \hbox (badness 10000) in paragraph at lines 414--418
 
  []
@@ -1455,7 +1457,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_7-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<Figures/Fig_7-eps-converted-to.pdf, id=626, 191.71625pt x 158.5925pt>
+<Figures/Fig_7-eps-converted-to.pdf, id=631, 191.71625pt x 158.5925pt>
 File: Figures/Fig_7-eps-converted-to.pdf Graphic file (type pdf)
 <use Figures/Fig_7-eps-converted-to.pdf>
 Package pdftex.def Info: Figures/Fig_7-eps-converted-to.pdf  used on input line
@@ -1502,7 +1504,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/BEM_scheme-eps-converted-to.p
 df): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<Figures/BEM_scheme-eps-converted-to.pdf, id=664, 101.37875pt x 102.3825pt>
+<Figures/BEM_scheme-eps-converted-to.pdf, id=669, 101.37875pt x 102.3825pt>
 File: Figures/BEM_scheme-eps-converted-to.pdf Graphic file (type pdf)
 <use Figures/BEM_scheme-eps-converted-to.pdf>
 Package pdftex.def Info: Figures/BEM_scheme-eps-converted-to.pdf  used on input
@@ -1599,7 +1601,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_4-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_4-eps-converted-to.pdf, id=739, 330.23375pt x 228.855pt>
+<./Figures/Fig_4-eps-converted-to.pdf, id=744, 330.23375pt x 228.855pt>
 File: ./Figures/Fig_4-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_4-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_4-eps-converted-to.pdf  used on input li
@@ -1721,7 +1723,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_6-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_6-eps-converted-to.pdf, id=814, 145.54375pt x 100.375pt>
+<./Figures/Fig_6-eps-converted-to.pdf, id=819, 145.54375pt x 100.375pt>
 File: ./Figures/Fig_6-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_6-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_6-eps-converted-to.pdf  used on input li
@@ -1758,7 +1760,7 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: /usr/bin/pdflatex (file ./Figures/Fig_9-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Figures/Fig_9-eps-converted-to.pdf, id=845, 469.755pt x 287.0725pt>
+<./Figures/Fig_9-eps-converted-to.pdf, id=850, 469.755pt x 287.0725pt>
 File: ./Figures/Fig_9-eps-converted-to.pdf Graphic file (type pdf)
 <use ./Figures/Fig_9-eps-converted-to.pdf>
 Package pdftex.def Info: ./Figures/Fig_9-eps-converted-to.pdf  used on input li
@@ -1841,17 +1843,17 @@ Underfull \vbox (badness 1975) has occurred while \output is active []
 Underfull \vbox (badness 1810) has occurred while \output is active []
 
  [64]
-<./Figures/Potencial.pdf, id=902, 748.64067pt x 465.68039pt>
+<./Figures/Potencial.pdf, id=907, 748.64067pt x 465.68039pt>
 File: ./Figures/Potencial.pdf Graphic file (type pdf)
 <use ./Figures/Potencial.pdf>
 Package pdftex.def Info: ./Figures/Potencial.pdf  used on input line 934.
 (pdftex.def)             Requested size: 374.31943pt x 232.83961pt.
-<./Figures/Error.pdf, id=903, 758.0665pt x 462.95772pt>
+<./Figures/Error.pdf, id=908, 758.0665pt x 462.95772pt>
 File: ./Figures/Error.pdf Graphic file (type pdf)
 <use ./Figures/Error.pdf>
 Package pdftex.def Info: ./Figures/Error.pdf  used on input line 941.
 (pdftex.def)             Requested size: 379.03232pt x 231.47829pt.
-<./Figures/Error_log.pdf, id=906, 764.7634pt x 487.054pt>
+<./Figures/Error_log.pdf, id=911, 764.7634pt x 487.054pt>
 File: ./Figures/Error_log.pdf Graphic file (type pdf)
 <use ./Figures/Error_log.pdf>
 Package pdftex.def Info: ./Figures/Error_log.pdf  used on input line 948.
@@ -1910,9 +1912,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 998--1002
  []
 
 [70] [71]
-\openout2 = `Anexo_Bromoethane.aux'.
+\openout2 = `Anexos/Anexo_Bromoethane.aux'.
 
- (./Anexo_Bromoethane.tex
+ (./Anexos/Anexo_Bromoethane.tex
 Ap\IeC {\'e}ndice A.
 
 Overfull \hbox (30.31364pt too wide) in paragraph at lines 4--14
@@ -1923,9 +1925,9 @@ Overfull \hbox (30.31364pt too wide) in paragraph at lines 4--14
 
 
 ]
-\openout2 = `Anexo_Solv_Energy.aux'.
+\openout2 = `Anexos/Anexo_Solv_Energy.aux'.
 
- (./Anexo_Solv_Energy.tex
+ (./Anexos/Anexo_Solv_Energy.tex
 Ap\IeC {\'e}ndice B.
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 5.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
@@ -1938,10 +1940,10 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <14.4> not available
 
 
 ]
-\openout2 = `Anexo_APBS.aux'.
+\openout2 = `Anexos/Anexo_APBS.aux'.
 
 
-(./Anexo_APBS.tex
+(./Anexos/Anexo_APBS.tex
 Ap\IeC {\'e}ndice C.
 
 Underfull \hbox (badness 10000) in paragraph at lines 2--5
@@ -1969,39 +1971,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--16
 Underfull \vbox (badness 2142) has occurred while \output is active []
 
  [77])
-[78] [79
-
-
-]
-Underfull \hbox (badness 1199) in paragraph at lines 1044--1045
-\OT1/ptm/m/it/14.4 Ro-bust-ness of a Sur-face In-te-gral For-mu-la-tion for Wid
-e-band
+[78] (./Memoria.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 12--13
+[][]$\OT1/pcr/m/n/14.4 https : / / apbs-[]pdb2pqr . readthedocs . io / en /
  []
 
 
-Underfull \hbox (badness 6188) in paragraph at lines 1048--1049
-[]\OT1/ptm/m/n/14.4 Durand, E. []\OT1/ptm/m/it/14.4 Electrostatique Vol. III M[
-]ethodes de Cal-cul
+Underfull \hbox (badness 10000) in paragraph at lines 15--17
+[][]$\OT1/pcr/m/n/14.4 https : / / apbs-[]pdb2pqr . readthedocs . io / en /
  []
 
-[80] [81]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1059.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1059.
- (./Memoria.aux (./Portada/anteportada.aux) (./Portada/portada.aux)
-(./Resumen.aux) (./Abstract.aux) (./Anexo_Bromoethane.aux)
-(./Anexo_Solv_Energy.aux) (./Anexo_APBS.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1059.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1059.
+[79
+
+
+
+] [80]) [81]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1061.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1061.
+ (./Memoria.aux (./Portada/anteportada.aux)
+(./Portada/portada.aux) (./Resumen.aux) (./Abstract.aux)
+(./Anexos/Anexo_Bromoethane.aux) (./Anexos/Anexo_Solv_Energy.aux)
+(./Anexos/Anexo_APBS.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1061.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1061.
 
 Package rerunfilecheck Info: File `Memoria.out' has not changed.
-(rerunfilecheck)             Checksum: ED8209E9964444BAFD9B072F0FB3812A;3204.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1059.
+(rerunfilecheck)             Checksum: 737A83F1960D32926363CC684BE610E3;3257.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1061.
  ) 
 Here is how much of TeX's memory you used:
- 21830 strings out of 494923
- 384371 string characters out of 6180742
- 471075 words of memory out of 5000000
- 24372 multiletter control sequences out of 15000+600000
+ 21864 strings out of 494923
+ 384912 string characters out of 6180742
+ 471909 words of memory out of 5000000
+ 24398 multiletter control sequences out of 15000+600000
  41540 words of font info for 93 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  55i,21n,60p,2282b,1851s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2025,10 +2027,10 @@ ts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
 courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Memoria.pdf (93 pages, 556658 bytes).
+Output written on Memoria.pdf (93 pages, 558529 bytes).
 PDF statistics:
- 1276 PDF objects out of 1440 (max. 8388607)
- 1033 compressed objects within 11 object streams
- 276 named destinations out of 1000 (max. 500000)
- 400 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1290 PDF objects out of 1440 (max. 8388607)
+ 1047 compressed objects within 11 object streams
+ 280 named destinations out of 1000 (max. 500000)
+ 408 words of extra memory for PDF output out of 10000 (max. 10000000)
 

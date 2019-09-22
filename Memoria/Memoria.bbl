@@ -1,0 +1,153 @@
+\begin{thebibliography}{25}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[apb()]{apbsmem_website}
+\url{https://apbsmem.sourceforge.io}.
+
+\bibitem[pdb({\natexlab{a}})]{pdb2pqr_1}
+\url{https://apbs-pdb2pqr.readthedocs.io/en/latest/index.html}, {\natexlab{a}}.
+
+\bibitem[pdb({\natexlab{b}})]{pdb2pqr_2}
+\url{https://apbs-pdb2pqr.readthedocs.io/en/latest/formats/pqr.html},
+  {\natexlab{b}}.
+
+\bibitem[Andelman(1995)]{Andelman}
+D.~Andelman.
+\newblock Chapter 12 - {E}lectrostatic properties of membranes: {T}he
+  {P}oisson-{B}oltzmann {T}heory.
+\newblock In \emph{Structure and Dynamics of Membranes}, volume~1 of
+  \emph{Handbook of Biological Physics}, pages 603--642. North-Holland, 1995.
+
+\bibitem[Baker et~al.(2001)Baker, Sept, Simpson, and McCammon]{Baker}
+N.~A. Baker, D.~Sept, M.~J. Simpson, J.~Holst, and J.~A. McCammon.
+\newblock Electrostatics of nanosystems: {A}pplication to microtubules and the
+  ribosome.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 98\penalty0
+  (18):\penalty0 10037--10041, 2001.
+
+\bibitem[Brebbia and Dominguez(1992)]{Brebbia}
+C.~A. Brebbia and J.~Dominguez.
+\newblock \emph{Boundary {E}lements: {A}n introductory course}.
+\newblock WIT Press, second edition, 1992.
+
+\bibitem[Cai(2013)]{Cai}
+W.~Cai.
+\newblock \emph{Computational methods for electromagnetic phenomena:
+  {E}lectrostatics in solvation, scattering, and electron transport}.
+\newblock Cambridge University Press, first edition, 2013.
+
+\bibitem[Cai et~al.(2007)Cai, Deng, and Jacobs]{Wei-Cai}
+W.~Cai, S.~Deng, and D.~Jacobs.
+\newblock Extending the {F}ast {M}ultipole {M}ethod to charges inside or
+  outside a dielectric sphere.
+\newblock \emph{Journal of Computational Physics}, 223\penalty0 (2):\penalty0
+  846--864, 2007.
+
+\bibitem[Callenberg et~al.(2010)Callenberg, Choudhary, de~Forest, Gohara, and
+  Grabe]{APBSmem}
+K.~M. Callenberg, O.~P. Choudhary, G.~L. de~Forest, N.~A. Gohara, D.
+  W.and~Baker, and M.~Grabe.
+\newblock A{PBS}mem: {A} graphical interface for electrostatic calculations at
+  the membrane.
+\newblock \emph{PLOS ONE}, 5\penalty0 (9):\penalty0 1--12, 2010.
+
+\bibitem[Campbell and Reece(2007)]{Campbell}
+N.~Campbell and J.~Reece.
+\newblock \emph{Biología}.
+\newblock Editorial Médica Panamericana, seventh edition, 2007.
+
+\bibitem[Cooper(2015)]{Cooper2015}
+C.~D. Cooper.
+\newblock Biomolecular electrostatics with continuum models: {A} {B}oundary
+  {I}ntegral implementation and applications to biosensors, 2015.
+
+\bibitem[Durand(1966)]{Durand}
+E.~Durand.
+\newblock \emph{Electrostatique, {V}ol. 3}.
+\newblock Elsevier Masson, 1966.
+
+\bibitem[et~al.(2015)]{Alberts}
+Alberts~B. et~al.
+\newblock \emph{Molecular Biology of the Cell}.
+\newblock WW Norton and Co., sixth edition, 2015.
+
+\bibitem[Gan and Xu(2011)]{Gan}
+Z.~Gan and Z.~Xu.
+\newblock Multiple-image treatment of induced charges in {M}onte {C}arlo
+  simulations of electrolytes near a spherical dielectric interface.
+\newblock \emph{Physical Review. E, Statistical, Nonlinear, and Soft Matter
+  Physics}, 84:\penalty0 016705, 2011.
+
+\bibitem[Griffiths(1999)]{Griffiths}
+D.~J. Griffiths.
+\newblock \emph{Introduction to {E}lectrodynamics}.
+\newblock Prentice Hall, third edition, 1999.
+
+\bibitem[Hess and Smith(1967)]{Hess}
+J.~L. Hess and A.M.O. Smith.
+\newblock Calculation of potential flow about arbitrary bodies.
+\newblock \emph{Progress in Aerospace Sciences}, 8:\penalty0 1--138, 1967.
+\newblock ISSN 0376-0421.
+
+\bibitem[Jackson(1998)]{Jackson}
+J.~D. Jackson.
+\newblock \emph{Classical {E}lectrodynamics}.
+\newblock Wiley, third edition, 1998.
+
+\bibitem[Kantorovich(2004)]{Kantorovich}
+L.~Kantorovich.
+\newblock \emph{Quantum {T}heory of the {S}olid {S}tate: {A}n introduction}.
+\newblock Springer, first edition, 2004.
+
+\bibitem[Lin et~al.(2012)Lin, Xu, Tang, and Cai]{Huimin-Lin}
+H.~Lin, Z.~Xu, H.~Tang, and W.~Cai.
+\newblock Image approximations to electrostatic potentials in layered
+  electrolytes/dielectrics and an ion-channel model.
+\newblock \emph{Journal of Scientific Computing}, 53\penalty0 (2):\penalty0
+  249--267, 2012.
+
+\bibitem[Lombard(2014)]{Lombard}
+J.~Lombard.
+\newblock Once upon a time the cell membranes: 175 years of cell boundary
+  research.
+\newblock \emph{Biology Direct}, 9:\penalty0 32, 2014.
+
+\bibitem[Minkin(2009)]{glossary_of_chem_terms}
+V.~Minkin.
+\newblock Glossary of terms used in {T}heoretical {O}rganic {C}hemistry.
+\newblock \emph{Pure and Applied Chemistry}, 71\penalty0 (10):\penalty0
+  1919--1981, 2009.
+
+\bibitem[Roux(1997)]{Roux}
+Beno\^it Roux.
+\newblock Influence of the membrane potential on the free energy of an
+  intrinsic protein.
+\newblock \emph{Biophysical Journal}, 73:\penalty0 2980--2989, 1997.
+
+\bibitem[Yang et~al.(2002)Yang, Liaw, and Lim]{Pei-kun}
+P.~Yang, S.~Liaw, and C.~Lim.
+\newblock Representing an infinite solvent system with a rectangular finite
+  system using image charges.
+\newblock \emph{The Journal of Physical Chemistry B}, 106\penalty0
+  (11):\penalty0 2973--2982, 2002.
+
+\bibitem[Yoon and Lenhoff(1990)]{yoon}
+B.~J. Yoon and A.~M. Lenhoff.
+\newblock A {B}oundary {E}lement {M}ethod for molecular electrostatics with
+  electrolyte effects.
+\newblock \emph{Journal of Computational Chemistry}, 11\penalty0 (9):\penalty0
+  1080--1086, 1990.
+
+\bibitem[Zhu et~al.(2001)Zhu, Huang, Song, and White]{Zhu}
+Z.~Zhu, J.~Huang, B.~Song, and J.~White.
+\newblock Improving the robustness of a {S}urface {I}ntegral formulation for
+  wideband impedance extraction of 3{D} structures.
+\newblock In \emph{IEEE/ACM International Conference on Computer Aided Design.
+  ICCAD 2001. IEEE/ACM Digest of Technical Papers (Cat. No.01CH37281)}, pages
+  592--597. IEEE, 2001.
+
+\end{thebibliography}

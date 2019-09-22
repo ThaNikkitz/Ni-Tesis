@@ -198,17 +198,17 @@ Es conveniente explicar que si bien se define uno de los campos como microscópi
 donde $\kappa$ es un factor de corrección que depende del ordenamiento microscópico. El campo eléctrico local es el campo que siente cada uno de los muchos volúmenes pequeños que, en conjunto, componen el medio macroscópico que se esta estudiando. Por último se presenta la definición de densidad de polarización $\vec{P}$ para cerrar el círculo de relaciones entre el dieléctrico estudiado a nivel macroscópico y microscópico. La densidad de polarización por unidad de volumen se define de dos maneras; esto sale de diversas fuentes, pero W. Cai \cite{Cai} lo resume todo de forma simple:
 
 \begin{gather}
-\vec{P}(\mathbf{r}) = \sum_i N_i\alpha_i\left[\vec{E}(\mathbf{r})^{loc}\right]_i = \sum_i N_i\mathbf{p}_i\label{eqn:Micro_Polarization_sumation}\\
+\vec{P}(\mathbf{r}) = \sum_i n_i\alpha_i\left[\vec{E}(\mathbf{r})^{loc}\right]_i = \sum_i n_i\mathbf{p}_i\label{eqn:Micro_Polarization_sumation}\\
 \vec{P}(\mathbf{r}) = \varepsilon_0\chi\vec{E}(\mathbf{r})\label{eqn:Macro_Polarization}
 \end{gather}
 \noindent
-con $N_i$ la densidad numérica (\textit{number density}) del $i$-ésimo átomo por unidad de volumen, y $\chi$ la susceptibilidad del medio dieléctrico (que en el caso del vacío es 0). Antes de continuar el desarrollo, se procede a definir qué son la densidad de polarización y la susceptibilidad.\\\\
+con $n_i$ la densidad numérica (\textit{number density}) del $i$-ésimo átomo por unidad de volumen, y $\chi$ la susceptibilidad del medio dieléctrico (que en el caso del vacío es 0). Antes de continuar el desarrollo, se procede a definir qué son la densidad de polarización y la susceptibilidad.\\\\
 Como concepto, la densidad de polarización es la polarización a nivel macroscópico, por unidad de volumen, causada por todos los momentos dipolares inducidos en las moléculas de dicho volumen asociados al campo eléctrico que los induce. Por otra parte, la susceptibilidad permite relacionar un campo eléctrico macroscópico con los efectos que este tiene en el momento dipolar de las partículas en un volumen a través de la densidad de polarización, como se indica en la ecuación \ref{eqn:Macro_Polarization}; más allá de ser una constante de proporcionalidad, la susceptibilidad indica de forma promediada cómo influye el campo eléctrico en la orientación de los dipolos, y cómo varía el momento dipolar del medio a nivel macroscópico en presencia del campo eléctrico. Hay que resaltar que esto no implica traslación o \textit{migración} electrónica, sino solo rotación del átomo o molécula para la reorientación del dipolo, intentando alinearlo con el campo.\\\\
 Para terminar esta parte del desarrollo teórico, de las ecuaciones (\ref{eqn:Local_Field} - \ref{eqn:Macro_Polarization}) y sabiendo que el campo macroscópico es el mismo, se puede deducir que
 
 \begin{align*}
-\vec{P}(\mathbf{r}) &= \varepsilon_0\chi\vec{E}(\mathbf{r}) = \vec{E}(\mathbf{r})\sum_iN_i\alpha_i(1+\kappa_i)\\
-&\implies\quad \varepsilon_0\chi = \sum_iN_i\alpha_i(1+\kappa_i) \numberthis
+\vec{P}(\mathbf{r}) &= \varepsilon_0\chi\vec{E}(\mathbf{r}) = \vec{E}(\mathbf{r})\sum_in_i\alpha_i(1+\kappa_i)\\
+&\implies\quad \varepsilon_0\chi = \sum_in_i\alpha_i(1+\kappa_i) \numberthis
 \end{align*}
 \noindent
 Un caso particular es la teoría de Clausius-Mossotti. Aquí el valor de $\kappa_i = \kappa$ es $\chi/3$; uno de los supuestos es que la distribución molecular es una malla cúbica regular.\\\\
@@ -403,7 +403,7 @@ Ya se caracterizó el modelo de solvente implícito y cómo funciona. Un resulta
 \begin{equation}
 -\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot \exp\left(-\frac{ez_i\phi}{k_BT}\right)
 \end{equation}
-donde $e$ es la carga del electrón, $z_i$ la carga de la $i$-ésima especie de ion, $n_i^0$ es el number density de dicha especie de ion, $k_B$ es la constante de Boltzmann y $T$ la temperatura del sistema. Como esta ecuación varía de forma exponencial, se busca linealizarla para facilitar su aplicación en cálculos
+donde $e$ es el valor de la carga del electrón, $z_i$ la carga de la $i$-ésima especie iónica, $n_i^0$ es el number density de dicha especie de ion, $k_B$ es la constante de Boltzmann y $T$ la temperatura del sistema. Como esta ecuación varía de forma exponencial, se busca linealizarla para facilitar su aplicación en cálculos
 \begin{equation}
 -\nabla\cdot(\varepsilon(\mathbf{r})\cdot\nabla\phi(\mathbf{r})) = \rho(\mathbf{r}) + \sum_i ez_in_i^0\cdot \left(1 - \frac{ez_i\phi}{k_BT}\right)
 \end{equation}
@@ -1002,58 +1002,60 @@ Otras formas de mejorar la precisión del modelo pueden venirse a la mente, pues
 
 \appendix
 
-\include{Anexo_Bromoethane}
+\include{Anexos/Anexo_Bromoethane}
 \pagebreak
-\include{Anexo_Solv_Energy}
+\include{Anexos/Anexo_Solv_Energy}
 \pagebreak
-\include{Anexo_APBS}
+\include{Anexos/Anexo_APBS}
 \pagebreak
 
-\begin{thebibliography}{150}
-\bibitem{Jackson}
-Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
-\bibitem{Griffiths}
-Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prentice Hall, 1999
-\bibitem{Kantorovich}
-Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition; Springer, 2004
-\bibitem{Cai}
-Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition; Cambridge University Press, 2013
-\bibitem{Brebbia}
-Brebbia, C. A.; Dominguez J. \textit{Boundary Elements: An Introductory Course}, Second Edition; WIT Press, 1992
-\bibitem{Cooper2015}
-Cooper, C. \textit{Biomolecular Electrostatics With Continuum Models: A Boundary Integral Implementation and Applications to Biosensors}, 2015
-\bibitem{Pei-kun}
-Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
-\bibitem{APBSmem}
-Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9), 2010
-\bibitem{Huimin-Lin}
-Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model}, J. Sci. Comput., 2011
-\bibitem{Wei-Cai}
-Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to charges inside or outside a dielectric sphere}, J. Comput. Phys. 223, 2007
-\bibitem{Gan}
-Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface}, Phys. Rev. E 84, 016705, 2011
-\bibitem{Roux}
-Roux, B. \textit{Influence of the Membrane Potential on the Free Energy of an Intrinsic Protein}, Byophysical Journal, Vol. 73, 2980-2989, 1997
-\bibitem{Campbell}
-Campbell, N.; Reece, J. \textit{Biología}, Séptima Edición, Editorial Médica Panamericana, 2007
-\bibitem{Alberts}
-Alberts, B. et al. \textit{Molecular Biology of the Cell}, Sixth Edition, Garland Science, 2015
-\bibitem{Lombard}
-Lombard, J. \textit{Once upon a time the cell membranes: 175 years of cell boundary research}, Biology Direct 9:32, 2014
-\bibitem{Zhu}
-Zhenhai, Z.; Jingfang, H.; Song, B.; White, J. \textit{Improving the Robustness of a Surface Integral Formulation for Wideband Impedance Extraction of 3D Structures}, IEEE/ACM International Conference on Computer Aided Design. 592-597, 2001
-\bibitem{Hess}
-Hess, J.; Smith, A. \textit{Calculation of Potential Flow About Arbitrary Bodies}, Progress in Aerospace Sciences, Vol. 8, 1-138, 1967
-\bibitem{Durand}
-Durand, E. \textit{Électrostatique Vol. III Méthodes de Calcul Diélectriques}, Masson et Cie.; 1966
-\bibitem{pdb2pqr_1}
-https://apbs-pdb2pqr.readthedocs.io/en/latest/index.html
-\bibitem{pdb2pqr_2}
-https://apbs-pdb2pqr.readthedocs.io/en/latest/formats/pqr.html
-\bibitem{glossary_of_chem_terms}
-\textit{GLOSSARY OF TERMS USED IN THEORETICAL ORGANIC CHEMISTRY}, Pure Appl. Chem., Vol. 71, No. 10, pp. 1919-1981, 1999.
-\bibitem{apbsmem_website}
-https://apbsmem.sourceforge.io
-\end{thebibliography}
+\nocite{*}
+\bibliography{bibliografia}
+%\begin{thebibliography}{150}
+%\bibitem{Jackson}
+%Jackson, J. D. \textit{Classical Electrodynamics}, Third Edition; Wiley, 1998
+%\bibitem{Griffiths}
+%Griffiths, D. J. \textit{Introduction to Electrodynamics}, Third Edition; Prentice Hall, 1999
+%\bibitem{Kantorovich}
+%Kantorovich, L. \textit{Quantum Theory of the Solid State: An Introduction}, First Edition; Springer, 2004
+%\bibitem{Cai}
+%Cai, W. \textit{Computational Methods for Electromagnetic Phenomena}, First Edition; Cambridge University Press, 2013
+%\bibitem{Brebbia}
+%Brebbia, C. A.; Dominguez J. \textit{Boundary Elements: An Introductory Course}, Second Edition; WIT Press, 1992
+%\bibitem{Cooper2015}
+%Cooper, C. \textit{Biomolecular Electrostatics With Continuum Models: A Boundary Integral Implementation and Applications to Biosensors}, 2015
+%\bibitem{Pei-kun}
+%Yang, P.; Liaw, S.; Lim, C. \textit{Representing an Infinite Solvent System with a Rectangular Finite System Using Image Charges}, J. Phys. Chem. B 2002, 106, 2973-2982
+%\bibitem{APBSmem}
+%Callenberg, K. M.; Choudhary, O. P.; de Forest, G. L.; Gohara, D. W.; Baker, N. A.; Grabe, M. \textit{APBSmem: A Graphical Interface for Electrostatic Calculations at the Membrane}, PLoS ONE 5(9), 2010
+%\bibitem{Huimin-Lin}
+%Lin, H.; Xu, Z.; Tang, H.; Cai, W. \textit{Image Approximations to Electrostatic Potentials in Layered Electrolytes/Dielectrics and an Ion-Channel Model}, J. Sci. Comput., 2011
+%\bibitem{Wei-Cai}
+%Cai, W.; Deng, S.; Jacobs, D. \textit{Extending the fast multipole method to charges inside or outside a dielectric sphere}, J. Comput. Phys. 223, 2007
+%\bibitem{Gan}
+%Gan, Z.; Xu, Z. \textit{Multiple-image treatment of induced charges in Monte Carlo simulations of electrolytes near a spherical dielectric interface}, Phys. Rev. E 84, 016705, 2011
+%\bibitem{Roux}
+%Roux, B. \textit{Influence of the Membrane Potential on the Free Energy of an Intrinsic Protein}, Byophysical Journal, Vol. 73, 2980-2989, 1997
+%\bibitem{Campbell}
+%Campbell, N.; Reece, J. \textit{Biología}, Séptima Edición, Editorial Médica Panamericana, 2007
+%\bibitem{Alberts}
+%Alberts, B. et al. \textit{Molecular Biology of the Cell}, Sixth Edition, Garland Science, 2015
+%\bibitem{Lombard}
+%Lombard, J. \textit{Once upon a time the cell membranes: 175 years of cell boundary research}, Biology Direct 9:32, 2014
+%\bibitem{Zhu}
+%Zhenhai, Z.; Jingfang, H.; Song, B.; White, J. \textit{Improving the Robustness of a Surface Integral Formulation for Wideband Impedance Extraction of 3D Structures}, IEEE/ACM International Conference on Computer Aided Design. 592-597, 2001
+%\bibitem{Hess}
+%Hess, J.; Smith, A. \textit{Calculation of Potential Flow About Arbitrary Bodies}, Progress in Aerospace Sciences, Vol. 8, 1-138, 1967
+%\bibitem{Durand}
+%Durand, E. \textit{Électrostatique Vol. III Méthodes de Calcul Diélectriques}, Masson et Cie.; 1966
+%\bibitem{pdb2pqr_1}
+%https://apbs-pdb2pqr.readthedocs.io/en/latest/index.html
+%\bibitem{pdb2pqr_2}
+%https://apbs-pdb2pqr.readthedocs.io/en/latest/formats/pqr.html
+%\bibitem{glossary_of_chem_terms}
+%\textit{GLOSSARY OF TERMS USED IN THEORETICAL ORGANIC CHEMISTRY}, Pure Appl. Chem., Vol. 71, No. 10, pp. 1919-1981, 1999.
+%\bibitem{apbsmem_website}
+%https://apbsmem.sourceforge.io
+%\end{thebibliography}
 
 \end{document}

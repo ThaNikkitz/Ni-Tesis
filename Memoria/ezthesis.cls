@@ -179,13 +179,13 @@ marginparwidth = 15mm ]{geometry}
   \else
     \RequirePackage[sort&compress,round,authoryear]{natbib}
   \fi
-  \if@spanish
-    \bibliographystyle{ezspanish}
-  \else
+%  \if@spanish
+%    \bibliographystyle{spbasic}
+%  \else
     \bibliographystyle{plainnat}
   \fi
-  \let\cite\citep
-\fi
+%  \let\cite\citep
+%\fi
 
 % bibliography fix - makes bibliography appear
 % in table of contents, and makes it work nice
@@ -197,6 +197,7 @@ marginparwidth = 15mm ]{geometry}
 		\phantomsection
 		\addcontentsline{toc}{chapter}{\bibname}%
 		\old@bibliography}}
+	
 \if@bibfix
 	\AtBeginDocument{\bibliographyfix}
 \fi
@@ -222,34 +223,34 @@ marginparwidth = 15mm ]{geometry}
 %\fi
 
 % Linking and pdf options
-%\let\phantomsection\@empty
-%\def\hyperlinking{%
-%	\providecommand\theHalgorithm{\thealgorithm}
-%	\providecommand\theHdefinition{\thedefinition}
-%	\providecommand\theHexample{\theexample}
-%	\providecommand\theHlemma{\thelemma}
-%	\providecommand\theHproposition{\theproposition}
-%	\providecommand\theHcorollary{\thecorollary}
-%
-%	\RequirePackage[final,breaklinks,bookmarks]{hyperref}
+\let\phantomsection\@empty
+\def\hyperlinking{%
+	\providecommand\theHalgorithm{\thealgorithm}
+	\providecommand\theHdefinition{\thedefinition}
+	\providecommand\theHexample{\theexample}
+	\providecommand\theHlemma{\thelemma}
+	\providecommand\theHproposition{\theproposition}
+	\providecommand\theHcorollary{\thecorollary}
+
+	\RequirePackage[final,breaklinks,bookmarks]{hyperref}
 %%
-%	% properties of pdf file
-%	\hypersetup{%
-%		pdftitle={\inserttitle},pdfauthor={\insertauthor},
-%		pdfsubject={\insertdegree\ Thesis, \insertdepartment}}
+	% properties of pdf file
+	\hypersetup{%
+		pdftitle={\inserttitle},pdfauthor={\insertauthor},
+		pdfsubject={\insertdegree\ Thesis, \insertdepartment}}
+
+	% color links
+	\if@colors
+		\hypersetup{%
+			colorlinks,linkcolor={dark-red},citecolor={dark-blue},
+			urlcolor={medium-blue}}
+	\fi
 %
-%%	% color links
-%%	\if@colors
-%%		\hypersetup{%
-%%			colorlinks,linkcolor={dark-red},citecolor={dark-blue},
-%%			urlcolor={medium-blue}}
-%%	\fi
-%%
-%	\renewcommand{\chapterautorefname}{Chapter}
-%	\renewcommand{\sectionautorefname}{Section}
-%	\renewcommand{\subsectionautorefname}{Section}
-%	\renewcommand{\subsubsectionautorefname}{Section}
-%	\RequirePackage[all]{hypcap}
-%}
-%
-%\endinput
+	\renewcommand{\chapterautorefname}{Chapter}
+	\renewcommand{\sectionautorefname}{Section}
+	\renewcommand{\subsectionautorefname}{Section}
+	\renewcommand{\subsubsectionautorefname}{Section}
+	\RequirePackage[all]{hypcap}
+}
+
+\endinput
