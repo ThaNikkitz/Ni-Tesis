@@ -1,18 +1,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Expresi\IeC {\'o}n de las diferencias energ\IeC {\'e}ticas, en funci\IeC {\'o}n de los estados 1 a 4. $\Delta G$ es la diferencia en la energ\IeC {\'\i }a de Gibbs entre los distintos estados del ciclo \ref {fig:thermo_cycle}.\relax }}{56}{table.caption.59}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Expresi\IeC {\'o}n de las diferencias energ\IeC {\'e}ticas, en funci\IeC {\'o}n de los estados 1 a 4. $\Delta G$ es la diferencia en la energ\IeC {\'\i }a de Gibbs entre los distintos estados del ciclo \ref {fig:thermo_cycle}.\relax }}{56}{table.caption.61}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Permitividades en los estados de inter\IeC {\'e}s.\relax }}{58}{table.caption.61}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Energ\IeC {\'\i }as de solvataci\IeC {\'o}n calculadas, tiempos de c\IeC {\'a}lculo y memoria RAM utilizada para los c\IeC {\'o}mputos seg\IeC {\'u}n la densidad de malla probada, para el archivo \texttt {centered\_ion}.\relax }}{59}{table.caption.62}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Energ\IeC {\'\i }as de solvataci\IeC {\'o}n calculadas seg\IeC {\'u}n la densidad de malla para el archivo \texttt {3q}.\relax }}{60}{table.caption.63}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Energ\IeC {\'\i }as de solvataci\IeC {\'o}n calculadas, tiempos de c\IeC {\'a}lculo y memoria RAM para cada una de las tres mallas de la mol\IeC {\'e}cula de \texttt {bromoethane}.\relax }}{60}{table.caption.64}
-\contentsline {table}{\numberline {4.5}{\ignorespaces Resultados, tiempos de c\IeC {\'a}lculo y RAM utilizada para el c\IeC {\'a}lculo sobre el archivo \texttt {centered\_ion}, mediante APBS.\relax }}{61}{table.caption.65}
-\contentsline {table}{\numberline {4.6}{\ignorespaces Resultados, tiempos de c\IeC {\'a}lculo y RAM utilizada para las tras mallas en el caso de estudio \texttt {3q}, mediante APBS.\relax }}{62}{table.caption.66}
-\contentsline {table}{\numberline {4.7}{\ignorespaces Resultado, tiempo de c\IeC {\'a}lculo y RAM utilizada para la malla m\IeC {\'a}s fina en el caso de estudio de \texttt {bromoethane}, mediante APBS.\relax }}{62}{table.caption.67}
-\contentsline {table}{\numberline {4.8}{\ignorespaces Valores te\IeC {\'o}ricos extrapolados mediante extrapolaci\IeC {\'o}n de Richardson de los distintos casos de estudio.\relax }}{64}{table.caption.68}
-\contentsline {table}{\numberline {4.9}{\ignorespaces Convergencia al valor te\IeC {\'o}rico extrapolado de los resultados, para PyGBE y las dos condiciones importantes de APBS.\relax }}{64}{table.caption.69}
-\contentsline {table}{\numberline {4.10}{\ignorespaces Diferencia de PyGBe con inclusi\IeC {\'o}n de membrana, con las dos condiciones de contorno de APBS.\relax }}{65}{table.caption.70}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Permitividades en los estados de inter\IeC {\'e}s.\relax }}{58}{table.caption.63}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Energ\IeC {\'\i }as de solvataci\IeC {\'o}n calculadas, tiempos de c\IeC {\'a}lculo y memoria RAM utilizada para los c\IeC {\'o}mputos seg\IeC {\'u}n la densidad de malla probada, para el archivo \texttt {centered\_ion}.\relax }}{59}{table.caption.64}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Energ\IeC {\'\i }as de solvataci\IeC {\'o}n calculadas seg\IeC {\'u}n la densidad de malla para el archivo \texttt {3q}.\relax }}{60}{table.caption.65}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Energ\IeC {\'\i }as de solvataci\IeC {\'o}n calculadas, tiempos de c\IeC {\'a}lculo y memoria RAM para cada una de las tres mallas de la mol\IeC {\'e}cula de \texttt {bromoethane}.\relax }}{60}{table.caption.66}
+\contentsline {table}{\numberline {4.5}{\ignorespaces Resultados, tiempos de c\IeC {\'a}lculo y RAM utilizada para el c\IeC {\'a}lculo sobre el archivo \texttt {centered\_ion}, mediante APBS.\relax }}{61}{table.caption.67}
+\contentsline {table}{\numberline {4.6}{\ignorespaces Resultados, tiempos de c\IeC {\'a}lculo y RAM utilizada para las tras mallas en el caso de estudio \texttt {3q}, mediante APBS.\relax }}{62}{table.caption.68}
+\contentsline {table}{\numberline {4.7}{\ignorespaces Resultado, tiempo de c\IeC {\'a}lculo y RAM utilizada para la malla m\IeC {\'a}s fina en el caso de estudio de \texttt {bromoethane}, mediante APBS.\relax }}{62}{table.caption.69}
+\contentsline {table}{\numberline {4.8}{\ignorespaces Valores te\IeC {\'o}ricos extrapolados mediante extrapolaci\IeC {\'o}n de Richardson de los distintos casos de estudio.\relax }}{64}{table.caption.70}
+\contentsline {table}{\numberline {4.9}{\ignorespaces Convergencia al valor te\IeC {\'o}rico extrapolado de los resultados, para PyGBE y las dos condiciones importantes de APBS.\relax }}{64}{table.caption.71}
+\contentsline {table}{\numberline {4.10}{\ignorespaces Diferencia de PyGBe con inclusi\IeC {\'o}n de membrana, con las dos condiciones de contorno de APBS.\relax }}{65}{table.caption.72}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
