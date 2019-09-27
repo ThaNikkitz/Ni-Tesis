@@ -1,5 +1,4 @@
-\PassOptionsToPackage{demo}{graphicx}
-\documentclass[usenames,dvipsnames,notitlepage]{beamer}
+\documentclass[usenames,dvipsnames,landscape]{beamer}
 \usepackage[utf8x]{inputenc}
 \usepackage{ucs}
 \usepackage{amsmath}
@@ -12,7 +11,10 @@
 \usetheme{Execushares}
 \usecolortheme[named=NavyBlue]{structure}
 
-\setcounter{showSlideNumbers}{1}
+%https://blog.hamaluik.ca/posts/better-beamer-themes/
+%https://github.com/hamaluik/Beamer-Theme-Execushares
+%https://nval.andreasherten.de/2016/09/13/beamer-tips.html
+%https://tex.stackexchange.com/questions/116077/presentation-beamer-title-page
 
 \author{Nicolás Espinoza Muñoz}
 \title{MODELACIÓN NUMÉRICA DE UNA PROTEÍNA INSERTA EN UNA MEMBRANA CELULAR USANDO EL MÉTODO DE ELEMENTOS DE BORDE.}
@@ -20,14 +22,99 @@
 \date{\today}
 
 \begin{document}
-\begin{frame}[plain]
-\maketitle
+	
+	\maketitle
+	
+	\section{Motivación}
+	
+\begin{frame}{La célula}
+	\begin{figure}
+		\begin{minipage}{0.5\slidewidth}
+			\begin{itemize}
+				\item[$\bullet$] La membrana se encuentra en todas las células.
+				\item[$\bullet$] Se compone de una doble capa de fosfolípidos.
+				\item[$\bullet$] Tiene proteínas insertas.
+			\end{itemize}
+		\end{minipage}
+	\vspace{15pt}
+		\begin{minipage}{0.1\slidewidth}
+			\hspace*{0.5cm}
+		\end{minipage}%
+%	\vspace{15pt}
+		\begin{minipage}{0.2\slidewidth}
+			\includegraphics[scale = 0.15]{./Figures/Alberts_mem_protein.png}
+		\end{minipage}
+	\vspace{-50pt}
+		\begin{minipage}{0.45\slidewidth}
+			\input{./Figures/Fig_5-2.eps_tex}
+		\end{minipage}
+	\end{figure}
 \end{frame}
 
-\begin{frame}
-\frametitle{Motivación}
-\framesubtitle{La célula}
+\begin{frame}{Representaciones}
+	\begin{figure}
+		\begin{minipage}{0.34\slidewidth}
+			{\Large \textbf{Solvente Implícito}}\\[0.5cm]
+			Representación como continuo, con propiedades ponderadas.
+		\end{minipage}%
+		\begin{minipage}{0.1\slidewidth}
+			\hspace*{0.5cm}
+		\end{minipage}%
+		\begin{minipage}{0.33\slidewidth}
+			{\Large \textbf{Solvente Explícito}}\\[0.5cm]
+			Representación de cada una de las moléculas componentes.
+		\end{minipage}\vspace{0.5cm}
+		\begin{minipage}{0.4\slidewidth}
+			\hspace*{5pt}
+			\includegraphics[scale=0.1]{./Figures/TRPV1_003.png}
+		\end{minipage}%
+		\begin{minipage}{0.4\slidewidth}
+			\hspace*{10pt}
+			\includegraphics[scale=0.18]{./Figures/TRPV1_1.png}
+		\end{minipage}
+	\end{figure}
 \end{frame}
+
+\begin{frame}{Métodos numéricos, análisis continuo}
+	\begin{figure}
+		\begin{minipage}{0.4\slidewidth}
+				{\Large\textbf{Diferencias Finitas}}\\[0.5cm]
+		\end{minipage}%
+		\begin{minipage}{0.4\slidewidth}
+			{\Large \textbf{Elementos Finitos}}\\[0.5cm]
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Boundary Element Method}
+	\begin{figure}
+		\begin{minipage}{0.8\slidewidth}
+			\Large{Ventajas y desventajas de \textbf{BEM} como método}
+		\end{minipage}
+		\vspace{-1cm}
+		\begin{minipage}{0.4\slidewidth}
+			\input{./Figures/BEM_scheme.eps_tex}
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Objetivo del trabajo}
+	\begin{figure}
+		\begin{minipage}{0.4\slidewidth}
+			asdasd
+		\end{minipage}%
+		\vspace{1cm}
+		\begin{minipage}{0.4\slidewidth}
+			asdasd
+		\end{minipage}
+%		\vspace{-1cm}
+		\begin{minipage}{0.68\slidewidth}
+			\input{./Figures/Fig_Intro.eps_tex}
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+
 
 
 \end{document}

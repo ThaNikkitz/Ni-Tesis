@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{280bp}%
+    \setlength{\unitlength}{175bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -54,7 +54,7 @@
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0.07,0.02){\includegraphics[width=\unitlength]{./Figures/Fig_5-2.eps}}%
-    \put(-0.15,0.273){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.32854513\unitlength}\raggedright Bicapa fosfolipídica\end{minipage}}}%
-    \put(0.78,0.56){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.25877685\unitlength}\raggedright Proteína de membrana\end{minipage}}}%
+    \put(-0.25,0.275){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.32854513\unitlength}\raggedright Bicapa fosfolipídica\end{minipage}}}%
+    \put(0.78,0.572){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.35\unitlength}\raggedright Proteína de membrana\end{minipage}}}%
   \end{picture}%
 \endgroup%
