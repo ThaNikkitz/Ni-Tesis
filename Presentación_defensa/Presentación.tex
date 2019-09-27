@@ -1,12 +1,15 @@
-\documentclass[usenames,dvipsnames,landscape]{beamer}
+\documentclass[serif,usenames,dvipsnames,landscape]{beamer}
 \usepackage[utf8x]{inputenc}
 \usepackage{ucs}
+\usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{gensymb}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{graphicx}
-\usepackage{kpfonts}
+%\usepackage{kpfonts}
+\usepackage{tikz}
 \usepackage{xcolor}
 \usetheme{Execushares}
 \usecolortheme[named=NavyBlue]{structure}
@@ -22,9 +25,7 @@
 \date{\today}
 
 \begin{document}
-	
 	\maketitle
-	
 	\section{Motivación}
 	
 \begin{frame}{La célula}
@@ -98,22 +99,35 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Objetivo del trabajo}
+\begin{frame}{Objetivos del trabajo}
 	\begin{figure}
 		\begin{minipage}{0.4\slidewidth}
-			asdasd
+			\begin{itemize}
+				\item[$\bullet$] Ec. de Green con método de imágenes
+				\item[$\bullet$] Calculo de energías de solvatación
+			\end{itemize}
 		\end{minipage}%
 		\vspace{1cm}
 		\begin{minipage}{0.4\slidewidth}
-			asdasd
+			\begin{itemize}
+				\item[$\bullet$] Velocidad de cálculo rápida
+				\item[$\bullet$] Implementación en programa
+			\end{itemize}
 		\end{minipage}
 %		\vspace{-1cm}
-		\begin{minipage}{0.68\slidewidth}
+		\begin{minipage}{0.55\slidewidth}
 			\input{./Figures/Fig_Intro.eps_tex}
 		\end{minipage}
+		\vspace{-0.8cm}
 	\end{figure}
 \end{frame}
 
+\section{Teoría}
+	\begin{frame}{Ley de Gauss}
+		\begin{equation*}
+			\nabla\cdot\mathbf{E} = \frac{\rho}{\varepsilon}
+		\end{equation*}
+	\end{frame}
 
 
 
