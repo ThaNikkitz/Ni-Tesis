@@ -21,7 +21,7 @@
 '''
 
 from numpy import *
-from GaussIntegration_edit import gaussIntegration_fine
+from GaussIntegration import gaussIntegration_fine
 
 def calculate_phir(phi, dphi, s, xq, K_fine, eps, LorY, kappa, E, m_E, m_a, infty):
 

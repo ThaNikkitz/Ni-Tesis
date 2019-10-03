@@ -20,7 +20,8 @@
   THE SOFTWARE.
 '''
 import numpy
-from numpy              import *
+import numpy.matlib
+#from numpy              import *
 from class_definition   import *
 from scipy.sparse       import *
 from semi_analyticalwrap import SA_wrap_arr                  
@@ -29,7 +30,7 @@ from semi_analyticalwrap import SA_wrap_arr
 #from triangulation          import *
 #from integral_matfree       import *
 #from semi_analyticalwrap    import SA_wrap_arr
-from GaussIntegration       import gaussIntegration_fine
+from GaussIntegration_edit       import gaussIntegration_fine #Should be GaussIntegration
 
 
 def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
@@ -102,7 +103,7 @@ def blockMatrix2(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     return K_lyr, V_lyr
 
 
-def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
+def blockMatrix(tar, src, WK, kappa, E, m_E, m_a, threshold, LorY, xk, wk, K_fine, eps, n):
     
     Ns = len(src.xi)
     Nt = len(tar.xi)
@@ -114,24 +115,30 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
     r = sqrt(dx*dx+dy*dy+dz*dz+eps*eps)
 
     dx = reshape(dx,(Nt,Ns,K))
+    dxx = numpy.repeat(dx[:,:,:,numpy.newaxis], n, axis = 3)
     dy = reshape(dy,(Nt,Ns,K))
+    dyy = numpy.repeat(dy[:,:,:,numpy.newaxis], n, axis = 3)
     dz = reshape(dz,(Nt,Ns,K))
     r  = reshape(r,(Nt,Ns,K))
 
     if LorY==1:   # if Laplace
 #       Double layer 
+
         K_lyr = src.Area * (sum(WK/r**3*dx, axis=2)*src.normal[:,0]
                           + sum(WK/r**3*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**3*dz, axis=2)*src.normal[:,2])
+        
 #       Single layer
         V_lyr = src.Area * sum(WK/r, axis=2)
+
 #       Adjoint double layer
         Kp_lyr = -src.Area * ( transpose(transpose(sum(WK/r**3*dx, axis=2))*tar.normal[:,0])
                              + transpose(transpose(sum(WK/r**3*dy, axis=2))*tar.normal[:,1])
                              + transpose(transpose(sum(WK/r**3*dz, axis=2))*tar.normal[:,2]) )
 
-    else:           # if Yukawa
-#       Double layer 
+    elif LorY==2:           # if Yukawa
+
+#       Double layer
         K_lyr = src.Area * (sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*src.normal[:,0]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*src.normal[:,1]
                           + sum(WK/r**2*exp(-kappa*r)*(kappa+1/r)*dz, axis=2)*src.normal[:,2])
@@ -140,6 +147,40 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         V_lyr = src.Area * sum(WK * exp(-kappa*r)/r, axis=2)
 #       Adjoint double layer
         Kp_lyr = zeros(shape(K_lyr))      #TO BE IMPLEMENTED
+
+
+    else:
+        Q_i = numpy.zeros((K,n))
+        e_pos = transpose(numpy.ones((Ns*K,1))*tar.zi)
+        e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
+        i_pos = numpy.zeros((Ns*K,n))
+        for nn in range(-(n-1)/2,(n+1)/2):
+            Q_i[:,nn+(n-1)/2] = WK*((m_E - E)/(E + m_E))**abs(nn)
+            for i in range(Ns*K):
+                i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*src.zj[i] + m_a*nn
+
+        dzz = e_pos - i_pos
+        dzz = reshape(dzz, (Nt,Ns,K,n))
+        r_vec_i = numpy.sqrt(dxx**2 + dyy**2 + dzz**2 + eps*eps)
+
+#       Double layer
+        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*src.normal[:,2]
+        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*src.normal[:,1]
+        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*src.normal[:,0]
+
+        K_lyr = src.Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+
+
+#       Single layer              
+
+        V_lyr = src.Area * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
+
+#       Adjoint double layer
+        Kp_lyr = -src.Area *( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2))*tar.normal[:,2])
+                             + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2))*tar.normal[:,1])
+                             + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2))*tar.normal[:,0]) )
+
+
 
     same = zeros((Nt,Ns),dtype=int32)
     if abs(src.xi[0]-tar.xi[0])<1e-10:
@@ -166,34 +207,43 @@ def blockMatrix(tar, src, WK, kappa, threshold, LorY, xk, wk, K_fine, eps):
         local_center[:,2] = tar.zi[an_integrals]
         normal_tar = tar.normal[an_integrals]
 
-        K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, kappa, LorY, eps)
+        K_aux, V_aux, Kp_aux = gaussIntegration_fine(local_center, panel, src.normal[i], src.Area[i], normal_tar, K_fine, kappa, E, m_E, m_a, LorY, eps, n)
         K_lyr[an_integrals,i]  = K_aux[:,0]
         V_lyr[an_integrals,i]  = V_aux[:,0]
         Kp_lyr[an_integrals,i] = Kp_aux[:,0]
 
         N_analytical += len(an_integrals)
 
-        if abs(src.xi[0]-tar.xi[0])<1e-10:
+        if abs(src.xi[0]-tar.xi[0])<1e-10: # Por que solo con la primera coordenada? No deberia tambien probar "y" y "z"?
             if same[i,i] == 1:
                 local_center = array([tar.xi[i], tar.yi[i], tar.zi[i]])
                 G_Y  = zeros(1)
                 dG_Y = zeros(1)
                 G_L  = zeros(1)
                 dG_L = zeros(1)
-                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, kappa, array([1], dtype=int32), xk, wk) 
+                G_R  = zeros(1)
+                dG_R = zeros(1)
+#                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, kappa, array([1], dtype=int32), xk, wk) Llamar original
+                SA_wrap_arr(ravel(panel), local_center, G_Y, dG_Y, G_L, dG_L, G_R, dG_R, kappa, E, m_E, m_a, array([1], dtype=int32), xk, wk, n, src.Area[i])
 
                 if LorY==1:   # if Laplace
                     K_lyr[i,i]  = dG_L
                     V_lyr[i,i]  = G_L
                     Kp_lyr[i,i] = dG_L
-                else:           # if Yukawa
+                elif LorY==2:           # if Yukawa
                     K_lyr[i,i]  = dG_Y
                     V_lyr[i,i]  = G_Y  
                     Kp_lyr[i,i] = dG_Y
+                else:
+                    K_lyr[i,i]  = dG_R
+                    V_lyr[i,i]  = G_R 
+                    Kp_lyr[i,i] = dG_R
 
                 N_analytical += 1
 
     print '\t%i analytical integrals'%(N_analytical/Ns)
+
+#    print sum(V_lyr), sum(K_lyr)
 
     return K_lyr, V_lyr, Kp_lyr
 

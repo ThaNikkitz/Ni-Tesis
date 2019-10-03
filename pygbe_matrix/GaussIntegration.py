@@ -21,6 +21,7 @@
 '''
 
 from numpy import *
+import numpy.matlib
 import sys
 
 
@@ -89,7 +90,7 @@ def getGaussPoints(y,triangle, n):
     return xi[:,0], xi[:,1], xi[:,2]
 
 
-def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, LorY, eps):
+def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine, kappa, E, m_E, m_a, LorY, eps, n):
 
     xi = local_center[:,0]
     yi = local_center[:,1]
@@ -103,14 +104,16 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
     Ns = 1
     Nt = len(xi)
 
-    dx = transpose(ones((Ns*K_fine,Nt))*xi) - Xj[:,0]
-    dy = transpose(ones((Ns*K_fine,Nt))*yi) - Xj[:,1]
-    dz = transpose(ones((Ns*K_fine,Nt))*zi) - Xj[:,2]
+    dx = transpose(ones((Ns*K_fine,1))*xi) - Xj[:,0]
+    dy = transpose(ones((Ns*K_fine,1))*yi) - Xj[:,1]
+    dz = transpose(ones((Ns*K_fine,1))*zi) - Xj[:,2]
 
     r = sqrt(dx*dx+dy*dy+dz*dz)
 
     dx = reshape(dx,(Nt,Ns,K_fine))
+    dxx = numpy.repeat(dx[:,:,:,numpy.newaxis], n, axis = 3)
     dy = reshape(dy,(Nt,Ns,K_fine))
+    dyy = numpy.repeat(dy[:,:,:,numpy.newaxis], n, axis = 3)
     dz = reshape(dz,(Nt,Ns,K_fine))
     r  = reshape(r,(Nt,Ns,K_fine))
 
@@ -119,14 +122,17 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         K_lyr = Area * (sum(W/r**3*dx, axis=2)*normal[0]
                       + sum(W/r**3*dy, axis=2)*normal[1]
                       + sum(W/r**3*dz, axis=2)*normal[2])
+
 #       Single layer
         V_lyr = Area * sum(W/r, axis=2)
+
 #       Adjoint Double layer 
         Kp_lyr = -Area * ( transpose(transpose(sum(W/r**3*dx, axis=2))*normal_tar[:,0])
                          + transpose(transpose(sum(W/r**3*dy, axis=2))*normal_tar[:,1])
                          + transpose(transpose(sum(W/r**3*dz, axis=2))*normal_tar[:,2]) )
 
-    else:           # if Yukawa
+
+    elif LorY==2:           # if Yukawa
 #       Double layer 
         K_lyr = Area * (sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dx, axis=2)*normal[0]
                           + sum(W/r**2*exp(-kappa*r)*(kappa+1/r)*dy, axis=2)*normal[1]
@@ -135,6 +141,38 @@ def gaussIntegration_fine(local_center, panel, normal, Area, normal_tar, K_fine,
         V_lyr = Area * sum(W * exp(-kappa*r)/r, axis=2)
 #       Adjoint Double layer 
         Kp_lyr = zeros(shape(K_lyr)) # TO BE IMPLEMENTED 
+
+
+    else:           # if RIC - membrane
+
+        Q_i = numpy.zeros((K_fine,n))
+        e_pos = transpose(numpy.ones((Ns*K_fine,1))*zi)
+        e_pos = numpy.repeat(e_pos[:,:,numpy.newaxis], n, axis = 2)
+        i_pos = numpy.zeros((Ns*K_fine,n))
+        for nn in range(-(n-1)/2,(n+1)/2):
+            Q_i[:,nn+(n-1)/2] = W*((m_E - E)/(E + m_E))**abs(nn)
+            for i in range(Ns*K_fine):
+                i_pos[i,nn+(n-1)/2] = ((-1.)**nn)*Xj[i,2] + m_a*nn
+
+        dzz = e_pos - i_pos
+        dzz = reshape(dzz, (Nt,Ns,K_fine,n))
+        r_vec_i = numpy.sqrt(dzz**2 + dxx**2 + dyy**2 + eps*eps)
+
+#       Double layer 
+        dumb_dummy_1 = sum(sum(Q_i/r_vec_i**3*dzz, axis = 3), axis = 2)*normal[2]
+        dumb_dummy_2 = sum(sum(Q_i/r_vec_i**3*dyy, axis = 3), axis = 2)*normal[1]
+        dumb_dummy_3 = sum(sum(Q_i/r_vec_i**3*dxx, axis = 3), axis = 2)*normal[0]
+
+        K_lyr = Area * (dumb_dummy_1 + dumb_dummy_2 + dumb_dummy_3)
+
+#       Single layer
+        
+        V_lyr = Area * sum(sum(Q_i/r_vec_i, axis = 3), axis = 2)
+
+#       Adjoint Double layer 
+        Kp_lyr = -Area  * ( transpose(transpose(sum(sum(Q_i/r_vec_i**3*dzz , axis = 3), axis=2))*normal_tar[:,2])
+                         + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dyy , axis = 3), axis=2))*normal_tar[:,1])
+                         + transpose(transpose(sum(sum(Q_i/r_vec_i**3*dxx , axis = 3), axis=2))*normal_tar[:,0]) )
 
     return K_lyr, V_lyr, Kp_lyr
 

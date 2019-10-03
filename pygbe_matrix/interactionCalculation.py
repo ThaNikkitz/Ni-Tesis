@@ -22,7 +22,7 @@
 
 
 from numpy import *
-from blockMatrixGen_edit_2 import blockMatrix #should be from blockMatrixGen import
+from blockMatrixGen import blockMatrix 
 from semi_analytical import GQ_1D                  
 #import sys
 #sys.path.append('../util')

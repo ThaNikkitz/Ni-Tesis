@@ -19,8 +19,8 @@ from argparse               import ArgumentParser
 from class_definition       import (surfaces, parameters, readParameters, 
                             initializeField, initializeSurf, readElectricField)
 from gmres                  import gmres_mgs
-from blockMatrixGen_edit_2    import (blockMatrix, generateMatrix,
-                            generatePreconditioner) #should be from blockMatrixGen import
+from blockMatrixGen    import (blockMatrix, generateMatrix,
+                            generatePreconditioner)
 from RHScalculation         import charge2surf, generateRHS
 from interactionCalculation import computeInter
 from energyCalculation      import (fill_phi, solvationEnergy, coulombicEnergy,
