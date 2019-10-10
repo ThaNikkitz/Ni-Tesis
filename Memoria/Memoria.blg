@@ -1,11 +1,13 @@
-This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Memoria.aux
 The style file: plainnat.bst
 A level-1 auxiliary file: Portada/anteportada.aux
 A level-1 auxiliary file: Portada/portada.aux
+A level-1 auxiliary file: Agradecimientos.aux
 A level-1 auxiliary file: Resumen.aux
 A level-1 auxiliary file: Abstract.aux
+A level-1 auxiliary file: nomenclatura.aux
 A level-1 auxiliary file: Anexos/Anexo_Bromoethane.aux
 A level-1 auxiliary file: Anexos/Anexo_Solv_Energy.aux
 A level-1 auxiliary file: Anexos/Anexo_APBS.aux
@@ -18,7 +20,7 @@ Warning--empty year in pdb2pqr_1
 Warning--empty year in pdb2pqr_2
 You've used 25 entries,
             2773 wiz_defined-function locations,
-            768 strings with 8620 characters,
+            770 strings with 8655 characters,
 and the built_in function-call counts, 9894 in all, are:
 = -- 863
 > -- 440
