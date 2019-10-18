@@ -16,6 +16,7 @@
 \usepackage{array}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{pdfpages}
 \usepackage{xcolor}
 \usepackage{times}
 \usepackage{tikz}
@@ -74,12 +75,12 @@
 \pagenumbering{roman}
 \sloppy
 
-\include{Portada/anteportada}
-\blankpage
-\pagebreak
-\include{Portada/portada}
-\blankpage
-\pagebreak
+\begin{figure}
+	\includepdf[pages=1]{Portada.pdf}.
+\end{figure}
+\begin{picture}(150,150)
+	\put(70,-50){\includegraphics[scale = 0.6]{./Figures/utfsm_logo.pdf}}
+\end{picture}
 \include{Agradecimientos}
 \blankpage
 \pagebreak
